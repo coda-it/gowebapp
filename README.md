@@ -1,2 +1,3 @@
-# sh-panel
-Web panel for smarthome users
+# gowebapp
+A simple GO based web app scaffolding
+
