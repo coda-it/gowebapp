@@ -3,8 +3,8 @@ package main
 import (
 	"errors"
 	"github.com/coda-it/gowebserver"
-	"github.com/smart-evolution/shpanel/controllers"
-	"github.com/smart-evolution/shpanel/utils"
+	"github.com/coda-it/gowebapp/controllers"
+	"github.com/coda-it/gowebapp/utils"
 )
 
 // WebServer - adapter for gowebserver instance

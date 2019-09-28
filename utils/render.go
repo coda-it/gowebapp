@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"github.com/smart-evolution/shpanel/models/page"
+	"github.com/coda-it/gowebapp/models/page"
 	"html/template"
 	"net/http"
 	"os"

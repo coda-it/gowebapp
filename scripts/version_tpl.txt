@@ -1,4 +1,4 @@
 package main
 
-// VERSION - current shpanel webserver version
+// VERSION - current gowebapp webserver version
 var VERSION = %VERSION%

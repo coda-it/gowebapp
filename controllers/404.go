@@ -4,7 +4,7 @@ import (
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
-	"github.com/smart-evolution/shpanel/utils"
+	"github.com/coda-it/gowebapp/utils"
 	"net/http"
 )
 

@@ -1,5 +1,5 @@
 {
-  "name": "sh-panel",
+  "name": "gowebapp",
   "version": "0.0.1",
   "description": "Smart Home Panel",
   "main": "index.js",
@@ -19,14 +19,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/smart-evolution/sh-panel.git"
+    "url": "git+https://github.com/coda-it/gowebapp.git"
   },
   "author": "Oskar Szura",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/smart-evolution/sh-panel/issues"
+    "url": "https://github.com/coda-it/gowebapp/issues"
   },
-  "homepage": "https://github.com/smart-evolution/sh-panel#readme",
+  "homepage": "https://github.com/coda-it/gowebapp#readme",
   "dependencies": {
     "graphen": "^1.2.5",
     "lodash": "^4.17.5",

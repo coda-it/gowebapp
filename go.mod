@@ -1,4 +1,4 @@
-module github.com/smart-evolution/shpanel
+module github.com/coda-it/gowebapp
 
 go 1.12
 

@@ -25,7 +25,7 @@ build-frontend:
 
 .PHONY: build-backend
 build-backend:
-	$(GOCMD) build -mod=vendor -o smarthome
+	$(GOCMD) build -mod=vendor -o gowebapp
 
 .PHONY: test
 test:
