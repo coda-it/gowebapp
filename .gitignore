@@ -1,1 +1,11 @@
 .idea/
+.env
+.DS_Store
+npm-debug.log
+
+vendor/
+
+node_modules/
+
+public/
+
