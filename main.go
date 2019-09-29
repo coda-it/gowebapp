@@ -5,6 +5,7 @@ import (
 	"github.com/coda-it/gowebapp/controllers"
 	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver"
+	"os"
 )
 
 // WebServer - adapter for gowebserver instance
@@ -14,7 +15,7 @@ type WebServer struct {
 
 func getServerAddress(port string) (string, error) {
 	if port == "" {
-		return "", errors.New("Port not set")
+		return "", errors.New("Web server port is not set")
 	}
 	return ":" + port, nil
 }
@@ -34,7 +35,7 @@ func New(port string) *WebServer {
 	}
 
 	server := gowebserver.New(serverOptions, controllers.NotFound)
-	server.Router.AddRoute("/", controllers.CtrDashboard)
+	server.Router.AddRoute("/", controllers.CtrMain)
 
 	return &WebServer{
 		server: server,
@@ -47,6 +48,6 @@ func (ws *WebServer) RunService() {
 }
 
 func main() {
-	ws := New("3223")
+	ws := New(os.Getenv("GOWEBAPP_HTTP_PORT"))
 	ws.RunService()
 }
