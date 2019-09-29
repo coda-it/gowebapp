@@ -2,9 +2,9 @@ package main
 
 import (
 	"errors"
-	"github.com/coda-it/gowebserver"
 	"github.com/coda-it/gowebapp/controllers"
 	"github.com/coda-it/gowebapp/utils"
+	"github.com/coda-it/gowebserver"
 )
 
 // WebServer - adapter for gowebserver instance
@@ -50,4 +50,3 @@ func main() {
 	ws := New("3223")
 	ws.RunService()
 }
-

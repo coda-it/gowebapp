@@ -1,10 +1,10 @@
 package controllers
 
 import (
+	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
-	"github.com/coda-it/gowebapp/utils"
 	"net/http"
 )
 

@@ -21,8 +21,8 @@ func RenderTemplate(
 	}
 
 	templateModel := page.Page{
-		Version:  VERSION,
-		Title:    name,
+		Version: VERSION,
+		Title:   name,
 	}
 
 	template := template.Must(
