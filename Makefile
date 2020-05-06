@@ -52,6 +52,11 @@ fix:
 	$(NPM) run csslint:fix
 	$(GOFMT) -w .
 
+.PHONY: run
+run:
+	GOWEBAPP_HTTP_PORT=3000 \
+	./gowebapp
+
 .PHONY: version
 version:
 	git tag $(V)
