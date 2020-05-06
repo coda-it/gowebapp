@@ -4,7 +4,7 @@
   bottom: $spacing-large;
 
   &__alert {
-    @extend .c-alert;
+    @extend .gc-alert;
 
     width: 350px;
     margin-bottom: $spacing-small;
@@ -20,11 +20,11 @@
     }
 
     &--info {
-      @extend .c-alert--success;
+      @extend .gc-alert--success;
     }
 
     &--error {
-      @extend .c-alert--danger;
+      @extend .gc-alert--danger;
     }
   }
 }

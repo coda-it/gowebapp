@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/coda-it/gowebapp#readme",
   "dependencies": {
-    "graphen": "^1.2.5",
+    "graphen": "^1.7.2",
     "lodash": "^4.17.5",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
