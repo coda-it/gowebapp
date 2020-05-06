@@ -17,7 +17,7 @@ class Application extends React.PureComponent<Props> {
   render() {
     const { children, isLoaded } = this.props;
 
-    const loader = <div className="c-loader" />;
+    const loader = <div className="gc-loader" />;
 
     return (
       <div className="application">
