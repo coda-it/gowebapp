@@ -3,10 +3,13 @@ package main
 import (
 	"errors"
 	"github.com/coda-it/gowebapp/controllers"
+	"github.com/coda-it/gowebapp/datasources/persistence"
 	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver"
 	"os"
 )
+
+//go:generate bash ./scripts/version.sh ./scripts/version_tpl.txt ./version.go
 
 // WebServer - adapter for gowebserver instance
 type WebServer struct {
@@ -21,7 +24,7 @@ func getServerAddress(port string) (string, error) {
 }
 
 // New - creates new WebServer instance
-func New(port string) *WebServer {
+func New(port string, p *persistence.Persistance) *WebServer {
 	addr, err := getServerAddress(port)
 
 	if err != nil {
@@ -36,6 +39,10 @@ func New(port string) *WebServer {
 
 	server := gowebserver.New(serverOptions, controllers.NotFound)
 	server.Router.AddRoute("/", controllers.CtrMain)
+	server.Router.AddRoute("/login/register", controllers.Register)
+	server.Router.AddRoute("/login/logout", controllers.AuthenticateLogout)
+	server.Router.AddRoute("/login", controllers.Authenticate)
+	server.AddDataSource("persistence", p)
 
 	return &WebServer{
 		server: server,
@@ -48,6 +55,22 @@ func (ws *WebServer) RunService() {
 }
 
 func main() {
-	ws := New(os.Getenv("GOWEBAPP_HTTP_PORT"))
+	webAppMongoURI := os.Getenv("WEBAPP_MONGO_URI")
+	webAppMongoDB := os.Getenv("WEBAPP_MONGO_DB")
+	webAppHTTPPort := os.Getenv("WEBAPP_HTTP_PORT")
+
+	utils.Log("Staring sh-panel with the following ENV variables")
+	utils.Log("SH_PANEL_MONGO_URI = " + webAppMongoURI)
+	utils.Log("SH_PANEL_MONGO_DB = " + webAppMongoDB)
+	utils.Log("SH_HTTP_PORT = " + webAppHTTPPort)
+
+	utils.VERSION = VERSION
+
+	p := persistence.New(
+		webAppMongoURI,
+		webAppMongoDB,
+	)
+
+	ws := New(webAppHTTPPort, p)
 	ws.RunService()
 }
