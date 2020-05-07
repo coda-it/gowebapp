@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	// SessionKey - shpanel session key
+	// SessionKey - session key
 	SessionKey = "webapp-sid"
 )
 
