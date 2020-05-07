@@ -7,6 +7,10 @@ mode=prod
 
 .DEFAULT_GOAL := all
 
+WEBAPP_MONGO_URI=mongodb://localhost:27017
+WEBAPP_MONGO_DB=webapp
+WEBAPP_HTTP_PORT=3000
+
 .PHONY: install
 install:
 	$(shell cd /; $(GOCMD) get -u golang.org/x/lint/golint)
@@ -54,8 +58,14 @@ fix:
 
 .PHONY: run
 run:
-	GOWEBAPP_HTTP_PORT=3000 \
+	WEBAPP_MONGO_URI=$(WEBAPP_MONGO_URI) \
+	WEBAPP_MONGO_DB=$(WEBAPP_MONGO_DB) \
+	WEBAPP_HTTP_PORT=$(WEBAPP_HTTP_PORT) \
 	./gowebapp
+
+.PHONY: run-services
+run-services:
+	cd docker/webapp/dev && docker-compose --verbose up
 
 .PHONY: version
 version:

@@ -10,5 +10,5 @@ import (
 
 // CtrMain - controller for main page
 func CtrMain(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm session.ISessionManager, s store.IStore) {
-	utils.RenderTemplate(w, r, "main")
+	utils.RenderTemplate(w, r, "main", sm, make(map[string]interface{}))
 }

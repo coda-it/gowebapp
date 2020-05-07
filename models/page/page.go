@@ -6,4 +6,5 @@ type Page struct {
 	Title    string
 	IsLogged bool
 	Params   map[string]interface{}
+	Name     string
 }
