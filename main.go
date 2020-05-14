@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"github.com/coda-it/gowebapp/controllers"
+	"github.com/coda-it/gowebapp/controllers/api/posts"
 	"github.com/coda-it/gowebapp/datasources/persistence"
 	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver"
@@ -38,7 +39,10 @@ func New(port string, p *persistence.Persistance) *WebServer {
 	}
 
 	server := gowebserver.New(serverOptions, controllers.NotFound)
+	server.Router.AddRoute("/api/posts", posts.CtrPosts)
 	server.Router.AddRoute("/", controllers.CtrMain)
+	server.Router.AddRoute("/posts", controllers.CtrPosts)
+	server.Router.AddRoute("/posts/new", controllers.CtrNewPost)
 	server.Router.AddRoute("/login/register", controllers.Register)
 	server.Router.AddRoute("/login/logout", controllers.AuthenticateLogout)
 	server.Router.AddRoute("/login", controllers.Authenticate)

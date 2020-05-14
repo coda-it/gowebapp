@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import AlertPanel from 'client/modules/AlertPanel';
+import { Loader } from 'graphen';
 
 type Props = {
   isLoaded: boolean,
@@ -17,12 +18,10 @@ class Application extends React.PureComponent<Props> {
   render() {
     const { children, isLoaded } = this.props;
 
-    const loader = <div className="gc-loader" />;
-
     return (
       <div className="application">
         {isLoaded && children}
-        {!isLoaded && loader}
+        {!isLoaded && <Loader />}
         <AlertPanel />
       </div>
     );

@@ -3,10 +3,12 @@ import React from 'react';
 import { render } from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router';
+import { Router, Route } from 'react-router';
 import { createBrowserHistory } from 'history';
 import createSagaMiddleware from 'redux-saga';
 import Application from './modules/Application';
+import Posts from './modules/Posts';
+import NewPost from './modules/NewPost';
 import sagas from './sagas';
 import reducers from './reducers';
 
@@ -21,7 +23,10 @@ if (appContainer) {
   render(
     <Provider store={store}>
       <Router history={createBrowserHistory({})}>
-        <Application />
+        <Application>
+          <Route exact path="/posts" component={Posts} />
+          <Route exact path="/posts/new" component={NewPost} />
+        </Application>
       </Router>
     </Provider>,
     appContainer
