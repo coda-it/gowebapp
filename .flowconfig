@@ -9,6 +9,7 @@
 
 [options]
 module.name_mapper='^client\(.*\)$' -> '<PROJECT_ROOT>/client\1'
+esproposal.optional_chaining=enable
 
 [strict]
 

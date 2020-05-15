@@ -15,7 +15,8 @@
     "fetch": true,
     "WebSocket": true,
     "cy": true,
-    "Cypress": true
+    "Cypress": true,
+    "Request": true
   },
   "env": {
     "jest": true

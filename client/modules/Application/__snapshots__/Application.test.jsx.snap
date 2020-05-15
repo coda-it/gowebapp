@@ -15,9 +15,7 @@ exports[`Application should render with loader 1`] = `
 <div
   className="application"
 >
-  <div
-    className="gc-loader"
-  />
+  <I />
   <Connect(AlertPanel) />
 </div>
 `;
