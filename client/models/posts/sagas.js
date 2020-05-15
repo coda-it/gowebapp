@@ -1,5 +1,7 @@
 // @flow
 import { put, call } from 'redux-saga/effects';
+import * as alertActions from 'client/models/alerts/actions';
+import * as alertConstants from 'client/models/alerts/constants';
 import * as actions from './actions';
 
 function callAddPost(title: string, description: string) {
@@ -13,7 +15,7 @@ function callAddPost(title: string, description: string) {
 
   return fetch(request)
     .then(response => response.json())
-    .catch(() => 'Send alert failed');
+    .catch(() => 'Adding post failed');
 }
 
 export function* onAddPost({
@@ -23,7 +25,11 @@ export function* onAddPost({
   title: string,
   description: string,
 }): Iterable<any> {
-  yield call(callAddPost, title, description);
+  const response = yield call(callAddPost, title, description);
+
+  if (typeof response === 'string') {
+    put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
+  }
 }
 
 export function callFetchPosts() {
@@ -32,18 +38,18 @@ export function callFetchPosts() {
   });
 
   return fetch(request)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Fetching data error: ${response.statusText}`);
-      }
-
-      return response.json();
-    })
-    .catch(e => e);
+    .then(response => response.json())
+    .catch(() => 'Fetch posts failed');
 }
 
 export function* onFetchPosts(): Iterable<any> {
-  const data = yield call(callFetchPosts);
-  const posts = data?._embedded?.posts || [];
+  const response = yield call(callFetchPosts);
+
+  if (typeof response === 'string') {
+    yield put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
+    return;
+  }
+
+  const posts = response?._embedded?.posts || [];
   yield put(actions.fetchPostsSuccess(posts));
 }

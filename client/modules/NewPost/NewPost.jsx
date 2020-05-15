@@ -28,7 +28,9 @@ function NewPost(props: Props) {
 
   const handleAddPost = useCallback(() => {
     onAdd(title, description);
-  }, [onAdd, title, description]);
+    setTitle('');
+    setDescription('');
+  }, [onAdd, title, description, setTitle, setDescription]);
 
   return (
     <>
@@ -57,7 +59,9 @@ function NewPost(props: Props) {
             className="gc-textarea"
           />
         </article>
-        <Button onClick={handleAddPost}>Add</Button>
+        <Button className="gc-btn--primary" onClick={handleAddPost}>
+          Add
+        </Button>
       </div>
     </>
   );
