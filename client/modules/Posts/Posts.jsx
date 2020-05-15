@@ -2,7 +2,6 @@
 import _ from 'lodash';
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router';
-import { Link } from 'graphen';
 import * as postTypes from 'client/models/posts/types';
 
 type Props = {|
