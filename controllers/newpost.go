@@ -10,5 +10,5 @@ import (
 
 // CtrNewPost - controller for new post
 func CtrNewPost(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm session.ISessionManager, s store.IStore) {
-	utils.RenderTemplate(w, r, "posts", sm, make(map[string]interface{}))
+	utils.RenderTemplate(w, r, "admin", sm, make(map[string]interface{}))
 }

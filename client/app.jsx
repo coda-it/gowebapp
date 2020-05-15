@@ -7,6 +7,7 @@ import { Router, Route } from 'react-router';
 import { createBrowserHistory } from 'history';
 import createSagaMiddleware from 'redux-saga';
 import Application from './modules/Application';
+import Admin from './modules/Admin';
 import Posts from './modules/Posts';
 import NewPost from './modules/NewPost';
 import sagas from './sagas';
@@ -24,8 +25,9 @@ if (appContainer) {
     <Provider store={store}>
       <Router history={createBrowserHistory({})}>
         <Application>
-          <Route exact path="/posts" component={Posts} />
-          <Route exact path="/posts/new" component={NewPost} />
+          <Route exact path="/" component={Posts} />
+          <Route exact path="/admin" component={Admin} />
+          <Route exact path="/admin/new-post" component={NewPost} />
         </Application>
       </Router>
     </Provider>,

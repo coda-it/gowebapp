@@ -23,7 +23,7 @@ func RenderTemplate(
 	if !isLogged {
 		ClearSession(w)
 
-		if r.URL.Path != "/login" && r.URL.Path != "/login/register" {
+		if r.URL.Path != "/login" && r.URL.Path != "/login/register" && r.URL.Path != "/" {
 			http.Redirect(w, r, "/login", http.StatusSeeOther)
 		}
 	}

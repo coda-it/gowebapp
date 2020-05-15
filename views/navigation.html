@@ -7,11 +7,11 @@
     </li>
 {{end}}
 
-{{define "nav-main"}}
-    <li {{if eq .Name "main"}}class="gc-navigation__option gc-navigation__option--active"{{else}}class="gc-navigation__option"{{end}}
+{{define "nav-admin"}}
+    <li {{if eq .Name "admin"}}class="gc-navigation__option gc-navigation__option--active"{{else}}class="gc-navigation__option"{{end}}
         role="presentation">
         <a class="gc-navigation__link gc-link" href="/">
-            Main
+            Admin
         </a>
     </li>
 {{end}}
@@ -19,7 +19,7 @@
 {{define "nav-posts"}}
     <li {{if eq .Name "posts"}}class="gc-navigation__option gc-navigation__option--active"{{else}}class="gc-navigation__option"{{end}}
         role="presentation">
-        <a class="gc-navigation__link gc-link" href="/posts">
+        <a class="gc-navigation__link gc-link" href="/">
             Posts
         </a>
     </li>
@@ -32,14 +32,12 @@
     </a>
     <nav class="gc-header__navigation">
         <ul class="gc-navigation">
+            {{template "nav-posts" .}}
+            {{if .IsLogged}}
+                {{template "nav-admin" .}}
+            {{end}}
             {{if not .IsLogged}}
                 {{template "nav-login" .}}
-            {{end}}
-            {{if .IsLogged}}
-                {{template "nav-main" .}}
-            {{end}}
-            {{if .IsLogged}}
-                {{template "nav-posts" .}}
             {{end}}
             {{if .IsLogged}}
                 <li class="gc-navigation__option"

@@ -1,6 +1,8 @@
 package post
 
-import "gopkg.in/mgo.v2/bson"
+import (
+	"gopkg.in/mgo.v2/bson"
+)
 
 // Post - model representing post
 type Post struct {
