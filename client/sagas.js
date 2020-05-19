@@ -4,6 +4,8 @@ import * as applicationSagas from './modules/Application/sagas';
 import * as applicationActionTypes from './modules/Application/actionTypes';
 import * as postsSagas from './models/posts/sagas';
 import * as postsActionTypes from './models/posts/actionTypes';
+import * as usersSagas from './models/users/sagas';
+import * as usersActionTypes from './models/users/actionTypes';
 
 function* root(): Iterable<any> {
   yield [
@@ -13,6 +15,7 @@ function* root(): Iterable<any> {
     ),
     takeEvery(postsActionTypes.ADD_POST, postsSagas.onAddPost),
     takeEvery(postsActionTypes.FETCH_POSTS, postsSagas.onFetchPosts),
+    takeEvery(usersActionTypes.FETCH_USER, usersSagas.onFetchUser),
   ];
 }
 

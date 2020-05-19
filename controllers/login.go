@@ -33,7 +33,7 @@ func Authenticate(w http.ResponseWriter, r *http.Request, opt router.UrlOptions,
 		isLogged := sm.IsExist(sessionID)
 
 		if !isLogged {
-			user := r.PostFormValue("username")
+			u := r.PostFormValue("username")
 			password := utils.HashString(r.PostFormValue("password"))
 			expiration := time.Now().Add(365 * 24 * time.Hour)
 
@@ -45,21 +45,21 @@ func Authenticate(w http.ResponseWriter, r *http.Request, opt router.UrlOptions,
 				return
 			}
 
-			authenticatedUser, err := authenticateUser(user, password, p)
+			t := time.Now()
+			timeStr := t.Format(time.RFC850)
+			cookieValue := utils.CreateSessionID(u, password, timeStr)
+			authenticatedUser, err := authenticateUser(u, password, cookieValue, p)
 
 			if err == nil {
-				utils.Log("Logged in as user", user)
-				t := time.Now()
-				timeStr := t.Format(time.RFC850)
-				cookieValue := utils.CreateSessionID(user, password, timeStr)
+				utils.Log("Logged in as user", u)
 
 				cookie := http.Cookie{
 					Name:    utils.SessionKey,
 					Value:   cookieValue,
 					Expires: expiration}
 
-				session := sm.Create(cookieValue)
-				session.Set("user", authenticatedUser)
+				s := sm.Create(cookieValue)
+				s.Set("user", authenticatedUser)
 
 				http.SetCookie(w, &cookie)
 				http.Redirect(w, r, "/", http.StatusSeeOther)
@@ -75,18 +75,25 @@ func Authenticate(w http.ResponseWriter, r *http.Request, opt router.UrlOptions,
 	}
 }
 
-func authenticateUser(username string, password string, persistance persistence.IPersistance) (user.User, error) {
-	var user user.User
+func authenticateUser(username string, password string, sid string, p persistence.IPersistance) (user.User, error) {
+	var u user.User
 
-	c := persistance.GetCollection("users")
+	c := p.GetCollection("users")
 
 	err := c.Find(bson.M{
 		"username": username,
 		"password": password,
-	}).One(&user)
+	}).One(&u)
 
 	if err != nil {
-		return user, errors.New("User '" + username + "' not found")
+		return u, errors.New("User '" + username + "' not found")
 	}
-	return user, nil
+
+	err = c.Update(bson.M{"username": username}, bson.M{"sessionId": sid})
+
+	if err != nil {
+		return u, errors.New("error updating " + username + " status")
+	}
+
+	return u, nil
 }

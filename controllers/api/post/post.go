@@ -1,9 +1,10 @@
-package posts
+package post
 
 import (
 	"encoding/json"
 	"github.com/coda-it/gowebapp/datasources"
 	"github.com/coda-it/gowebapp/datasources/persistence"
+	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/post"
 	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/router"
@@ -59,7 +60,7 @@ func CtrPosts(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm 
 			"posts": posts,
 		}
 
-		utils.HandleResponse(w, data, embedded, links, http.StatusOK)
+		handlers.HandleJSONResponse(w, data, embedded, links, http.StatusOK)
 
 		return
 	case "POST":
@@ -67,9 +68,7 @@ func CtrPosts(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm 
 		defer r.Body.Close()
 
 		if err != nil {
-			msg := "error reading request body"
-			utils.Log(msg)
-			http.Error(w, msg, http.StatusInternalServerError)
+			handlers.HandleErrorResponse(w, "error reading request body")
 			return
 		}
 
@@ -79,9 +78,7 @@ func CtrPosts(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm 
 		dataSource := s.GetDataSource(datasources.Persistence)
 		p, ok := dataSource.(persistence.IPersistance)
 		if !ok {
-			msg := "unsupported data source"
-			utils.Log(msg)
-			http.Error(w, msg, http.StatusInternalServerError)
+			handlers.HandleErrorResponse(w, "unsupported data source")
 			return
 		}
 
@@ -89,9 +86,7 @@ func CtrPosts(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm 
 		err = postsCollection.Insert(newPost)
 
 		if !ok {
-			msg := "error adding new post"
-			utils.Log(msg)
-			http.Error(w, msg, http.StatusInternalServerError)
+			handlers.HandleErrorResponse(w, "error adding new post")
 		}
 
 		return
