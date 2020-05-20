@@ -1,13 +1,16 @@
 // @flow
-import { put, call } from 'redux-saga/effects';
+import { put, call, select } from 'redux-saga/effects';
 import * as alertActions from 'client/models/alerts/actions';
 import * as alertConstants from 'client/models/alerts/constants';
+import * as userSelectors from 'client/models/users/selectors';
 import * as actions from './actions';
+import * as constants from './constants';
 
-function callAddPost(title: string, description: string) {
-  const request = new Request('/api/posts', {
+function callAddPost(title: string, description: string, userId: string) {
+  const request = new Request(constants.POST_ENDPOINT, {
     method: 'POST',
     body: JSON.stringify({
+      userId,
       title,
       description,
     }),
@@ -25,7 +28,8 @@ export function* onAddPost({
   title: string,
   description: string,
 }): Iterable<any> {
-  const response = yield call(callAddPost, title, description);
+  const userId = yield select(userSelectors.getId);
+  const response = yield call(callAddPost, title, description, userId);
 
   if (typeof response === 'string') {
     put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
@@ -33,7 +37,7 @@ export function* onAddPost({
 }
 
 export function callFetchPosts() {
-  const request = new Request('/api/posts', {
+  const request = new Request(constants.POST_ENDPOINT, {
     method: 'GET',
   });
 
