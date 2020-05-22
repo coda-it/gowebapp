@@ -16,7 +16,8 @@
     "WebSocket": true,
     "cy": true,
     "Cypress": true,
-    "Request": true
+    "Request": true,
+    "before": true
   },
   "env": {
     "jest": true
