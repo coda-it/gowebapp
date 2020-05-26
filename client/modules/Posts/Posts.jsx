@@ -6,7 +6,7 @@ import * as postTypes from 'client/models/posts/types';
 import * as userTypes from 'client/models/users/types';
 
 type Props = {|
-  loadPosts: () => void,
+  loadPosts: (?userTypes.User) => void,
   posts: $ReadOnlyArray<postTypes.Post>,
   user?: userTypes.User,
 |};
