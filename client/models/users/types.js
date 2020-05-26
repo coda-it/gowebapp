@@ -7,3 +7,8 @@ export type User = {
   password: string,
   featureFlags: FeatureFlags,
 };
+
+export type State = {
+  isLoading: boolean,
+  user: User,
+};

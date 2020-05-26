@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"errors"
+	"fmt"
 	"github.com/coda-it/gowebapp/datasources/persistence"
 	"github.com/coda-it/gowebapp/models/user"
 	"github.com/coda-it/gowebapp/utils"
@@ -84,8 +85,9 @@ func authenticateUser(username string, password string, sid string, p persistenc
 		"username": username,
 		"password": password,
 	}).One(&u)
-
+	fmt.Println(u, username, password)
 	if err != nil {
+		fmt.Println(err)
 		return u, errors.New("User '" + username + "' not found")
 	}
 

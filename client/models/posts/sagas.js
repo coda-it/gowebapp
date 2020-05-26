@@ -3,6 +3,7 @@ import { put, call, select } from 'redux-saga/effects';
 import * as alertActions from 'client/models/alerts/actions';
 import * as alertConstants from 'client/models/alerts/constants';
 import * as userSelectors from 'client/models/users/selectors';
+import * as userTypes from 'client/models/users/types';
 import * as actions from './actions';
 import * as constants from './constants';
 
@@ -36,8 +37,11 @@ export function* onAddPost({
   }
 }
 
-export function callFetchPosts() {
-  const request = new Request(constants.POST_ENDPOINT, {
+export function callFetchPosts(userId: string) {
+  const userIdParam = userId ? `userId=${userId}` : null;
+  const urlParams = userIdParam ? `?${userIdParam}` : '';
+
+  const request = new Request(`${constants.POST_ENDPOINT}${urlParams}`, {
     method: 'GET',
   });
 
@@ -46,8 +50,13 @@ export function callFetchPosts() {
     .catch(() => 'Fetch posts failed');
 }
 
-export function* onFetchPosts(): Iterable<any> {
-  const response = yield call(callFetchPosts);
+export function* onFetchPosts({
+  user,
+}: {
+  user?: userTypes.User,
+}): Iterable<any> {
+  const userId = user?.id;
+  const response = yield call(callFetchPosts, userId);
 
   if (typeof response === 'string') {
     yield put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));

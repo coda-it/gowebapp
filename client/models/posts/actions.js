@@ -1,4 +1,5 @@
 // @flow
+import * as userTypes from 'client/models/users/types';
 import * as actionTypes from './actionTypes';
 import * as types from './types';
 
@@ -8,8 +9,9 @@ export const addPost = (title: string, description: string) => ({
   description,
 });
 
-export const fetchPosts = () => ({
+export const fetchPosts = (user?: userTypes.User) => ({
   type: actionTypes.FETCH_POSTS,
+  user,
 });
 
 export const fetchPostsSuccess = (posts: $ReadOnlyArray<types.Post>) => ({

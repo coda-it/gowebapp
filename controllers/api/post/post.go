@@ -20,6 +20,8 @@ import (
 func CtrPosts(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm session.ISessionManager, s store.IStore) {
 	href := "/api/posts"
 
+	userID := r.URL.Query().Get("userId")
+
 	switch r.Method {
 	case "GET":
 		dataSource := s.GetDataSource(datasources.Persistence)
@@ -34,16 +36,23 @@ func CtrPosts(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm 
 		postsCollection := p.GetCollection("posts")
 
 		var posts []post.Post
-		err := postsCollection.Find(bson.M{}).All(&posts)
+		var searchQuery bson.M
+
+		if userID != "" {
+			searchQuery = bson.M{"userId": userID}
+		} else {
+			searchQuery = bson.M{}
+		}
+
+		err := postsCollection.Find(searchQuery).All(&posts)
 
 		if err != nil {
-			msg := "objects not found"
+			msg := "error looking up for posts"
 			utils.Log(msg)
 		}
 
 		if len(posts) == 0 {
-			w.WriteHeader(http.StatusNoContent)
-			return
+			posts = []post.Post{}
 		}
 
 		data := map[string]string{
@@ -65,12 +74,12 @@ func CtrPosts(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm 
 		return
 	case "POST":
 		requestBody, err := ioutil.ReadAll(r.Body)
-		defer r.Body.Close()
 
 		if err != nil {
 			handlers.HandleErrorResponse(w, "error reading request body")
 			return
 		}
+		defer r.Body.Close()
 
 		var newPost post.Post
 		err = json.Unmarshal(requestBody, &newPost)

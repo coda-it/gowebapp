@@ -2,6 +2,7 @@
 import { connect } from 'react-redux';
 import * as postActions from 'client/models/posts/actions';
 import * as postSelectors from 'client/models/posts/selectors';
+import * as userTypes from 'client/models/users/types';
 import * as globalTypes from 'client/types';
 import Posts from './Posts';
 
@@ -10,8 +11,8 @@ const mapStateToProps = (state: globalTypes.State) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadPosts: () => {
-    dispatch(postActions.fetchPosts());
+  loadPosts: (user?: userTypes.User) => {
+    dispatch(postActions.fetchPosts(user));
   },
 });
 
