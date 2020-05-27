@@ -6,6 +6,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
+// AddUser - add user to the persistence
 func AddUser(p persistence.IPersistance, username string, password string) error {
 	c := p.GetCollection(CollectionName)
 
@@ -20,6 +21,7 @@ func AddUser(p persistence.IPersistance, username string, password string) error
 	return err
 }
 
+// AuthenticateUser - authenticate user in the persistence
 func AuthenticateUser(p persistence.IPersistance, username string, password string, sid string) (User, error) {
 	var u User
 

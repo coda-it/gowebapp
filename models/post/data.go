@@ -6,6 +6,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
+// FetchPosts - fetch posts from persistence
 func FetchPosts(p persistence.IPersistance, userID string) []Post {
 	postsCollection := p.GetCollection(CollectionName)
 
@@ -32,6 +33,7 @@ func FetchPosts(p persistence.IPersistance, userID string) []Post {
 	return posts
 }
 
+// AddPost - add post to persistence
 func AddPost(p persistence.IPersistance, post Post) error {
 	postsCollection := p.GetCollection(CollectionName)
 	return postsCollection.Insert(post)
