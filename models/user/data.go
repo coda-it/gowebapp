@@ -1,6 +1,7 @@
 package user
 
 import (
+	"errors"
 	"github.com/coda-it/gowebapp/datasources/persistence"
 	"gopkg.in/mgo.v2/bson"
 )

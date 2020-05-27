@@ -9,6 +9,7 @@ vendor/
 node_modules/
 
 public/
+cypress/screenshots/
 
 gowebapp
 
