@@ -1,15 +1,12 @@
 package controllers
 
 import (
-	"errors"
-	"fmt"
 	"github.com/coda-it/gowebapp/datasources/persistence"
 	"github.com/coda-it/gowebapp/models/user"
 	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
-	"gopkg.in/mgo.v2/bson"
 	"net/http"
 	"time"
 )
@@ -49,7 +46,7 @@ func Authenticate(w http.ResponseWriter, r *http.Request, opt router.UrlOptions,
 			t := time.Now()
 			timeStr := t.Format(time.RFC850)
 			cookieValue := utils.CreateSessionID(u, password, timeStr)
-			authenticatedUser, err := authenticateUser(u, password, cookieValue, p)
+			authenticatedUser, err := user.AuthenticateUser(p, u, password, cookieValue)
 
 			if err == nil {
 				utils.Log("Logged in as user", u)
@@ -74,28 +71,4 @@ func Authenticate(w http.ResponseWriter, r *http.Request, opt router.UrlOptions,
 
 	default:
 	}
-}
-
-func authenticateUser(username string, password string, sid string, p persistence.IPersistance) (user.User, error) {
-	var u user.User
-
-	c := p.GetCollection("users")
-
-	err := c.Find(bson.M{
-		"username": username,
-		"password": password,
-	}).One(&u)
-	fmt.Println(u, username, password)
-	if err != nil {
-		fmt.Println(err)
-		return u, errors.New("User '" + username + "' not found")
-	}
-
-	err = c.Update(bson.M{"username": username}, bson.M{"sessionId": sid})
-
-	if err != nil {
-		return u, errors.New("error updating " + username + " status")
-	}
-
-	return u, nil
 }
