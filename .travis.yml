@@ -4,7 +4,7 @@ go:
   - 1.x
 
 env:
-  - GO111MODULE=on
+  - GO111MODULE=on APP_VERSION=v1.0.0
 
 install:
   - sudo apt-get update
@@ -16,8 +16,25 @@ install:
 before_script:
   - make lint
   - make test
+
+script:
+  - make all ENV=prod
   - |
-    if [[ $IS_INTEGRATION_TESTS == "true" ]]
+    echo "$DOCKER_PASS" | docker login -u "$DOCKER_LOGIN" --password-stdin
+    docker pull mongo:latest
+    docker run -d --net=host mongo:latest
+    sleep 10
+  - make image IMAGE_NAME=webapp ENV=prod V=$APP_VERSION
+  - |
+    docker run -d --net=host oszura/webapp-prod:$APP_VERSION
+    sleep 5
+    npm run cypress:run
+
+after_success:
+  - |
+    if [[ ($TRAVIS_PULL_REQUEST == "false") && ($TRAVIS_COMMIT_MESSAGE =~ ^Build.*) ]]
     then
-      make integration-test
+      make image IMAGE_NAME=webapp ENV=dev V=$APP_VERSION
+      docker push oszura/webapp-prod
+      docker push oszura/webapp-dev
     fi
