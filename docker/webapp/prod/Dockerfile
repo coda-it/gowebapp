@@ -19,4 +19,4 @@ ADD ./views /root/go/src/github.com/coda-it/gowebapp/views
 COPY ./gowebapp /root/go/src/github.com/coda-it/gowebapp/
 COPY ./docker/webapp/prod/entrypoint.sh /root/scripts/
 
-ENTRYPOINT /root/scripts/entrypoint.sh
+#ENTRYPOINT /root/scripts/entrypoint.sh

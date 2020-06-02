@@ -85,6 +85,9 @@ version:
 	go generate
 	$(NPM) version $(V) --no-git-tag-version
 	git add package.json
+	git add package-lock.json
+	sed -i "" "s/APP_VERSION=.*/APP_VERSION=$(V)/g" .travis.yml
+	git add .travis.yml
 	git add ./version.go || true
 	git add ./docs/changelogs/CHANGELOG_$(V).md
 	git commit --allow-empty -m "Build $(V)"
