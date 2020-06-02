@@ -4,6 +4,7 @@ GOFMT=gofmt
 MAKE=make
 NPM=npm
 mode=prod
+FULL_IMAGE_NAME=oszura/$(IMAGE_NAME)
 
 .DEFAULT_GOAL := all
 
@@ -63,10 +64,20 @@ run:
 	WEBAPP_HTTP_PORT=$(WEBAPP_HTTP_PORT) \
 	./gowebapp
 
+### Containerization
+.PHONY: image
+image:
+ifdef ENV
+	docker build --tag $(FULL_IMAGE_NAME)-$(ENV):$(V) --file=./docker/$(IMAGE_NAME)/$(ENV)/Dockerfile .
+else
+	docker build --tag $(FULL_IMAGE_NAME):$(V) --file=./docker/$(IMAGE_NAME)/Dockerfile .
+endif
+
 .PHONY: run-services
 run-services:
 	cd docker/webapp/dev && docker-compose --verbose up
 
+### Utilities
 .PHONY: version
 version:
 	git tag $(V)
@@ -74,16 +85,11 @@ version:
 	go generate
 	$(NPM) version $(V) --no-git-tag-version
 	git add package.json
+	git add package-lock.json
+	sed -i "" "s/APP_VERSION=.*/APP_VERSION=$(V)/g" .travis.yml
+	git add .travis.yml
 	git add ./version.go || true
 	git add ./docs/changelogs/CHANGELOG_$(V).md
 	git commit --allow-empty -m "Build $(V)"
 	git tag --delete $(V)
 	git tag $(V)
-
-.PHONY: build-image
-build-image:
-	docker build --no-cache --tag oszura/sh-panel --file=Dockerfile .
-
-.PHONY: build-image-soft
-build-image-soft:
-	docker build --tag oszura/sh-panel --file=Dockerfile .

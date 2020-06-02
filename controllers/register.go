@@ -8,7 +8,6 @@ import (
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
-	"gopkg.in/mgo.v2/bson"
 	"net/http"
 )
 
@@ -19,34 +18,25 @@ func Register(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm 
 		utils.RenderTemplate(w, r, "register", sm, make(map[string]interface{}))
 
 	case "POST":
-		var newUser *user.User
-
 		dfc := s.GetDataSource("persistence")
 
 		p, ok := dfc.(persistence.IPersistance)
 		if !ok {
-			utils.Log("Invalid store")
+			utils.Log("invalid store")
 			return
 		}
-
-		c := p.GetCollection("users")
 
 		username := r.PostFormValue("username")
 		password := utils.HashString(r.PostFormValue("password"))
 
-		newUser = &user.User{
-			ID:       bson.NewObjectId(),
-			Username: username,
-			Password: password,
-		}
+		err := user.AddUser(p, username, password)
 
-		err := c.Insert(newUser)
 		if err != nil {
 			fmt.Println(err)
-			utils.Log("Error registering user '" + username + "'")
+			utils.Log("error registering user '" + username + "'")
 			return
 		}
-		utils.Log("Registered user '" + username + "'")
+		utils.Log("registered user '" + username + "'")
 
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	default:

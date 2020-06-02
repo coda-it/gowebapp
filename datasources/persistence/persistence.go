@@ -7,6 +7,7 @@ import (
 // IPersistance - interface for user settings and general purpose storage
 type IPersistance interface {
 	GetCollection(string) *mgo.Collection
+	DropDatabase() error
 }
 
 // Persistance - data source keeping system state and user data
@@ -38,4 +39,10 @@ func (p *Persistance) getDatabase() *mgo.Database {
 func (p *Persistance) GetCollection(name string) *mgo.Collection {
 	ds := p.getDatabase()
 	return ds.C(name)
+}
+
+// DropDatabase - clear whole database
+func (p *Persistance) DropDatabase() error {
+	ds := p.getDatabase()
+	return ds.DropDatabase()
 }

@@ -27,10 +27,8 @@ func AuthenticateLogout(w http.ResponseWriter, r *http.Request, opt router.UrlOp
 
 	if err != nil {
 		err := c.Update(bson.M{
-			"sid": sid,
-		}, bson.M{
-			"sid": "",
-		})
+			"sessionId": sid,
+		}, bson.M{"$set": bson.M{"sessionId": sid}})
 
 		if err != nil {
 			handlers.HandleErrorResponse(w, "error clearing sid in database")
