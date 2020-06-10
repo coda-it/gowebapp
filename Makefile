@@ -3,7 +3,7 @@ GOLINT=golint
 GOFMT=gofmt
 MAKE=make
 NPM=npm
-mode=prod
+ENV=prod
 FULL_IMAGE_NAME=oszura/$(IMAGE_NAME)
 
 .DEFAULT_GOAL := all
@@ -26,7 +26,7 @@ all:
 .PHONY: build-frontend
 build-frontend:
 	$(NPM) rebuild node-sass
-	$(NPM) run build:$(mode)
+	$(NPM) run build:$(ENV)
 
 .PHONY: build-backend
 build-backend:

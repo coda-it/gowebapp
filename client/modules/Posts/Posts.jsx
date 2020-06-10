@@ -2,16 +2,9 @@
 import _ from 'lodash';
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router';
-import * as postTypes from 'client/models/posts/types';
-import * as userTypes from 'client/models/users/types';
+import * as types from './types';
 
-type Props = {|
-  loadPosts: (?userTypes.User) => void,
-  posts: $ReadOnlyArray<postTypes.Post>,
-  user?: userTypes.User,
-|};
-
-function Posts(props: Props) {
+function Posts(props: types.Props) {
   const { loadPosts, posts, user } = props;
 
   useEffect(() => {
