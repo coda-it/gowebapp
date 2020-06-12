@@ -1,14 +1,16 @@
 // @flow
-import React, { useState, useCallback } from 'react';
+import _ from 'lodash';
+import React, { useState, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import { Button } from 'graphen';
+import * as types from './types';
 
-type Props = {|
-  onAdd: (string, string) => void,
-|};
+function PostEditor(props: types.Props) {
+  const { onAdd, onUpdate, post, loadPosts, user } = props;
 
-function NewPost(props: Props) {
-  const { onAdd } = props;
+  useEffect(() => {
+    loadPosts(user);
+  }, [loadPosts]);
 
   const [title, setTitle] = useState('');
   const handleTitleChange = useCallback(
@@ -26,11 +28,25 @@ function NewPost(props: Props) {
     [setDescription]
   );
 
+  useEffect(() => {
+    setTitle(post?.title || '');
+    setDescription(post?.description || '');
+  }, [post]);
+
   const handleAddPost = useCallback(() => {
     onAdd(title, description);
     setTitle('');
     setDescription('');
   }, [onAdd, title, description, setTitle, setDescription]);
+
+  const handleUpdatePost = useCallback(() => {
+    if (post) {
+      onUpdate(post.id, title, description);
+    }
+  }, [onUpdate, post, title, description]);
+
+  const onSubmit = _.isEmpty(post) ? handleAddPost : handleUpdatePost;
+  const submitTitle = _.isEmpty(post) ? 'Add' : 'Update';
 
   return (
     <>
@@ -59,12 +75,12 @@ function NewPost(props: Props) {
             className="gc-textarea"
           />
         </article>
-        <Button className="gc-btn--primary" onClick={handleAddPost}>
-          Add
+        <Button className="gc-btn--primary" onClick={onSubmit}>
+          {submitTitle}
         </Button>
       </div>
     </>
   );
 }
 
-export default withRouter(NewPost);
+export default withRouter(PostEditor);

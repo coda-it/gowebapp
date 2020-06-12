@@ -8,12 +8,15 @@ import (
 )
 
 var (
-	href = "/api/posts"
+	href = "/api/post"
 )
 
-// CtrPosts - posts api controller entry-point
-func CtrPosts(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm session.ISessionManager, s store.IStore) {
+// CtrPost - posts api controller entry-point
+func CtrPost(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm session.ISessionManager, s store.IStore) {
 	switch r.Method {
+	case "PUT":
+		putHandler(w, r, s)
+		return
 	case "GET":
 		getHandler(w, r, s)
 		return

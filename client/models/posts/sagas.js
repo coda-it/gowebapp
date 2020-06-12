@@ -37,6 +37,44 @@ export function* onAddPost({
   }
 }
 
+function callUpdatePost(
+  title: string,
+  description: string,
+  id: string,
+  userId: string
+) {
+  const request = new Request(constants.POST_ENDPOINT, {
+    method: 'PUT',
+    body: JSON.stringify({
+      id,
+      userId,
+      title,
+      description,
+    }),
+  });
+
+  return fetch(request)
+    .then(response => response.json())
+    .catch(() => 'Updating post failed');
+}
+
+export function* onUpdatePost({
+  id,
+  title,
+  description,
+}: {
+  id: string,
+  title: string,
+  description: string,
+}): Iterable<any> {
+  const userId = yield select(userSelectors.getId);
+  const response = yield call(callUpdatePost, title, description, id, userId);
+
+  if (typeof response === 'string') {
+    put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
+  }
+}
+
 export function callFetchPosts(userId: string) {
   const userIdParam = userId ? `userId=${userId}` : null;
   const urlParams = userIdParam ? `?${userIdParam}` : '';

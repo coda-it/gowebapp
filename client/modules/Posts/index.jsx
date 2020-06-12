@@ -8,12 +8,13 @@ import * as globalTypes from 'client/types';
 import Posts from './Posts';
 import * as types from './types';
 
-const mapStateToProps = (state: globalTypes.State, props: types.Props) => {
+const mapStateToProps = (state: globalTypes.State, props: types.OwnProps) => {
   const { isAdmin } = props;
 
   return {
     posts: postSelectors.getPosts(state),
     user: isAdmin ? userSelectors.getUser(state) : undefined,
+    isAdmin,
   };
 };
 
@@ -23,7 +24,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Posts);
+export default connect(mapStateToProps, mapDispatchToProps)(Posts);

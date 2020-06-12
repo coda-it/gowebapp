@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import * as types from './types';
 
 function Posts(props: types.Props) {
-  const { loadPosts, posts, user } = props;
+  const { isAdmin, loadPosts, posts, user } = props;
 
   useEffect(() => {
     loadPosts(user);
@@ -13,15 +13,21 @@ function Posts(props: types.Props) {
 
   return (
     <>
-      {_.map(posts, ({ title, description }, key) => (
-        <div
-          key={key}
-          className="gc-card gc-card--gradient gc-panel gm-spacing-bl"
-        >
-          <div className="gc-panel__title">{title}</div>
-          <div className="gc-panel__content">{description}</div>
-        </div>
-      ))}
+      {_.map(posts, ({ id, title, description }, key) => {
+        const link = `/admin/posts/edit/${id}`;
+
+        const postTitle = isAdmin ? <a href={link}>{title}</a> : title;
+
+        return (
+          <div
+            key={key}
+            className="gc-card gc-card--gradient gc-panel gm-spacing-bl"
+          >
+            <div className="gc-panel__title">{postTitle}</div>
+            <div className="gc-panel__content">{description}</div>
+          </div>
+        );
+      })}
     </>
   );
 }

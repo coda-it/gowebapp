@@ -9,6 +9,13 @@ export const addPost = (title: string, description: string) => ({
   description,
 });
 
+export const updatePost = (id: string, title: string, description: string) => ({
+  type: actionTypes.UPDATE_POST,
+  id,
+  title,
+  description,
+});
+
 export const fetchPosts = (user?: userTypes.User) => ({
   type: actionTypes.FETCH_POSTS,
   user,
