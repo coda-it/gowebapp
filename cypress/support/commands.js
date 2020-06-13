@@ -5,7 +5,7 @@ Cypress.Commands.add('login', {}, () => {
   cy.get('.tst-password').type('admin');
   cy.get('.tst-register').click();
 
-  cy.get('.tst-login').click();
+  cy.get('.tst-nav-login').click();
   cy.get('.tst-email').type('admin@localhost.pl');
   cy.get('.tst-password').type('admin');
   cy.get('.tst-login').click();
@@ -14,3 +14,4 @@ Cypress.Commands.add('login', {}, () => {
 Cypress.Commands.add('resetDb', {}, () => {
   cy.request('POST', 'http://localhost:3000/api/reset');
 });
+

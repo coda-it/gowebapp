@@ -57,9 +57,14 @@ function PostEditor(props: types.Props) {
     }
   }, [onDelete, post]);
 
-  const updateButtonClasses = classNames('gc-btn--primary', 'gm-spacing-bl', {
-    'gc-btn--disabled': isDirty,
-  });
+  const updateButtonClasses = classNames(
+    'gc-btn--primary',
+    'gm-spacing-bl',
+    'tst-post-editor-update',
+    {
+      'gc-btn--disabled': isDirty,
+    }
+  );
 
   return (
     <>
@@ -74,7 +79,7 @@ function PostEditor(props: types.Props) {
               id="post-title"
               value={title}
               onChange={handleTitleChange}
-              className="gc-input__field"
+              className="gc-input__field tst-post-editor-title"
             />
           </div>
         </article>
@@ -85,11 +90,14 @@ function PostEditor(props: types.Props) {
           <textarea
             value={description}
             onChange={handleDescriptionChange}
-            className="gc-textarea"
+            className="gc-textarea  tst-post-editor-description"
           />
         </article>
         {_.isEmpty(post) && (
-          <Button className="gc-btn--primary" onClick={handleAddPost}>
+          <Button
+            className="gc-btn--primary tst-post-editor-add"
+            onClick={handleAddPost}
+          >
             Add
           </Button>
         )}
@@ -98,7 +106,10 @@ function PostEditor(props: types.Props) {
             <Button className={updateButtonClasses} onClick={handleUpdatePost}>
               Update
             </Button>
-            <Button className="gc-btn--danger" onClick={handleDeletePost}>
+            <Button
+              className="gc-btn--danger tst-post-editor-delete"
+              onClick={handleDeletePost}
+            >
               Delete
             </Button>
           </>

@@ -1,12 +1,7 @@
 describe('Login page', () => {
-  before(function () {
+  before(() => {
     cy.resetDb();
     cy.clearCookies();
-  });
-
-  it('should render front page successfully', () => {
-    cy.visit('http://localhost:3000');
-    cy.screenshot();
   });
 
   it('should register successfully', () => {
