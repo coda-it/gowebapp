@@ -45,3 +45,9 @@ func UpdatePost(p persistence.IPersistance, post Post) error {
 	_, err := postsCollection.Upsert(bson.M{"_id": post.ID}, post)
 	return err
 }
+
+// DeletePost - delete post
+func DeletePost(p persistence.IPersistance, id bson.ObjectId) error {
+	postsCollection := p.GetCollection(CollectionName)
+	return postsCollection.Remove(bson.M{"_id": id})
+}

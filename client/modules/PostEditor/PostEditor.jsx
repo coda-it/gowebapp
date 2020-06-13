@@ -1,31 +1,36 @@
 // @flow
 import _ from 'lodash';
+import classNames from 'classnames';
 import React, { useState, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import { Button } from 'graphen';
 import * as types from './types';
 
 function PostEditor(props: types.Props) {
-  const { onAdd, onUpdate, post, loadPosts, user } = props;
+  const { onAdd, onUpdate, post, loadPosts, user, onDelete } = props;
 
   useEffect(() => {
     loadPosts(user);
   }, [loadPosts]);
 
+  const [isDirty, setIsDirty] = useState(false);
+
   const [title, setTitle] = useState('');
   const handleTitleChange = useCallback(
     event => {
       setTitle(event.target.value);
+      setIsDirty(true);
     },
-    [setTitle]
+    [setTitle, setIsDirty]
   );
 
   const [description, setDescription] = useState('');
   const handleDescriptionChange = useCallback(
     event => {
       setDescription(event.target.value);
+      setIsDirty(true);
     },
-    [setDescription]
+    [setDescription, setIsDirty]
   );
 
   useEffect(() => {
@@ -42,11 +47,19 @@ function PostEditor(props: types.Props) {
   const handleUpdatePost = useCallback(() => {
     if (post) {
       onUpdate(post.id, title, description);
+      setIsDirty(false);
     }
-  }, [onUpdate, post, title, description]);
+  }, [onUpdate, post, title, description, setIsDirty]);
 
-  const onSubmit = _.isEmpty(post) ? handleAddPost : handleUpdatePost;
-  const submitTitle = _.isEmpty(post) ? 'Add' : 'Update';
+  const handleDeletePost = useCallback(() => {
+    if (post) {
+      onDelete(post.id);
+    }
+  }, [onDelete, post]);
+
+  const updateButtonClasses = classNames('gc-btn--primary', 'gm-spacing-bl', {
+    'gc-btn--disabled': isDirty,
+  });
 
   return (
     <>
@@ -75,9 +88,21 @@ function PostEditor(props: types.Props) {
             className="gc-textarea"
           />
         </article>
-        <Button className="gc-btn--primary" onClick={onSubmit}>
-          {submitTitle}
-        </Button>
+        {_.isEmpty(post) && (
+          <Button className="gc-btn--primary" onClick={handleAddPost}>
+            Add
+          </Button>
+        )}
+        {!_.isEmpty(post) && (
+          <>
+            <Button className={updateButtonClasses} onClick={handleUpdatePost}>
+              Update
+            </Button>
+            <Button className="gc-btn--danger" onClick={handleDeletePost}>
+              Delete
+            </Button>
+          </>
+        )}
       </div>
     </>
   );

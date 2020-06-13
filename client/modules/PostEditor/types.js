@@ -16,5 +16,6 @@ export type Props = {|
   user?: userTypes.User,
   onAdd: (string, string) => void,
   onUpdate: (string, string, string) => void,
+  onDelete: string => void,
   loadPosts: (?userTypes.User) => void,
 |};

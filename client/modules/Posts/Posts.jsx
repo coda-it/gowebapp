@@ -15,15 +15,20 @@ function Posts(props: types.Props) {
     <>
       {_.map(posts, ({ id, title, description }, key) => {
         const link = `/admin/posts/edit/${id}`;
-
-        const postTitle = isAdmin ? <a href={link}>{title}</a> : title;
+        const editButton = isAdmin ? (
+          <a className="gc-btn gc-btn--small gc-btn--primary" href={link}>
+            Edit
+          </a>
+        ) : null;
 
         return (
           <div
             key={key}
             className="gc-card gc-card--gradient gc-panel gm-spacing-bl"
           >
-            <div className="gc-panel__title">{postTitle}</div>
+            <div className="gc-panel__title">
+              {title} {editButton}
+            </div>
             <div className="gc-panel__content">{description}</div>
           </div>
         );

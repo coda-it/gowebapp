@@ -23,6 +23,8 @@ func CtrPost(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm s
 	case "POST":
 		postHandler(w, r, s)
 		return
+	case "DELETE":
+		deleteHandler(w, r, s)
 	default:
 	}
 }

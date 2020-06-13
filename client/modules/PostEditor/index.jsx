@@ -30,6 +30,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(postActions.addPost(title, description)),
   onUpdate: (id, title, description) =>
     dispatch(postActions.updatePost(id, title, description)),
+  onDelete: id => dispatch(postActions.deletePost(id)),
   loadPosts: (user?: userTypes.User) => {
     dispatch(postActions.fetchPosts(user));
   },

@@ -11,7 +11,7 @@ import (
 	"net/http"
 )
 
-func putHandler(w http.ResponseWriter, r *http.Request, s store.IStore) {
+func deleteHandler(w http.ResponseWriter, r *http.Request, s store.IStore) {
 	requestBody, err := ioutil.ReadAll(r.Body)
 
 	if err != nil {
@@ -20,8 +20,8 @@ func putHandler(w http.ResponseWriter, r *http.Request, s store.IStore) {
 	}
 	defer r.Body.Close()
 
-	var editedPost post.Post
-	err = json.Unmarshal(requestBody, &editedPost)
+	var deletedPost post.Post
+	err = json.Unmarshal(requestBody, &deletedPost)
 
 	dataSource := s.GetDataSource(datasources.Persistence)
 	p, ok := dataSource.(persistence.IPersistance)
@@ -30,16 +30,16 @@ func putHandler(w http.ResponseWriter, r *http.Request, s store.IStore) {
 		return
 	}
 
-	err = post.UpdatePost(p, editedPost)
+	err = post.DeletePost(p, deletedPost.ID)
 
 	if err != nil {
-		handlers.HandleErrorResponse(w, "error updating post")
+		handlers.HandleErrorResponse(w, "error removing post")
 	}
 
 	data := struct {
 		Post post.Post `json:"post"`
 	}{
-		editedPost,
+		deletedPost,
 	}
 
 	links := map[string]map[string]string{
