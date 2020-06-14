@@ -13,7 +13,7 @@
     "csslint": "stylelint ./client/**/*.scss",
     "csslint:fix": "stylelint ./client/**/*.scss --fix",
     "flow": "flow",
-    "prettify": "prettier --write \"./client/**/*.{js,jsx}\"",
+    "prettify": "prettier --write \"./client/**/*.{js,jsx}\" \"./cypress/**/*.{js,jsx}\"",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },

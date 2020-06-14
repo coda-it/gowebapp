@@ -35,6 +35,75 @@ export function* onAddPost({
   if (typeof response === 'string') {
     put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
   }
+
+  window.location.href = '/admin/posts';
+}
+
+function callUpdatePost(
+  title: string,
+  description: string,
+  id: string,
+  userId: string
+) {
+  const request = new Request(constants.POST_ENDPOINT, {
+    method: 'PUT',
+    body: JSON.stringify({
+      id,
+      userId,
+      title,
+      description,
+    }),
+  });
+
+  return fetch(request)
+    .then(response => response.json())
+    .catch(() => 'Updating post failed');
+}
+
+export function* onUpdatePost({
+  id,
+  title,
+  description,
+}: {
+  id: string,
+  title: string,
+  description: string,
+}): Iterable<any> {
+  const userId = yield select(userSelectors.getId);
+  const response = yield call(callUpdatePost, title, description, id, userId);
+
+  if (typeof response === 'string') {
+    yield put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
+    return;
+  }
+
+  yield put(
+    alertActions.addAlert('Post updated', alertConstants.ALERT_TYPE_INFO)
+  );
+}
+
+function callDeletePost(id: string) {
+  const request = new Request(constants.POST_ENDPOINT, {
+    method: 'DELETE',
+    body: JSON.stringify({
+      id,
+    }),
+  });
+
+  return fetch(request)
+    .then(response => response.json())
+    .catch(() => 'Updating post failed');
+}
+
+export function* onDeletePost({ id }: { id: string }): Iterable<any> {
+  const response = yield call(callDeletePost, id);
+
+  if (typeof response === 'string') {
+    yield put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
+    return;
+  }
+
+  window.location.href = '/admin/posts';
 }
 
 export function callFetchPosts(userId: string) {

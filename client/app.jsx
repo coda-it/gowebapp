@@ -9,7 +9,7 @@ import createSagaMiddleware from 'redux-saga';
 import Application from './modules/Application';
 import Admin from './modules/Admin';
 import Posts from './modules/Posts';
-import NewPost from './modules/NewPost';
+import PostEditor from './modules/PostEditor';
 import sagas from './sagas';
 import reducers from './reducers';
 
@@ -27,7 +27,9 @@ if (appContainer) {
         <Application>
           <Route exact path="/" component={Posts} />
           <Route exact path="/admin" component={Admin} />
-          <Route exact path="/admin/new-post" component={NewPost} />
+          <Route exact path="/admin/posts" render={() => <Posts isAdmin />} />
+          <Route exact path="/admin/posts/new" component={PostEditor} />
+          <Route exact path="/admin/posts/edit/:id?" component={PostEditor} />
         </Application>
       </Router>
     </Provider>,

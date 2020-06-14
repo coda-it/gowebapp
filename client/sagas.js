@@ -14,6 +14,8 @@ function* root(): Iterable<any> {
       applicationSagas.onApplicationMount
     ),
     takeEvery(postsActionTypes.ADD_POST, postsSagas.onAddPost),
+    takeEvery(postsActionTypes.UPDATE_POST, postsSagas.onUpdatePost),
+    takeEvery(postsActionTypes.DELETE_POST, postsSagas.onDeletePost),
     takeEvery(postsActionTypes.FETCH_POSTS, postsSagas.onFetchPosts),
     takeEvery(usersActionTypes.FETCH_USER, usersSagas.onFetchUser),
   ];

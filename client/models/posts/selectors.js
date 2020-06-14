@@ -1,9 +1,11 @@
 // @flow
+import _ from 'lodash';
 import * as globalTypes from 'client/types';
 import * as types from './types';
 
-/* eslint-disable import/prefer-default-export */
 export const getPosts = (
   state: globalTypes.State
 ): $ReadOnlyArray<types.Post> => state.posts.posts;
-/* eslint-enable import/prefer-default-export */
+
+export const getPostById = (state: globalTypes.State, id: string): types.Post =>
+  _.find(state.posts.posts, { id });

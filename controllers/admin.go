@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-// CtrMain - controller for main page
-func CtrMain(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm session.ISessionManager, s store.IStore) {
+// CtrAdmin - controller for admin page
+func CtrAdmin(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm session.ISessionManager, s store.IStore) {
 	utils.RenderTemplate(w, r, "admin", sm, make(map[string]interface{}))
 }
