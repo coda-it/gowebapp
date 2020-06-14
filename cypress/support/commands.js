@@ -14,4 +14,3 @@ Cypress.Commands.add('login', {}, () => {
 Cypress.Commands.add('resetDb', {}, () => {
   cy.request('POST', 'http://localhost:3000/api/reset');
 });
-

@@ -15,8 +15,12 @@ describe('Posts', () => {
     cy.get('.tst-post-editor-add').click();
 
     cy.get('.tst-post').should('have.length', 1);
-    cy.get('.tst-post').find('.tst-post-title').contains('Post title');
-    cy.get('.tst-post').find('.tst-post-description').contains( 'Post description');
+    cy.get('.tst-post')
+      .find('.tst-post-title')
+      .contains('Post title');
+    cy.get('.tst-post')
+      .find('.tst-post-description')
+      .contains('Post description');
     cy.screenshot();
 
     cy.get('.tst-post-edit').click();
@@ -28,8 +32,12 @@ describe('Posts', () => {
     cy.get('.tst-nav-admin-posts').click();
 
     cy.get('.tst-post').should('have.length', 1);
-    cy.get('.tst-post').find('.tst-post-title').contains('Post title updated');
-    cy.get('.tst-post').find('.tst-post-description').contains('Post description updated');
+    cy.get('.tst-post')
+      .find('.tst-post-title')
+      .contains('Post title updated');
+    cy.get('.tst-post')
+      .find('.tst-post-description')
+      .contains('Post description updated');
     cy.screenshot();
 
     cy.get('.tst-post-edit').click();

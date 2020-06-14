@@ -11,7 +11,6 @@ describe('Login page', () => {
     cy.get('.tst-register').click();
   });
 
-
   it('should login successfully', () => {
     cy.visit('http://localhost:3000/login');
     cy.get('.tst-email').type('admin@localhost.pl');
