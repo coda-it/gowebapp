@@ -1,5 +1,4 @@
 // @flow
-import * as userTypes from 'client/models/users/types';
 import * as categoryTypes from 'client/models/categories/types';
 
 export type OwnProps = {|
@@ -13,8 +12,8 @@ export type OwnProps = {|
 
 export type Props = {|
   category?: categoryTypes.Category,
-  onAdd: (string, string) => void,
-  onUpdate: (string, string, string) => void,
+  onAdd: string => void,
+  onUpdate: (string, string) => void,
   onDelete: string => void,
-  loadPosts: (?userTypes.User) => void,
+  loadCategories: () => void,
 |};

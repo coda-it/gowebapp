@@ -1,7 +1,7 @@
 // @flow
 export type Category = {
   id: string,
-  title: string,
+  name: string,
 };
 
 export type State = {
