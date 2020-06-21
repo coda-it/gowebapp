@@ -16,7 +16,7 @@ func FetchCategories(p persistence.IPersistance) []Category {
 	err := categoriesCollection.Find(searchQuery).All(&categories)
 
 	if err != nil {
-		msg := "error looking up for posts"
+		msg := "error looking up for categories"
 		utils.Log(msg)
 	}
 
@@ -29,8 +29,8 @@ func FetchCategories(p persistence.IPersistance) []Category {
 
 // AddCategory - add category to persistence
 func AddCategory(p persistence.IPersistance, c Category) error {
-	postsCollection := p.GetCollection(CollectionName)
-	return postsCollection.Insert(c)
+	categoriesCollection := p.GetCollection(CollectionName)
+	return categoriesCollection.Insert(c)
 }
 
 // UpdateCategory - update existing category
