@@ -19,12 +19,12 @@ function Categories(props: types.Props) {
         return (
           <div
             key={key}
-            className="gc-card gc-card--gradient gc-panel gm-spacing-bl tst-post"
+            className="gc-card gc-card--gradient gc-panel gm-spacing-bl tst-category"
           >
-            <div className="gc-panel__title tst-post-title">
+            <div className="gc-panel__title tst-category-name">
               {name}{' '}
               <a
-                className="gc-btn gc-btn--small gc-btn--primary tst-post-edit"
+                className="gc-btn gc-btn--small gc-btn--primary tst-category-edit"
                 href={link}
               >
                 Edit

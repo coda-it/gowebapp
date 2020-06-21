@@ -6,7 +6,6 @@ import (
 	"github.com/coda-it/gowebapp/datasources/persistence"
 	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/category"
-	"github.com/coda-it/gowebapp/models/post"
 	"github.com/coda-it/gowebserver/store"
 	"io/ioutil"
 	"net/http"
@@ -31,10 +30,10 @@ func deleteHandler(w http.ResponseWriter, r *http.Request, s store.IStore) {
 		return
 	}
 
-	err = post.DeletePost(p, deletedCategory.ID)
+	err = category.DeleteCategory(p, deletedCategory.ID)
 
 	if err != nil {
-		handlers.HandleErrorResponse(w, "error removing post")
+		handlers.HandleErrorResponse(w, "error removing category")
 	}
 
 	data := struct {
@@ -45,7 +44,7 @@ func deleteHandler(w http.ResponseWriter, r *http.Request, s store.IStore) {
 
 	links := map[string]map[string]string{
 		"self": map[string]string{
-			"href": "/api/posts",
+			"href": "/api/categories",
 		},
 	}
 
