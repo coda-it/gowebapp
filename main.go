@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"github.com/coda-it/gowebapp/controllers"
+	"github.com/coda-it/gowebapp/controllers/api/category"
 	"github.com/coda-it/gowebapp/controllers/api/post"
 	"github.com/coda-it/gowebapp/controllers/api/reset"
 	"github.com/coda-it/gowebapp/controllers/api/user"
@@ -42,6 +43,7 @@ func New(port string, p *persistence.Persistance) *WebServer {
 
 	server := gowebserver.New(serverOptions, controllers.NotFound)
 	server.Router.AddRoute("/api/user", user.CtrUsers)
+	server.Router.AddRoute("/api/category", category.CtrCategory)
 	server.Router.AddRoute("/api/post/{id}", post.CtrPost)
 	server.Router.AddRoute("/api/reset", reset.CtrResetDb)
 	server.Router.AddRoute("/", controllers.CtrPosts)
@@ -49,6 +51,9 @@ func New(port string, p *persistence.Persistance) *WebServer {
 	server.Router.AddRoute("/admin/posts", controllers.CtrAdmin)
 	server.Router.AddRoute("/admin/posts/new", controllers.CtrAdmin)
 	server.Router.AddRoute("/admin/posts/edit/{id}", controllers.CtrAdmin)
+	server.Router.AddRoute("/admin/categories", controllers.CtrAdmin)
+	server.Router.AddRoute("/admin/categories/new", controllers.CtrAdmin)
+	server.Router.AddRoute("/admin/categories/edit/{id}", controllers.CtrAdmin)
 	server.Router.AddRoute("/login/register", controllers.Register)
 	server.Router.AddRoute("/login/logout", controllers.AuthenticateLogout)
 	server.Router.AddRoute("/login", controllers.Authenticate)
