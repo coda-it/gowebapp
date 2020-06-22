@@ -22,7 +22,12 @@ func getHandler(w http.ResponseWriter, r *http.Request, s store.IStore) {
 		return
 	}
 
-	posts := post.FetchPosts(p, userID)
+	posts, err := post.FetchPosts(p, userID)
+
+	if err != nil {
+		handlers.HandleErrorResponse(w, err.Error())
+		return
+	}
 
 	data := map[string]string{
 		"count": strconv.Itoa(len(posts)),

@@ -41,6 +41,15 @@
     </li>
 {{end}}
 
+{{define "nav-categories"}}
+    <li {{if eq .Name "categories"}}class="gc-navigation__option gc-navigation__option--active"{{else}}class="gc-navigation__option"{{end}}
+        role="presentation">
+        <a class="gc-navigation__link gc-link" href="/category">
+            Categories
+        </a>
+    </li>
+{{end}}
+
 {{define "navigation"}}
 <header class="gc-header gc-header--default">
     <a class="gc-header__logo" href="/">
@@ -49,6 +58,7 @@
     <nav class="gc-header__navigation">
         <ul class="gc-navigation">
             {{template "nav-posts" .}}
+            {{template "nav-categories" .}}
             {{if .IsLogged}}
                 {{template "nav-admin" .}}
             {{end}}

@@ -2,12 +2,11 @@ package category
 
 import (
 	"github.com/coda-it/gowebapp/datasources/persistence"
-	"github.com/coda-it/gowebapp/utils"
 	"gopkg.in/mgo.v2/bson"
 )
 
 // FetchCategories - fetch categories from persistence
-func FetchCategories(p persistence.IPersistance) []Category {
+func FetchCategories(p persistence.IPersistance) ([]Category, error) {
 	categoriesCollection := p.GetCollection(CollectionName)
 
 	var categories []Category
@@ -16,15 +15,10 @@ func FetchCategories(p persistence.IPersistance) []Category {
 	err := categoriesCollection.Find(searchQuery).All(&categories)
 
 	if err != nil {
-		msg := "error looking up for categories"
-		utils.Log(msg)
+		return categories, err
 	}
 
-	if len(categories) == 0 {
-		return []Category{}
-	}
-
-	return categories
+	return categories, nil
 }
 
 // AddCategory - add category to persistence

@@ -28,11 +28,16 @@ if (appContainer) {
       <Router history={createBrowserHistory({})}>
         <Application>
           <Route exact path="/" component={Posts} />
+          <Route exact path="/category" component={Categories} />
           <Route exact path="/admin" component={Admin} />
           <Route exact path="/admin/posts" render={() => <Posts isAdmin />} />
           <Route exact path="/admin/posts/new" component={PostEditor} />
           <Route exact path="/admin/posts/edit/:id?" component={PostEditor} />
-          <Route exact path="/admin/categories" component={Categories} />
+          <Route
+            exact
+            path="/admin/categories"
+            render={() => <Categories isAdmin />}
+          />
           <Route
             exact
             path="/admin/categories/new"
