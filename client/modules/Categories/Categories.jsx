@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import * as types from './types';
 
 function Categories(props: types.Props) {
-  const { loadCategories, categories } = props;
+  const { loadCategories, categories, isAdmin } = props;
 
   useEffect(() => {
     loadCategories();
@@ -15,6 +15,14 @@ function Categories(props: types.Props) {
     <>
       {_.map(categories, ({ id, name }, key) => {
         const link = `/admin/categories/edit/${id}`;
+        const editButton = isAdmin ? (
+          <a
+            className="gc-btn gc-btn--small gc-btn--primary tst-category-edit"
+            href={link}
+          >
+            Edit
+          </a>
+        ) : null;
 
         return (
           <div
@@ -22,13 +30,7 @@ function Categories(props: types.Props) {
             className="gc-card gc-card--gradient gc-panel gm-spacing-bl tst-category"
           >
             <div className="gc-panel__title tst-category-name">
-              {name}{' '}
-              <a
-                className="gc-btn gc-btn--small gc-btn--primary tst-category-edit"
-                href={link}
-              >
-                Edit
-              </a>
+              {name} {editButton}
             </div>
           </div>
         );

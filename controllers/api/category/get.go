@@ -21,7 +21,12 @@ func getHandler(w http.ResponseWriter, r *http.Request, s store.IStore) {
 		return
 	}
 
-	categories := category.FetchCategories(p)
+	categories, err := category.FetchCategories(p)
+
+	if err != nil {
+		handlers.HandleErrorResponse(w, err.Error())
+		return
+	}
 
 	data := map[string]string{
 		"count": strconv.Itoa(len(categories)),
