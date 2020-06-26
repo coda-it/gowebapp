@@ -24,8 +24,9 @@ const mapStateToProps = (
 };
 
 const mapDispatchToProps = dispatch => ({
-  onAdd: name => dispatch(categoryActions.addCategory(name)),
-  onUpdate: (id, name) => dispatch(categoryActions.updateCategory(id, name)),
+  onAdd: (name, image) => dispatch(categoryActions.addCategory(name, image)),
+  onUpdate: (id, name, image) =>
+    dispatch(categoryActions.updateCategory(id, name, image)),
   onDelete: id => dispatch(categoryActions.deleteCategory(id)),
   loadCategories: () => {
     dispatch(categoryActions.fetchCategories());

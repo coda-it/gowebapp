@@ -2,15 +2,21 @@
 import * as actionTypes from './actionTypes';
 import * as types from './types';
 
-export const addCategory = (name: string) => ({
+export const addCategory = (name: string, image: string | null) => ({
   type: actionTypes.ADD_CATEGORY,
   name,
+  image,
 });
 
-export const updateCategory = (id: string, name: string) => ({
+export const updateCategory = (
+  id: string,
+  name: string,
+  image: string | null
+) => ({
   type: actionTypes.UPDATE_CATEGORY,
   id,
   name,
+  image,
 });
 
 export const deleteCategory = (id: string) => ({

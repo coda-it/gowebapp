@@ -6,6 +6,7 @@ import (
 
 // Category - model representing category
 type Category struct {
-	ID   bson.ObjectId `json:"id" bson:"_id,omitempty"`
-	Name string        `json:"name" bson:"title"`
+	ID    bson.ObjectId `json:"id" bson:"_id,omitempty"`
+	Name  string        `json:"name" bson:"name"`
+	Image string        `json:"image" bson:"image"`
 }

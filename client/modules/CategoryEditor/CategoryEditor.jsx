@@ -24,21 +24,40 @@ function CategoryEditor(props: types.Props) {
     [setName, setIsDirty]
   );
 
+  const [image, setImage] = useState(null);
+  const loadImage = useCallback(
+    (event: SyntheticInputEvent<EventTarget>) => {
+      setImage(event.currentTarget.result);
+    },
+    [setImage]
+  );
+  const handleImageChange = useCallback(
+    (event: SyntheticInputEvent<EventTarget>) => {
+      const file = _.head(event.currentTarget.files);
+      const fileReader = new FileReader();
+      fileReader.addEventListener('load', loadImage);
+      fileReader.readAsDataURL(file);
+    },
+    [loadImage]
+  );
+
   useEffect(() => {
     setName(category?.name || '');
+    setImage(category?.image || null);
   }, [category]);
 
   const handleAddCategory = useCallback(() => {
-    onAdd(name);
+    onAdd(name, image);
     setName('');
-  }, [onAdd, name, setName]);
+    setImage(null);
+  }, [onAdd, name, setName, image, setImage]);
 
   const handleUpdateCategory = useCallback(() => {
     if (category) {
-      onUpdate(category.id, name);
+      onUpdate(category.id, name, image);
       setIsDirty(false);
     }
-  }, [onUpdate, category, name, setIsDirty]);
+  }, [onUpdate, category, name, setIsDirty, image]);
 
   const handleDeleteCategory = useCallback(() => {
     if (category) {
@@ -72,6 +91,17 @@ function CategoryEditor(props: types.Props) {
             />
           </div>
         </article>
+      </div>
+      <div className="gc-panel gc-panel--separator gm-spacing-bl">
+        <header className="gc-panel__title">Category image</header>
+        <input
+          type="file"
+          name="category-image"
+          accept="image/png, image/jpeg"
+          onChange={handleImageChange}
+          className="gm-spacing-bl"
+        />
+        <img src={image} role="presentation" />
       </div>
       <div className="gc-panel gc-panel--separator">
         {_.isEmpty(category) && (

@@ -12,8 +12,8 @@ export type OwnProps = {|
 
 export type Props = {|
   category?: categoryTypes.Category,
-  onAdd: string => void,
-  onUpdate: (string, string) => void,
+  onAdd: (string, string | null) => void,
+  onUpdate: (string, string, string | null) => void,
   onDelete: string => void,
   loadCategories: () => void,
 |};
