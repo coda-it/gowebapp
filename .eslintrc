@@ -17,7 +17,8 @@
     "cy": true,
     "Cypress": true,
     "Request": true,
-    "before": true
+    "before": true,
+    "FileReader": true,
   },
   "env": {
     "jest": true

@@ -5,11 +5,12 @@ import * as alertConstants from 'client/models/alerts/constants';
 import * as actions from './actions';
 import * as constants from './constants';
 
-function callAddCategory(name: string) {
+function callAddCategory(name: string, image: string) {
   const request = new Request(constants.CATEGORY_ENDPOINT, {
     method: 'POST',
     body: JSON.stringify({
       name,
+      image,
     }),
   });
 
@@ -18,8 +19,14 @@ function callAddCategory(name: string) {
     .catch(() => 'Adding category failed');
 }
 
-export function* onAddCategory({ name }: { name: string }): Iterable<any> {
-  const response = yield call(callAddCategory, name);
+export function* onAddCategory({
+  name,
+  image,
+}: {
+  name: string,
+  image: string,
+}): Iterable<any> {
+  const response = yield call(callAddCategory, name, image);
 
   if (typeof response === 'string') {
     put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
@@ -28,12 +35,13 @@ export function* onAddCategory({ name }: { name: string }): Iterable<any> {
   window.location.href = '/admin/categories';
 }
 
-function callUpdateCategory(name: string, id: string) {
+function callUpdateCategory(name: string, image: string, id: string) {
   const request = new Request(constants.CATEGORY_ENDPOINT, {
     method: 'PUT',
     body: JSON.stringify({
       id,
       name,
+      image,
     }),
   });
 
@@ -45,11 +53,13 @@ function callUpdateCategory(name: string, id: string) {
 export function* onUpdateCategory({
   id,
   name,
+  image,
 }: {
   id: string,
   name: string,
+  image: string,
 }): Iterable<any> {
-  const response = yield call(callUpdateCategory, name, id);
+  const response = yield call(callUpdateCategory, name, image, id);
 
   if (typeof response === 'string') {
     yield put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
