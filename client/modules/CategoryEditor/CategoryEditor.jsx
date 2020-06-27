@@ -26,13 +26,17 @@ function CategoryEditor(props: types.Props) {
 
   const [image, setImage] = useState(null);
   const loadImage = useCallback(
-    (event: SyntheticInputEvent<EventTarget>) => {
-      setImage(event.currentTarget.result);
+    (event: Event) => {
+      if (event.currentTarget instanceof FileReader) {
+        if (event.currentTarget.result instanceof 'string') {
+          setImage(event.currentTarget.result);
+        }
+      }
     },
     [setImage]
   );
   const handleImageChange = useCallback(
-    (event: SyntheticInputEvent<EventTarget>) => {
+    (event: SyntheticInputEvent<HTMLInputElement>) => {
       const file = _.head(event.currentTarget.files);
       const fileReader = new FileReader();
       fileReader.addEventListener('load', loadImage);
