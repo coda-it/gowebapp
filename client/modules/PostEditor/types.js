@@ -1,6 +1,7 @@
 // @flow
 import * as userTypes from 'client/models/users/types';
 import * as postTypes from 'client/models/posts/types';
+import * as categoryTypes from 'client/models/categories/types';
 
 export type OwnProps = {|
   id?: string,
@@ -13,9 +14,11 @@ export type OwnProps = {|
 
 export type Props = {|
   post?: postTypes.Post,
+  categories: $ReadOnlyArray<categoryTypes.Category>,
   user?: userTypes.User,
-  onAdd: (string, string) => void,
-  onUpdate: (string, string, string) => void,
+  onAdd: (string, string, string | null) => void,
+  onUpdate: (string, string, string, string | null) => void,
   onDelete: string => void,
   loadPosts: (?userTypes.User) => void,
+  loadCategories: () => void,
 |};

@@ -7,11 +7,17 @@ import * as userTypes from 'client/models/users/types';
 import * as actions from './actions';
 import * as constants from './constants';
 
-function callAddPost(title: string, description: string, userId: string) {
+function callAddPost(
+  title: string,
+  description: string,
+  categoryId: string | null,
+  userId: string
+) {
   const request = new Request(constants.POST_ENDPOINT, {
     method: 'POST',
     body: JSON.stringify({
       userId,
+      categoryId,
       title,
       description,
     }),
@@ -25,12 +31,20 @@ function callAddPost(title: string, description: string, userId: string) {
 export function* onAddPost({
   title,
   description,
+  categoryId,
 }: {
   title: string,
   description: string,
+  categoryId: string | null,
 }): Iterable<any> {
   const userId = yield select(userSelectors.getId);
-  const response = yield call(callAddPost, title, description, userId);
+  const response = yield call(
+    callAddPost,
+    title,
+    description,
+    categoryId,
+    userId
+  );
 
   if (typeof response === 'string') {
     put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
@@ -43,6 +57,7 @@ function callUpdatePost(
   title: string,
   description: string,
   id: string,
+  categoryId: string | null,
   userId: string
 ) {
   const request = new Request(constants.POST_ENDPOINT, {
@@ -50,6 +65,7 @@ function callUpdatePost(
     body: JSON.stringify({
       id,
       userId,
+      categoryId,
       title,
       description,
     }),
@@ -64,13 +80,22 @@ export function* onUpdatePost({
   id,
   title,
   description,
+  categoryId,
 }: {
   id: string,
   title: string,
   description: string,
+  categoryId: string | null,
 }): Iterable<any> {
   const userId = yield select(userSelectors.getId);
-  const response = yield call(callUpdatePost, title, description, id, userId);
+  const response = yield call(
+    callUpdatePost,
+    title,
+    description,
+    id,
+    categoryId,
+    userId
+  );
 
   if (typeof response === 'string') {
     yield put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
