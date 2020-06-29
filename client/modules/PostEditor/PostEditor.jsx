@@ -7,10 +7,20 @@ import { Button } from 'graphen';
 import * as types from './types';
 
 function PostEditor(props: types.Props) {
-  const { onAdd, onUpdate, post, loadPosts, user, onDelete } = props;
+  const {
+    onAdd,
+    onUpdate,
+    post,
+    categories,
+    loadPosts,
+    loadCategories,
+    user,
+    onDelete,
+  } = props;
 
   useEffect(() => {
     loadPosts(user);
+    loadCategories();
   }, [loadPosts]);
 
   const [isDirty, setIsDirty] = useState(false);
@@ -22,6 +32,15 @@ function PostEditor(props: types.Props) {
       setIsDirty(true);
     },
     [setTitle, setIsDirty]
+  );
+
+  const [categoryId, setCategoryId] = useState(null);
+  const handleCategoryChange = useCallback(
+    event => {
+      setCategoryId(event.target.value);
+      setIsDirty(true);
+    },
+    [setCategoryId, setIsDirty]
   );
 
   const [description, setDescription] = useState('');
@@ -36,20 +55,30 @@ function PostEditor(props: types.Props) {
   useEffect(() => {
     setTitle(post?.title || '');
     setDescription(post?.description || '');
+    setCategoryId(post?.categoryId || null);
   }, [post]);
 
   const handleAddPost = useCallback(() => {
-    onAdd(title, description);
+    onAdd(title, description, categoryId);
     setTitle('');
     setDescription('');
-  }, [onAdd, title, description, setTitle, setDescription]);
+    setCategoryId(null);
+  }, [
+    onAdd,
+    title,
+    description,
+    categoryId,
+    setTitle,
+    setDescription,
+    setCategoryId,
+  ]);
 
   const handleUpdatePost = useCallback(() => {
     if (post) {
-      onUpdate(post.id, title, description);
+      onUpdate(post.id, title, description, categoryId);
       setIsDirty(false);
     }
-  }, [onUpdate, post, title, description, setIsDirty]);
+  }, [onUpdate, post, title, description, categoryId, setIsDirty]);
 
   const handleDeletePost = useCallback(() => {
     if (post) {
@@ -82,6 +111,18 @@ function PostEditor(props: types.Props) {
               className="gc-input__field tst-post-editor-title"
             />
           </div>
+          <select
+            id="categories"
+            name="categories"
+            value={categoryId}
+            onChange={handleCategoryChange}
+          >
+            {_.map(categories, category => (
+              <option key={`category-${category.id}`} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
         </article>
       </div>
       <div className="gc-panel gc-panel--separator">
