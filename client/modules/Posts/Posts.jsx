@@ -2,6 +2,7 @@
 import _ from 'lodash';
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router';
+import { Image } from 'graphen';
 import * as types from './types';
 
 function Posts(props: types.Props) {
@@ -13,7 +14,7 @@ function Posts(props: types.Props) {
 
   return (
     <>
-      {_.map(posts, ({ id, title, description }, key) => {
+      {_.map(posts, ({ id, title, description, image }, key) => {
         const link = `/admin/posts/edit/${id}`;
         const editButton = isAdmin ? (
           <a
@@ -33,7 +34,7 @@ function Posts(props: types.Props) {
               {title} {editButton}
             </div>
             <div className="gc-panel__content tst-post-description">
-              {description}
+              <Image src={image} height={200} width={400} /> {description}
             </div>
           </div>
         );

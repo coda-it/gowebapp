@@ -6,25 +6,29 @@ import * as types from './types';
 export const addPost = (
   title: string,
   description: string,
-  categoryId: string | null
+  categoryId: string | null,
+  image: string | null
 ) => ({
   type: actionTypes.ADD_POST,
   title,
   description,
   categoryId,
+  image,
 });
 
 export const updatePost = (
   id: string,
   title: string,
   description: string,
-  categoryId: string | null
+  categoryId: string | null,
+  image: string | null
 ) => ({
   type: actionTypes.UPDATE_POST,
   id,
   title,
   description,
   categoryId,
+  image,
 });
 
 export const deletePost = (id: string) => ({

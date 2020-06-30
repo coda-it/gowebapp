@@ -33,4 +33,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryEditor);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CategoryEditor);

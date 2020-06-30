@@ -28,7 +28,7 @@ function CategoryEditor(props: types.Props) {
   const loadImage = useCallback(
     (event: Event) => {
       if (event.currentTarget instanceof FileReader) {
-        if (event.currentTarget.result instanceof 'string') {
+        if (typeof event.currentTarget.result === 'string') {
           setImage(event.currentTarget.result);
         }
       }
@@ -48,7 +48,7 @@ function CategoryEditor(props: types.Props) {
   useEffect(() => {
     setName(category?.name || '');
     setImage(category?.image || null);
-  }, [category]);
+  }, [category, setName, setImage]);
 
   const handleAddCategory = useCallback(() => {
     onAdd(name, image);

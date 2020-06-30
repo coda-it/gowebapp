@@ -5,6 +5,7 @@ export type Post = {
   description: string,
   categoryId: string | null,
   userId?: string,
+  image: string | null,
 };
 
 export type State = {
