@@ -11,4 +11,5 @@ type Post struct {
 	CategoryID  string        `json:"categoryId" bson:"categoryId"`
 	Title       string        `json:"title" bson:"title"`
 	Description string        `json:"description" bson:"description"`
+	Image       string        `json:"image" bson:"image"`
 }

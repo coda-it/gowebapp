@@ -34,6 +34,27 @@ function PostEditor(props: types.Props) {
     [setTitle, setIsDirty]
   );
 
+  const [image, setImage] = useState(null);
+  const loadImage = useCallback(
+    (event: Event) => {
+      if (event.currentTarget instanceof FileReader) {
+        if (typeof event.currentTarget.result === 'string') {
+          setImage(event.currentTarget.result);
+        }
+      }
+    },
+    [setImage]
+  );
+  const handleImageChange = useCallback(
+    (event: SyntheticInputEvent<HTMLInputElement>) => {
+      const file = _.head(event.currentTarget.files);
+      const fileReader = new FileReader();
+      fileReader.addEventListener('load', loadImage);
+      fileReader.readAsDataURL(file);
+    },
+    [loadImage]
+  );
+
   const [categoryId, setCategoryId] = useState(null);
   const handleCategoryChange = useCallback(
     event => {
@@ -56,10 +77,11 @@ function PostEditor(props: types.Props) {
     setTitle(post?.title || '');
     setDescription(post?.description || '');
     setCategoryId(post?.categoryId || null);
-  }, [post]);
+    setImage(post?.image || null);
+  }, [post, setTitle, setDescription, setCategoryId, setImage]);
 
   const handleAddPost = useCallback(() => {
-    onAdd(title, description, categoryId);
+    onAdd(title, description, categoryId, image);
     setTitle('');
     setDescription('');
     setCategoryId(null);
@@ -71,14 +93,16 @@ function PostEditor(props: types.Props) {
     setTitle,
     setDescription,
     setCategoryId,
+    image,
+    setImage,
   ]);
 
   const handleUpdatePost = useCallback(() => {
     if (post) {
-      onUpdate(post.id, title, description, categoryId);
+      onUpdate(post.id, title, description, categoryId, image);
       setIsDirty(false);
     }
-  }, [onUpdate, post, title, description, categoryId, setIsDirty]);
+  }, [onUpdate, post, title, description, categoryId, setIsDirty, image]);
 
   const handleDeletePost = useCallback(() => {
     if (post) {
@@ -124,6 +148,17 @@ function PostEditor(props: types.Props) {
             ))}
           </select>
         </article>
+      </div>
+      <div className="gc-panel gc-panel--separator gm-spacing-bl">
+        <header className="gc-panel__title">Post image</header>
+        <input
+          type="file"
+          name="post-image"
+          accept="image/png, image/jpeg"
+          onChange={handleImageChange}
+          className="gm-spacing-bl"
+        />
+        <img src={image} role="presentation" />
       </div>
       <div className="gc-panel gc-panel--separator">
         <header className="gc-panel__title">Description</header>

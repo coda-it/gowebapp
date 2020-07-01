@@ -11,7 +11,8 @@ function callAddPost(
   title: string,
   description: string,
   categoryId: string | null,
-  userId: string
+  userId: string,
+  image: string | null
 ) {
   const request = new Request(constants.POST_ENDPOINT, {
     method: 'POST',
@@ -20,6 +21,7 @@ function callAddPost(
       categoryId,
       title,
       description,
+      image,
     }),
   });
 
@@ -32,10 +34,12 @@ export function* onAddPost({
   title,
   description,
   categoryId,
+  image,
 }: {
   title: string,
   description: string,
   categoryId: string | null,
+  image: string | null,
 }): Iterable<any> {
   const userId = yield select(userSelectors.getId);
   const response = yield call(
@@ -43,7 +47,8 @@ export function* onAddPost({
     title,
     description,
     categoryId,
-    userId
+    userId,
+    image
   );
 
   if (typeof response === 'string') {
@@ -58,7 +63,8 @@ function callUpdatePost(
   description: string,
   id: string,
   categoryId: string | null,
-  userId: string
+  userId: string,
+  image: string | null
 ) {
   const request = new Request(constants.POST_ENDPOINT, {
     method: 'PUT',
@@ -68,6 +74,7 @@ function callUpdatePost(
       categoryId,
       title,
       description,
+      image,
     }),
   });
 
@@ -81,11 +88,13 @@ export function* onUpdatePost({
   title,
   description,
   categoryId,
+  image,
 }: {
   id: string,
   title: string,
   description: string,
   categoryId: string | null,
+  image: string | null,
 }): Iterable<any> {
   const userId = yield select(userSelectors.getId);
   const response = yield call(
@@ -94,7 +103,8 @@ export function* onUpdatePost({
     description,
     id,
     categoryId,
-    userId
+    userId,
+    image
   );
 
   if (typeof response === 'string') {

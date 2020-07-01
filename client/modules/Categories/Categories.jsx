@@ -2,6 +2,7 @@
 import _ from 'lodash';
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router';
+import { Image } from 'graphen';
 import * as types from './types';
 
 function Categories(props: types.Props) {
@@ -13,7 +14,7 @@ function Categories(props: types.Props) {
 
   return (
     <>
-      {_.map(categories, ({ id, name }, key) => {
+      {_.map(categories, ({ id, name, image }, key) => {
         const link = `/admin/categories/edit/${id}`;
         const editButton = isAdmin ? (
           <a
@@ -31,6 +32,9 @@ function Categories(props: types.Props) {
           >
             <div className="gc-panel__title tst-category-name">
               {name} {editButton}
+            </div>
+            <div className="gc-panel__content">
+              <Image src={image} height={200} width={400} />
             </div>
           </div>
         );

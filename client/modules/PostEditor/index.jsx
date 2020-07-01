@@ -30,10 +30,10 @@ const mapStateToProps = (
 };
 
 const mapDispatchToProps = dispatch => ({
-  onAdd: (title, description, categoryId) =>
-    dispatch(postActions.addPost(title, description, categoryId)),
-  onUpdate: (id, title, description, categoryId) =>
-    dispatch(postActions.updatePost(id, title, description, categoryId)),
+  onAdd: (title, description, categoryId, image) =>
+    dispatch(postActions.addPost(title, description, categoryId, image)),
+  onUpdate: (id, title, description, categoryId, image) =>
+    dispatch(postActions.updatePost(id, title, description, categoryId, image)),
   onDelete: id => dispatch(postActions.deletePost(id)),
   loadPosts: (user?: userTypes.User) => {
     dispatch(postActions.fetchPosts(user));
@@ -43,4 +43,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostEditor);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PostEditor);
