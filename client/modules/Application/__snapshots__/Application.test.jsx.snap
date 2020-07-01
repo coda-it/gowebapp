@@ -15,7 +15,7 @@ exports[`Application should render with loader 1`] = `
 <div
   className="application"
 >
-  <I />
+  <R />
   <Connect(AlertPanel) />
 </div>
 `;
