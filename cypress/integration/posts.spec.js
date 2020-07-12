@@ -18,9 +18,6 @@ describe('Posts', () => {
     cy.get('.tst-post')
       .find('.tst-post-title')
       .contains('Post title');
-    cy.get('.tst-post')
-      .find('.tst-post-description')
-      .contains('Post description');
     cy.screenshot();
 
     cy.get('.tst-post-edit').click();
@@ -35,9 +32,6 @@ describe('Posts', () => {
     cy.get('.tst-post')
       .find('.tst-post-title')
       .contains('Post title updated');
-    cy.get('.tst-post')
-      .find('.tst-post-description')
-      .contains('Post description updated');
     cy.screenshot();
 
     cy.get('.tst-post-edit').click();
