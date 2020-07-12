@@ -13,7 +13,7 @@ function Categories(props: types.Props) {
   }, [loadCategories]);
 
   return (
-    <>
+    <div className="gc-flex gc-flex--wrap">
       {_.map(categories, ({ id, name, image }, key) => {
         const link = `/admin/categories/edit/${id}`;
         const editButton = isAdmin ? (
@@ -28,18 +28,16 @@ function Categories(props: types.Props) {
         return (
           <div
             key={key}
-            className="gc-card gc-card--gradient gc-panel gm-spacing-bl tst-category"
+            className="gc-flex__item gc-card gc-card--gradient gc-panel gm-spacing-l tst-category"
           >
+            <Image src={image} height={200} width={300} />
             <div className="gc-panel__title tst-category-name">
               {name} {editButton}
-            </div>
-            <div className="gc-panel__content">
-              <Image src={image} height={200} width={400} />
             </div>
           </div>
         );
       })}
-    </>
+    </div>
   );
 }
 

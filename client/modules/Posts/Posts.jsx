@@ -13,8 +13,8 @@ function Posts(props: types.Props) {
   }, [loadPosts]);
 
   return (
-    <>
-      {_.map(posts, ({ id, title, description, image }, key) => {
+    <div className="gc-flex gc-flex--wrap">
+      {_.map(posts, ({ id, title, image }, key) => {
         const link = `/admin/posts/edit/${id}`;
         const editButton = isAdmin ? (
           <a
@@ -28,18 +28,18 @@ function Posts(props: types.Props) {
         return (
           <div
             key={key}
-            className="gc-card gc-card--gradient gc-panel gm-spacing-bl tst-post"
+            className="gc-flex__item gc-card gc-card--gradient gc-panel gm-spacing-l tst-post"
           >
             <div className="gc-panel__title tst-post-title">
               {title} {editButton}
             </div>
             <div className="gc-panel__content tst-post-description">
-              <Image src={image} height={200} width={400} /> {description}
+              <Image src={image} height={200} width={300} />
             </div>
           </div>
         );
       })}
-    </>
+    </div>
   );
 }
 
