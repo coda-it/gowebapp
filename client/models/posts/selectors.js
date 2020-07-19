@@ -9,3 +9,8 @@ export const getPosts = (
 
 export const getPostById = (state: globalTypes.State, id: string): types.Post =>
   _.find(state.posts.posts, { id });
+
+export const getPostByCategoryId = (
+  state: globalTypes.State,
+  categoryId: string
+): types.Post => _.find(state.posts.posts, { categoryId });
