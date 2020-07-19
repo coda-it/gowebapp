@@ -4,6 +4,11 @@ import * as postTypes from 'client/models/posts/types';
 
 export type OwnProps = {|
   isAdmin?: boolean,
+  match?: {|
+    params?: {|
+      categoryId?: string,
+    |},
+  |},
 |};
 
 export type Props = {|
