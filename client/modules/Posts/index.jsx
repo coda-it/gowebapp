@@ -12,7 +12,7 @@ const mapStateToProps = (state: globalTypes.State, props: types.OwnProps) => {
   const { isAdmin, match } = props;
   const categoryId = match?.params?.categoryId;
   const posts = categoryId
-    ? postSelectors.getPostByCategoryId(state, categoryId)
+    ? postSelectors.getPostsByCategoryId(state, categoryId)
     : postSelectors.getPosts(state);
 
   return {
