@@ -32,7 +32,7 @@ function Categories(props: types.Props) {
           >
             <Image src={image} height={200} width={300} />
             <div className="gc-panel__title tst-category-name">
-              {name} {editButton}
+              <a href={`/category/${id}`}>{name}</a> {editButton}
             </div>
           </div>
         );

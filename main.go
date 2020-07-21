@@ -48,6 +48,7 @@ func New(port string, p *persistence.Persistance) *WebServer {
 	server.Router.AddRoute("/api/reset", reset.CtrResetDb)
 	server.Router.AddRoute("/", controllers.CtrPosts)
 	server.Router.AddRoute("/category", controllers.CtrCategories)
+	server.Router.AddRoute("/category/{id}", controllers.CtrPosts)
 	server.Router.AddRoute("/admin", controllers.CtrAdmin)
 	server.Router.AddRoute("/admin/posts", controllers.CtrAdmin)
 	server.Router.AddRoute("/admin/posts/new", controllers.CtrAdmin)

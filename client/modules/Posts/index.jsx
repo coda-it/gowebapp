@@ -9,10 +9,14 @@ import Posts from './Posts';
 import * as types from './types';
 
 const mapStateToProps = (state: globalTypes.State, props: types.OwnProps) => {
-  const { isAdmin } = props;
+  const { isAdmin, match } = props;
+  const categoryId = match?.params?.categoryId;
+  const posts = categoryId
+    ? postSelectors.getPostsByCategoryId(state, categoryId)
+    : postSelectors.getPosts(state);
 
   return {
-    posts: postSelectors.getPosts(state),
+    posts,
     user: isAdmin ? userSelectors.getUser(state) : undefined,
     isAdmin,
   };

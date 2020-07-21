@@ -8,4 +8,9 @@ export const getPosts = (
 ): $ReadOnlyArray<types.Post> => state.posts.posts;
 
 export const getPostById = (state: globalTypes.State, id: string): types.Post =>
-  _.find(state.posts.posts, { id });
+  _.find(getPosts(state), { id });
+
+export const getPostsByCategoryId = (
+  state: globalTypes.State,
+  categoryId: string
+): types.Post => _.filter(getPosts(state), { categoryId });
