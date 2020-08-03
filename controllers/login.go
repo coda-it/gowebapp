@@ -12,7 +12,7 @@ import (
 )
 
 // Authenticate - handle login page and login process
-func Authenticate(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm session.ISessionManager, s store.IStore) {
+func Authenticate(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	defer r.Body.Close()
 
 	switch r.Method {
@@ -27,7 +27,7 @@ func Authenticate(w http.ResponseWriter, r *http.Request, opt router.UrlOptions,
 		utils.RenderTemplate(w, r, "login", sm, params)
 
 	case "POST":
-		sessionID, _ := utils.GetSessionID(r)
+		sessionID, _ := session.GetSessionID(r)
 		isLogged := sm.IsExist(sessionID)
 
 		if !isLogged {

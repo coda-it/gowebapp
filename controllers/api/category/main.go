@@ -12,7 +12,7 @@ var (
 )
 
 // CtrCategory - categories api controller entry-point
-func CtrCategory(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm session.ISessionManager, s store.IStore) {
+func CtrCategory(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	switch r.Method {
 	case "PUT":
 		putHandler(w, r, s)

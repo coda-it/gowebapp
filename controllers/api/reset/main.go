@@ -10,7 +10,7 @@ import (
 const resetHref string = "/api/reset"
 
 // CtrResetDb - resets persistence
-func CtrResetDb(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm session.ISessionManager, s store.IStore) {
+func CtrResetDb(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 
 	switch r.Method {
 	case "POST":

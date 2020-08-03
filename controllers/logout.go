@@ -12,7 +12,7 @@ import (
 )
 
 // AuthenticateLogout - logout user
-func AuthenticateLogout(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm session.ISessionManager, s store.IStore) {
+func AuthenticateLogout(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	dfc := s.GetDataSource("persistence")
 
 	p, ok := dfc.(persistence.IPersistance)
@@ -23,7 +23,7 @@ func AuthenticateLogout(w http.ResponseWriter, r *http.Request, opt router.UrlOp
 
 	c := p.GetCollection("users")
 
-	sid, err := utils.GetSessionID(r)
+	sid, err := session.GetSessionID(r)
 
 	if err != nil {
 		err := c.Update(bson.M{
@@ -36,6 +36,6 @@ func AuthenticateLogout(w http.ResponseWriter, r *http.Request, opt router.UrlOp
 		}
 	}
 
-	utils.ClearSession(w)
+	session.ClearSession(w)
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

@@ -12,7 +12,7 @@ import (
 )
 
 // Register - handle register page and register user process
-func Register(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm session.ISessionManager, s store.IStore) {
+func Register(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	switch r.Method {
 	case "GET":
 		utils.RenderTemplate(w, r, "register", sm, make(map[string]interface{}))

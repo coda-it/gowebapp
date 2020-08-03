@@ -8,7 +8,7 @@ import (
 )
 
 // CtrUsers - api serving user data
-func CtrUsers(w http.ResponseWriter, r *http.Request, opt router.UrlOptions, sm session.ISessionManager, s store.IStore) {
+func CtrUsers(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	switch r.Method {
 	case "GET":
 		getHandler(w, r, sm, s)
