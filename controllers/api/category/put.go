@@ -6,12 +6,15 @@ import (
 	"github.com/coda-it/gowebapp/datasources/persistence"
 	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/category"
+	"github.com/coda-it/gowebserver/router"
+	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
 	"io/ioutil"
 	"net/http"
 )
 
-func putHandler(w http.ResponseWriter, r *http.Request, s store.IStore) {
+// CtrCategoryPut - updates category
+func CtrCategoryPut(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	requestBody, err := ioutil.ReadAll(r.Body)
 
 	if err != nil {

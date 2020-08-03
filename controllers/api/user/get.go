@@ -4,12 +4,14 @@ import (
 	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/user"
 	"github.com/coda-it/gowebapp/utils"
+	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
 	"net/http"
 )
 
-func getHandler(w http.ResponseWriter, r *http.Request, sm session.ISessionManager, s store.IStore) {
+// CtrUsersGet - gets user
+func CtrUsersGet(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	links := map[string]map[string]string{
 		"self": map[string]string{
 			"href": "/api/user",

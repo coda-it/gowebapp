@@ -42,13 +42,24 @@ func New(port string, p *persistence.Persistance) *WebServer {
 	}
 
 	server := gowebserver.New(serverOptions, controllers.NotFound, "/login")
-	server.Router.AddRoute("/api/user", "ALL", false, user.CtrUsers)
-	server.Router.AddRoute("/api/category", "ALL", false, category.CtrCategory)
-	server.Router.AddRoute("/api/post/{id}", "ALL", false, post.CtrPost)
+	server.Router.AddRoute("/api/user", "GET", false, user.CtrUsersGet)
+
+	server.Router.AddRoute("/api/category", "GET", false, category.CtrCategoryGet)
+	server.Router.AddRoute("/api/category", "POST", true, category.CtrCategoryPost)
+	server.Router.AddRoute("/api/category", "DELETE", true, category.CtrCategoryDelete)
+	server.Router.AddRoute("/api/category", "PUT", true, category.CtrCategoryPut)
+
+	server.Router.AddRoute("/api/post/{id}", "GET", false, post.CtrPostGet)
+	server.Router.AddRoute("/api/post/{id}", "POST", true, post.CtrPostPost)
+	server.Router.AddRoute("/api/post/{id}", "DELETE", true, post.CtrPostDelete)
+	server.Router.AddRoute("/api/post/{id}", "PUT", true, post.CtrPostPut)
+
 	server.Router.AddRoute("/api/reset", "ALL", false, reset.CtrResetDb)
+
 	server.Router.AddRoute("/", "ALL", false, controllers.CtrPosts)
-	server.Router.AddRoute("/category", "ALL", true, controllers.CtrCategories)
-	server.Router.AddRoute("/category/{id}", "ALL", true, controllers.CtrPosts)
+	server.Router.AddRoute("/category", "ALL", false, controllers.CtrCategories)
+	server.Router.AddRoute("/category/{id}", "ALL", false, controllers.CtrPosts)
+
 	server.Router.AddRoute("/admin", "ALL", true, controllers.CtrAdmin)
 	server.Router.AddRoute("/admin/posts", "ALL", true, controllers.CtrAdmin)
 	server.Router.AddRoute("/admin/posts/new", "ALL", true, controllers.CtrAdmin)
@@ -56,9 +67,11 @@ func New(port string, p *persistence.Persistance) *WebServer {
 	server.Router.AddRoute("/admin/categories", "ALL", true, controllers.CtrAdmin)
 	server.Router.AddRoute("/admin/categories/new", "ALL", true, controllers.CtrAdmin)
 	server.Router.AddRoute("/admin/categories/edit/{id}", "ALL", true, controllers.CtrAdmin)
+
 	server.Router.AddRoute("/login/register", "ALL", false, controllers.Register)
 	server.Router.AddRoute("/login/logout", "ALL", true, controllers.AuthenticateLogout)
 	server.Router.AddRoute("/login", "ALL", false, controllers.Authenticate)
+
 	server.AddDataSource("persistence", p)
 
 	return &WebServer{
