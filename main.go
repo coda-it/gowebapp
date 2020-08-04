@@ -37,28 +37,41 @@ func New(port string, p *persistence.Persistance) *WebServer {
 
 	serverOptions := gowebserver.WebServerOptions{
 		Port:           addr,
-		StaticFilesUrl: "/static/",
+		StaticFilesURL: "/static/",
 		StaticFilesDir: "public",
 	}
 
-	server := gowebserver.New(serverOptions, controllers.NotFound)
-	server.Router.AddRoute("/api/user", user.CtrUsers)
-	server.Router.AddRoute("/api/category", category.CtrCategory)
-	server.Router.AddRoute("/api/post/{id}", post.CtrPost)
-	server.Router.AddRoute("/api/reset", reset.CtrResetDb)
-	server.Router.AddRoute("/", controllers.CtrPosts)
-	server.Router.AddRoute("/category", controllers.CtrCategories)
-	server.Router.AddRoute("/category/{id}", controllers.CtrPosts)
-	server.Router.AddRoute("/admin", controllers.CtrAdmin)
-	server.Router.AddRoute("/admin/posts", controllers.CtrAdmin)
-	server.Router.AddRoute("/admin/posts/new", controllers.CtrAdmin)
-	server.Router.AddRoute("/admin/posts/edit/{id}", controllers.CtrAdmin)
-	server.Router.AddRoute("/admin/categories", controllers.CtrAdmin)
-	server.Router.AddRoute("/admin/categories/new", controllers.CtrAdmin)
-	server.Router.AddRoute("/admin/categories/edit/{id}", controllers.CtrAdmin)
-	server.Router.AddRoute("/login/register", controllers.Register)
-	server.Router.AddRoute("/login/logout", controllers.AuthenticateLogout)
-	server.Router.AddRoute("/login", controllers.Authenticate)
+	server := gowebserver.New(serverOptions, controllers.NotFound, "/login")
+	server.Router.AddRoute("/api/user", "GET", false, user.CtrUsersGet)
+
+	server.Router.AddRoute("/api/category", "GET", false, category.CtrCategoryGet)
+	server.Router.AddRoute("/api/category", "POST", true, category.CtrCategoryPost)
+	server.Router.AddRoute("/api/category", "DELETE", true, category.CtrCategoryDelete)
+	server.Router.AddRoute("/api/category", "PUT", true, category.CtrCategoryPut)
+
+	server.Router.AddRoute("/api/post/{id}", "GET", false, post.CtrPostGet)
+	server.Router.AddRoute("/api/post/{id}", "POST", true, post.CtrPostPost)
+	server.Router.AddRoute("/api/post/{id}", "DELETE", true, post.CtrPostDelete)
+	server.Router.AddRoute("/api/post/{id}", "PUT", true, post.CtrPostPut)
+
+	server.Router.AddRoute("/api/reset", "ALL", false, reset.CtrResetDb)
+
+	server.Router.AddRoute("/", "ALL", false, controllers.CtrPosts)
+	server.Router.AddRoute("/category", "ALL", false, controllers.CtrCategories)
+	server.Router.AddRoute("/category/{id}", "ALL", false, controllers.CtrPosts)
+
+	server.Router.AddRoute("/admin", "ALL", true, controllers.CtrAdmin)
+	server.Router.AddRoute("/admin/posts", "ALL", true, controllers.CtrAdmin)
+	server.Router.AddRoute("/admin/posts/new", "ALL", true, controllers.CtrAdmin)
+	server.Router.AddRoute("/admin/posts/edit/{id}", "ALL", true, controllers.CtrAdmin)
+	server.Router.AddRoute("/admin/categories", "ALL", true, controllers.CtrAdmin)
+	server.Router.AddRoute("/admin/categories/new", "ALL", true, controllers.CtrAdmin)
+	server.Router.AddRoute("/admin/categories/edit/{id}", "ALL", true, controllers.CtrAdmin)
+
+	server.Router.AddRoute("/login/register", "ALL", false, controllers.Register)
+	server.Router.AddRoute("/login/logout", "ALL", true, controllers.AuthenticateLogout)
+	server.Router.AddRoute("/login", "ALL", false, controllers.Authenticate)
+
 	server.AddDataSource("persistence", p)
 
 	return &WebServer{

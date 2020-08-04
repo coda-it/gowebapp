@@ -17,15 +17,11 @@ func RenderTemplate(
 	sm session.ISessionManager,
 	params map[string]interface{},
 ) {
-	sessionID, _ := GetSessionID(r)
+	sessionID, _ := session.GetSessionID(r)
 	isLogged := sm.IsExist(sessionID)
 
 	if !isLogged {
-		ClearSession(w)
-
-		if r.URL.Path != "/login" && r.URL.Path != "/login/register" && r.URL.Path != "/" && r.URL.Path != "/category" {
-			http.Redirect(w, r, "/login", http.StatusSeeOther)
-		}
+		session.ClearSession(w)
 	}
 
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))

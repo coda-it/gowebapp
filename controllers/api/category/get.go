@@ -6,12 +6,15 @@ import (
 	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/category"
 	"github.com/coda-it/gowebapp/utils"
+	"github.com/coda-it/gowebserver/router"
+	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
 	"net/http"
 	"strconv"
 )
 
-func getHandler(w http.ResponseWriter, r *http.Request, s store.IStore) {
+// CtrCategoryGet - gets categories
+func CtrCategoryGet(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	dataSource := s.GetDataSource(datasources.Persistence)
 	p, ok := dataSource.(persistence.IPersistance)
 	if !ok {
