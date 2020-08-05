@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/coda-it/gowebapp#readme",
   "dependencies": {
-    "graphen": "^1.8.4",
+    "graphen": "^1.8.5",
     "lodash": "^4.17.19",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
@@ -38,7 +38,7 @@
     "redux-saga": "^0.16.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.0",
+    "@babel/core": "^7.11.1",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/plugin-proposal-optional-chaining": "^7.11.0",
     "@babel/preset-env": "^7.11.0",
