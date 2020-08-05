@@ -1,7 +1,7 @@
 {
   "name": "gowebapp",
   "version": "1.0.1",
-  "description": "Smart Home Panel",
+  "description": "A customizable web platform",
   "main": "index.js",
   "scripts": {
     "build:dev": "webpack --mode=development --config webpack.dev.config.js",
@@ -10,8 +10,8 @@
     "lint:fix": "eslint --fix .",
     "test": "jest --config ./config/jest.config.js --no-watchman",
     "test:update": "jest --config ./config/jest.config.js --no-watchman --updateSnapshot",
-    "csslint": "stylelint ./client/**/*.scss",
-    "csslint:fix": "stylelint ./client/**/*.scss --fix",
+    "csslint": "stylelint \"./client/**/*.scss\" --config .stylelintrc",
+    "csslint:fix": "stylelint \"./client/**/*.scss\" --fix --config .stylelintrc",
     "flow": "flow",
     "prettify": "prettier --write \"./client/**/*.{js,jsx}\" \"./cypress/**/*.{js,jsx}\"",
     "cypress:open": "cypress open",
@@ -28,8 +28,8 @@
   },
   "homepage": "https://github.com/coda-it/gowebapp#readme",
   "dependencies": {
-    "graphen": "^1.8.3",
-    "lodash": "^4.17.5",
+    "graphen": "^1.8.4",
+    "lodash": "^4.17.19",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-redux": "^5.0.7",
@@ -38,10 +38,10 @@
     "redux-saga": "^0.16.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.10.4",
+    "@babel/core": "^7.11.0",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/plugin-proposal-optional-chaining": "^7.10.4",
-    "@babel/preset-env": "^7.10.4",
+    "@babel/plugin-proposal-optional-chaining": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
     "@babel/preset-flow": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
     "autoprefixer": "^6.5.0",
@@ -61,7 +61,7 @@
     "eslint-plugin-jest": "^22.21.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react": "^7.20.5",
     "file-loader": "^2.0.0",
     "flow-bin": "^0.94.0",
     "jest": "^24.1.0",
@@ -74,7 +74,7 @@
     "stylelint": "^9.6.0",
     "stylelint-config-standard": "^18.2.0",
     "uglifyjs-webpack-plugin": "^2.0.1",
-    "webpack": "^4.43.0",
+    "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   }
 }
