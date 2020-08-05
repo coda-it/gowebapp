@@ -33,9 +33,12 @@ function Posts(props: types.Props) {
             <div className="gc-panel__title tst-post-title">
               {title} {editButton}
             </div>
-            <div className="gc-panel__content tst-post-description">
-              <Image src={image} height={200} width={300} />
-            </div>
+            <Image
+              className="gm-margin-center"
+              src={image}
+              height={200}
+              width={300}
+            />
           </div>
         );
       })}

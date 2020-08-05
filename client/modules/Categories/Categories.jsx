@@ -2,7 +2,7 @@
 import _ from 'lodash';
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router';
-import { Image } from 'graphen';
+import { Image, Link, constants } from 'graphen';
 import * as types from './types';
 
 function Categories(props: types.Props) {
@@ -30,10 +30,18 @@ function Categories(props: types.Props) {
             key={key}
             className="gc-flex__item gc-card gc-card--gradient gc-panel gm-spacing-l tst-category"
           >
-            <Image src={image} height={200} width={300} />
             <div className="gc-panel__title tst-category-name">
-              <a href={`/category/${id}`}>{name}</a> {editButton}
+              <Link skin={constants.SKINS.default} link={`/category/${id}`}>
+                {name}
+              </Link>{' '}
+              {editButton}
             </div>
+            <Image
+              className="gm-margin-center"
+              src={image}
+              height={200}
+              width={300}
+            />
           </div>
         );
       })}
