@@ -1,8 +1,7 @@
 // @flow
-import _ from 'lodash';
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router';
-import { Image, Link, constants } from 'graphen';
+import { Image } from 'graphen';
 import * as types from './types';
 
 function Post(props: types.Props) {
