@@ -57,6 +57,7 @@ func New(port string, p *persistence.Persistance) *WebServer {
 	server.Router.AddRoute("/api/reset", "ALL", false, reset.CtrResetDb)
 
 	server.Router.AddRoute("/", "ALL", false, controllers.CtrPosts)
+	server.Router.AddRoute("/post/{id}", "ALL", false, controllers.CtrPosts)
 	server.Router.AddRoute("/category", "ALL", false, controllers.CtrCategories)
 	server.Router.AddRoute("/category/{id}", "ALL", false, controllers.CtrPosts)
 

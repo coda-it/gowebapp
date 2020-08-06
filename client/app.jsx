@@ -10,6 +10,7 @@ import Application from './modules/Application';
 import Admin from './modules/Admin';
 import Posts from './modules/Posts';
 import PostEditor from './modules/PostEditor';
+import Post from './modules/Post';
 import Categories from './modules/Categories';
 import CategoryEditor from './modules/CategoryEditor';
 import sagas from './sagas';
@@ -28,6 +29,7 @@ if (appContainer) {
       <Router history={createBrowserHistory({})}>
         <Application>
           <Route exact path="/" component={Posts} />
+          <Route exact path="/post/:postId" component={Post} />
           <Route exact path="/category" component={Categories} />
           <Route exact path="/category/:categoryId" component={Posts} />
           <Route exact path="/admin" component={Admin} />

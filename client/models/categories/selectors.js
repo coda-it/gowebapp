@@ -9,5 +9,5 @@ export const getCategories = (
 
 export const getCategoryById = (
   state: globalTypes.State,
-  id: string
-): types.Category => _.find(state.categories.categories, { id });
+  id?: string
+): ?types.Category => _.find(state.categories.categories, { id });
