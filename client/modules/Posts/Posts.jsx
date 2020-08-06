@@ -36,7 +36,11 @@ function Posts(props: types.Props) {
               className={`gc-flex__item gc-card gc-card--gradient gc-panel gm-spacing-l tst-post-${key}`}
             >
               <div className={`gc-panel__title tst-post-title-${key}`}>
-                <Link className={`tst-post-link-${key}`} skin={constants.SKINS.default} link={`/post/${id}`}>
+                <Link
+                  className={`tst-post-link-${key}`}
+                  skin={constants.SKINS.default}
+                  link={`/post/${id}`}
+                >
                   {title}
                 </Link>{' '}
                 {editButton}
