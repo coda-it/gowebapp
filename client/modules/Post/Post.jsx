@@ -12,7 +12,7 @@ function Post(props: types.Props) {
   }, [loadPosts]);
 
   return (
-    <div className="gc-panel">
+    <div className="gc-panel tst-post-module">
       <div className="gc-panel__title">{post?.title}</div>
       <div className="gc-panel__content">
         <Image

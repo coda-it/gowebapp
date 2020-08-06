@@ -18,12 +18,12 @@ function Posts(props: types.Props) {
       <div className="gc-panel__title">
         {`Category: ${category ? category.name : 'All'}`}
       </div>
-      <div className="gc-panel__content gc-flex gc-flex--wrap">
+      <div className="gc-panel__content gc-flex gc-flex--wrap tst-posts">
         {_.map(posts, ({ id, title, image }, key) => {
           const link = `/admin/posts/edit/${id}`;
           const editButton = isAdmin ? (
             <a
-              className="gc-btn gc-btn--small gc-btn--primary tst-post-edit"
+              className={`gc-btn gc-btn--small gc-btn--primary tst-post-edit-${key}`}
               href={link}
             >
               Edit
@@ -33,10 +33,10 @@ function Posts(props: types.Props) {
           return (
             <div
               key={key}
-              className="gc-flex__item gc-card gc-card--gradient gc-panel gm-spacing-l tst-post"
+              className={`gc-flex__item gc-card gc-card--gradient gc-panel gm-spacing-l tst-post-${key}`}
             >
-              <div className="gc-panel__title tst-post-title">
-                <Link skin={constants.SKINS.default} link={`/post/${id}`}>
+              <div className={`gc-panel__title tst-post-title-${key}`}>
+                <Link className={`tst-post-link-${key}`} skin={constants.SKINS.default} link={`/post/${id}`}>
                   {title}
                 </Link>{' '}
                 {editButton}
