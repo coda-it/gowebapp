@@ -13,38 +13,41 @@ function Categories(props: types.Props) {
   }, [loadCategories]);
 
   return (
-    <div className="gc-flex gc-flex--wrap">
-      {_.map(categories, ({ id, name, image }, key) => {
-        const link = `/admin/categories/edit/${id}`;
-        const editButton = isAdmin ? (
-          <a
-            className="gc-btn gc-btn--small gc-btn--primary tst-category-edit"
-            href={link}
-          >
-            Edit
-          </a>
-        ) : null;
+    <div className="gc-panel">
+      <div className="gc-panel__title">Categories</div>
+      <div className="gc-panel__content gc-flex gc-flex--wrap">
+        {_.map(categories, ({ id, name, image }, key) => {
+          const link = `/admin/categories/edit/${id}`;
+          const editButton = isAdmin ? (
+            <a
+              className="gc-btn gc-btn--small gc-btn--primary tst-category-edit"
+              href={link}
+            >
+              Edit
+            </a>
+          ) : null;
 
-        return (
-          <div
-            key={key}
-            className="gc-flex__item gc-card gc-card--gradient gc-panel gm-spacing-l tst-category"
-          >
-            <div className="gc-panel__title tst-category-name">
-              <Link skin={constants.SKINS.default} link={`/category/${id}`}>
-                {name}
-              </Link>{' '}
-              {editButton}
+          return (
+            <div
+              key={key}
+              className="gc-flex__item gc-card gc-card--gradient gc-panel gm-spacing-l tst-category"
+            >
+              <div className="gc-panel__title tst-category-name">
+                <Link skin={constants.SKINS.default} link={`/category/${id}`}>
+                  {name}
+                </Link>{' '}
+                {editButton}
+              </div>
+              <Image
+                className="gm-margin-center"
+                src={image}
+                height={200}
+                width={300}
+              />
             </div>
-            <Image
-              className="gm-margin-center"
-              src={image}
-              height={200}
-              width={300}
-            />
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 }
