@@ -14,14 +14,11 @@ func GetLoggedUser(r *http.Request, sm session.ISessionManager) (User, error) {
 	}
 
 	userSession := sm.Get(sid)
-	u := userSession.Get("user")
 
+	u := userSession.Get("user")
 	if u == nil {
 		return User{}, errors.New("no user in session")
 	}
-
-	embedded := map[string]map[string]bool{}
-	embedded["featureFlags"] = make(map[string]bool)
 
 	uu, ok := u.(User)
 	if !ok {
