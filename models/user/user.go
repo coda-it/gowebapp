@@ -11,6 +11,7 @@ type User struct {
 	Entitlements []string      `json:"entitlements" bson:"entitlements"`
 }
 
+// HasEntitlement - checks whether user has a particular entitlement
 func (u *User) HasEntitlement(entitlement string) bool {
 	for _, e := range u.Entitlements {
 		if e == entitlement {
