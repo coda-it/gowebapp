@@ -2,6 +2,7 @@ package utils
 
 import (
 	"github.com/coda-it/gowebapp/models/page"
+	"github.com/coda-it/gowebapp/models/user"
 	"github.com/coda-it/gowebserver/session"
 	"html/template"
 	"net/http"
@@ -17,11 +18,11 @@ func RenderTemplate(
 	sm session.ISessionManager,
 	params map[string]interface{},
 ) {
-	sessionID, _ := session.GetSessionID(r)
-	isLogged := sm.IsExist(sessionID)
+	isLogged := false
 
-	if !isLogged {
-		session.ClearSession(w)
+	u, err := user.GetLoggedUser(r, sm)
+	if err == nil {
+		isLogged = true
 	}
 
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
@@ -34,6 +35,7 @@ func RenderTemplate(
 		Version:  VERSION,
 		Title:    "WEBAPP - " + name,
 		IsLogged: isLogged,
+		IsRoot:   u.HasEntitlement("root"),
 		Params:   params,
 		Name:     name,
 	}

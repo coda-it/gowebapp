@@ -11,9 +11,10 @@ func AddUser(p persistence.IPersistance, username string, password string) error
 	c := p.GetCollection(CollectionName)
 
 	newUser := &User{
-		ID:       bson.NewObjectId(),
-		Username: username,
-		Password: password,
+		ID:           bson.NewObjectId(),
+		Username:     username,
+		Password:     password,
+		Entitlements: []string{},
 	}
 
 	err := c.Insert(newUser)
