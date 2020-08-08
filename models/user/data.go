@@ -7,13 +7,19 @@ import (
 )
 
 // AddUser - add user to the persistence
-func AddUser(p persistence.IPersistance, username string, password string) error {
+func AddUser(p persistence.IPersistance, username string, password string, isRoot bool) error {
 	c := p.GetCollection(CollectionName)
+	entitlements := []string{}
+
+	if isRoot {
+		entitlements = append(entitlements, "root")
+	}
 
 	newUser := &User{
-		ID:       bson.NewObjectId(),
-		Username: username,
-		Password: password,
+		ID:           bson.NewObjectId(),
+		Username:     username,
+		Password:     password,
+		Entitlements: entitlements,
 	}
 
 	err := c.Insert(newUser)

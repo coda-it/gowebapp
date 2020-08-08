@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/coda-it/gowebapp/datasources/persistence"
 	"github.com/coda-it/gowebapp/models/user"
 	"github.com/coda-it/gowebapp/utils"
@@ -9,6 +8,7 @@ import (
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
 	"net/http"
+	"os"
 )
 
 // Register - handle register page and register user process
@@ -29,10 +29,9 @@ func Register(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm 
 		username := r.PostFormValue("username")
 		password := utils.HashString(r.PostFormValue("password"))
 
-		err := user.AddUser(p, username, password)
+		err := user.AddUser(p, username, password, os.Getenv("WEBAPP_ENV") == "test")
 
 		if err != nil {
-			fmt.Println(err)
 			utils.Log("error registering user '" + username + "'")
 			return
 		}

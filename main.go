@@ -54,7 +54,9 @@ func New(port string, p *persistence.Persistance) *WebServer {
 	server.Router.AddRoute("/api/post/{id}", "DELETE", true, post.CtrPostDelete)
 	server.Router.AddRoute("/api/post/{id}", "PUT", true, post.CtrPostPut)
 
-	server.Router.AddRoute("/api/reset", "ALL", false, reset.CtrResetDb)
+	if os.Getenv("WEBAPP_ENV") == "test" {
+		server.Router.AddRoute("/api/reset", "ALL", false, reset.CtrResetDb)
+	}
 
 	server.Router.AddRoute("/", "ALL", false, controllers.CtrPosts)
 	server.Router.AddRoute("/post/{id}", "ALL", false, controllers.CtrPosts)

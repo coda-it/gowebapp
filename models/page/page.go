@@ -5,6 +5,7 @@ type Page struct {
 	Version  string
 	Title    string
 	IsLogged bool
+	IsRoot   bool
 	Params   map[string]interface{}
 	Name     string
 }
