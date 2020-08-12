@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/page"
 	"github.com/coda-it/gowebapp/models/user"
 	"github.com/coda-it/gowebserver/session"
@@ -47,5 +48,10 @@ func RenderTemplate(
 			dir+"/views/view.html",
 		),
 	)
-	tpl.ExecuteTemplate(w, "base", templateModel)
+
+	err = tpl.ExecuteTemplate(w, "base", templateModel)
+
+	if err != nil {
+		handlers.HandleErrorResponse(w, err.Error())
+	}
 }
