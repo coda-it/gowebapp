@@ -7,6 +7,7 @@ import (
 	"github.com/coda-it/gowebserver/store"
 )
 
+// GetPersistence - return persistence data source and handler error if unsuccessful
 func GetPersistence(s store.IStore) (persistence.IPersistance, error) {
 	dataSource := s.GetDataSource(datasources.Persistence)
 
