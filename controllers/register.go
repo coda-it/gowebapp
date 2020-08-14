@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"github.com/coda-it/gowebapp/datasources/persistence"
 	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/user"
 	"github.com/coda-it/gowebapp/utils"
@@ -19,18 +18,16 @@ func Register(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm 
 		handlers.RenderTemplate(w, r, "register", sm, make(map[string]interface{}))
 
 	case "POST":
-		dfc := s.GetDataSource("persistence")
-
-		p, ok := dfc.(persistence.IPersistance)
-		if !ok {
-			utils.Log("invalid store")
+		p, err := utils.GetPersistence(s)
+		if err != nil {
+			handlers.HandleErrorResponse(w, err.Error())
 			return
 		}
 
 		username := r.PostFormValue("username")
 		password := utils.HashString(r.PostFormValue("password"))
 
-		err := user.AddUser(p, username, password, os.Getenv("WEBAPP_ENV") == "test")
+		err = user.AddUser(p, username, password, os.Getenv("WEBAPP_ENV") == "test")
 
 		if err != nil {
 			utils.Log("error registering user '" + username + "'")

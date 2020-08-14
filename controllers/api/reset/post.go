@@ -1,23 +1,20 @@
 package reset
 
 import (
-	"github.com/coda-it/gowebapp/datasources"
-	"github.com/coda-it/gowebapp/datasources/persistence"
 	"github.com/coda-it/gowebapp/handlers"
+	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/store"
 	"net/http"
 )
 
 func postHandler(w http.ResponseWriter, s store.IStore) {
-	dataSource := s.GetDataSource(datasources.Persistence)
-	p, ok := dataSource.(persistence.IPersistance)
-
-	if !ok {
-		handlers.HandleErrorResponse(w, "unsupported data source")
+	p, err := utils.GetPersistence(s)
+	if err != nil {
+		handlers.HandleErrorResponse(w, err.Error())
 		return
 	}
 
-	err := p.DropDatabase()
+	err = p.DropDatabase()
 
 	if err != nil {
 		handlers.HandleErrorResponse(w, "error clearing database")

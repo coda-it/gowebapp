@@ -2,10 +2,9 @@ package category
 
 import (
 	"encoding/json"
-	"github.com/coda-it/gowebapp/datasources"
-	"github.com/coda-it/gowebapp/datasources/persistence"
 	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/category"
+	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
@@ -16,7 +15,6 @@ import (
 // CtrCategoryDelete - deletes category
 func CtrCategoryDelete(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	requestBody, err := ioutil.ReadAll(r.Body)
-
 	if err != nil {
 		handlers.HandleErrorResponse(w, "error reading request body")
 		return
@@ -26,10 +24,9 @@ func CtrCategoryDelete(w http.ResponseWriter, r *http.Request, opt router.URLOpt
 	var deletedCategory category.Category
 	err = json.Unmarshal(requestBody, &deletedCategory)
 
-	dataSource := s.GetDataSource(datasources.Persistence)
-	p, ok := dataSource.(persistence.IPersistance)
-	if !ok {
-		handlers.HandleErrorResponse(w, "unsupported data source")
+	p, err := utils.GetPersistence(s)
+	if err != nil {
+		handlers.HandleErrorResponse(w, err.Error())
 		return
 	}
 
