@@ -2,8 +2,6 @@ package post
 
 import (
 	"encoding/json"
-	"github.com/coda-it/gowebapp/datasources"
-	"github.com/coda-it/gowebapp/datasources/persistence"
 	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/post"
 	"github.com/coda-it/gowebapp/utils"
