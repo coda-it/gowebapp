@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/coda-it/gowebapp/datasources/persistence"
+	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/user"
 	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/router"
@@ -24,7 +25,7 @@ func Authenticate(w http.ResponseWriter, r *http.Request, opt router.URLOptions,
 			params["IsError"] = true
 		}
 
-		utils.RenderTemplate(w, r, "login", sm, params)
+		handlers.RenderTemplate(w, r, "login", sm, params)
 
 	case "POST":
 		sessionID, _ := session.GetSessionID(r)

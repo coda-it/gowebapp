@@ -1,9 +1,9 @@
-package utils
+package handlers
 
 import (
-	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/page"
 	"github.com/coda-it/gowebapp/models/user"
+	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/session"
 	"html/template"
 	"net/http"
@@ -29,11 +29,11 @@ func RenderTemplate(
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 
 	if err != nil {
-		Log(err)
+		utils.Log(err)
 	}
 
 	templateModel := page.Page{
-		Version:  VERSION,
+		Version:  utils.VERSION,
 		Title:    "WEBAPP - " + name,
 		IsLogged: isLogged,
 		IsRoot:   u.HasEntitlement("root"),
@@ -52,6 +52,6 @@ func RenderTemplate(
 	err = tpl.ExecuteTemplate(w, "base", templateModel)
 
 	if err != nil {
-		handlers.HandleErrorResponse(w, err.Error())
+		HandleErrorResponse(w, err.Error())
 	}
 }

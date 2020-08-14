@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/coda-it/gowebapp/datasources/persistence"
+	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/user"
 	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/router"
@@ -15,7 +16,7 @@ import (
 func Register(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	switch r.Method {
 	case "GET":
-		utils.RenderTemplate(w, r, "register", sm, make(map[string]interface{}))
+		handlers.RenderTemplate(w, r, "register", sm, make(map[string]interface{}))
 
 	case "POST":
 		dfc := s.GetDataSource("persistence")
