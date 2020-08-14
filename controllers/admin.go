@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"github.com/coda-it/gowebapp/utils"
+	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
@@ -10,5 +10,5 @@ import (
 
 // CtrAdmin - controller for admin page
 func CtrAdmin(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
-	utils.RenderTemplate(w, r, "admin", sm, make(map[string]interface{}))
+	handlers.RenderTemplate(w, r, "admin", sm, make(map[string]interface{}))
 }
