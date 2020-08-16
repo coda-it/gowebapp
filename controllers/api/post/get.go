@@ -1,8 +1,6 @@
 package post
 
 import (
-	"github.com/coda-it/gowebapp/datasources"
-	"github.com/coda-it/gowebapp/datasources/persistence"
 	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/post"
 	"github.com/coda-it/gowebapp/utils"
@@ -16,12 +14,10 @@ import (
 // CtrPostGet - gets posts
 func CtrPostGet(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	userID := r.URL.Query().Get("userId")
-	dataSource := s.GetDataSource(datasources.Persistence)
-	p, ok := dataSource.(persistence.IPersistance)
-	if !ok {
-		msg := "unsupported data source"
-		utils.Log(msg)
-		http.Error(w, msg, http.StatusInternalServerError)
+
+	p, err := utils.GetPersistence(s)
+	if err != nil {
+		handlers.HandleErrorResponse(w, err.Error())
 		return
 	}
 
