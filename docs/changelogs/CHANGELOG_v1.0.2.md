@@ -1,0 +1,18 @@
+# Changelog from v1.0.2
+### Commits
+* [[`6e6ca53`](http://github.com/coda-it/gowebapp/commit/6e6ca530de6410054683c36c99ba4dc2a699fc3b)] - CODA-111 - Deployment integration (#23) (Oskar Szura)
+* [[`05ab7e6`](http://github.com/coda-it/gowebapp/commit/05ab7e6c61c1f293deebf74b17f639924d558afa)] - CODA-78 - Data source assertion cleanup (#22) (Oskar Szura)
+* [[`85ae97d`](http://github.com/coda-it/gowebapp/commit/85ae97d60b60fb6637900a1411abe3cd79b8ea8d)] - CODA-108 - Template execution error handling (#21) (Oskar Szura)
+* [[`9a920a7`](http://github.com/coda-it/gowebapp/commit/9a920a703846a20382b4c6f8eb376672fdf3619e)] - CODA-91 - Multiple entitlement levels (#20) (Oskar Szura)
+* [[`5bba802`](http://github.com/coda-it/gowebapp/commit/5bba802a36342a17a8470bb0b3833bfd12d4fb7c)] - CODA-106 - Post view (#19) (Oskar Szura)
+* [[`bb6cf9e`](http://github.com/coda-it/gowebapp/commit/bb6cf9e6fa51bb37b3f4043686c805ce5eb53a1e)] - CODA-107 - Bump graphen version (#18) (Oskar Szura)
+* [[`449ab69`](http://github.com/coda-it/gowebapp/commit/449ab69c6c80e42c132f5f33ef5a31c9c1409482)] - CODA-104 - Fix css linter (#17) (Oskar Szura)
+* [[`fa08235`](http://github.com/coda-it/gowebapp/commit/fa08235888345c7da79dc0373b4bc59952d3f073)] - CODA-100 - Adopt v1.1.0 gowebserver (#16) (Oskar Szura)
+* [[`3ce078c`](http://github.com/coda-it/gowebapp/commit/3ce078cfafd849e466f14fd3f71bfa22d0a537b1)] - CODA-87 - Display posts for category (#15) (Oskar Szura)
+* [[`62136d1`](http://github.com/coda-it/gowebapp/commit/62136d112f636bbfcc1f674cd72181e2bb198399)] - CODA-95 - Better list UI (#14) (Oskar Szura)
+* [[`c74d60d`](http://github.com/coda-it/gowebapp/commit/c74d60d8dd0a41ce3839bfbf15100d666d3220d4)] - CODA-90 - Image field for posts (#13) (Oskar Szura)
+* [[`951b181`](http://github.com/coda-it/gowebapp/commit/951b18116b1654b28435ec03e906b61c1bcd2296)] - CODA-89 - Native category dropdown for posts (#12) (Oskar Szura)
+* [[`55baddf`](http://github.com/coda-it/gowebapp/commit/55baddf5a086df48940727339d3f4a1c7b2b206e)] - CODA-88 - Category image input field (#11) (Oskar Szura)
+* [[`8b28a9e`](http://github.com/coda-it/gowebapp/commit/8b28a9e663f85a61f2c96bf6cd1dcbbbeb56cee0)] - CODA-80 - Category navigation (#10) (Oskar Szura)
+* [[`318e7e4`](http://github.com/coda-it/gowebapp/commit/318e7e4aff14ea4d2cfced92372d1dd21eb7502c)] - CODA-85 - Add 'Category' section (#9) (Oskar Szura)
+* [[`3b4d0ba`](http://github.com/coda-it/gowebapp/commit/3b4d0bab058830c5cac1e2dd4173d7143f52bfff)] - CODA-77 - Add 'My Posts' section with CRUD (#8) (Oskar Szura)
