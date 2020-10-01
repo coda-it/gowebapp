@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/gowebapp/controllers"
 	"github.com/coda-it/gowebapp/controllers/api/category"
 	"github.com/coda-it/gowebapp/controllers/api/post"
@@ -32,7 +33,7 @@ func New(port string, p *persistence.Persistance) *WebServer {
 	addr, err := getServerAddress(port)
 
 	if err != nil {
-		utils.Log(err)
+		logger.Log(err)
 	}
 
 	serverOptions := gowebserver.WebServerOptions{
@@ -92,10 +93,10 @@ func main() {
 	webAppMongoDB := os.Getenv("WEBAPP_MONGO_DB")
 	webAppHTTPPort := os.Getenv("WEBAPP_HTTP_PORT")
 
-	utils.Log("Staring webapp with the following ENV variables")
-	utils.Log("WEBAPP_MONGO_URI = " + webAppMongoURI)
-	utils.Log("WEBAPP_MONGO_DB = " + webAppMongoDB)
-	utils.Log("WEBAPP_HTTP_PORT = " + webAppHTTPPort)
+	logger.Log("Staring webapp with the following ENV variables")
+	logger.Log("WEBAPP_MONGO_URI = " + webAppMongoURI)
+	logger.Log("WEBAPP_MONGO_DB = " + webAppMongoDB)
+	logger.Log("WEBAPP_HTTP_PORT = " + webAppHTTPPort)
 
 	utils.VERSION = VERSION
 
