@@ -1,12 +1,12 @@
 package handlers
 
 import (
-	"github.com/coda-it/gowebapp/utils"
+	"github.com/coda-it/goutils/logger"
 	"net/http"
 )
 
 // HandleErrorResponse - handle error response
 func HandleErrorResponse(w http.ResponseWriter, msg string) {
-	utils.Log(msg)
+	logger.Log(msg)
 	http.Error(w, msg, http.StatusInternalServerError)
 }

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/gowebapp/datasources/persistence"
 	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/user"
@@ -40,7 +41,7 @@ func Authenticate(w http.ResponseWriter, r *http.Request, opt router.URLOptions,
 
 			p, ok := dfc.(persistence.IPersistance)
 			if !ok {
-				utils.Log("Invalid store")
+				logger.Log("Invalid store")
 				return
 			}
 
@@ -50,7 +51,7 @@ func Authenticate(w http.ResponseWriter, r *http.Request, opt router.URLOptions,
 			authenticatedUser, err := user.AuthenticateUser(p, u, password, cookieValue)
 
 			if err == nil {
-				utils.Log("Logged in as user", u)
+				logger.Log("Logged in as user", u)
 
 				cookie := http.Cookie{
 					Name:    utils.SessionKey,
@@ -63,7 +64,7 @@ func Authenticate(w http.ResponseWriter, r *http.Request, opt router.URLOptions,
 				http.SetCookie(w, &cookie)
 				http.Redirect(w, r, "/", http.StatusSeeOther)
 			} else {
-				utils.Log(err)
+				logger.Log(err)
 				http.Redirect(w, r, "/login?err", http.StatusSeeOther)
 			}
 		}

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/user"
 	"github.com/coda-it/gowebapp/utils"
@@ -30,10 +31,10 @@ func Register(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm 
 		err = user.AddUser(p, username, password, os.Getenv("WEBAPP_ENV") == "test")
 
 		if err != nil {
-			utils.Log("error registering user '" + username + "'")
+			logger.Log("error registering user '" + username + "'")
 			return
 		}
-		utils.Log("registered user '" + username + "'")
+		logger.Log("registered user '" + username + "'")
 
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	default:

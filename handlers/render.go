@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/gowebapp/models/page"
 	"github.com/coda-it/gowebapp/models/user"
 	"github.com/coda-it/gowebapp/utils"
@@ -29,7 +30,7 @@ func RenderTemplate(
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 
 	if err != nil {
-		utils.Log(err)
+		logger.Log(err)
 	}
 
 	templateModel := page.Page{
