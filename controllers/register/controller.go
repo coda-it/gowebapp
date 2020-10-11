@@ -9,11 +9,11 @@ import (
 // Controller - register controller
 type Controller struct {
 	base.Controller
-	UserUsecases userUsecases.UserUsecase
+	UserUsecases userUsecases.Usecase
 }
 
 // New - creates instance of register Controller
-func New(m mailer.IMailer, u userUsecases.UserUsecase) *Controller {
+func New(m mailer.IMailer, u userUsecases.Usecase) *Controller {
 	return &Controller{
 		*base.New(m),
 		u,
