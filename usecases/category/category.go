@@ -8,13 +8,13 @@ import (
 
 // Usecase - category usecases
 type Usecase struct {
-	categoryRepository categoryRepository.Repository
+	categoryRepository categoryRepository.IRepository
 }
 
 // New - creates new category usecases
-func New(c categoryRepository.Repository) *Usecase {
+func New(cr categoryRepository.Repository) *Usecase {
 	return &Usecase{
-		c,
+		&cr,
 	}
 }
 

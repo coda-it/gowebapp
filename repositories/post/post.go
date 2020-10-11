@@ -11,6 +11,14 @@ const (
 	CollectionName = "posts"
 )
 
+// IRepository - post repository interface
+type IRepository interface {
+	FetchPosts(userID string) ([]postModel.Post, error)
+	AddPost(post postModel.Post) error
+	UpdatePost(post postModel.Post) error
+	DeletePost(id bson.ObjectId) error
+}
+
 // Repository - post repository
 type Repository struct {
 	Persistence persistence.IPersistance

@@ -11,6 +11,14 @@ const (
 	CollectionName = "categories"
 )
 
+// IRepository - category repository interface
+type IRepository interface {
+	FetchCategories() ([]categoryModel.Category, error)
+	AddCategory(c categoryModel.Category) error
+	UpdateCategory(c categoryModel.Category) error
+	DeleteCategory(id bson.ObjectId) error
+}
+
 // Repository - categories repository
 type Repository struct {
 	Persistence persistence.IPersistance

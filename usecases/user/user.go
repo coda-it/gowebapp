@@ -9,13 +9,13 @@ import (
 
 // Usecase - user usecases
 type Usecase struct {
-	userRepository userRepository.Repository
+	userRepository userRepository.IRepository
 }
 
 // New - creates new user usecases
-func New(u userRepository.Repository) *Usecase {
+func New(ur userRepository.Repository) *Usecase {
 	return &Usecase{
-		u,
+		&ur,
 	}
 }
 

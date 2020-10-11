@@ -8,13 +8,13 @@ import (
 
 // Usecase - post usecases
 type Usecase struct {
-	postRepository postRepository.Repository
+	postRepository postRepository.IRepository
 }
 
 // New - creates new post usecases
-func New(p postRepository.Repository) *Usecase {
+func New(pr postRepository.Repository) *Usecase {
 	return &Usecase{
-		p,
+		&pr,
 	}
 }
 

@@ -12,6 +12,13 @@ const (
 	CollectionName = "users"
 )
 
+// IRepository - user repository interface
+type IRepository interface {
+	Update(data bson.M, where bson.M) (userModel.User, error)
+	DoesExist(user bson.M) bool
+	AddUser(username string, password string, isRoot bool) error
+}
+
 // Repository - user repository
 type Repository struct {
 	Persistence persistence.IPersistance
