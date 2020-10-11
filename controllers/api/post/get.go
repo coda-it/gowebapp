@@ -2,8 +2,6 @@ package post
 
 import (
 	"github.com/coda-it/gowebapp/handlers"
-	"github.com/coda-it/gowebapp/models/post"
-	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
@@ -12,16 +10,9 @@ import (
 )
 
 // CtrPostGet - gets posts
-func CtrPostGet(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
+func (p* PostController) CtrPostGet(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	userID := r.URL.Query().Get("userId")
-
-	p, err := utils.GetPersistence(s)
-	if err != nil {
-		handlers.HandleErrorResponse(w, err.Error())
-		return
-	}
-
-	posts, err := post.FetchPosts(p, userID)
+	posts, err := p.PostUsecases.FetchPosts(userID)
 
 	if err != nil {
 		handlers.HandleErrorResponse(w, err.Error())

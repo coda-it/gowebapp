@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/category"
-	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
@@ -13,7 +12,7 @@ import (
 )
 
 // CtrCategoryDelete - deletes category
-func CtrCategoryDelete(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
+func (c* CategoryController) CtrCategoryDelete(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	requestBody, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		handlers.HandleErrorResponse(w, "error reading request body")
@@ -24,13 +23,7 @@ func CtrCategoryDelete(w http.ResponseWriter, r *http.Request, opt router.URLOpt
 	var deletedCategory category.Category
 	err = json.Unmarshal(requestBody, &deletedCategory)
 
-	p, err := utils.GetPersistence(s)
-	if err != nil {
-		handlers.HandleErrorResponse(w, err.Error())
-		return
-	}
-
-	err = category.DeleteCategory(p, deletedCategory.ID)
+	err = c.CategoryUsecases.DeleteCategory(deletedCategory.ID)
 
 	if err != nil {
 		handlers.HandleErrorResponse(w, "error removing category")

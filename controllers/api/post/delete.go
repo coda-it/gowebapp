@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/post"
-	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
@@ -13,7 +12,7 @@ import (
 )
 
 // CtrPostDelete - deletes post
-func CtrPostDelete(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
+func (p* PostController) CtrPostDelete(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	requestBody, err := ioutil.ReadAll(r.Body)
 
 	if err != nil {
@@ -23,15 +22,14 @@ func CtrPostDelete(w http.ResponseWriter, r *http.Request, opt router.URLOptions
 	defer r.Body.Close()
 
 	var deletedPost post.Post
-	err = json.Unmarshal(requestBody, &deletedPost)
 
-	p, err := utils.GetPersistence(s)
+	err = json.Unmarshal(requestBody, &deletedPost)
 	if err != nil {
 		handlers.HandleErrorResponse(w, err.Error())
 		return
 	}
 
-	err = post.DeletePost(p, deletedPost.ID)
+	err = p.PostUsecases.DeletePost(deletedPost.ID)
 
 	if err != nil {
 		handlers.HandleErrorResponse(w, "error removing post")
