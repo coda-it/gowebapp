@@ -9,7 +9,7 @@ import (
 )
 
 // CtrLoginGet - handler for rendering login page
-func (c *LoginController) CtrLoginGet(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
+func (c *Controller) CtrLoginGet(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	_, ok := r.URL.Query()["err"]
 	params := make(map[string]interface{})
 
