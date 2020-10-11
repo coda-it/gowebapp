@@ -26,14 +26,16 @@ func (u *Usecase) Register(username string, password string, isRoot bool) error 
 
 // Authenticate - authenticates existing user
 func (u *Usecase) Authenticate(username string, password string, sid string) (userModel.User, error) {
-	userExists := u.userRepository.DoesExist(bson.M{
+	usr, err := u.userRepository.FindUser(bson.M{
 		"username": username,
 		"password": password,
 	})
 
-	if !userExists {
+	if err != nil {
 		return userModel.User{}, errors.New("user '" + username + "' not found")
 	}
 
-	return u.userRepository.Update(bson.M{"username": username}, bson.M{"$set": bson.M{"sessionId": sid}})
+	err = u.userRepository.Update(bson.M{"username": username}, bson.M{"$set": bson.M{"sessionId": sid}})
+
+	return usr, err
 }

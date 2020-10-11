@@ -26,7 +26,7 @@ func (c *Controller) CtrLoginPost(w http.ResponseWriter, r *http.Request, opt ro
 		authenticatedUser, err := c.UserUsecases.Authenticate(u, password, cookieValue)
 
 		if err == nil {
-			logger.Log("Logged in as user", u)
+			logger.Log("Logged in as user " + u)
 
 			cookie := http.Cookie{
 				Name:    utils.SessionKey,

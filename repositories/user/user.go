@@ -14,8 +14,8 @@ const (
 
 // IRepository - user repository interface
 type IRepository interface {
-	Update(data bson.M, where bson.M) (userModel.User, error)
-	DoesExist(user bson.M) bool
+	Update(data bson.M, where bson.M) error
+	FindUser(user bson.M) (userModel.User, error)
 	AddUser(username string, password string, isRoot bool) error
 }
 
@@ -32,30 +32,26 @@ func New(p persistence.IPersistance) Repository {
 }
 
 // Update - updates particular user
-func (u *Repository) Update(data bson.M, where bson.M) (userModel.User, error) {
+func (u *Repository) Update(data bson.M, where bson.M) error {
 	var usr userModel.User
 
 	err := u.Persistence.GetCollection(CollectionName).Update(data, where)
 
 	if err != nil {
-		return usr, errors.New("error updating " + usr.Username + " status")
+		return errors.New("error updating " + usr.Username + " status")
 	}
 
-	return usr, nil
+	return nil
 }
 
-// DoesExist - checks does user exist
-func (u *Repository) DoesExist(user bson.M) bool {
+// FindUser - finds user
+func (u *Repository) FindUser(user bson.M) (userModel.User, error) {
 	var usr userModel.User
 
 	c := u.Persistence.GetCollection(CollectionName)
 	err := c.Find(user).One(&usr)
 
-	if err != nil {
-		return false
-	}
-
-	return true
+	return usr, err
 }
 
 // AddUser - adds new user
