@@ -11,21 +11,20 @@ const (
 	CollectionName = "posts"
 )
 
-type IPostRepository interface {
-}
-
-type PostRepository struct {
+// Repository - post repository
+type Repository struct {
 	Persistence persistence.IPersistance
 }
 
-func New (p persistence.IPersistance) PostRepository {
-	return PostRepository{
+// New - creates new post repository
+func New(p persistence.IPersistance) Repository {
+	return Repository{
 		p,
 	}
 }
 
 // FetchPosts - fetch posts from persistence
-func (p *PostRepository) FetchPosts(userID string) ([]postModel.Post, error) {
+func (p *Repository) FetchPosts(userID string) ([]postModel.Post, error) {
 	postsCollection := p.Persistence.GetCollection(CollectionName)
 
 	var posts []postModel.Post
@@ -47,21 +46,20 @@ func (p *PostRepository) FetchPosts(userID string) ([]postModel.Post, error) {
 }
 
 // AddPost - add post to persistence
-func (p *PostRepository) AddPost(post postModel.Post) error {
+func (p *Repository) AddPost(post postModel.Post) error {
 	postsCollection := p.Persistence.GetCollection(CollectionName)
 	return postsCollection.Insert(post)
 }
 
 // UpdatePost - update existing post
-func (p *PostRepository) UpdatePost(post postModel.Post) error {
+func (p *Repository) UpdatePost(post postModel.Post) error {
 	postsCollection := p.Persistence.GetCollection(CollectionName)
 	_, err := postsCollection.Upsert(bson.M{"_id": post.ID}, post)
 	return err
 }
 
 // DeletePost - delete post
-func (p *PostRepository) DeletePost(id bson.ObjectId) error {
+func (p *Repository) DeletePost(id bson.ObjectId) error {
 	postsCollection := p.Persistence.GetCollection(CollectionName)
 	return postsCollection.Remove(bson.M{"_id": id})
 }
-

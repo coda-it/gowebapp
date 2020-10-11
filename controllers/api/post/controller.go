@@ -6,16 +6,16 @@ import (
 	postUsecases "github.com/coda-it/gowebapp/usecases/post"
 )
 
-type PostController struct {
+// Controller - post controller
+type Controller struct {
 	base.Controller
 	PostUsecases postUsecases.PostUsecase
 }
 
-func New(m mailer.IMailer, p postUsecases.PostUsecase) *PostController {
-	return &PostController{
+// New - creates instance of post Controller
+func New(m mailer.IMailer, p postUsecases.PostUsecase) *Controller {
+	return &Controller{
 		*base.New(m),
 		p,
 	}
 }
-
-

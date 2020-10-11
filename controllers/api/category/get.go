@@ -10,7 +10,7 @@ import (
 )
 
 // CtrCategoryGet - gets categories
-func (c* CategoryController) CtrCategoryGet(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
+func (c *Controller) CtrCategoryGet(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	categories, err := c.CategoryUsecases.FetchCategories()
 
 	if err != nil {

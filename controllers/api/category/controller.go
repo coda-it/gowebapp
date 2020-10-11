@@ -6,16 +6,16 @@ import (
 	categoryUsecases "github.com/coda-it/gowebapp/usecases/category"
 )
 
-// CategoryController - category controller
-type CategoryController struct {
+// Controller - category controller
+type Controller struct {
 	base.Controller
 	CategoryUsecases categoryUsecases.CategoryUsecase
 }
 
-func New(m mailer.IMailer, c categoryUsecases.CategoryUsecase) *CategoryController {
-	return &CategoryController{
+// New - creates instance of category Controller
+func New(m mailer.IMailer, c categoryUsecases.CategoryUsecase) *Controller {
+	return &Controller{
 		*base.New(m),
 		c,
 	}
 }
-

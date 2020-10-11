@@ -1,41 +1,39 @@
 package post
 
 import (
-	postRepository "github.com/coda-it/gowebapp/repositories/post"
 	postModel "github.com/coda-it/gowebapp/models/post"
+	postRepository "github.com/coda-it/gowebapp/repositories/post"
 	"gopkg.in/mgo.v2/bson"
 )
 
-// IPostUsecase - use case for user activation repository
-type IPostUsecase interface {
+// Usecase - post usecases
+type Usecase struct {
+	postRepository postRepository.Repository
 }
 
-type PostUsecase struct {
-	postRepository	postRepository.PostRepository
-}
-
-func New(p postRepository.PostRepository) *PostUsecase {
-	return &PostUsecase {
+// New - creates new post usecases
+func New(p postRepository.Repository) *Usecase {
+	return &Usecase{
 		p,
 	}
 }
 
 // FetchPosts - fetch posts from persistence
-func (p *PostUsecase) FetchPosts(userID string) ([]postModel.Post, error) {
+func (p *Usecase) FetchPosts(userID string) ([]postModel.Post, error) {
 	return p.postRepository.FetchPosts(userID)
 }
 
 // AddPost - add post to persistence
-func (p *PostUsecase) AddPost(post postModel.Post) error {
+func (p *Usecase) AddPost(post postModel.Post) error {
 	return p.postRepository.AddPost(post)
 }
 
 // UpdatePost - update existing post
-func (p *PostUsecase) UpdatePost(post postModel.Post) error {
+func (p *Usecase) UpdatePost(post postModel.Post) error {
 	return p.postRepository.UpdatePost(post)
 }
 
 // DeletePost - delete post
-func (p *PostUsecase) DeletePost(id bson.ObjectId) error {
+func (p *Usecase) DeletePost(id bson.ObjectId) error {
 	return p.postRepository.DeletePost(id)
 }

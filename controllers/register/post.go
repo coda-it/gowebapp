@@ -4,14 +4,14 @@ import (
 	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/router"
-	"github.com/coda-it/gowebserver/store"
 	"github.com/coda-it/gowebserver/session"
+	"github.com/coda-it/gowebserver/store"
 	"net/http"
 	"os"
 )
 
 // CtrRegisterPost - registers user
-func (c* RegisterController) CtrRegisterPost(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
+func (c *Controller) CtrRegisterPost(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	username := r.PostFormValue("username")
 	password := utils.HashString(r.PostFormValue("password"))
 

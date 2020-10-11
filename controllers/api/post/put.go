@@ -12,7 +12,7 @@ import (
 )
 
 // CtrPostPut - update post
-func (p* PostController) CtrPostPut(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
+func (p *Controller) CtrPostPut(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	requestBody, err := ioutil.ReadAll(r.Body)
 
 	if err != nil {

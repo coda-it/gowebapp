@@ -12,22 +12,20 @@ const (
 	CollectionName = "users"
 )
 
-type IUserRepository interface {
-	AddUser(string, string, bool) error
-	DoesExist(string, string) bool
-}
-
-type UserRepository struct {
+// Repository - user repository
+type Repository struct {
 	Persistence persistence.IPersistance
 }
 
-func New (p persistence.IPersistance) UserRepository {
-	return 	UserRepository{
+// New - creates instance of user repository
+func New(p persistence.IPersistance) Repository {
+	return Repository{
 		p,
 	}
 }
 
-func (u *UserRepository) Update(data bson.M, where bson.M) (userModel.User, error) {
+// Update - updates particular user
+func (u *Repository) Update(data bson.M, where bson.M) (userModel.User, error) {
 	var usr userModel.User
 
 	err := u.Persistence.GetCollection(CollectionName).Update(data, where)
@@ -39,7 +37,8 @@ func (u *UserRepository) Update(data bson.M, where bson.M) (userModel.User, erro
 	return usr, nil
 }
 
-func (u *UserRepository) DoesExist(user bson.M) bool {
+// DoesExist - checks does user exist
+func (u *Repository) DoesExist(user bson.M) bool {
 	var usr userModel.User
 
 	c := u.Persistence.GetCollection(CollectionName)
@@ -52,7 +51,8 @@ func (u *UserRepository) DoesExist(user bson.M) bool {
 	return true
 }
 
-func (u *UserRepository) AddUser(username string, password string, isRoot bool) error {
+// AddUser - adds new user
+func (u *Repository) AddUser(username string, password string, isRoot bool) error {
 	c := u.Persistence.GetCollection(CollectionName)
 	entitlements := []string{}
 

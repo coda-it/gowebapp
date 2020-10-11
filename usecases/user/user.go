@@ -1,31 +1,31 @@
 package user
 
 import (
-	userRepository "github.com/coda-it/gowebapp/repositories/user"
-	userModel "github.com/coda-it/gowebapp/models/user"
-	"gopkg.in/mgo.v2/bson"
 	"errors"
+	userModel "github.com/coda-it/gowebapp/models/user"
+	userRepository "github.com/coda-it/gowebapp/repositories/user"
+	"gopkg.in/mgo.v2/bson"
 )
 
-// IUserUsecase - use case for user activation repository
-type IUserUsecase interface {
+// Usecase - user usecases
+type Usecase struct {
+	userRepository userRepository.Repository
 }
 
-type UserUsecase struct {
-	userRepository	userRepository.UserRepository
-}
-
-func New(u userRepository.UserRepository) *UserUsecase {
-	return &UserUsecase {
+// New - creates new user usecases
+func New(u userRepository.Repository) *Usecase {
+	return &Usecase{
 		u,
 	}
 }
 
-func (u *UserUsecase) Register(username string, password string, isRoot bool) error {
+// Register - registers new user
+func (u *Usecase) Register(username string, password string, isRoot bool) error {
 	return u.userRepository.AddUser(username, password, isRoot)
 }
 
-func (u *UserUsecase) Authenticate(username string, password string, sid string) (userModel.User, error) {
+// Authenticate - authenticates existing user
+func (u *Usecase) Authenticate(username string, password string, sid string) (userModel.User, error) {
 	userExists := u.userRepository.DoesExist(bson.M{
 		"username": username,
 		"password": password,

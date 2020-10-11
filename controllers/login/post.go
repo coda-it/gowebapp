@@ -1,17 +1,17 @@
 package login
 
 import (
-	"github.com/coda-it/gowebserver/router"
-	"github.com/coda-it/gowebserver/store"
-	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/gowebapp/utils"
+	"github.com/coda-it/gowebserver/router"
+	"github.com/coda-it/gowebserver/session"
+	"github.com/coda-it/gowebserver/store"
 	"net/http"
 	"time"
 )
 
 // CtrLoginPost - authenticates user
-func (c* LoginController) CtrLoginPost(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
+func (c *LoginController) CtrLoginPost(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	sessionID, _ := session.GetSessionID(r)
 	isLogged := sm.IsExist(sessionID)
 

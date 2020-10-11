@@ -11,21 +11,20 @@ const (
 	CollectionName = "categories"
 )
 
-type ICategoryRepository interface {
-}
-
-type CategoryRepository struct {
+// Repository - categories repository
+type Repository struct {
 	Persistence persistence.IPersistance
 }
 
-func New (p persistence.IPersistance) CategoryRepository {
-	return CategoryRepository{
+// New - creates new categories repository
+func New(p persistence.IPersistance) Repository {
+	return Repository{
 		p,
 	}
 }
 
 // FetchCategories - fetch categories from persistence
-func (cr *CategoryRepository) FetchCategories() ([]categoryModel.Category, error) {
+func (cr *Repository) FetchCategories() ([]categoryModel.Category, error) {
 	categoriesCollection := cr.Persistence.GetCollection(CollectionName)
 
 	var categories []categoryModel.Category
@@ -41,22 +40,20 @@ func (cr *CategoryRepository) FetchCategories() ([]categoryModel.Category, error
 }
 
 // AddCategory - add category to persistence
-func (cr *CategoryRepository) AddCategory(c categoryModel.Category) error {
+func (cr *Repository) AddCategory(c categoryModel.Category) error {
 	categoriesCollection := cr.Persistence.GetCollection(CollectionName)
 	return categoriesCollection.Insert(c)
 }
 
 // UpdateCategory - update existing category
-func (cr *CategoryRepository) UpdateCategory(c categoryModel.Category) error {
+func (cr *Repository) UpdateCategory(c categoryModel.Category) error {
 	categoriesCollection := cr.Persistence.GetCollection(CollectionName)
 	_, err := categoriesCollection.Upsert(bson.M{"_id": c.ID}, c)
 	return err
 }
 
 // DeleteCategory - delete category
-func (cr *CategoryRepository) DeleteCategory(id bson.ObjectId) error {
+func (cr *Repository) DeleteCategory(id bson.ObjectId) error {
 	categoriesCollection := cr.Persistence.GetCollection(CollectionName)
 	return categoriesCollection.Remove(bson.M{"_id": id})
 }
-
-

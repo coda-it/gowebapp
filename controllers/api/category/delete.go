@@ -12,7 +12,7 @@ import (
 )
 
 // CtrCategoryDelete - deletes category
-func (c* CategoryController) CtrCategoryDelete(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
+func (c *Controller) CtrCategoryDelete(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	requestBody, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		handlers.HandleErrorResponse(w, "error reading request body")

@@ -6,13 +6,15 @@ import (
 	userUsecases "github.com/coda-it/gowebapp/usecases/user"
 )
 
-type RegisterController struct {
+// Controller - register controller
+type Controller struct {
 	base.Controller
 	UserUsecases userUsecases.UserUsecase
 }
 
-func New(m mailer.IMailer, u userUsecases.UserUsecase) *RegisterController {
-	return &RegisterController{
+// New - creates instance of register Controller
+func New(m mailer.IMailer, u userUsecases.UserUsecase) *Controller {
+	return &Controller{
 		*base.New(m),
 		u,
 	}

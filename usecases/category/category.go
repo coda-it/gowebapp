@@ -1,41 +1,39 @@
 package user
 
 import (
-	categoryRepository "github.com/coda-it/gowebapp/repositories/category"
 	categoryModel "github.com/coda-it/gowebapp/models/category"
+	categoryRepository "github.com/coda-it/gowebapp/repositories/category"
 	"gopkg.in/mgo.v2/bson"
 )
 
-// ICategoryUsecase - use case for user activation repository
-type ICategoryUsecase interface {
+// Usecase - category usecases
+type Usecase struct {
+	categoryRepository categoryRepository.Repository
 }
 
-type CategoryUsecase struct {
-	categoryRepository	categoryRepository.CategoryRepository
-}
-
-func New(c categoryRepository.CategoryRepository) *CategoryUsecase {
-	return &CategoryUsecase {
+// New - creates new category usecases
+func New(c categoryRepository.Repository) *Usecase {
+	return &Usecase{
 		c,
 	}
 }
 
 // FetchCategories - fetch categories from persistence
-func (cr *CategoryUsecase) FetchCategories() ([]categoryModel.Category, error) {
+func (cr *Usecase) FetchCategories() ([]categoryModel.Category, error) {
 	return cr.categoryRepository.FetchCategories()
 }
 
 // AddCategory - add category to persistence
-func (cr *CategoryUsecase) AddCategory(c categoryModel.Category) error {
+func (cr *Usecase) AddCategory(c categoryModel.Category) error {
 	return cr.categoryRepository.AddCategory(c)
 }
 
 // UpdateCategory - update existing category
-func (cr *CategoryUsecase) UpdateCategory(c categoryModel.Category) error {
+func (cr *Usecase) UpdateCategory(c categoryModel.Category) error {
 	return cr.categoryRepository.UpdateCategory(c)
 }
 
 // DeleteCategory - delete category
-func (cr *CategoryUsecase) DeleteCategory(id bson.ObjectId) error {
+func (cr *Usecase) DeleteCategory(id bson.ObjectId) error {
 	return cr.categoryRepository.DeleteCategory(id)
 }

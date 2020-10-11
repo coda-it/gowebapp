@@ -6,15 +6,16 @@ import (
 	userUsecases "github.com/coda-it/gowebapp/usecases/user"
 )
 
-type LoginController struct {
+// Controller - login controller
+type Controller struct {
 	base.Controller
 	UserUsecases userUsecases.UserUsecase
 }
 
-func New(m mailer.IMailer, u userUsecases.UserUsecase) *LoginController {
-	return &LoginController{
+// New - creates instance of login Controller
+func New(m mailer.IMailer, u userUsecases.UserUsecase) *Controller {
+	return &Controller{
 		*base.New(m),
 		u,
 	}
 }
-
