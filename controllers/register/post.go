@@ -22,6 +22,6 @@ func (c *Controller) CtrRegisterPost(w http.ResponseWriter, r *http.Request, opt
 		return
 	}
 	logger.Log("registered user '" + username + "'")
-	
+
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
