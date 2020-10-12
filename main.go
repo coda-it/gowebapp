@@ -11,6 +11,7 @@ import (
 	"github.com/coda-it/gowebapp/controllers/api/user"
 	userLoginController "github.com/coda-it/gowebapp/controllers/login"
 	userRegisterController "github.com/coda-it/gowebapp/controllers/register"
+	userActivationController "github.com/coda-it/gowebapp/controllers/activation"
 	"github.com/coda-it/gowebapp/datasources/persistence"
 	categoryRepository "github.com/coda-it/gowebapp/repositories/category"
 	postRepository "github.com/coda-it/gowebapp/repositories/post"
@@ -94,6 +95,9 @@ func New(port string, p *persistence.Persistance, m *mailer.Mailer) *WebServer {
 	userRegisterCtl := userRegisterController.New(m, *uuc)
 	server.Router.AddRoute("/login/register", "GET", false, userRegisterCtl.CtrRegisterGet)
 	server.Router.AddRoute("/login/register", "POST", false, userRegisterCtl.CtrRegisterPost)
+
+	userActivationCtl := userActivationController.New(m, *uuc)
+	server.Router.AddRoute("/login/activation/{id}", "GET", false, userActivationCtl.CtrActivationGet)
 
 	loginCtr := userLoginController.New(m, *uuc)
 	server.Router.AddRoute("/login/logout", "ALL", true, controllers.AuthenticateLogout)

@@ -1,15 +1,13 @@
 package user
 
 import (
-	"errors"
 	"github.com/coda-it/gowebapp/datasources/persistence"
 	userModel "github.com/coda-it/gowebapp/models/user"
 	"gopkg.in/mgo.v2/bson"
 )
 
 const (
-	// CollectionName - is mongodb collection name
-	CollectionName = "users"
+	collectionName = "users"
 )
 
 // IRepository - user repository interface
@@ -32,13 +30,10 @@ func New(p persistence.IPersistance) Repository {
 }
 
 // Update - updates particular user
-func (u *Repository) Update(data bson.M, where bson.M) error {
-	var usr userModel.User
-
-	err := u.Persistence.GetCollection(CollectionName).Update(data, where)
-
+func (u *Repository) Update(where bson.M, data bson.M) error {
+	err := u.Persistence.GetCollection(collectionName).Update(where, data)
 	if err != nil {
-		return errors.New("error updating " + usr.Username + " status")
+		return err
 	}
 
 	return nil
@@ -48,7 +43,7 @@ func (u *Repository) Update(data bson.M, where bson.M) error {
 func (u *Repository) Find(user bson.M) (userModel.User, error) {
 	var usr userModel.User
 
-	c := u.Persistence.GetCollection(CollectionName)
+	c := u.Persistence.GetCollection(collectionName)
 	err := c.Find(user).One(&usr)
 
 	return usr, err
@@ -56,7 +51,7 @@ func (u *Repository) Find(user bson.M) (userModel.User, error) {
 
 // Add - adds new user
 func (u *Repository) Add(username string, password string, isRoot bool) error {
-	c := u.Persistence.GetCollection(CollectionName)
+	c := u.Persistence.GetCollection(collectionName)
 	entitlements := []string{}
 
 	if isRoot {
