@@ -13,9 +13,9 @@ type Controller struct {
 }
 
 // New - creates instance of login Controller
-func New(m mailer.IMailer, u userUsecases.Usecase) *Controller {
+func New(m mailer.IMailer, uu userUsecases.Usecase) *Controller {
 	return &Controller{
 		*base.New(m),
-		u,
+		uu,
 	}
 }

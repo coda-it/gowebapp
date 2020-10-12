@@ -13,9 +13,9 @@ type Controller struct {
 }
 
 // New - creates instance of category Controller
-func New(m mailer.IMailer, c categoryUsecases.Usecase) *Controller {
+func New(m mailer.IMailer, cu categoryUsecases.Usecase) *Controller {
 	return &Controller{
 		*base.New(m),
-		c,
+		cu,
 	}
 }
