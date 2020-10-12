@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/category"
-	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
@@ -13,7 +12,7 @@ import (
 )
 
 // CtrCategoryPut - updates category
-func CtrCategoryPut(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
+func (c *Controller) CtrCategoryPut(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	requestBody, err := ioutil.ReadAll(r.Body)
 
 	if err != nil {
@@ -23,16 +22,14 @@ func CtrCategoryPut(w http.ResponseWriter, r *http.Request, opt router.URLOption
 	defer r.Body.Close()
 
 	var editedCategory category.Category
-	err = json.Unmarshal(requestBody, &editedCategory)
 
-	p, err := utils.GetPersistence(s)
+	err = json.Unmarshal(requestBody, &editedCategory)
 	if err != nil {
 		handlers.HandleErrorResponse(w, err.Error())
 		return
 	}
 
-	err = category.UpdateCategory(p, editedCategory)
-
+	err = c.CategoryUsecases.Update(editedCategory)
 	if err != nil {
 		handlers.HandleErrorResponse(w, "error updating category")
 	}

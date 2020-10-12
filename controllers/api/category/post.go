@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/category"
-	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
@@ -13,7 +12,7 @@ import (
 )
 
 // CtrCategoryPost - adds new category
-func CtrCategoryPost(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
+func (c *Controller) CtrCategoryPost(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	requestBody, err := ioutil.ReadAll(r.Body)
 
 	if err != nil {
@@ -25,13 +24,7 @@ func CtrCategoryPost(w http.ResponseWriter, r *http.Request, opt router.URLOptio
 	var newCategory category.Category
 	err = json.Unmarshal(requestBody, &newCategory)
 
-	p, err := utils.GetPersistence(s)
-	if err != nil {
-		handlers.HandleErrorResponse(w, err.Error())
-		return
-	}
-
-	err = category.AddCategory(p, newCategory)
+	err = c.CategoryUsecases.Add(newCategory)
 
 	if err != nil {
 		handlers.HandleErrorResponse(w, "error adding new category")

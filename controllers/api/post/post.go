@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/post"
-	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
@@ -13,9 +12,8 @@ import (
 )
 
 // CtrPostPost - adds new post
-func CtrPostPost(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
+func (p *Controller) CtrPostPost(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	requestBody, err := ioutil.ReadAll(r.Body)
-
 	if err != nil {
 		handlers.HandleErrorResponse(w, "error reading request body")
 		return
@@ -23,15 +21,14 @@ func CtrPostPost(w http.ResponseWriter, r *http.Request, opt router.URLOptions, 
 	defer r.Body.Close()
 
 	var newPost post.Post
-	err = json.Unmarshal(requestBody, &newPost)
 
-	p, err := utils.GetPersistence(s)
+	err = json.Unmarshal(requestBody, &newPost)
 	if err != nil {
 		handlers.HandleErrorResponse(w, err.Error())
 		return
 	}
 
-	err = post.AddPost(p, newPost)
+	err = p.PostUsecases.Add(newPost)
 
 	if err != nil {
 		handlers.HandleErrorResponse(w, "error adding new post")
