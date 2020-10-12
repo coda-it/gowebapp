@@ -29,7 +29,7 @@ func (c *Controller) CtrCategoryPut(w http.ResponseWriter, r *http.Request, opt 
 		return
 	}
 
-	err = c.CategoryUsecases.UpdateCategory(editedCategory)
+	err = c.CategoryUsecases.Update(editedCategory)
 	if err != nil {
 		handlers.HandleErrorResponse(w, "error updating category")
 	}

@@ -18,22 +18,22 @@ func New(cr categoryRepository.Repository) *Usecase {
 	}
 }
 
-// FetchCategories - fetch categories from persistence
-func (cr *Usecase) FetchCategories() ([]categoryModel.Category, error) {
-	return cr.categoryRepository.FetchCategories()
+// FetchAll - fetch categories from persistence
+func (cr *Usecase) FetchAll() ([]categoryModel.Category, error) {
+	return cr.categoryRepository.FetchAll()
 }
 
-// AddCategory - add category to persistence
-func (cr *Usecase) AddCategory(c categoryModel.Category) error {
-	return cr.categoryRepository.AddCategory(c)
+// Add - add category to persistence
+func (cr *Usecase) Add(c categoryModel.Category) error {
+	return cr.categoryRepository.Add(c)
 }
 
-// UpdateCategory - update existing category
-func (cr *Usecase) UpdateCategory(c categoryModel.Category) error {
-	return cr.categoryRepository.UpdateCategory(c)
+// Update - update existing category
+func (cr *Usecase) Update(c categoryModel.Category) error {
+	return cr.categoryRepository.Update(c)
 }
 
-// DeleteCategory - delete category
-func (cr *Usecase) DeleteCategory(id bson.ObjectId) error {
-	return cr.categoryRepository.DeleteCategory(id)
+// Delete - delete category
+func (cr *Usecase) Delete(id bson.ObjectId) error {
+	return cr.categoryRepository.Delete(id)
 }

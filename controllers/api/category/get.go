@@ -11,7 +11,7 @@ import (
 
 // CtrCategoryGet - gets categories
 func (c *Controller) CtrCategoryGet(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
-	categories, err := c.CategoryUsecases.FetchCategories()
+	categories, err := c.CategoryUsecases.FetchAll()
 
 	if err != nil {
 		handlers.HandleErrorResponse(w, err.Error())

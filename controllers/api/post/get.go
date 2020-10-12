@@ -12,7 +12,7 @@ import (
 // CtrPostGet - gets posts
 func (p *Controller) CtrPostGet(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	userID := r.URL.Query().Get("userId")
-	posts, err := p.PostUsecases.FetchPosts(userID)
+	posts, err := p.PostUsecases.FetchAll(userID)
 
 	if err != nil {
 		handlers.HandleErrorResponse(w, err.Error())

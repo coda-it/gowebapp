@@ -13,10 +13,10 @@ const (
 
 // IRepository - category repository interface
 type IRepository interface {
-	FetchCategories() ([]categoryModel.Category, error)
-	AddCategory(c categoryModel.Category) error
-	UpdateCategory(c categoryModel.Category) error
-	DeleteCategory(id bson.ObjectId) error
+	FetchAll() ([]categoryModel.Category, error)
+	Add(c categoryModel.Category) error
+	Update(c categoryModel.Category) error
+	Delete(id bson.ObjectId) error
 }
 
 // Repository - categories repository
@@ -31,8 +31,8 @@ func New(p persistence.IPersistance) Repository {
 	}
 }
 
-// FetchCategories - fetch categories from persistence
-func (cr *Repository) FetchCategories() ([]categoryModel.Category, error) {
+// FetchAll - fetch categories from persistence
+func (cr *Repository) FetchAll() ([]categoryModel.Category, error) {
 	categoriesCollection := cr.Persistence.GetCollection(CollectionName)
 
 	var categories []categoryModel.Category
@@ -47,21 +47,21 @@ func (cr *Repository) FetchCategories() ([]categoryModel.Category, error) {
 	return categories, nil
 }
 
-// AddCategory - add category to persistence
-func (cr *Repository) AddCategory(c categoryModel.Category) error {
+// Add - add category to persistence
+func (cr *Repository) Add(c categoryModel.Category) error {
 	categoriesCollection := cr.Persistence.GetCollection(CollectionName)
 	return categoriesCollection.Insert(c)
 }
 
-// UpdateCategory - update existing category
-func (cr *Repository) UpdateCategory(c categoryModel.Category) error {
+// Update - update existing category
+func (cr *Repository) Update(c categoryModel.Category) error {
 	categoriesCollection := cr.Persistence.GetCollection(CollectionName)
 	_, err := categoriesCollection.Upsert(bson.M{"_id": c.ID}, c)
 	return err
 }
 
-// DeleteCategory - delete category
-func (cr *Repository) DeleteCategory(id bson.ObjectId) error {
+// Delete - delete category
+func (cr *Repository) Delete(id bson.ObjectId) error {
 	categoriesCollection := cr.Persistence.GetCollection(CollectionName)
 	return categoriesCollection.Remove(bson.M{"_id": id})
 }

@@ -21,12 +21,12 @@ func New(ur userRepository.Repository) *Usecase {
 
 // Register - registers new user
 func (u *Usecase) Register(username string, password string, isRoot bool) error {
-	return u.userRepository.AddUser(username, password, isRoot)
+	return u.userRepository.Add(username, password, isRoot)
 }
 
 // Authenticate - authenticates existing user
 func (u *Usecase) Authenticate(username string, password string, sid string) (userModel.User, error) {
-	usr, err := u.userRepository.FindUser(bson.M{
+	usr, err := u.userRepository.Find(bson.M{
 		"username": username,
 		"password": password,
 	})

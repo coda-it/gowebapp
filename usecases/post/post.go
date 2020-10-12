@@ -18,22 +18,22 @@ func New(pr postRepository.Repository) *Usecase {
 	}
 }
 
-// FetchPosts - fetch posts from persistence
-func (p *Usecase) FetchPosts(userID string) ([]postModel.Post, error) {
-	return p.postRepository.FetchPosts(userID)
+// FetchAll - fetch posts from persistence
+func (p *Usecase) FetchAll(userID string) ([]postModel.Post, error) {
+	return p.postRepository.FetchAll(userID)
 }
 
-// AddPost - add post to persistence
-func (p *Usecase) AddPost(post postModel.Post) error {
-	return p.postRepository.AddPost(post)
+// Add - add post to persistence
+func (p *Usecase) Add(post postModel.Post) error {
+	return p.postRepository.Add(post)
 }
 
 // UpdatePost - update existing post
-func (p *Usecase) UpdatePost(post postModel.Post) error {
-	return p.postRepository.UpdatePost(post)
+func (p *Usecase) Update(post postModel.Post) error {
+	return p.postRepository.Update(post)
 }
 
-// DeletePost - delete post
-func (p *Usecase) DeletePost(id bson.ObjectId) error {
-	return p.postRepository.DeletePost(id)
+// Delete - delete post
+func (p *Usecase) Delete(id bson.ObjectId) error {
+	return p.postRepository.Delete(id)
 }

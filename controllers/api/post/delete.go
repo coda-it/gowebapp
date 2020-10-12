@@ -29,7 +29,7 @@ func (p *Controller) CtrPostDelete(w http.ResponseWriter, r *http.Request, opt r
 		return
 	}
 
-	err = p.PostUsecases.DeletePost(deletedPost.ID)
+	err = p.PostUsecases.Delete(deletedPost.ID)
 
 	if err != nil {
 		handlers.HandleErrorResponse(w, "error removing post")

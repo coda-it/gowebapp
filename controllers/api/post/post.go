@@ -28,7 +28,7 @@ func (p *Controller) CtrPostPost(w http.ResponseWriter, r *http.Request, opt rou
 		return
 	}
 
-	err = p.PostUsecases.AddPost(newPost)
+	err = p.PostUsecases.Add(newPost)
 
 	if err != nil {
 		handlers.HandleErrorResponse(w, "error adding new post")

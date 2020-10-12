@@ -15,8 +15,8 @@ const (
 // IRepository - user repository interface
 type IRepository interface {
 	Update(data bson.M, where bson.M) error
-	FindUser(user bson.M) (userModel.User, error)
-	AddUser(username string, password string, isRoot bool) error
+	Find(user bson.M) (userModel.User, error)
+	Add(username string, password string, isRoot bool) error
 }
 
 // Repository - user repository
@@ -44,8 +44,8 @@ func (u *Repository) Update(data bson.M, where bson.M) error {
 	return nil
 }
 
-// FindUser - finds user
-func (u *Repository) FindUser(user bson.M) (userModel.User, error) {
+// Find - finds user
+func (u *Repository) Find(user bson.M) (userModel.User, error) {
 	var usr userModel.User
 
 	c := u.Persistence.GetCollection(CollectionName)
@@ -54,8 +54,8 @@ func (u *Repository) FindUser(user bson.M) (userModel.User, error) {
 	return usr, err
 }
 
-// AddUser - adds new user
-func (u *Repository) AddUser(username string, password string, isRoot bool) error {
+// Add - adds new user
+func (u *Repository) Add(username string, password string, isRoot bool) error {
 	c := u.Persistence.GetCollection(CollectionName)
 	entitlements := []string{}
 

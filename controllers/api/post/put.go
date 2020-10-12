@@ -28,7 +28,7 @@ func (p *Controller) CtrPostPut(w http.ResponseWriter, r *http.Request, opt rout
 		return
 	}
 
-	err = p.PostUsecases.UpdatePost(editedPost)
+	err = p.PostUsecases.Update(editedPost)
 
 	if err != nil {
 		handlers.HandleErrorResponse(w, "error updating post")

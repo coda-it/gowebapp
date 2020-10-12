@@ -23,7 +23,7 @@ func (c *Controller) CtrCategoryDelete(w http.ResponseWriter, r *http.Request, o
 	var deletedCategory category.Category
 	err = json.Unmarshal(requestBody, &deletedCategory)
 
-	err = c.CategoryUsecases.DeleteCategory(deletedCategory.ID)
+	err = c.CategoryUsecases.Delete(deletedCategory.ID)
 
 	if err != nil {
 		handlers.HandleErrorResponse(w, "error removing category")

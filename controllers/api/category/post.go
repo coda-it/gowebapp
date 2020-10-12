@@ -24,7 +24,7 @@ func (c *Controller) CtrCategoryPost(w http.ResponseWriter, r *http.Request, opt
 	var newCategory category.Category
 	err = json.Unmarshal(requestBody, &newCategory)
 
-	err = c.CategoryUsecases.AddCategory(newCategory)
+	err = c.CategoryUsecases.Add(newCategory)
 
 	if err != nil {
 		handlers.HandleErrorResponse(w, "error adding new category")
