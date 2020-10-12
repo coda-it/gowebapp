@@ -28,7 +28,7 @@ func (p *Usecase) Add(post postModel.Post) error {
 	return p.postRepository.Add(post)
 }
 
-// UpdatePost - update existing post
+// Update - update existing post
 func (p *Usecase) Update(post postModel.Post) error {
 	return p.postRepository.Update(post)
 }
