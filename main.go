@@ -43,7 +43,7 @@ func New(port string, p *persistence.Persistance, m *mailer.Mailer) *WebServer {
 	addr, err := getServerAddress(port)
 
 	if err != nil {
-		logger.Log(err)
+		logger.Log("starting server failed: " + err.Error())
 	}
 
 	serverOptions := gowebserver.WebServerOptions{
@@ -74,7 +74,7 @@ func New(port string, p *persistence.Persistance, m *mailer.Mailer) *WebServer {
 	server.Router.AddRoute("/api/post/{id}", "DELETE", true, postCtl.CtrPostDelete)
 	server.Router.AddRoute("/api/post/{id}", "PUT", true, postCtl.CtrPostPut)
 
-	if os.Getenv("WEBAPP_ENV") == "test" {
+	if utils.IsTestEnv() {
 		server.Router.AddRoute("/api/reset", "ALL", false, reset.CtrResetDb)
 	}
 
@@ -121,7 +121,7 @@ func main() {
 	webAppMongoDB := os.Getenv("WEBAPP_MONGO_DB")
 	webAppHTTPPort := os.Getenv("WEBAPP_HTTP_PORT")
 
-	logger.Log("Staring webapp with the following ENV variables")
+	logger.Log("staring webapp with the following ENV variables")
 	logger.Log("WEBAPP_MONGO_URI = " + webAppMongoURI)
 	logger.Log("WEBAPP_MONGO_DB = " + webAppMongoDB)
 	logger.Log("WEBAPP_HTTP_PORT = " + webAppHTTPPort)

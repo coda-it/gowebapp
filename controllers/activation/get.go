@@ -14,7 +14,7 @@ func (c *Controller) CtrActivationGet(w http.ResponseWriter, r *http.Request, op
 
 	err := c.UserUsecases.Activate(userID)
 	if err != nil {
-		handlers.HandleErrorResponse(w, err.Error())
+		handlers.HandleErrorResponse(w, "user activation error:"+err.Error())
 		return
 	}
 
