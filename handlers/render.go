@@ -30,7 +30,7 @@ func RenderTemplate(
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 
 	if err != nil {
-		logger.Log(err)
+		logger.Log("reading template failed:" + err.Error())
 	}
 
 	templateModel := page.Page{

@@ -7,8 +7,7 @@ import (
 )
 
 const (
-	// CollectionName - is mongodb collection name
-	CollectionName = "categories"
+	collectionName = "categories"
 )
 
 // IRepository - category repository interface
@@ -33,7 +32,7 @@ func New(p persistence.IPersistance) Repository {
 
 // FetchAll - fetch categories from persistence
 func (cr *Repository) FetchAll() ([]categoryModel.Category, error) {
-	categoriesCollection := cr.Persistence.GetCollection(CollectionName)
+	categoriesCollection := cr.Persistence.GetCollection(collectionName)
 
 	var categories []categoryModel.Category
 	var searchQuery bson.M
@@ -49,19 +48,19 @@ func (cr *Repository) FetchAll() ([]categoryModel.Category, error) {
 
 // Add - add category to persistence
 func (cr *Repository) Add(c categoryModel.Category) error {
-	categoriesCollection := cr.Persistence.GetCollection(CollectionName)
+	categoriesCollection := cr.Persistence.GetCollection(collectionName)
 	return categoriesCollection.Insert(c)
 }
 
 // Update - update existing category
 func (cr *Repository) Update(c categoryModel.Category) error {
-	categoriesCollection := cr.Persistence.GetCollection(CollectionName)
+	categoriesCollection := cr.Persistence.GetCollection(collectionName)
 	_, err := categoriesCollection.Upsert(bson.M{"_id": c.ID}, c)
 	return err
 }
 
 // Delete - delete category
 func (cr *Repository) Delete(id bson.ObjectId) error {
-	categoriesCollection := cr.Persistence.GetCollection(CollectionName)
+	categoriesCollection := cr.Persistence.GetCollection(collectionName)
 	return categoriesCollection.Remove(bson.M{"_id": id})
 }

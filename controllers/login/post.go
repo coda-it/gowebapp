@@ -25,8 +25,8 @@ func (c *Controller) CtrLoginPost(w http.ResponseWriter, r *http.Request, opt ro
 		cookieValue := utils.CreateSessionID(u, password, timeStr)
 		authenticatedUser, err := c.UserUsecases.Authenticate(u, password, cookieValue)
 
-		if err == nil {
-			logger.Log("Logged in as user " + u)
+		if err == nil && (authenticatedUser.Activated || utils.IsTestEnv()) {
+			logger.Log("logged in as user " + u)
 
 			cookie := http.Cookie{
 				Name:    utils.SessionKey,
@@ -39,7 +39,7 @@ func (c *Controller) CtrLoginPost(w http.ResponseWriter, r *http.Request, opt ro
 			http.SetCookie(w, &cookie)
 			http.Redirect(w, r, "/", http.StatusSeeOther)
 		} else {
-			logger.Log(err)
+			logger.Log("user '" + u + "' failed to login: " + err.Error())
 			http.Redirect(w, r, "/login?err", http.StatusSeeOther)
 		}
 	}

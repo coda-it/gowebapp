@@ -5,6 +5,7 @@ import (
 	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/goutils/mailer"
 	"github.com/coda-it/gowebapp/controllers"
+	userActivationController "github.com/coda-it/gowebapp/controllers/activation"
 	categoryApiController "github.com/coda-it/gowebapp/controllers/api/category"
 	postApiController "github.com/coda-it/gowebapp/controllers/api/post"
 	"github.com/coda-it/gowebapp/controllers/api/reset"
@@ -42,7 +43,7 @@ func New(port string, p *persistence.Persistance, m *mailer.Mailer) *WebServer {
 	addr, err := getServerAddress(port)
 
 	if err != nil {
-		logger.Log(err)
+		logger.Log("starting server failed: " + err.Error())
 	}
 
 	serverOptions := gowebserver.WebServerOptions{
@@ -73,7 +74,7 @@ func New(port string, p *persistence.Persistance, m *mailer.Mailer) *WebServer {
 	server.Router.AddRoute("/api/post/{id}", "DELETE", true, postCtl.CtrPostDelete)
 	server.Router.AddRoute("/api/post/{id}", "PUT", true, postCtl.CtrPostPut)
 
-	if os.Getenv("WEBAPP_ENV") == "test" {
+	if utils.IsTestEnv() {
 		server.Router.AddRoute("/api/reset", "ALL", false, reset.CtrResetDb)
 	}
 
@@ -94,6 +95,9 @@ func New(port string, p *persistence.Persistance, m *mailer.Mailer) *WebServer {
 	userRegisterCtl := userRegisterController.New(m, *uuc)
 	server.Router.AddRoute("/login/register", "GET", false, userRegisterCtl.CtrRegisterGet)
 	server.Router.AddRoute("/login/register", "POST", false, userRegisterCtl.CtrRegisterPost)
+
+	userActivationCtl := userActivationController.New(m, *uuc)
+	server.Router.AddRoute("/login/activation/{id}", "GET", false, userActivationCtl.CtrActivationGet)
 
 	loginCtr := userLoginController.New(m, *uuc)
 	server.Router.AddRoute("/login/logout", "ALL", true, controllers.AuthenticateLogout)
@@ -117,7 +121,7 @@ func main() {
 	webAppMongoDB := os.Getenv("WEBAPP_MONGO_DB")
 	webAppHTTPPort := os.Getenv("WEBAPP_HTTP_PORT")
 
-	logger.Log("Staring webapp with the following ENV variables")
+	logger.Log("staring webapp with the following ENV variables")
 	logger.Log("WEBAPP_MONGO_URI = " + webAppMongoURI)
 	logger.Log("WEBAPP_MONGO_DB = " + webAppMongoDB)
 	logger.Log("WEBAPP_HTTP_PORT = " + webAppHTTPPort)

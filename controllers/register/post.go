@@ -7,7 +7,6 @@ import (
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
 	"net/http"
-	"os"
 )
 
 // CtrRegisterPost - registers user
@@ -15,7 +14,7 @@ func (c *Controller) CtrRegisterPost(w http.ResponseWriter, r *http.Request, opt
 	username := r.PostFormValue("username")
 	password := utils.HashString(r.PostFormValue("password"))
 
-	err := c.UserUsecases.Register(username, password, os.Getenv("WEBAPP_ENV") == "test")
+	err := c.UserUsecases.Register(username, password, utils.IsTestEnv())
 
 	if err != nil {
 		logger.Log("error registering user '" + username + "'")

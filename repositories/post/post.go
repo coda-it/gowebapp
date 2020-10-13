@@ -7,8 +7,7 @@ import (
 )
 
 const (
-	// CollectionName - is mongodb collection name
-	CollectionName = "posts"
+	collectionName = "posts"
 )
 
 // IRepository - post repository interface
@@ -33,7 +32,7 @@ func New(p persistence.IPersistance) Repository {
 
 // FetchAll - fetch posts from persistence
 func (p *Repository) FetchAll(userID string) ([]postModel.Post, error) {
-	postsCollection := p.Persistence.GetCollection(CollectionName)
+	postsCollection := p.Persistence.GetCollection(collectionName)
 
 	var posts []postModel.Post
 	var searchQuery bson.M
@@ -55,19 +54,19 @@ func (p *Repository) FetchAll(userID string) ([]postModel.Post, error) {
 
 // Add - add post to persistence
 func (p *Repository) Add(post postModel.Post) error {
-	postsCollection := p.Persistence.GetCollection(CollectionName)
+	postsCollection := p.Persistence.GetCollection(collectionName)
 	return postsCollection.Insert(post)
 }
 
 // Update - update existing post
 func (p *Repository) Update(post postModel.Post) error {
-	postsCollection := p.Persistence.GetCollection(CollectionName)
+	postsCollection := p.Persistence.GetCollection(collectionName)
 	_, err := postsCollection.Upsert(bson.M{"_id": post.ID}, post)
 	return err
 }
 
 // Delete - delete post
 func (p *Repository) Delete(id bson.ObjectId) error {
-	postsCollection := p.Persistence.GetCollection(CollectionName)
+	postsCollection := p.Persistence.GetCollection(collectionName)
 	return postsCollection.Remove(bson.M{"_id": id})
 }

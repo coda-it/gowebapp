@@ -9,6 +9,7 @@ type User struct {
 	Password     string        `json:"password" bson:"password"`
 	SessionID    string        `json:"sessionId" bson:"sessionId"`
 	Entitlements []string      `json:"entitlements" bson:"entitlements"`
+	Activated    bool          `json:"isActivated" bson:"isActivated"`
 }
 
 // HasEntitlement - checks whether user has a particular entitlement
