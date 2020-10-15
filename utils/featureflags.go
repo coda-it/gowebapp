@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"gopkg.in/configcat/go-sdk.v3"
+	"gopkg.in/configcat/go-sdk.v1"
 	"os"
 )
 

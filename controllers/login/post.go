@@ -6,7 +6,6 @@ import (
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
-	"github.com/smart-evolution/shpanel/services/featureflags"
 	"net/http"
 	"time"
 )
@@ -26,7 +25,7 @@ func (c *Controller) CtrLoginPost(w http.ResponseWriter, r *http.Request, opt ro
 		cookieValue := utils.CreateSessionID(u, password, timeStr)
 		authenticatedUser, err := c.UserUsecases.Authenticate(u, password, cookieValue)
 
-		isActivationEnabled, _ := featureflags.GetFeatureFlag("isActivationEnabled", false)
+		isActivationEnabled, _ := utils.GetFeatureFlag("isActivationEnabled", false)
 
 		if err == nil && (!isActivationEnabled || authenticatedUser.Activated || utils.IsTestEnv()) {
 			logger.Log("logged in as user " + u)
