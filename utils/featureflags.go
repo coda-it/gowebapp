@@ -18,6 +18,10 @@ func getClient() *configcat.Client {
 
 // GetFeatureFlag - gets feature flag
 func GetFeatureFlag(name string, defaultValue bool) (bool, bool) {
+	if IsTestEnv() {
+		return true, true
+	}
+
 	value, ok := getClient().GetValue(name, defaultValue).(bool)
 	return value, ok
 }
