@@ -27,7 +27,7 @@ func (c *Controller) CtrLoginPost(w http.ResponseWriter, r *http.Request, opt ro
 
 		isActivationEnabled, _ := utils.GetFeatureFlag("isActivationEnabled", false)
 
-		if err == nil && (!isActivationEnabled || authenticatedUser.Activated || utils.IsTestEnv()) {
+		if err == nil && (!isActivationEnabled && authenticatedUser.Activated || utils.IsTestEnv()) {
 			logger.Log("logged in as user " + u)
 
 			cookie := http.Cookie{
