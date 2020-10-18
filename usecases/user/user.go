@@ -43,15 +43,3 @@ func (u *Usecase) Authenticate(username string, password string, sid string) (us
 func (u *Usecase) Activate(ID string) error {
 	return u.userRepository.Update(bson.M{"_id": bson.ObjectIdHex(ID)}, bson.M{"$set": bson.M{"isActivated": true}})
 }
-
-// IsActivated - checks whether user is activated
-func (u *Usecase) IsActivated(ID string) (bool, error) {
-	usr, err := u.userRepository.Find(bson.M{
-		"id": ID,
-	})
-	if err != nil {
-		return false, errors.New("user '" + usr.Username + "' not found")
-	}
-
-	return usr.Activated, nil
-}
