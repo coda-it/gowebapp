@@ -3,7 +3,7 @@ package handlers
 import (
 	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/gowebapp/models/page"
-	"github.com/coda-it/gowebapp/models/user"
+	userServices "github.com/coda-it/gowebapp/services/user"
 	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/session"
 	"html/template"
@@ -22,7 +22,7 @@ func RenderTemplate(
 ) {
 	isLogged := false
 
-	u, err := user.GetLoggedUser(r, sm)
+	u, err := userServices.GetLoggedUser(r, sm)
 	if err == nil {
 		isLogged = true
 	}

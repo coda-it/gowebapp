@@ -2,6 +2,7 @@ package login
 
 import (
 	"github.com/coda-it/goutils/logger"
+	userServices "github.com/coda-it/gowebapp/services/user"
 	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
@@ -23,11 +24,15 @@ func (c *Controller) CtrLoginPost(w http.ResponseWriter, r *http.Request, opt ro
 		t := time.Now()
 		timeStr := t.Format(time.RFC850)
 		cookieValue := utils.CreateSessionID(u, password, timeStr)
+
 		authenticatedUser, err := c.UserUsecases.Authenticate(u, password, cookieValue)
+		if err != nil {
+			logger.Log("user '" + u + "' failed to login: " + err.Error())
+		}
 
-		isActivationEnabled, _ := utils.GetFeatureFlag("isActivationEnabled", false)
+		isActivated := userServices.IsActivated(authenticatedUser)
 
-		if err == nil && (!isActivationEnabled && authenticatedUser.Activated || utils.IsTestEnv()) {
+		if err == nil && isActivated {
 			logger.Log("logged in as user " + u)
 
 			cookie := http.Cookie{
@@ -40,9 +45,10 @@ func (c *Controller) CtrLoginPost(w http.ResponseWriter, r *http.Request, opt ro
 
 			http.SetCookie(w, &cookie)
 			http.Redirect(w, r, "/", http.StatusSeeOther)
+			return
 		} else {
-			logger.Log("user '" + u + "' failed to login: " + err.Error())
 			http.Redirect(w, r, "/login?err", http.StatusSeeOther)
+			return
 		}
 	}
 

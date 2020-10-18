@@ -124,7 +124,7 @@ func main() {
 	logger.Log("staring webapp with the following ENV variables")
 	logger.Log("WEBAPP_MONGO_URI = " + webAppMongoURI)
 	logger.Log("WEBAPP_MONGO_DB = " + webAppMongoDB)
-	logger.Log("WEBAPP_HTTP_PORT = " + webAppHTTPPort)
+	logger.Log("WEBAPP_ENV = " + os.Getenv("WEBAPP_ENV"))
 
 	utils.VERSION = VERSION
 
