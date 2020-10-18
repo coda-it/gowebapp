@@ -46,10 +46,10 @@ func (c *Controller) CtrLoginPost(w http.ResponseWriter, r *http.Request, opt ro
 			http.SetCookie(w, &cookie)
 			http.Redirect(w, r, "/", http.StatusSeeOther)
 			return
-		} else {
-			http.Redirect(w, r, "/login?err", http.StatusSeeOther)
-			return
 		}
+
+		http.Redirect(w, r, "/login?err", http.StatusSeeOther)
+		return
 	}
 
 	http.Redirect(w, r, "/login", http.StatusSeeOther)
