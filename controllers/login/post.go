@@ -1,9 +1,11 @@
 package login
 
 import (
+	"github.com/coda-it/goutils/hash"
 	"github.com/coda-it/goutils/logger"
+	goutilsSession "github.com/coda-it/goutils/session"
+	"github.com/coda-it/gowebapp/constants"
 	userServices "github.com/coda-it/gowebapp/services/user"
-	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
@@ -18,12 +20,12 @@ func (c *Controller) CtrLoginPost(w http.ResponseWriter, r *http.Request, opt ro
 
 	if !isLogged {
 		u := r.PostFormValue("username")
-		password := utils.HashString(r.PostFormValue("password"))
+		password := hash.EncryptString(r.PostFormValue("password"))
 		expiration := time.Now().Add(365 * 24 * time.Hour)
 
 		t := time.Now()
 		timeStr := t.Format(time.RFC850)
-		cookieValue := utils.CreateSessionID(u, password, timeStr)
+		cookieValue := goutilsSession.CreateSessionID(u, password, timeStr)
 
 		authenticatedUser, err := c.UserUsecases.Authenticate(u, password, cookieValue)
 		if err != nil {
@@ -36,7 +38,7 @@ func (c *Controller) CtrLoginPost(w http.ResponseWriter, r *http.Request, opt ro
 			logger.Log("logged in as user " + u)
 
 			cookie := http.Cookie{
-				Name:    utils.SessionKey,
+				Name:    constants.SessionKey,
 				Value:   cookieValue,
 				Expires: expiration}
 
