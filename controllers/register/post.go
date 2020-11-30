@@ -1,6 +1,7 @@
 package register
 
 import (
+	"github.com/coda-it/goutils/hash"
 	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/router"
@@ -12,7 +13,7 @@ import (
 // CtrRegisterPost - registers user
 func (c *Controller) CtrRegisterPost(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	username := r.PostFormValue("username")
-	password := utils.HashString(r.PostFormValue("password"))
+	password := hash.EncryptString(r.PostFormValue("password"))
 
 	err := c.UserUsecases.Register(username, password, utils.IsTestEnv())
 
