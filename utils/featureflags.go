@@ -1,29 +1,39 @@
 package utils
 
 import (
-	"errors"
 	"gopkg.in/configcat/go-sdk.v1"
 	"os"
 )
 
+type IClient interface {
+	GetValue(string, interface{}) interface{}
+}
+
 var (
-	client *configcat.Client
+	newClient = configcat.NewClient
+	client    IClient
+	apiKey    = os.Getenv("WEBAPP_CONFIGCAT_KEY")
 )
 
-func getClient() (*configcat.Client, error) {
-	if client == nil {
-		client = configcat.NewClient(os.Getenv("WEBAPP_CONFIGCAT_KEY"))
-		return client, nil
+func getClient() IClient {
+	if client == nil && apiKey != "" {
+		client = newClient(apiKey)
+		return client
 	}
-	return client, errors.New("no configCat client")
+	return client
 }
 
 // GetFeatureFlag - gets feature flag
 func GetFeatureFlag(name string, defaultValue bool) (bool, bool) {
-	client, err := getClient()
+	client := getClient()
+
+	if client == nil {
+		return true, true
+	}
+
 	value, ok := client.GetValue(name, defaultValue).(bool)
 
-	if IsTestEnv() || !ok || err != nil {
+	if IsTestEnv() || !ok {
 		return true, true
 	}
 
