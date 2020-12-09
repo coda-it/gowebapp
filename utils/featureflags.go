@@ -5,23 +5,37 @@ import (
 	"os"
 )
 
+type iClient interface {
+	GetValue(string, interface{}) interface{}
+}
+
 var (
-	client *configcat.Client
+	newClient = configcat.NewClient
+	client    iClient
+	apiKey    = os.Getenv("WEBAPP_CONFIGCAT_KEY")
 )
 
-func getClient() *configcat.Client {
-	if client == nil {
-		client = configcat.NewClient(os.Getenv("WEBAPP_CONFIGCAT_KEY"))
+func getClient() iClient {
+	if client == nil && apiKey != "" {
+		client = newClient(apiKey)
+		return client
 	}
 	return client
 }
 
 // GetFeatureFlag - gets feature flag
 func GetFeatureFlag(name string, defaultValue bool) (bool, bool) {
-	if IsTestEnv() {
+	client := getClient()
+
+	if client == nil {
 		return true, true
 	}
 
-	value, ok := getClient().GetValue(name, defaultValue).(bool)
+	value, ok := client.GetValue(name, defaultValue).(bool)
+
+	if IsTestEnv() || !ok {
+		return true, true
+	}
+
 	return value, ok
 }
