@@ -5,17 +5,17 @@ import (
 	"os"
 )
 
-type IClient interface {
+type iClient interface {
 	GetValue(string, interface{}) interface{}
 }
 
 var (
 	newClient = configcat.NewClient
-	client    IClient
+	client    iClient
 	apiKey    = os.Getenv("WEBAPP_CONFIGCAT_KEY")
 )
 
-func getClient() IClient {
+func getClient() iClient {
 	if client == nil && apiKey != "" {
 		client = newClient(apiKey)
 		return client
