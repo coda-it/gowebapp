@@ -2,8 +2,8 @@ package handlers
 
 import (
 	"github.com/coda-it/goutils/logger"
-	"github.com/coda-it/gowebapp/models/page"
 	userServices "github.com/coda-it/gowebapp/helpers/user"
+	"github.com/coda-it/gowebapp/models/page"
 	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/session"
 	"html/template"
