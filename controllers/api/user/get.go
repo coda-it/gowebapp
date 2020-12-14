@@ -2,7 +2,7 @@ package user
 
 import (
 	"github.com/coda-it/gowebapp/handlers"
-	userServices "github.com/coda-it/gowebapp/services/user"
+	userServices "github.com/coda-it/gowebapp/helpers/user"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"

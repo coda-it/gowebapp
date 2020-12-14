@@ -12,9 +12,9 @@ type Usecase struct {
 }
 
 // New - creates new post usecases
-func New(pr postRepository.Repository) *Usecase {
+func New(pr postRepository.IRepository) *Usecase {
 	return &Usecase{
-		&pr,
+		pr,
 	}
 }
 

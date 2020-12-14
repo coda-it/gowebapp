@@ -13,9 +13,9 @@ type Usecase struct {
 }
 
 // New - creates new user usecases
-func New(ur userRepository.Repository) *Usecase {
+func New(ur userRepository.IRepository) *Usecase {
 	return &Usecase{
-		&ur,
+		ur,
 	}
 }
 

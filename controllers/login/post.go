@@ -5,7 +5,7 @@ import (
 	"github.com/coda-it/goutils/logger"
 	goutilsSession "github.com/coda-it/goutils/session"
 	"github.com/coda-it/gowebapp/constants"
-	userServices "github.com/coda-it/gowebapp/services/user"
+	userServices "github.com/coda-it/gowebapp/helpers/user"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"

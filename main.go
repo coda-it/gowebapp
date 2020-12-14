@@ -53,11 +53,11 @@ func New(port string, p *persistence.Persistance, m *mailer.Mailer) *WebServer {
 	}
 
 	ur := userRepository.New(p)
-	uuc := userUsecases.New(ur)
+	uuc := userUsecases.New(&ur)
 	cr := categoryRepository.New(p)
-	cuc := categoryUsecases.New(cr)
+	cuc := categoryUsecases.New(&cr)
 	pr := postRepository.New(p)
-	puc := postUsecases.New(pr)
+	puc := postUsecases.New(&pr)
 
 	server := gowebserver.New(serverOptions, controllers.NotFound, "/login")
 	server.Router.AddRoute("/api/user", "GET", false, user.CtrUsersGet)
