@@ -12,9 +12,9 @@ type Usecase struct {
 }
 
 // New - creates new category usecases
-func New(cr categoryRepository.Repository) *Usecase {
+func New(cr categoryRepository.IRepository) *Usecase {
 	return &Usecase{
-		&cr,
+		cr,
 	}
 }
 
