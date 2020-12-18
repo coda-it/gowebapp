@@ -1,7 +1,6 @@
 package login
 
 import (
-	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
@@ -17,5 +16,5 @@ func (c *Controller) CtrLoginGet(w http.ResponseWriter, r *http.Request, opt rou
 		params["IsError"] = true
 	}
 
-	handlers.RenderTemplate(w, r, "login", sm, params)
+	c.RenderTemplate(w, r, "login", sm, params)
 }

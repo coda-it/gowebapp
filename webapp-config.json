@@ -1,0 +1,34 @@
+{
+  "navigation": [
+    {
+      "name": "Posts",
+      "href": "/"
+    },
+    {
+      "name": "Categories",
+      "href": "/category"
+    },
+    {
+      "name": "Admin",
+      "href": "/admin",
+      "children": [
+        {
+          "name": "Categories",
+          "href": "/admin/categories"
+        },
+        {
+          "name": "Add Category",
+          "href": "/admin/categories/new"
+        },
+        {
+          "name": "Posts",
+          "href": "/admin/posts"
+        },
+        {
+          "name": "Add Post",
+          "href": "/admin/posts/new"
+        }
+      ]
+    }
+  ]
+}

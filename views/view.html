@@ -11,10 +11,13 @@
 <body class="gc-body">
     {{template "navigation" .}}
     {{template "body" .}}
-    <script src="/static/scripts.js"></script>
+    <footer class="gc-footer gc-footer--default">
+        Version: {{.Version}}
+    </footer>
+    <script type="text/javascript">
+        window.config = {};
+    </script>
+    <script type="text/javascript" src="/static/scripts.js"></script>
 </body>
-<footer class="gc-footer gc-footer--default">
-    Version: {{.Version}}
-</footer>
 </html>
 {{end}}

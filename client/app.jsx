@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { Router, Route } from 'react-router';
 import { createBrowserHistory } from 'history';
 import createSagaMiddleware from 'redux-saga';
+import './config';
 import Application from './modules/Application';
 import Admin from './modules/Admin';
 import Posts from './modules/Posts';

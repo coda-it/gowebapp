@@ -1,7 +1,7 @@
 package category
 
 import (
-	"github.com/coda-it/gowebapp/datasources/persistence"
+	"github.com/coda-it/gowebapp/data/persistence"
 	categoryModel "github.com/coda-it/gowebapp/models/category"
 	"gopkg.in/mgo.v2/bson"
 )
