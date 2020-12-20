@@ -2,8 +2,8 @@ package config
 
 // Navigation - menu navigation struct
 type Navigation struct {
+	Id       string       `json:"id"`
 	Label    string       `json:"label"`
-	Name     string       `json:"name"`
 	Href     string       `json:"href"`
 	IsRoot   bool         `json:"isRoot"`
 	Children []Navigation `json:"children"`

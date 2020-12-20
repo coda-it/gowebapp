@@ -18,16 +18,16 @@
             {{ $isRoot := .IsRoot }}
             {{range $index, $element := .Navigation}}
                 {{if or (eq $element.IsRoot false) (and (eq $element.IsRoot true) (eq $isRoot true)) }}
-                <li {{if eq $template $element.Name}}class="gc-navigation__option gc-navigation__option--active"{{else}}class="gc-navigation__option"{{end}}
+                <li {{if eq $template $element.Id}}class="gc-navigation__option gc-navigation__option--active"{{else}}class="gc-navigation__option"{{end}}
                         role="presentation">
-                    <a class="gc-navigation__link gc-link gc-link--primary" href="{{$element.Href}}">
+                    <a class="gc-navigation__link gc-link gc-link--primary tst-{{$element.Id}}" href="{{$element.Href}}">
                         {{$element.Label}}
                     </a>
                     {{if $element.Children}}
                         <div class="gc-navigation__suboption gc-submenu tst-nav-admin-sub">
                             <div class="gc-submenu__content">
                                 {{range $subindex, $subelement := $element.Children}}
-                                <a class="gc-submenu__item gc-link gc-link--primary" href="{{$subelement.Href}}">
+                                <a class="gc-submenu__item gc-link gc-link--primary tst-{{$subelement.Id}}" href="{{$subelement.Href}}">
                                     {{$subelement.Label}}
                                 </a>
                                 {{end}}
