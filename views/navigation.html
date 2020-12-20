@@ -24,10 +24,10 @@
                         {{$element.Label}}
                     </a>
                     {{if $element.Children}}
-                        <div class="gc-navigation__suboption gc-submenu tst-nav-admin-sub">
+                        <div class="gc-navigation__suboption gc-submenu tst-nav-{{$element.ID}}}-sub">
                             <div class="gc-submenu__content">
                                 {{range $subindex, $subelement := $element.Children}}
-                                <a class="gc-submenu__item gc-link gc-link--primary tst-nav{{$subelement.ID}}" href="{{$subelement.Href}}">
+                                <a class="gc-submenu__item gc-link gc-link--primary tst-nav-{{$subelement.ID}}" href="{{$subelement.Href}}">
                                     {{$subelement.Label}}
                                 </a>
                                 {{end}}
