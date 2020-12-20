@@ -15,7 +15,7 @@
         Version: {{.Version}}
     </footer>
     <script type="text/javascript">
-        window.config = {};
+        window.config = JSON.parse({{.JSConfig}})
     </script>
     <script type="text/javascript" src="/static/scripts.js"></script>
 </body>

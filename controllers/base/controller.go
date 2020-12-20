@@ -57,6 +57,8 @@ func (c *Controller) RenderTemplate(
 		logger.Log("reading template failed:" + err.Error())
 	}
 
+	jsConfig, _ := json.Marshal(c.Config)
+
 	templateModel := page.Page{
 		Version:    utils.VERSION,
 		Title:      "WEBAPP - " + name,
@@ -65,6 +67,7 @@ func (c *Controller) RenderTemplate(
 		Params:     params,
 		Name:       name,
 		Navigation: c.Config.Navigation,
+		JSConfig:   string(jsConfig),
 	}
 
 	tpl := template.Must(

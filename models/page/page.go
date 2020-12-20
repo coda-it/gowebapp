@@ -11,4 +11,5 @@ type Page struct {
 	Params     map[string]interface{}
 	Name       string
 	Navigation []config.Navigation
+	JSConfig   string
 }
