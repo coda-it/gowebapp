@@ -1,25 +1,25 @@
 package base
 
 import (
+	"encoding/json"
+	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/goutils/mailer"
 	"github.com/coda-it/gowebapp/data/config"
-	"github.com/coda-it/gowebserver/session"
 	userServices "github.com/coda-it/gowebapp/helpers/user"
-	"github.com/coda-it/gowebapp/utils"
-	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/gowebapp/models/page"
+	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/helpers"
-	"encoding/json"
+	"github.com/coda-it/gowebserver/session"
+	"html/template"
 	"net/http"
 	"os"
 	"path/filepath"
-	"html/template"
 )
 
 // Controller - base controller
 type Controller struct {
-	Mailer	mailer.IMailer
-	Config	config.Config
+	Mailer mailer.IMailer
+	Config config.Config
 }
 
 // New - creates new instance of base Mailer
@@ -30,11 +30,11 @@ func New(m mailer.IMailer, c config.Config) *Controller {
 	}
 }
 
-func handleErrorResponse(w http.ResponseWriter, msg string) {
+// HandleErrorResponse - handle error response
+func (c *Controller) HandleErrorResponse(w http.ResponseWriter, msg string) {
 	logger.Log(msg)
 	http.Error(w, msg, http.StatusInternalServerError)
 }
-
 
 // RenderTemplate - helper for page rendering
 func (c *Controller) RenderTemplate(
@@ -77,16 +77,17 @@ func (c *Controller) RenderTemplate(
 	err = tpl.ExecuteTemplate(w, "base", templateModel)
 
 	if err != nil {
-		handleErrorResponse(w, err.Error())
+		c.HandleErrorResponse(w, err.Error())
 	}
 }
 
-func HandleJSONResponse(w http.ResponseWriter, data interface{}, embedded interface{}, links map[string]map[string]string, status int) {
+// HandleJSONResponse - handle response with proper headers
+func (c *Controller) HandleJSONResponse(w http.ResponseWriter, data interface{}, embedded interface{}, links map[string]map[string]string, status int) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(status)
 	err := json.NewEncoder(w).Encode(helpers.ServeHal(data, embedded, links))
 
 	if err != nil {
-		handleErrorResponse(w, "error parsing JSON response")
+		c.HandleErrorResponse(w, "error parsing JSON response")
 	}
 }

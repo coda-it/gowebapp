@@ -5,18 +5,18 @@ import (
 	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/goutils/mailer"
 	"github.com/coda-it/gowebapp/constants"
-	postsController "github.com/coda-it/gowebapp/controllers/posts"
 	userActivationController "github.com/coda-it/gowebapp/controllers/activation"
+	adminController "github.com/coda-it/gowebapp/controllers/admin"
 	categoryApiController "github.com/coda-it/gowebapp/controllers/api/category"
 	postApiController "github.com/coda-it/gowebapp/controllers/api/post"
 	"github.com/coda-it/gowebapp/controllers/api/reset"
 	"github.com/coda-it/gowebapp/controllers/api/user"
 	"github.com/coda-it/gowebapp/controllers/base"
-	"github.com/coda-it/gowebapp/controllers/notfound"
 	categoriesController "github.com/coda-it/gowebapp/controllers/categories"
-	adminController "github.com/coda-it/gowebapp/controllers/admin"
 	userLoginController "github.com/coda-it/gowebapp/controllers/login"
 	userLogoutController "github.com/coda-it/gowebapp/controllers/logout"
+	"github.com/coda-it/gowebapp/controllers/notfound"
+	postsController "github.com/coda-it/gowebapp/controllers/posts"
 	userRegisterController "github.com/coda-it/gowebapp/controllers/register"
 	"github.com/coda-it/gowebapp/data/config"
 	"github.com/coda-it/gowebapp/data/persistence"
@@ -71,7 +71,9 @@ func New(port string, p *persistence.Persistance, m *mailer.Mailer) *WebServer {
 
 	notFoundCtl := notfound.New(baseController)
 	server := gowebserver.New(serverOptions, notFoundCtl.NotFound, "/login")
-	server.Router.AddRoute("/api/user", "GET", false, user.CtrUsersGet)
+
+	userCtl := user.New(baseController)
+	server.Router.AddRoute("/api/user", "GET", false, userCtl.CtrUsersGet)
 
 	categoryCtl := categoryApiController.New(baseController, *cuc)
 	server.Router.AddRoute("/api/category", "GET", false, categoryCtl.CtrCategoryGet)
@@ -86,7 +88,8 @@ func New(port string, p *persistence.Persistance, m *mailer.Mailer) *WebServer {
 	server.Router.AddRoute("/api/post/{id}", "PUT", true, postCtl.CtrPostPut)
 
 	if utils.IsTestEnv() {
-		server.Router.AddRoute("/api/reset", "ALL", false, reset.CtrResetDb)
+		resetCtl := reset.New(baseController)
+		server.Router.AddRoute("/api/reset", "ALL", false, resetCtl.CtrResetDb)
 	}
 
 	postsCtl := postsController.New(baseController)

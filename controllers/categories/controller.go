@@ -13,4 +13,3 @@ func New(b *base.Controller) *Controller {
 		b,
 	}
 }
-

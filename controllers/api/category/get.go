@@ -1,7 +1,6 @@
 package category
 
 import (
-	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
@@ -14,7 +13,7 @@ func (c *Controller) CtrCategoryGet(w http.ResponseWriter, r *http.Request, opt 
 	categories, err := c.CategoryUsecases.FetchAll()
 
 	if err != nil {
-		handlers.HandleErrorResponse(w, err.Error())
+		c.HandleErrorResponse(w, err.Error())
 		return
 	}
 
@@ -32,5 +31,5 @@ func (c *Controller) CtrCategoryGet(w http.ResponseWriter, r *http.Request, opt 
 		"categories": categories,
 	}
 
-	handlers.HandleJSONResponse(w, data, embedded, links, http.StatusOK)
+	c.HandleJSONResponse(w, data, embedded, links, http.StatusOK)
 }

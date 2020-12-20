@@ -7,16 +7,19 @@ import (
 	"io/ioutil"
 )
 
+// Navigation - menu navigation struct
 type Navigation struct {
-	Name		string			`json:"name"`
-	Href 		string			`json:"href"`
-	Children 	[]Navigation	`json:"children"`
+	Name     string       `json:"name"`
+	Href     string       `json:"href"`
+	Children []Navigation `json:"children"`
 }
 
+// Config - static app config
 type Config struct {
-	Navigation	[]Navigation	`json:"navigation"`
+	Navigation []Navigation `json:"navigation"`
 }
 
+// New - Config factory
 func New() Config {
 	var config Config
 

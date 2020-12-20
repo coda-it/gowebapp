@@ -1,23 +1,25 @@
 package reset
 
 import (
-	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/utils"
+	"github.com/coda-it/gowebserver/router"
+	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
 	"net/http"
 )
 
-func postHandler(w http.ResponseWriter, s store.IStore) {
+// CtrResetDb - resets persistence
+func (c *Controller) CtrResetDb(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	p, err := utils.GetPersistence(s)
 	if err != nil {
-		handlers.HandleErrorResponse(w, err.Error())
+		c.HandleErrorResponse(w, err.Error())
 		return
 	}
 
 	err = p.DropDatabase()
 
 	if err != nil {
-		handlers.HandleErrorResponse(w, "error clearing database")
+		c.HandleErrorResponse(w, "error clearing database")
 		return
 	}
 
@@ -35,5 +37,5 @@ func postHandler(w http.ResponseWriter, s store.IStore) {
 
 	embedded := map[string]string{}
 
-	handlers.HandleJSONResponse(w, data, embedded, links, http.StatusOK)
+	c.HandleJSONResponse(w, data, embedded, links, http.StatusOK)
 }

@@ -2,7 +2,6 @@ package post
 
 import (
 	"encoding/json"
-	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/post"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
@@ -16,7 +15,7 @@ func (p *Controller) CtrPostPut(w http.ResponseWriter, r *http.Request, opt rout
 	requestBody, err := ioutil.ReadAll(r.Body)
 
 	if err != nil {
-		handlers.HandleErrorResponse(w, "error reading request body")
+		p.HandleErrorResponse(w, "error reading request body")
 		return
 	}
 	defer r.Body.Close()
@@ -24,14 +23,14 @@ func (p *Controller) CtrPostPut(w http.ResponseWriter, r *http.Request, opt rout
 	var editedPost post.Post
 	err = json.Unmarshal(requestBody, &editedPost)
 	if err != nil {
-		handlers.HandleErrorResponse(w, err.Error())
+		p.HandleErrorResponse(w, err.Error())
 		return
 	}
 
 	err = p.PostUsecases.Update(editedPost)
 
 	if err != nil {
-		handlers.HandleErrorResponse(w, "error updating post")
+		p.HandleErrorResponse(w, "error updating post")
 	}
 
 	data := struct {
@@ -48,5 +47,5 @@ func (p *Controller) CtrPostPut(w http.ResponseWriter, r *http.Request, opt rout
 
 	embedded := map[string]string{}
 
-	handlers.HandleJSONResponse(w, data, embedded, links, http.StatusOK)
+	p.HandleJSONResponse(w, data, embedded, links, http.StatusOK)
 }

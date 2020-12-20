@@ -8,10 +8,6 @@ import (
 )
 
 // CtrCategories - controller for categories
-func (c *Controller)  CtrCategories(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
+func (c *Controller) CtrCategories(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	c.RenderTemplate(w, r, "categories", sm, make(map[string]interface{}))
 }
-
-
-
-
