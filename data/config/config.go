@@ -3,37 +3,26 @@ package config
 import (
 	"encoding/json"
 	"github.com/coda-it/gowebapp/constants"
+	"github.com/coda-it/gowebapp/models/config"
 	"github.com/coda-it/gowebserver/utils/logger"
 	"io/ioutil"
 )
 
-// Navigation - menu navigation struct
-type Navigation struct {
-	Name     string       `json:"name"`
-	Href     string       `json:"href"`
-	Children []Navigation `json:"children"`
-}
-
-// Config - static app config
-type Config struct {
-	Navigation []Navigation `json:"navigation"`
-}
-
 // New - Config factory
-func New() Config {
-	var config Config
+func New() config.Config {
+	var cnf config.Config
 
 	configBytes, err := ioutil.ReadFile(constants.ConfigFilePath)
 	if err != nil {
 		logger.Log(logger.ERROR, err.Error())
-		return config
+		return cnf
 	}
 
-	err = json.Unmarshal(configBytes, &config)
+	err = json.Unmarshal(configBytes, &cnf)
 	if err != nil {
 		logger.Log(logger.ERROR, err.Error())
-		return config
+		return cnf
 	}
 
-	return config
+	return cnf
 }

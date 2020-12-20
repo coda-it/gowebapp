@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/goutils/mailer"
-	"github.com/coda-it/gowebapp/data/config"
 	userServices "github.com/coda-it/gowebapp/helpers/user"
+	"github.com/coda-it/gowebapp/models/config"
 	"github.com/coda-it/gowebapp/models/page"
 	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/helpers"
@@ -58,12 +58,13 @@ func (c *Controller) RenderTemplate(
 	}
 
 	templateModel := page.Page{
-		Version:  utils.VERSION,
-		Title:    "WEBAPP - " + name,
-		IsLogged: isLogged,
-		IsRoot:   u.HasEntitlement("root"),
-		Params:   params,
-		Name:     name,
+		Version:    utils.VERSION,
+		Title:      "WEBAPP - " + name,
+		IsLogged:   isLogged,
+		IsRoot:     u.HasEntitlement("root"),
+		Params:     params,
+		Name:       name,
+		Navigation: c.Config.Navigation,
 	}
 
 	tpl := template.Must(

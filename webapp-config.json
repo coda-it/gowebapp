@@ -1,31 +1,41 @@
 {
   "navigation": [
     {
-      "name": "Posts",
-      "href": "/"
+      "label": "Posts",
+      "name": "posts",
+      "href": "/",
+      "isRoot":  false
     },
     {
-      "name": "Categories",
-      "href": "/category"
+      "label": "Categories",
+      "name": "categories",
+      "href": "/category",
+      "isRoot":  false
     },
     {
-      "name": "Admin",
+      "label": "Admin",
+      "name": "admin",
       "href": "/admin",
+      "isRoot":  true,
       "children": [
         {
-          "name": "Categories",
+          "label": "Categories",
+          "name": "admin",
           "href": "/admin/categories"
         },
         {
-          "name": "Add Category",
+          "label": "Add Category",
+          "name": "admin",
           "href": "/admin/categories/new"
         },
         {
-          "name": "Posts",
+          "label": "Posts",
+          "name": "admin",
           "href": "/admin/posts"
         },
         {
-          "name": "Add Post",
+          "label": "Add Post",
+          "name": "admin",
           "href": "/admin/posts/new"
         }
       ]
