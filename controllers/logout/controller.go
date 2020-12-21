@@ -1,4 +1,4 @@
-package login
+package logout
 
 import (
 	"github.com/coda-it/gowebapp/controllers/base"
@@ -11,7 +11,7 @@ type Controller struct {
 	UserUsecases userUsecases.Usecase
 }
 
-// New - creates instance of login Controller
+// New - creates instance of logout Controller
 func New(b *base.Controller, uu userUsecases.Usecase) *Controller {
 	return &Controller{
 		b,

@@ -2,7 +2,6 @@ package category
 
 import (
 	"encoding/json"
-	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/category"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
@@ -16,7 +15,7 @@ func (c *Controller) CtrCategoryPut(w http.ResponseWriter, r *http.Request, opt 
 	requestBody, err := ioutil.ReadAll(r.Body)
 
 	if err != nil {
-		handlers.HandleErrorResponse(w, "error reading request body")
+		c.HandleErrorResponse(w, "error reading request body")
 		return
 	}
 	defer r.Body.Close()
@@ -25,13 +24,13 @@ func (c *Controller) CtrCategoryPut(w http.ResponseWriter, r *http.Request, opt 
 
 	err = json.Unmarshal(requestBody, &editedCategory)
 	if err != nil {
-		handlers.HandleErrorResponse(w, err.Error())
+		c.HandleErrorResponse(w, err.Error())
 		return
 	}
 
 	err = c.CategoryUsecases.Update(editedCategory)
 	if err != nil {
-		handlers.HandleErrorResponse(w, "error updating category")
+		c.HandleErrorResponse(w, "error updating category")
 	}
 
 	data := struct {
@@ -48,5 +47,5 @@ func (c *Controller) CtrCategoryPut(w http.ResponseWriter, r *http.Request, opt 
 
 	embedded := map[string]string{}
 
-	handlers.HandleJSONResponse(w, data, embedded, links, http.StatusOK)
+	c.HandleJSONResponse(w, data, embedded, links, http.StatusOK)
 }

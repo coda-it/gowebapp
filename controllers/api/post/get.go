@@ -1,7 +1,6 @@
 package post
 
 import (
-	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
@@ -10,12 +9,12 @@ import (
 )
 
 // CtrPostGet - gets posts
-func (p *Controller) CtrPostGet(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
+func (c *Controller) CtrPostGet(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	userID := r.URL.Query().Get("userId")
-	posts, err := p.PostUsecases.FetchAll(userID)
+	posts, err := c.PostUsecases.FetchAll(userID)
 
 	if err != nil {
-		handlers.HandleErrorResponse(w, err.Error())
+		c.HandleErrorResponse(w, err.Error())
 		return
 	}
 
@@ -33,5 +32,5 @@ func (p *Controller) CtrPostGet(w http.ResponseWriter, r *http.Request, opt rout
 		"posts": posts,
 	}
 
-	handlers.HandleJSONResponse(w, data, embedded, links, http.StatusOK)
+	c.HandleJSONResponse(w, data, embedded, links, http.StatusOK)
 }

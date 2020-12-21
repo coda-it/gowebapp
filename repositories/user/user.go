@@ -1,7 +1,7 @@
 package user
 
 import (
-	"github.com/coda-it/gowebapp/datasources/persistence"
+	"github.com/coda-it/gowebapp/data/persistence"
 	userModel "github.com/coda-it/gowebapp/models/user"
 	"gopkg.in/mgo.v2/bson"
 )

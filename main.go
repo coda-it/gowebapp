@@ -4,15 +4,22 @@ import (
 	"errors"
 	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/goutils/mailer"
-	"github.com/coda-it/gowebapp/controllers"
+	"github.com/coda-it/gowebapp/constants"
 	userActivationController "github.com/coda-it/gowebapp/controllers/activation"
+	adminController "github.com/coda-it/gowebapp/controllers/admin"
 	categoryApiController "github.com/coda-it/gowebapp/controllers/api/category"
 	postApiController "github.com/coda-it/gowebapp/controllers/api/post"
 	"github.com/coda-it/gowebapp/controllers/api/reset"
 	"github.com/coda-it/gowebapp/controllers/api/user"
+	"github.com/coda-it/gowebapp/controllers/base"
+	categoriesController "github.com/coda-it/gowebapp/controllers/categories"
 	userLoginController "github.com/coda-it/gowebapp/controllers/login"
+	userLogoutController "github.com/coda-it/gowebapp/controllers/logout"
+	"github.com/coda-it/gowebapp/controllers/notfound"
+	postsController "github.com/coda-it/gowebapp/controllers/posts"
 	userRegisterController "github.com/coda-it/gowebapp/controllers/register"
-	"github.com/coda-it/gowebapp/datasources/persistence"
+	"github.com/coda-it/gowebapp/data/config"
+	"github.com/coda-it/gowebapp/data/persistence"
 	categoryRepository "github.com/coda-it/gowebapp/repositories/category"
 	postRepository "github.com/coda-it/gowebapp/repositories/post"
 	userRepository "github.com/coda-it/gowebapp/repositories/user"
@@ -52,6 +59,9 @@ func New(port string, p *persistence.Persistance, m *mailer.Mailer) *WebServer {
 		StaticFilesDir: "public",
 	}
 
+	appConfig := config.New()
+	baseController := base.New(m, appConfig)
+
 	ur := userRepository.New(p)
 	uuc := userUsecases.New(&ur)
 	cr := categoryRepository.New(p)
@@ -59,52 +69,62 @@ func New(port string, p *persistence.Persistance, m *mailer.Mailer) *WebServer {
 	pr := postRepository.New(p)
 	puc := postUsecases.New(&pr)
 
-	server := gowebserver.New(serverOptions, controllers.NotFound, "/login")
-	server.Router.AddRoute("/api/user", "GET", false, user.CtrUsersGet)
+	notFoundCtl := notfound.New(baseController)
+	server := gowebserver.New(serverOptions, notFoundCtl.NotFound, "/login")
 
-	categoryCtl := categoryApiController.New(m, *cuc)
+	userCtl := user.New(baseController)
+	server.Router.AddRoute("/api/user", "GET", false, userCtl.CtrUsersGet)
+
+	categoryCtl := categoryApiController.New(baseController, *cuc)
 	server.Router.AddRoute("/api/category", "GET", false, categoryCtl.CtrCategoryGet)
 	server.Router.AddRoute("/api/category", "POST", true, categoryCtl.CtrCategoryPost)
 	server.Router.AddRoute("/api/category", "DELETE", true, categoryCtl.CtrCategoryDelete)
 	server.Router.AddRoute("/api/category", "PUT", true, categoryCtl.CtrCategoryPut)
 
-	postCtl := postApiController.New(m, *puc)
+	postCtl := postApiController.New(baseController, *puc)
 	server.Router.AddRoute("/api/post/{id}", "GET", false, postCtl.CtrPostGet)
 	server.Router.AddRoute("/api/post/{id}", "POST", true, postCtl.CtrPostPost)
 	server.Router.AddRoute("/api/post/{id}", "DELETE", true, postCtl.CtrPostDelete)
 	server.Router.AddRoute("/api/post/{id}", "PUT", true, postCtl.CtrPostPut)
 
 	if utils.IsTestEnv() {
-		server.Router.AddRoute("/api/reset", "ALL", false, reset.CtrResetDb)
+		resetCtl := reset.New(baseController)
+		server.Router.AddRoute("/api/reset", "ALL", false, resetCtl.CtrResetDb)
 	}
 
-	server.Router.AddRoute("/", "ALL", false, controllers.CtrPosts)
-	server.Router.AddRoute("/post/{id}", "ALL", false, controllers.CtrPosts)
-	server.Router.AddRoute("/category", "ALL", false, controllers.CtrCategories)
-	server.Router.AddRoute("/category/{id}", "ALL", false, controllers.CtrPosts)
+	postsCtl := postsController.New(baseController)
+	server.Router.AddRoute("/", "ALL", false, postsCtl.CtrPosts)
+	server.Router.AddRoute("/post/{id}", "ALL", false, postsCtl.CtrPosts)
 
-	server.Router.AddRoute("/admin", "ALL", true, controllers.CtrAdmin)
-	server.Router.AddRoute("/admin/posts", "ALL", true, controllers.CtrAdmin)
-	server.Router.AddRoute("/admin/posts/new", "ALL", true, controllers.CtrAdmin)
-	server.Router.AddRoute("/admin/posts/edit/{id}", "ALL", true, controllers.CtrAdmin)
+	categoriesCtl := categoriesController.New(baseController)
+	server.Router.AddRoute("/category", "ALL", false, categoriesCtl.CtrCategories)
+	server.Router.AddRoute("/category/{id}", "ALL", false, postsCtl.CtrPosts)
 
-	server.Router.AddRoute("/admin/categories", "ALL", true, controllers.CtrAdmin)
-	server.Router.AddRoute("/admin/categories/new", "ALL", true, controllers.CtrAdmin)
-	server.Router.AddRoute("/admin/categories/edit/{id}", "ALL", true, controllers.CtrAdmin)
+	adminCtl := adminController.New(baseController)
+	server.Router.AddRoute("/admin", "ALL", true, adminCtl.CtrAdmin)
+	server.Router.AddRoute("/admin/posts", "ALL", true, adminCtl.CtrAdmin)
+	server.Router.AddRoute("/admin/posts/new", "ALL", true, adminCtl.CtrAdmin)
+	server.Router.AddRoute("/admin/posts/edit/{id}", "ALL", true, adminCtl.CtrAdmin)
 
-	userRegisterCtl := userRegisterController.New(m, *uuc)
+	server.Router.AddRoute("/admin/categories", "ALL", true, adminCtl.CtrAdmin)
+	server.Router.AddRoute("/admin/categories/new", "ALL", true, adminCtl.CtrAdmin)
+	server.Router.AddRoute("/admin/categories/edit/{id}", "ALL", true, adminCtl.CtrAdmin)
+
+	userRegisterCtl := userRegisterController.New(baseController, *uuc)
 	server.Router.AddRoute("/login/register", "GET", false, userRegisterCtl.CtrRegisterGet)
 	server.Router.AddRoute("/login/register", "POST", false, userRegisterCtl.CtrRegisterPost)
 
-	userActivationCtl := userActivationController.New(m, *uuc)
+	userActivationCtl := userActivationController.New(baseController, *uuc)
 	server.Router.AddRoute("/login/activation/{id}", "GET", false, userActivationCtl.CtrActivationGet)
 
-	loginCtr := userLoginController.New(m, *uuc)
-	server.Router.AddRoute("/login/logout", "ALL", true, controllers.AuthenticateLogout)
+	logoutCtr := userLogoutController.New(baseController, *uuc)
+	server.Router.AddRoute("/login/logout", "ALL", true, logoutCtr.AuthenticateLogout)
+
+	loginCtr := userLoginController.New(baseController, *uuc)
 	server.Router.AddRoute("/login", "GET", false, loginCtr.CtrLoginGet)
 	server.Router.AddRoute("/login", "POST", false, loginCtr.CtrLoginPost)
 
-	server.AddDataSource("persistence", p)
+	server.AddDataSource(constants.PersistenceDataKey, p)
 
 	return &WebServer{
 		server: server,

@@ -1,7 +1,7 @@
 package post
 
 import (
-	"github.com/coda-it/gowebapp/datasources/persistence"
+	"github.com/coda-it/gowebapp/data/persistence"
 	postModel "github.com/coda-it/gowebapp/models/post"
 	"gopkg.in/mgo.v2/bson"
 )

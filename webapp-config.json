@@ -1,0 +1,44 @@
+{
+  "navigation": [
+    {
+      "id": "posts",
+      "label": "Posts",
+      "href": "/",
+      "isRoot":  false
+    },
+    {
+      "id": "categories",
+      "label": "Categories",
+      "href": "/category",
+      "isRoot":  false
+    },
+    {
+      "id": "admin",
+      "label": "Admin",
+      "href": "/admin",
+      "isRoot":  true,
+      "children": [
+        {
+          "id": "admin-categories",
+          "label": "Categories",
+          "href": "/admin/categories"
+        },
+        {
+          "id": "admin-add-category",
+          "label": "Add Category",
+          "href": "/admin/categories/new"
+        },
+        {
+          "id": "admin-posts",
+          "label": "Posts",
+          "href": "/admin/posts"
+        },
+        {
+          "id": "admin-add-post",
+          "label": "Add Post",
+          "href": "/admin/posts/new"
+        }
+      ]
+    }
+  ]
+}

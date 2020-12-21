@@ -2,7 +2,6 @@ package post
 
 import (
 	"encoding/json"
-	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/post"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
@@ -12,11 +11,11 @@ import (
 )
 
 // CtrPostDelete - deletes post
-func (p *Controller) CtrPostDelete(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
+func (c *Controller) CtrPostDelete(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	requestBody, err := ioutil.ReadAll(r.Body)
 
 	if err != nil {
-		handlers.HandleErrorResponse(w, "error reading request body")
+		c.HandleErrorResponse(w, "error reading request body")
 		return
 	}
 	defer r.Body.Close()
@@ -25,14 +24,14 @@ func (p *Controller) CtrPostDelete(w http.ResponseWriter, r *http.Request, opt r
 
 	err = json.Unmarshal(requestBody, &deletedPost)
 	if err != nil {
-		handlers.HandleErrorResponse(w, err.Error())
+		c.HandleErrorResponse(w, err.Error())
 		return
 	}
 
-	err = p.PostUsecases.Delete(deletedPost.ID)
+	err = c.PostUsecases.Delete(deletedPost.ID)
 
 	if err != nil {
-		handlers.HandleErrorResponse(w, "error removing post")
+		c.HandleErrorResponse(w, "error removing post")
 	}
 
 	data := struct {
@@ -49,5 +48,5 @@ func (p *Controller) CtrPostDelete(w http.ResponseWriter, r *http.Request, opt r
 
 	embedded := map[string]string{}
 
-	handlers.HandleJSONResponse(w, data, embedded, links, http.StatusOK)
+	c.HandleJSONResponse(w, data, embedded, links, http.StatusOK)
 }

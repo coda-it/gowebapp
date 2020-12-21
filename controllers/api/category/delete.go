@@ -2,7 +2,6 @@ package category
 
 import (
 	"encoding/json"
-	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/category"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
@@ -15,7 +14,7 @@ import (
 func (c *Controller) CtrCategoryDelete(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	requestBody, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		handlers.HandleErrorResponse(w, "error reading request body")
+		c.HandleErrorResponse(w, "error reading request body")
 		return
 	}
 	defer r.Body.Close()
@@ -26,7 +25,7 @@ func (c *Controller) CtrCategoryDelete(w http.ResponseWriter, r *http.Request, o
 	err = c.CategoryUsecases.Delete(deletedCategory.ID)
 
 	if err != nil {
-		handlers.HandleErrorResponse(w, "error removing category")
+		c.HandleErrorResponse(w, "error removing category")
 	}
 
 	data := struct {
@@ -43,5 +42,5 @@ func (c *Controller) CtrCategoryDelete(w http.ResponseWriter, r *http.Request, o
 
 	embedded := map[string]string{}
 
-	handlers.HandleJSONResponse(w, data, embedded, links, http.StatusOK)
+	c.HandleJSONResponse(w, data, embedded, links, http.StatusOK)
 }

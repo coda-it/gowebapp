@@ -2,7 +2,6 @@ package category
 
 import (
 	"encoding/json"
-	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebapp/models/category"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
@@ -16,7 +15,7 @@ func (c *Controller) CtrCategoryPost(w http.ResponseWriter, r *http.Request, opt
 	requestBody, err := ioutil.ReadAll(r.Body)
 
 	if err != nil {
-		handlers.HandleErrorResponse(w, "error reading request body")
+		c.HandleErrorResponse(w, "error reading request body")
 		return
 	}
 	defer r.Body.Close()
@@ -27,6 +26,6 @@ func (c *Controller) CtrCategoryPost(w http.ResponseWriter, r *http.Request, opt
 	err = c.CategoryUsecases.Add(newCategory)
 
 	if err != nil {
-		handlers.HandleErrorResponse(w, "error adding new category")
+		c.HandleErrorResponse(w, "error adding new category")
 	}
 }

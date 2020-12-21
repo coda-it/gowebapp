@@ -17,5 +17,6 @@ ADD ./public /root/go/src/github.com/coda-it/gowebapp/public
 ADD ./views /root/go/src/github.com/coda-it/gowebapp/views
 COPY ./gowebapp /root/go/src/github.com/coda-it/gowebapp/
 COPY ./docker/webapp/prod/entrypoint.sh /root/scripts/
+COPY ./webapp-config.json /root/go/src/github.com/coda-it/gowebapp/
 
 ENTRYPOINT /root/scripts/entrypoint.sh

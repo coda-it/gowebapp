@@ -39,6 +39,13 @@ func (u *Usecase) Authenticate(username string, password string, sid string) (us
 	return usr, err
 }
 
+// Logout - logout user
+func (u *Usecase) Logout(sid string) error {
+	return u.userRepository.Update(bson.M{
+		"sessionId": sid,
+	}, bson.M{"$set": bson.M{"sessionId": sid}})
+}
+
 // Activate - activates user
 func (u *Usecase) Activate(ID string) error {
 	return u.userRepository.Update(bson.M{"_id": bson.ObjectIdHex(ID)}, bson.M{"$set": bson.M{"isActivated": true}})

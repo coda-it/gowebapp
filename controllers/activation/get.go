@@ -1,7 +1,6 @@
 package activation
 
 import (
-	"github.com/coda-it/gowebapp/handlers"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
@@ -14,7 +13,7 @@ func (c *Controller) CtrActivationGet(w http.ResponseWriter, r *http.Request, op
 
 	err := c.UserUsecases.Activate(userID)
 	if err != nil {
-		handlers.HandleErrorResponse(w, "user activation error: "+err.Error())
+		c.HandleErrorResponse(w, "user activation error: "+err.Error())
 		return
 	}
 
