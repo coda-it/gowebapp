@@ -7,7 +7,7 @@ type Controller struct {
 	*base.Controller
 }
 
-// New - creates instance of register Controller
+// New - creates instance of admin Controller
 func New(b *base.Controller) *Controller {
 	return &Controller{
 		b,

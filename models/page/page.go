@@ -1,6 +1,6 @@
 package page
 
-import "github.com/coda-it/gowebapp/models/config"
+import "github.com/coda-it/gowebapp/models/navigation"
 
 // Page - entity representing page
 type Page struct {
@@ -10,6 +10,6 @@ type Page struct {
 	IsRoot     bool
 	Params     map[string]interface{}
 	Name       string
-	Navigation []config.Navigation
+	Navigation []navigation.Navigation
 	JSConfig   string
 }
