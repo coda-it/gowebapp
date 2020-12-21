@@ -8,4 +8,3 @@ type Navigation struct {
 	IsRoot   bool         `json:"isRoot"`
 	Children []Navigation `json:"children"`
 }
-
