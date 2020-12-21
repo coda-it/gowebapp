@@ -1,15 +1,8 @@
 package config
 
-// Navigation - menu navigation struct
-type Navigation struct {
-	ID       string       `json:"id"`
-	Label    string       `json:"label"`
-	Href     string       `json:"href"`
-	IsRoot   bool         `json:"isRoot"`
-	Children []Navigation `json:"children"`
-}
+import "github.com/coda-it/gowebapp/models/navigation"
 
 // Config - static app config
 type Config struct {
-	Navigation []Navigation `json:"navigation"`
+	Navigation []navigation.Navigation `json:"navigation"`
 }

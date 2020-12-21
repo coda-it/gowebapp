@@ -22,7 +22,7 @@ type Controller struct {
 	Config config.Config
 }
 
-// New - creates new instance of base Mailer
+// New - creates new instance of base Controller
 func New(m mailer.IMailer, c config.Config) *Controller {
 	return &Controller{
 		m,
@@ -30,13 +30,13 @@ func New(m mailer.IMailer, c config.Config) *Controller {
 	}
 }
 
-// HandleErrorResponse - handle error response
+// HandleErrorResponse - renders error output
 func (c *Controller) HandleErrorResponse(w http.ResponseWriter, msg string) {
 	logger.Log(msg)
 	http.Error(w, msg, http.StatusInternalServerError)
 }
 
-// RenderTemplate - helper for page rendering
+// RenderTemplate - renders regular page template
 func (c *Controller) RenderTemplate(
 	w http.ResponseWriter,
 	r *http.Request,
@@ -85,7 +85,7 @@ func (c *Controller) RenderTemplate(
 	}
 }
 
-// HandleJSONResponse - handle response with proper headers
+// HandleJSONResponse - renders JSON output
 func (c *Controller) HandleJSONResponse(w http.ResponseWriter, data interface{}, embedded interface{}, links map[string]map[string]string, status int) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(status)
