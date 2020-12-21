@@ -47,5 +47,5 @@ func (c *Controller) CtrPostPut(w http.ResponseWriter, r *http.Request, opt rout
 
 	embedded := map[string]string{}
 
-	p.HandleJSONResponse(w, data, embedded, links, http.StatusOK)
+	c.HandleJSONResponse(w, data, embedded, links, http.StatusOK)
 }
