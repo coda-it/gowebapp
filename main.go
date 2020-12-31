@@ -1,10 +1,8 @@
 package main
 
 import (
-	"errors"
 	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/goutils/mailer"
-	"github.com/coda-it/gowebapp/constants"
 	userActivationController "github.com/coda-it/gowebapp/controllers/activation"
 	adminController "github.com/coda-it/gowebapp/controllers/admin"
 	categoryApiController "github.com/coda-it/gowebapp/controllers/api/category"
@@ -21,6 +19,7 @@ import (
 	"github.com/coda-it/gowebapp/data/config"
 	"github.com/coda-it/gowebapp/data/persistence"
 	"github.com/coda-it/gowebapp/models/module"
+	"github.com/coda-it/gowebapp/models/route"
 	categoryRepository "github.com/coda-it/gowebapp/repositories/category"
 	postRepository "github.com/coda-it/gowebapp/repositories/post"
 	userRepository "github.com/coda-it/gowebapp/repositories/user"
@@ -28,64 +27,10 @@ import (
 	postUsecases "github.com/coda-it/gowebapp/usecases/post"
 	userUsecases "github.com/coda-it/gowebapp/usecases/user"
 	"github.com/coda-it/gowebapp/utils"
-	"github.com/coda-it/gowebserver"
 	"os"
 )
 
 //go:generate bash ./scripts/version.sh ./scripts/version_tpl.txt ./version.go
-
-// App - main application struct
-type App struct {
-	server *gowebserver.WebServer
-	config Config
-}
-
-func getServerAddress(port string) (string, error) {
-	if port == "" {
-		return "", errors.New("server port is not set")
-	}
-	return ":" + port, nil
-}
-
-// New - creates new App instance
-func New(appConfig Config) *App {
-	addr, err := getServerAddress(appConfig.Port)
-
-	if err != nil {
-		logger.Log("starting server failed: " + err.Error())
-	}
-	baseController := base.New(appConfig.Mailer, config.New())
-
-	notFoundCtl := notfound.New(baseController)
-	server := gowebserver.New(gowebserver.WebServerOptions{
-		Port:           addr,
-		StaticFilesURL: "/static/",
-		StaticFilesDir: "public",
-	}, notFoundCtl.NotFound, "/login")
-
-	for _, m := range appConfig.Modules {
-		for _, r := range m.Routes {
-			server.Router.AddRoute(r.Path, r.Method, r.Protected, r.Handler)
-		}
-	}
-
-	if utils.IsTestEnv() {
-		resetCtl := reset.New(baseController)
-		server.Router.AddRoute("/api/reset", "ALL", false, resetCtl.CtrResetDb)
-	}
-
-	server.AddDataSource(constants.PersistenceDataKey, appConfig.Persistence)
-
-	return &App{
-		server,
-		appConfig,
-	}
-}
-
-// Run - runs WebServer process
-func (ws *App) Run() {
-	ws.server.Run()
-}
 
 func main() {
 	webAppMongoURI := os.Getenv("WEBAPP_MONGO_URI")
@@ -122,7 +67,8 @@ func main() {
 
 	userCtl := user.New(baseController)
 	userModule := module.Module{
-		Routes: []module.Route{
+		Enabled: true,
+		Routes: []route.Route{
 			{
 				Path:      "/api/user",
 				Method:    "GET",
@@ -134,7 +80,8 @@ func main() {
 
 	categoryCtl := categoryApiController.New(baseController, *categoryUsecasesEntity)
 	categoryModule := module.Module{
-		Routes: []module.Route{
+		Enabled: true,
+		Routes: []route.Route{
 			{
 				Path:      "/api/category",
 				Method:    "GET",
@@ -164,7 +111,8 @@ func main() {
 
 	postCtl := postApiController.New(baseController, *postUsecasesEntity)
 	postModule := module.Module{
-		Routes: []module.Route{
+		Enabled: true,
+		Routes: []route.Route{
 			{
 				Path:      "/api/post/{id}",
 				Method:    "GET",
@@ -194,7 +142,8 @@ func main() {
 
 	postsCtl := postsController.New(baseController)
 	postsModule := module.Module{
-		Routes: []module.Route{
+		Enabled: true,
+		Routes: []route.Route{
 			{
 				Path:      "/",
 				Method:    "ALL",
@@ -212,7 +161,8 @@ func main() {
 
 	categoriesCtl := categoriesController.New(baseController)
 	categoriesModule := module.Module{
-		Routes: []module.Route{
+		Enabled: true,
+		Routes: []route.Route{
 			{
 				Path:      "/category",
 				Method:    "ALL",
@@ -230,7 +180,8 @@ func main() {
 
 	adminCtl := adminController.New(baseController)
 	adminModule := module.Module{
-		Routes: []module.Route{
+		Enabled: true,
+		Routes: []route.Route{
 			{
 				Path:      "/admin",
 				Method:    "ALL",
@@ -278,7 +229,8 @@ func main() {
 
 	userRegisterCtl := userRegisterController.New(baseController, *userUsecaseEntity)
 	userRegisterModule := module.Module{
-		Routes: []module.Route{
+		Enabled: true,
+		Routes: []route.Route{
 			{
 				Path:      "/login/register",
 				Method:    "GET",
@@ -296,7 +248,8 @@ func main() {
 
 	userActivationCtl := userActivationController.New(baseController, *userUsecaseEntity)
 	userActivationModule := module.Module{
-		Routes: []module.Route{
+		Enabled: true,
+		Routes: []route.Route{
 			{
 				Path:      "/login/activation/{id}",
 				Method:    "GET",
@@ -308,7 +261,8 @@ func main() {
 
 	userLogoutCtl := userLogoutController.New(baseController, *userUsecaseEntity)
 	userLogoutModule := module.Module{
-		Routes: []module.Route{
+		Enabled: true,
+		Routes: []route.Route{
 			{
 				Path:      "/login/logout",
 				Method:    "ALL",
@@ -320,7 +274,8 @@ func main() {
 
 	userLoginCtl := userLoginController.New(baseController, *userUsecaseEntity)
 	userLoginModule := module.Module{
-		Routes: []module.Route{
+		Enabled: true,
+		Routes: []route.Route{
 			{
 				Path:      "/login",
 				Method:    "GET",
@@ -336,9 +291,24 @@ func main() {
 		},
 	}
 
-	appConfig := Config{
+	resetCtl := reset.New(baseController)
+	resetModule := module.Module{
+		Enabled: utils.IsTestEnv(),
+		Routes: []route.Route{
+			{
+				Path:      "/api/reset",
+				Method:    "ALL",
+				Handler:   resetCtl.CtrResetDb,
+				Protected: false,
+			},
+		},
+	}
+
+	notFoundCtl := notfound.New(baseController)
+
+	app := New(Internals{
 		Port:    webAppHTTPPort,
-		Modules: []module.Module{userModule, categoryModule, postModule, postsModule, categoriesModule, adminModule, userRegisterModule, userActivationModule, userLogoutModule, userLoginModule},
+		Modules: []module.Module{userModule, categoryModule, postModule, postsModule, categoriesModule, adminModule, userRegisterModule, userActivationModule, userLogoutModule, userLoginModule, resetModule},
 		Persistence: persistence.New(
 			webAppMongoURI,
 			webAppMongoDB,
@@ -350,8 +320,7 @@ func main() {
 			os.Getenv("WEBAPP_MAILER_SMTP_PORT"),
 			os.Getenv("WEBAPP_MAILER_SMTP_AUTHURL"),
 		),
-	}
-
-	app := New(appConfig)
+		NotFound: notFoundCtl.NotFound,
+	})
 	app.Run()
 }

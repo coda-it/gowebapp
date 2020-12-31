@@ -1,6 +1,8 @@
 package config
 
-import "github.com/coda-it/gowebapp/models/navigation"
+import (
+	"github.com/coda-it/gowebapp/models/navigation"
+)
 
 // Config - static app config
 type Config struct {
