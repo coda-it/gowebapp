@@ -14,22 +14,22 @@ The config inside is a JSON object with the following properties that can be cus
 Key: `"navigation"` - array of objects
 ```json
 {
-  "id": "navigation-id", // string
-  "label": "Label to display", // string
-  "href": "/path-to-navigate", // string
-  "isRoot": false, // bool - is item visible after logging-in
+  "id": "navigation-id",
+  "label": "Label to display",
+  "href": "/path-to-navigate",
+  "isRoot": false,
   "children": [{
     "id": "sub-navigation-d",
     "label": "Sub label to display",
     "href": "/path-to-navigate/sub"
-  }] // array of objects - only one level of nesting
+  }]
  } 
 ```
 
 ### Local development
 #### To run locally
 1. run `make run-services` in one terminal
-2. run `make && make run` in another terminal  
+2. run `make ENV=dev && WEBAPP_ENV=test make run` in another terminal  
 
 #### To run tests
 1. Above steps are required (services and application need to be running)

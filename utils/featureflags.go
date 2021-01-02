@@ -28,13 +28,13 @@ func GetFeatureFlag(name string, defaultValue bool) (bool, bool) {
 	client := getClient()
 
 	if client == nil {
-		return true, true
+		return defaultValue, true
 	}
 
 	value, ok := client.GetValue(name, defaultValue).(bool)
 
 	if IsTestEnv() || !ok {
-		return true, true
+		return defaultValue, true
 	}
 
 	return value, ok

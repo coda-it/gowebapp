@@ -1,10 +1,8 @@
 package main
 
 import (
-	"errors"
 	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/goutils/mailer"
-	"github.com/coda-it/gowebapp/constants"
 	userActivationController "github.com/coda-it/gowebapp/controllers/activation"
 	adminController "github.com/coda-it/gowebapp/controllers/admin"
 	categoryApiController "github.com/coda-it/gowebapp/controllers/api/category"
@@ -20,6 +18,8 @@ import (
 	userRegisterController "github.com/coda-it/gowebapp/controllers/register"
 	"github.com/coda-it/gowebapp/data/config"
 	"github.com/coda-it/gowebapp/data/persistence"
+	"github.com/coda-it/gowebapp/models/module"
+	"github.com/coda-it/gowebapp/models/route"
 	categoryRepository "github.com/coda-it/gowebapp/repositories/category"
 	postRepository "github.com/coda-it/gowebapp/repositories/post"
 	userRepository "github.com/coda-it/gowebapp/repositories/user"
@@ -27,114 +27,10 @@ import (
 	postUsecases "github.com/coda-it/gowebapp/usecases/post"
 	userUsecases "github.com/coda-it/gowebapp/usecases/user"
 	"github.com/coda-it/gowebapp/utils"
-	"github.com/coda-it/gowebserver"
 	"os"
 )
 
 //go:generate bash ./scripts/version.sh ./scripts/version_tpl.txt ./version.go
-
-// WebServer - adapter for gowebserver instance
-type WebServer struct {
-	server *gowebserver.WebServer
-}
-
-func getServerAddress(port string) (string, error) {
-	if port == "" {
-		return "", errors.New("Web server port is not set")
-	}
-	return ":" + port, nil
-}
-
-// New - creates new WebServer instance
-func New(port string, p *persistence.Persistance, m *mailer.Mailer) *WebServer {
-	addr, err := getServerAddress(port)
-
-	if err != nil {
-		logger.Log("starting server failed: " + err.Error())
-	}
-
-	serverOptions := gowebserver.WebServerOptions{
-		Port:           addr,
-		StaticFilesURL: "/static/",
-		StaticFilesDir: "public",
-	}
-
-	appConfig := config.New()
-	baseController := base.New(m, appConfig)
-
-	ur := userRepository.New(p)
-	uuc := userUsecases.New(&ur)
-	cr := categoryRepository.New(p)
-	cuc := categoryUsecases.New(&cr)
-	pr := postRepository.New(p)
-	puc := postUsecases.New(&pr)
-
-	notFoundCtl := notfound.New(baseController)
-	server := gowebserver.New(serverOptions, notFoundCtl.NotFound, "/login")
-
-	userCtl := user.New(baseController)
-	server.Router.AddRoute("/api/user", "GET", false, userCtl.CtrUsersGet)
-
-	categoryCtl := categoryApiController.New(baseController, *cuc)
-	server.Router.AddRoute("/api/category", "GET", false, categoryCtl.CtrCategoryGet)
-	server.Router.AddRoute("/api/category", "POST", true, categoryCtl.CtrCategoryPost)
-	server.Router.AddRoute("/api/category", "DELETE", true, categoryCtl.CtrCategoryDelete)
-	server.Router.AddRoute("/api/category", "PUT", true, categoryCtl.CtrCategoryPut)
-
-	postCtl := postApiController.New(baseController, *puc)
-	server.Router.AddRoute("/api/post/{id}", "GET", false, postCtl.CtrPostGet)
-	server.Router.AddRoute("/api/post/{id}", "POST", true, postCtl.CtrPostPost)
-	server.Router.AddRoute("/api/post/{id}", "DELETE", true, postCtl.CtrPostDelete)
-	server.Router.AddRoute("/api/post/{id}", "PUT", true, postCtl.CtrPostPut)
-
-	if utils.IsTestEnv() {
-		resetCtl := reset.New(baseController)
-		server.Router.AddRoute("/api/reset", "ALL", false, resetCtl.CtrResetDb)
-	}
-
-	postsCtl := postsController.New(baseController)
-	server.Router.AddRoute("/", "ALL", false, postsCtl.CtrPosts)
-	server.Router.AddRoute("/post/{id}", "ALL", false, postsCtl.CtrPosts)
-
-	categoriesCtl := categoriesController.New(baseController)
-	server.Router.AddRoute("/category", "ALL", false, categoriesCtl.CtrCategories)
-	server.Router.AddRoute("/category/{id}", "ALL", false, postsCtl.CtrPosts)
-
-	adminCtl := adminController.New(baseController)
-	server.Router.AddRoute("/admin", "ALL", true, adminCtl.CtrAdmin)
-	server.Router.AddRoute("/admin/posts", "ALL", true, adminCtl.CtrAdmin)
-	server.Router.AddRoute("/admin/posts/new", "ALL", true, adminCtl.CtrAdmin)
-	server.Router.AddRoute("/admin/posts/edit/{id}", "ALL", true, adminCtl.CtrAdmin)
-
-	server.Router.AddRoute("/admin/categories", "ALL", true, adminCtl.CtrAdmin)
-	server.Router.AddRoute("/admin/categories/new", "ALL", true, adminCtl.CtrAdmin)
-	server.Router.AddRoute("/admin/categories/edit/{id}", "ALL", true, adminCtl.CtrAdmin)
-
-	userRegisterCtl := userRegisterController.New(baseController, *uuc)
-	server.Router.AddRoute("/login/register", "GET", false, userRegisterCtl.CtrRegisterGet)
-	server.Router.AddRoute("/login/register", "POST", false, userRegisterCtl.CtrRegisterPost)
-
-	userActivationCtl := userActivationController.New(baseController, *uuc)
-	server.Router.AddRoute("/login/activation/{id}", "GET", false, userActivationCtl.CtrActivationGet)
-
-	logoutCtr := userLogoutController.New(baseController, *uuc)
-	server.Router.AddRoute("/login/logout", "ALL", true, logoutCtr.AuthenticateLogout)
-
-	loginCtr := userLoginController.New(baseController, *uuc)
-	server.Router.AddRoute("/login", "GET", false, loginCtr.CtrLoginGet)
-	server.Router.AddRoute("/login", "POST", false, loginCtr.CtrLoginPost)
-
-	server.AddDataSource(constants.PersistenceDataKey, p)
-
-	return &WebServer{
-		server: server,
-	}
-}
-
-// RunService - runs WebServer process
-func (ws *WebServer) RunService() {
-	ws.server.Run()
-}
 
 func main() {
 	webAppMongoURI := os.Getenv("WEBAPP_MONGO_URI")
@@ -149,19 +45,282 @@ func main() {
 
 	utils.VERSION = VERSION
 
-	p := persistence.New(
-		webAppMongoURI,
-		webAppMongoDB,
-	)
-
-	m := mailer.New(
+	baseController := base.New(mailer.New(
 		[]string{},
 		os.Getenv("WEBAPP_MAILER_EMAIL_NAME"),
 		os.Getenv("WEBAPP_MAILER_EMAIL_PASS"),
 		os.Getenv("WEBAPP_MAILER_SMTP_PORT"),
 		os.Getenv("WEBAPP_MAILER_SMTP_AUTHURL"),
+	), config.New())
+
+	store := persistence.New(
+		webAppMongoURI,
+		webAppMongoDB,
 	)
 
-	ws := New(webAppHTTPPort, p, m)
-	ws.RunService()
+	categoryRepositoryEntity := categoryRepository.New(store)
+	categoryUsecasesEntity := categoryUsecases.New(&categoryRepositoryEntity)
+	postRepositoryEntity := postRepository.New(store)
+	postUsecasesEntity := postUsecases.New(&postRepositoryEntity)
+	userRepositoryEntity := userRepository.New(store)
+	userUsecaseEntity := userUsecases.New(&userRepositoryEntity)
+
+	userCtl := user.New(baseController)
+	userModule := module.Module{
+		Enabled: true,
+		Routes: []route.Route{
+			{
+				Path:      "/api/user",
+				Method:    "GET",
+				Handler:   userCtl.CtrUsersGet,
+				Protected: false,
+			},
+		},
+	}
+
+	categoryCtl := categoryApiController.New(baseController, *categoryUsecasesEntity)
+	categoryModule := module.Module{
+		Enabled: true,
+		Routes: []route.Route{
+			{
+				Path:      "/api/category",
+				Method:    "GET",
+				Handler:   categoryCtl.CtrCategoryGet,
+				Protected: false,
+			},
+			{
+				Path:      "/api/category",
+				Method:    "POST",
+				Handler:   categoryCtl.CtrCategoryPost,
+				Protected: true,
+			},
+			{
+				Path:      "/api/category",
+				Method:    "DELETE",
+				Handler:   categoryCtl.CtrCategoryDelete,
+				Protected: true,
+			},
+			{
+				Path:      "/api/category",
+				Method:    "PUT",
+				Handler:   categoryCtl.CtrCategoryPut,
+				Protected: true,
+			},
+		},
+	}
+
+	postCtl := postApiController.New(baseController, *postUsecasesEntity)
+	postModule := module.Module{
+		Enabled: true,
+		Routes: []route.Route{
+			{
+				Path:      "/api/post/{id}",
+				Method:    "GET",
+				Handler:   postCtl.CtrPostGet,
+				Protected: false,
+			},
+			{
+				Path:      "/api/post/{id}",
+				Method:    "POST",
+				Handler:   postCtl.CtrPostPost,
+				Protected: true,
+			},
+			{
+				Path:      "/api/post/{id}",
+				Method:    "DELETE",
+				Handler:   postCtl.CtrPostDelete,
+				Protected: true,
+			},
+			{
+				Path:      "/api/post/{id}",
+				Method:    "PUT",
+				Handler:   postCtl.CtrPostPut,
+				Protected: true,
+			},
+		},
+	}
+
+	postsCtl := postsController.New(baseController)
+	postsModule := module.Module{
+		Enabled: true,
+		Routes: []route.Route{
+			{
+				Path:      "/",
+				Method:    "ALL",
+				Handler:   postsCtl.CtrPosts,
+				Protected: false,
+			},
+			{
+				Path:      "/post/{id}",
+				Method:    "ALL",
+				Handler:   postsCtl.CtrPosts,
+				Protected: false,
+			},
+		},
+	}
+
+	categoriesCtl := categoriesController.New(baseController)
+	categoriesModule := module.Module{
+		Enabled: true,
+		Routes: []route.Route{
+			{
+				Path:      "/category",
+				Method:    "ALL",
+				Handler:   categoriesCtl.CtrCategories,
+				Protected: false,
+			},
+			{
+				Path:      "/category/{id}",
+				Method:    "ALL",
+				Handler:   postsCtl.CtrPosts,
+				Protected: false,
+			},
+		},
+	}
+
+	adminCtl := adminController.New(baseController)
+	adminModule := module.Module{
+		Enabled: true,
+		Routes: []route.Route{
+			{
+				Path:      "/admin",
+				Method:    "ALL",
+				Handler:   adminCtl.CtrAdmin,
+				Protected: true,
+			},
+			{
+				Path:      "/admin/posts",
+				Method:    "ALL",
+				Handler:   adminCtl.CtrAdmin,
+				Protected: true,
+			},
+			{
+				Path:      "/admin/posts/new",
+				Method:    "ALL",
+				Handler:   adminCtl.CtrAdmin,
+				Protected: true,
+			},
+			{
+				Path:      "/admin/posts/edit/{id}",
+				Method:    "ALL",
+				Handler:   adminCtl.CtrAdmin,
+				Protected: true,
+			},
+			{
+				Path:      "/admin/categories",
+				Method:    "ALL",
+				Handler:   adminCtl.CtrAdmin,
+				Protected: true,
+			},
+			{
+				Path:      "/admin/categories/new",
+				Method:    "ALL",
+				Handler:   adminCtl.CtrAdmin,
+				Protected: true,
+			},
+			{
+				Path:      "/admin/categories/edit/{id}",
+				Method:    "ALL",
+				Handler:   adminCtl.CtrAdmin,
+				Protected: true,
+			},
+		},
+	}
+
+	userRegisterCtl := userRegisterController.New(baseController, *userUsecaseEntity)
+	userRegisterModule := module.Module{
+		Enabled: true,
+		Routes: []route.Route{
+			{
+				Path:      "/login/register",
+				Method:    "GET",
+				Handler:   userRegisterCtl.CtrRegisterGet,
+				Protected: false,
+			},
+			{
+				Path:      "/login/register",
+				Method:    "POST",
+				Handler:   userRegisterCtl.CtrRegisterPost,
+				Protected: false,
+			},
+		},
+	}
+
+	userActivationCtl := userActivationController.New(baseController, *userUsecaseEntity)
+	userActivationModule := module.Module{
+		Enabled: true,
+		Routes: []route.Route{
+			{
+				Path:      "/login/activation/{id}",
+				Method:    "GET",
+				Handler:   userActivationCtl.CtrActivationGet,
+				Protected: false,
+			},
+		},
+	}
+
+	userLogoutCtl := userLogoutController.New(baseController, *userUsecaseEntity)
+	userLogoutModule := module.Module{
+		Enabled: true,
+		Routes: []route.Route{
+			{
+				Path:      "/login/logout",
+				Method:    "ALL",
+				Handler:   userLogoutCtl.AuthenticateLogout,
+				Protected: true,
+			},
+		},
+	}
+
+	userLoginCtl := userLoginController.New(baseController, *userUsecaseEntity)
+	userLoginModule := module.Module{
+		Enabled: true,
+		Routes: []route.Route{
+			{
+				Path:      "/login",
+				Method:    "GET",
+				Handler:   userLoginCtl.CtrLoginGet,
+				Protected: false,
+			},
+			{
+				Path:      "/login",
+				Method:    "POST",
+				Handler:   userLoginCtl.CtrLoginPost,
+				Protected: false,
+			},
+		},
+	}
+
+	resetCtl := reset.New(baseController)
+	resetModule := module.Module{
+		Enabled: utils.IsTestEnv(),
+		Routes: []route.Route{
+			{
+				Path:      "/api/reset",
+				Method:    "ALL",
+				Handler:   resetCtl.CtrResetDb,
+				Protected: false,
+			},
+		},
+	}
+
+	notFoundCtl := notfound.New(baseController)
+
+	app := New(Internals{
+		Port:    webAppHTTPPort,
+		Modules: []module.Module{userModule, categoryModule, postModule, postsModule, categoriesModule, adminModule, userRegisterModule, userActivationModule, userLogoutModule, userLoginModule, resetModule},
+		Persistence: persistence.New(
+			webAppMongoURI,
+			webAppMongoDB,
+		),
+		Mailer: mailer.New(
+			[]string{},
+			os.Getenv("WEBAPP_MAILER_EMAIL_NAME"),
+			os.Getenv("WEBAPP_MAILER_EMAIL_PASS"),
+			os.Getenv("WEBAPP_MAILER_SMTP_PORT"),
+			os.Getenv("WEBAPP_MAILER_SMTP_AUTHURL"),
+		),
+		NotFound: notFoundCtl.NotFound,
+	})
+	app.Run()
 }

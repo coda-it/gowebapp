@@ -54,7 +54,7 @@ func TestGetFeatureFlag(t *testing.T) {
 	})
 
 	t.Run("When `Client` is not defined", func(t *testing.T) {
-		t.Run("Should return `true` for any flag when client is not defined", func(t *testing.T) {
+		t.Run("Should return default value for any flag when client is not defined", func(t *testing.T) {
 			client = nil
 			apiKey = ""
 			newClient = func(apiKey string) *configcat.Client {
@@ -63,7 +63,7 @@ func TestGetFeatureFlag(t *testing.T) {
 
 			value, ok := GetFeatureFlag("key-true", false)
 
-			if !ok || value == false {
+			if !ok || value == true {
 				t.Errorf("Returned `false` when for not defined Client all flags should be `true`")
 			}
 		})
