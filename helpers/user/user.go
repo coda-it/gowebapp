@@ -2,7 +2,7 @@ package user
 
 import (
 	"errors"
-	userModel "github.com/coda-it/gowebapp/models/user"
+	userModel "github.com/coda-it/gowebapp/domain/models/user"
 	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/session"
 	"net/http"
