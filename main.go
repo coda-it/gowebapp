@@ -3,29 +3,29 @@ package main
 import (
 	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/goutils/mailer"
-	userActivationController "github.com/coda-it/gowebapp/controllers/activation"
-	adminController "github.com/coda-it/gowebapp/controllers/admin"
-	categoryApiController "github.com/coda-it/gowebapp/controllers/api/category"
-	postApiController "github.com/coda-it/gowebapp/controllers/api/post"
-	"github.com/coda-it/gowebapp/controllers/api/reset"
-	"github.com/coda-it/gowebapp/controllers/api/user"
-	"github.com/coda-it/gowebapp/controllers/base"
-	categoriesController "github.com/coda-it/gowebapp/controllers/categories"
-	userLoginController "github.com/coda-it/gowebapp/controllers/login"
-	userLogoutController "github.com/coda-it/gowebapp/controllers/logout"
-	"github.com/coda-it/gowebapp/controllers/notfound"
-	postsController "github.com/coda-it/gowebapp/controllers/posts"
-	userRegisterController "github.com/coda-it/gowebapp/controllers/register"
+	userActivationController "github.com/coda-it/gowebapp/application/controllers/activation"
+	adminController "github.com/coda-it/gowebapp/application/controllers/admin"
+	categoryApiController "github.com/coda-it/gowebapp/application/controllers/api/category"
+	postApiController "github.com/coda-it/gowebapp/application/controllers/api/post"
+	"github.com/coda-it/gowebapp/application/controllers/api/reset"
+	"github.com/coda-it/gowebapp/application/controllers/api/user"
+	"github.com/coda-it/gowebapp/application/controllers/base"
+	categoriesController "github.com/coda-it/gowebapp/application/controllers/categories"
+	userLoginController "github.com/coda-it/gowebapp/application/controllers/login"
+	userLogoutController "github.com/coda-it/gowebapp/application/controllers/logout"
+	"github.com/coda-it/gowebapp/application/controllers/notfound"
+	postsController "github.com/coda-it/gowebapp/application/controllers/posts"
+	userRegisterController "github.com/coda-it/gowebapp/application/controllers/register"
+	"github.com/coda-it/gowebapp/application/module"
+	categoryRepository "github.com/coda-it/gowebapp/application/repositories/category"
+	postRepository "github.com/coda-it/gowebapp/application/repositories/post"
+	userRepository "github.com/coda-it/gowebapp/application/repositories/user"
+	"github.com/coda-it/gowebapp/application/route"
 	"github.com/coda-it/gowebapp/data/config"
 	"github.com/coda-it/gowebapp/data/persistence"
-	"github.com/coda-it/gowebapp/models/module"
-	"github.com/coda-it/gowebapp/models/route"
-	categoryRepository "github.com/coda-it/gowebapp/repositories/category"
-	postRepository "github.com/coda-it/gowebapp/repositories/post"
-	userRepository "github.com/coda-it/gowebapp/repositories/user"
-	categoryUsecases "github.com/coda-it/gowebapp/usecases/category"
-	postUsecases "github.com/coda-it/gowebapp/usecases/post"
-	userUsecases "github.com/coda-it/gowebapp/usecases/user"
+	categoryUsecases "github.com/coda-it/gowebapp/domain/usecases/category"
+	postUsecases "github.com/coda-it/gowebapp/domain/usecases/post"
+	userUsecases "github.com/coda-it/gowebapp/domain/usecases/user"
 	"github.com/coda-it/gowebapp/utils"
 	"os"
 )
@@ -307,8 +307,20 @@ func main() {
 	notFoundCtl := notfound.New(baseController)
 
 	app := New(Internals{
-		Port:    webAppHTTPPort,
-		Modules: []module.Module{userModule, categoryModule, postModule, postsModule, categoriesModule, adminModule, userRegisterModule, userActivationModule, userLogoutModule, userLoginModule, resetModule},
+		Port: webAppHTTPPort,
+		Modules: []module.Module{
+			userModule,
+			categoryModule,
+			postModule,
+			postsModule,
+			categoriesModule,
+			adminModule,
+			userRegisterModule,
+			userActivationModule,
+			userLogoutModule,
+			userLoginModule,
+			resetModule,
+		},
 		Persistence: persistence.New(
 			webAppMongoURI,
 			webAppMongoDB,

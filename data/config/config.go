@@ -2,8 +2,8 @@ package config
 
 import (
 	"encoding/json"
+	"github.com/coda-it/gowebapp/application/config"
 	"github.com/coda-it/gowebapp/constants"
-	"github.com/coda-it/gowebapp/models/config"
 	"github.com/coda-it/gowebserver/utils/logger"
 	"io/ioutil"
 )

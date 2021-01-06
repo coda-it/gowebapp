@@ -34,3 +34,16 @@ Key: `"navigation"` - array of objects
 #### To run tests
 1. Above steps are required (services and application need to be running)
 3. run `npm run cypress:open` to open Cypress in browser mode
+
+### Architecture
+
+#### Back-end
+##### Layers
+This project shares the idea of Uncle's Sam 'Clean Architecture' principles and is an example of a layered architecture. Below layers are presented from the inner-most to the outer-most:
+
+* domain
+    * models
+    * usecases
+* application
+* input/output
+    * data
