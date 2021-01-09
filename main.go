@@ -6,6 +6,7 @@ import (
 	"github.com/coda-it/goappframe/route"
 	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/goutils/mailer"
+	"github.com/coda-it/gowebapp/constants"
 	userActivationController "github.com/coda-it/gowebapp/controllers/activation"
 	adminController "github.com/coda-it/gowebapp/controllers/admin"
 	categoryApiController "github.com/coda-it/gowebapp/controllers/api/category"
@@ -326,6 +327,7 @@ func main() {
 			webAppMongoURI,
 			webAppMongoDB,
 		),
+		DataKey: constants.PersistenceDataKey,
 		Mailer: mailer.New(
 			[]string{},
 			os.Getenv("WEBAPP_MAILER_EMAIL_NAME"),
