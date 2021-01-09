@@ -39,11 +39,17 @@ Key: `"navigation"` - array of objects
 
 #### Back-end
 ##### Layers
-This project shares the idea of Uncle's Sam 'Clean Architecture' principles and is an example of a layered architecture. Below layers are presented from the inner-most to the outer-most:
+This project shares the idea of Uncle's Bob 'Clean Architecture' principles and is an example of a layered architecture. Below layers are presented from the inner-most to the outer-most:
 
 * domain
     * models
     * usecases
-* application
-* input/output
+* controllers
+* input/output & frameworks/drivers
     * data
+    * application
+
+* side abstractions
+    * utils
+    * constants
+    * helpers <- ?
