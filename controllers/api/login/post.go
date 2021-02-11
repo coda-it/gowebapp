@@ -29,9 +29,9 @@ func (c *Controller) CtrLoginPost(w http.ResponseWriter, r *http.Request, opt ro
 		username := r.PostFormValue("username")
 		password := hash.EncryptString(r.PostFormValue("password"))
 
-		isSession := c.UserUsecases.CreateClientSession(w, r, username, password, sm)
+		_, err := c.UserUsecases.CreateClientSession(w, r, username, password, sm)
 
-		if !isSession {
+		if err != nil {
 			data := struct {
 				IsSession bool `json:"isSession"`
 			}{
