@@ -3,10 +3,12 @@ import _ from 'lodash';
 import classNames from 'classnames';
 import React, { useState, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router';
-import { Button } from 'graphen';
+import { Button, Dropdown } from 'graphen';
 import * as types from './types';
 
 function PostEditor(props: types.Props) {
+  console.log(Dropdown)
+
   const {
     onAdd,
     onUpdate,
@@ -135,18 +137,18 @@ function PostEditor(props: types.Props) {
               className="gc-input__field tst-post-editor-title"
             />
           </div>
-          <select
-            id="categories"
-            name="categories"
-            value={categoryId}
-            onChange={handleCategoryChange}
-          >
-            {_.map(categories, category => (
-              <option key={`category-${category.id}`} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
+         
+         // dropdown
+          <Dropdown
+              initValue={{ label: "-Select Value-", value: "selectValue" }}
+              label="Dropdown label"
+              items={[
+                { label: "Red", value: "red" },
+                { label: "Blue", value: "blue" }
+              ]}
+            />
+          //
+          
         </article>
       </div>
       <div className="gc-panel gc-panel--separator gm-spacing-bl">
