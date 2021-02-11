@@ -7,6 +7,21 @@ import { Button, Dropdown } from 'graphen';
 import * as types from './types';
 
 function PostEditor(props: types.Props) {
+/*
+<select
+            id="categories"
+            name="categories"
+            value={categoryId}
+            onChange={handleCategoryChange}
+          >
+            {_.map(categories, category => (
+              <option key={`category-${category.id}`} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+          */
+
   console.log(Dropdown)
 
   const {
