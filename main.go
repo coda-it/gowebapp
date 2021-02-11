@@ -10,6 +10,7 @@ import (
 	userActivationController "github.com/coda-it/gowebapp/controllers/activation"
 	adminController "github.com/coda-it/gowebapp/controllers/admin"
 	categoryApiController "github.com/coda-it/gowebapp/controllers/api/category"
+	loginApiController "github.com/coda-it/gowebapp/controllers/api/login"
 	postApiController "github.com/coda-it/gowebapp/controllers/api/post"
 	"github.com/coda-it/gowebapp/controllers/api/reset"
 	"github.com/coda-it/gowebapp/controllers/api/user"
@@ -66,6 +67,25 @@ func main() {
 	postUsecasesEntity := postUsecases.New(&postRepositoryEntity)
 	userRepositoryEntity := userRepository.New(store)
 	userUsecaseEntity := userUsecases.New(&userRepositoryEntity)
+
+	apiLoginCtl := loginApiController.New(baseController, *userUsecaseEntity)
+	apiLoginModule := module.Module{
+		Enabled: true,
+		Routes: []route.Route{
+			{
+				Path:      "/api/login",
+				Method:    "OPTIONS",
+				Handler:   apiLoginCtl.CtrLoginOptions,
+				Protected: false,
+			},
+			{
+				Path:      "/api/login",
+				Method:    "POST",
+				Handler:   apiLoginCtl.CtrLoginPost,
+				Protected: false,
+			},
+		},
+	}
 
 	userCtl := user.New(baseController)
 	userModule := module.Module{
@@ -311,6 +331,7 @@ func main() {
 	appInstance := goappframe.New(goappframe.Internals{
 		Port: webAppHTTPPort,
 		Modules: []module.Module{
+			apiLoginModule,
 			userModule,
 			categoryModule,
 			postModule,

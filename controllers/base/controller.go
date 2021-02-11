@@ -6,7 +6,7 @@ import (
 	"github.com/coda-it/goappframe/page"   // this probably should not depand on application layer
 	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/goutils/mailer"
-	userServices "github.com/coda-it/gowebapp/helpers/user"
+	userHelpers "github.com/coda-it/gowebapp/helpers/user"
 	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/helpers"
 	"github.com/coda-it/gowebserver/session"
@@ -30,6 +30,15 @@ func New(m mailer.IMailer, c config.Config) *Controller {
 	}
 }
 
+// CorsHeaders - set required CORS headers
+func (c *Controller) CorsHeaders(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", r.Header.Get("Origin"))
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+}
+
 // HandleErrorResponse - renders error output
 func (c *Controller) HandleErrorResponse(w http.ResponseWriter, msg string) {
 	logger.Log(msg)
@@ -46,7 +55,7 @@ func (c *Controller) RenderTemplate(
 ) {
 	isLogged := false
 
-	u, err := userServices.GetLoggedUser(r, sm)
+	u, err := userHelpers.GetLoggedUser(r, sm)
 	if err == nil {
 		isLogged = true
 	}
