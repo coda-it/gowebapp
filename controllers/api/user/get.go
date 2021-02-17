@@ -1,7 +1,7 @@
 package user
 
 import (
-	userServices "github.com/coda-it/gowebapp/helpers/user"
+	userHelpers "github.com/coda-it/gowebapp/helpers/user"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
@@ -16,7 +16,7 @@ func (c *Controller) CtrUsersGet(w http.ResponseWriter, r *http.Request, opt rou
 		},
 	}
 
-	u, err := userServices.GetLoggedUser(r, sm)
+	u, err := userHelpers.GetLoggedUser(r, sm)
 
 	if err != nil {
 		c.HandleJSONResponse(w, struct{}{}, struct{}{}, links, http.StatusOK)
