@@ -6,6 +6,7 @@ module.exports = {
   resolve: {
     modules: [
       path.resolve(__dirname, './node_modules'),
+      path.resolve(__dirname, './node_modules/graphen'),
       path.resolve(__dirname, '.'),
     ],
   },
