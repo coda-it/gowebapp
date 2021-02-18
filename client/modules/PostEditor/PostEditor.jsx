@@ -7,7 +7,7 @@ import { Button, Dropdown } from 'graphen';
 import * as types from './types';
 
 function PostEditor(props: types.Props) {
-/*
+/* drop
 <select
             id="categories"
             name="categories"
