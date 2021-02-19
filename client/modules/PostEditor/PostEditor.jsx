@@ -56,6 +56,7 @@ function PostEditor(props: types.Props) {
   );
 
   const [categoryId, setCategoryId] = useState(null);
+  /* eslint-disable no-unused-vars */
   const handleCategoryChange = useCallback(
     event => {
       setCategoryId(event.target.value);
