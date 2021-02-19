@@ -137,7 +137,7 @@ function PostEditor(props: types.Props) {
           </div>
           <Dropdown
             initValue={{ label: '-Select Value-', value: 'selectValue' }}
-            label="categories"
+            label="Categories"
             items={_.map(categories, category => ({
               label: `${category.name}`,
               value: `${category.id}`,
