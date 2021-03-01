@@ -3,7 +3,7 @@ import _ from 'lodash';
 import classNames from 'classnames';
 import React, { useState, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router';
-import { Button, Dropdown } from 'graphen';
+import { Button, Dropdown, Loader } from 'graphen';
 import * as types from './types';
 
 function PostEditor(props: types.Props) {
@@ -58,8 +58,8 @@ function PostEditor(props: types.Props) {
   const [categoryId, setCategoryId] = useState(null);
   /* eslint-disable no-unused-vars */
   const handleCategoryChange = useCallback(
-    event => {
-      setCategoryId(event.target.value);
+    value => {
+      setCategoryId(value);
       setIsDirty(true);
     },
     [setCategoryId, setIsDirty]
@@ -136,14 +136,22 @@ function PostEditor(props: types.Props) {
               className="gc-input__field tst-post-editor-title"
             />
           </div>
-          <Dropdown
-            initValue={{ label: '-Select Value-', value: 'selectValue' }}
-            label="Categories"
-            items={_.map(categories, category => ({
-              label: `${category.name}`,
-              value: `${category.id}`,
-            }))}
-          />
+          {categories?.length > 0 ? (
+            <Dropdown
+              initValue={{
+                label: _.head(categories).name,
+                value: _.head(categories).id,
+              }}
+              label="Categories"
+              items={_.map(categories, category => ({
+                label: category.name,
+                value: category.id,
+              }))}
+              onChange={handleCategoryChange}
+            />
+          ) : (
+            <Loader />
+          )}
         </article>
       </div>
       <div className="gc-panel gc-panel--separator gm-spacing-bl">
