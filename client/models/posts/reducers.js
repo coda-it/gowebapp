@@ -12,12 +12,9 @@ export default function reducers(
 ) {
   switch (action.type) {
     case actionTypes.FETCH_POSTS_SUCCESS:
-      return Object.assign(
-        {},
-        {
-          posts: action.posts,
-        }
-      );
+      return {
+        posts: action.posts,
+      };
     default:
       return state;
   }

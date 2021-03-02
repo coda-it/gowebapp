@@ -84,9 +84,11 @@ function CategoryEditor(props: types.Props) {
         <header className="gc-panel__title">Name</header>
         <article className="gc-panel__content">
           <div className="gc-input gc-input--full">
+            {/* eslint-disable jsx-a11y/label-has-associated-control */}
             <label htmlFor="category-name" className="gc-input__label">
               Name
             </label>
+            {/* eslint-enable jsx-a11y/label-has-associated-control */}
             <input
               id="category-name"
               value={name}
@@ -105,7 +107,7 @@ function CategoryEditor(props: types.Props) {
           onChange={handleImageChange}
           className="gm-spacing-bl"
         />
-        <img src={image} role="presentation" />
+        <img src={image} alt="category" />
       </div>
       <div className="gc-panel gc-panel--separator">
         {_.isEmpty(category) && (

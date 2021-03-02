@@ -12,12 +12,9 @@ export default function reducers(
 ) {
   switch (action.type) {
     case actionTypes.FETCH_CATEGORIES_SUCCESS:
-      return Object.assign(
-        {},
-        {
-          categories: action.categories,
-        }
-      );
+      return {
+        categories: action.categories,
+      };
     default:
       return state;
   }

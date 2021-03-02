@@ -11,13 +11,13 @@ export default function reducers(state: Object = defaultState, action: Object) {
 
   switch (action.type) {
     case actionTypes.FETCH_USER:
-      return Object.assign({}, state, { isLoading: true });
+      return { ...state, isLoading: true };
 
     case actionTypes.LOAD_USER:
-      return Object.assign({}, state, { user, isLoading: false });
+      return { ...state, user, isLoading: false };
 
     case actionTypes.FETCH_USER_FAILURE:
-      return Object.assign({}, state, { error, isLoading: false });
+      return { ...state, error, isLoading: false };
 
     default:
       return state;

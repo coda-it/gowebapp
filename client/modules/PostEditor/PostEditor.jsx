@@ -125,9 +125,11 @@ function PostEditor(props: types.Props) {
         <header className="gc-panel__title">Title</header>
         <article className="gc-panel__content">
           <div className="gc-input gc-input--full">
+            {/* eslint-disable jsx-a11y/label-has-associated-control */}
             <label htmlFor="post-title" className="gc-input__label">
               Title
             </label>
+            {/* eslint-enable jsx-a11y/label-has-associated-control */}
             <input
               id="post-title"
               value={title}
@@ -158,7 +160,7 @@ function PostEditor(props: types.Props) {
           onChange={handleImageChange}
           className="gm-spacing-bl"
         />
-        <img src={image} role="presentation" />
+        <img src={image} alt="post" />
       </div>
       <div className="gc-panel gc-panel--separator">
         <header className="gc-panel__title">Description</header>

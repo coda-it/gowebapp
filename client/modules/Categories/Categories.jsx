@@ -33,10 +33,11 @@ function Categories(props: types.Props) {
               className="gc-flex__item gc-card gc-card--gradient gc-panel gm-spacing-l tst-category"
             >
               <div className="gc-panel__title tst-category-name">
+                {/* eslint-disable jsx-a11y/anchor-is-valid */}
                 <Link skin={constants.SKINS.default} link={`/category/${id}`}>
                   {name}
-                </Link>{' '}
-                {editButton}
+                </Link>
+                {/* eslint-enable jsx-a11y/anchor-is-valid */} {editButton}
               </div>
               <Image
                 className="gm-margin-center"

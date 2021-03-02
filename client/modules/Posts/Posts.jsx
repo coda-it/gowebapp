@@ -36,14 +36,15 @@ function Posts(props: types.Props) {
               className={`gc-flex__item gc-card gc-card--gradient gc-panel gm-spacing-l tst-post-${key}`}
             >
               <div className={`gc-panel__title tst-post-title-${key}`}>
+                {/* eslint-disable jsx-a11y/anchor-is-valid */}
                 <Link
                   className={`tst-post-link-${key}`}
                   skin={constants.SKINS.default}
                   link={`/post/${id}`}
                 >
                   {title}
-                </Link>{' '}
-                {editButton}
+                </Link>
+                {/* eslint-enable jsx-a11y/anchor-is-valid */} {editButton}
               </div>
               <Image
                 className="gm-margin-center"

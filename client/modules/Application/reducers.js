@@ -12,9 +12,7 @@ const defaultState = {
 export default function reducers(state: State = defaultState, action: Object) {
   switch (action.type) {
     case actionTypes.LOADED:
-      return Object.assign({}, state, {
-        isLoaded: true,
-      });
+      return { ...state, isLoaded: true };
     default:
       return state;
   }

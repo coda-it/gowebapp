@@ -1,7 +1,12 @@
+// @flow
 import React from 'react';
-import PropTypes from 'prop-types';
 
-class Alert extends React.Component {
+type Props = {
+  type: string,
+  children: React$Element<any>,
+};
+
+class Alert extends React.Component<Props> {
   constructor() {
     super();
 
@@ -41,13 +46,5 @@ class Alert extends React.Component {
     return <div className={classes}>{children}</div>;
   }
 }
-
-Alert.propTypes = {
-  type: PropTypes.string,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-};
 
 export default Alert;

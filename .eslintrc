@@ -1,3 +1,15 @@
 {
-  "extends": ["codait"]
+  "extends": ["codait"],
+  "overrides": [
+    {
+      "files": ["client/**/*.ts", "client/**/*.tsx"],
+      "parserOptions": {
+        "project": ["tsconfig.json"]
+      },
+      "extends": "airbnb-typescript",
+      "rules": {
+        "import/no-unused-modules": ["error", { "unusedExports": true }]
+      }
+    }
+  ]
 }

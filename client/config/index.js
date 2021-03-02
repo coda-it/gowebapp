@@ -1,6 +1,6 @@
 // @flow
 
-const config = Object.assign({}, window.config);
+const config = { ...window.config };
 delete window.config;
 
 export default config;
