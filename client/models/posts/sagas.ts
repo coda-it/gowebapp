@@ -2,7 +2,6 @@ import { put, call, select } from 'redux-saga/effects';
 import * as alertActions from 'client/models/alerts/actions';
 import * as alertConstants from 'client/models/alerts/constants';
 import * as userSelectors from 'client/models/users/selectors';
-import * as userTypes from 'client/models/users/types';
 import * as actions from './actions';
 import * as constants from './constants';
 import type * as types from './types';

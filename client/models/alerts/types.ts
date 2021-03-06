@@ -1,5 +1,3 @@
-import * as constants from './constants';
-
 export type AlertType = string;
 
 export type Alert = {
