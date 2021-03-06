@@ -1,33 +1,19 @@
-// @ts-ignore
 import React from 'react';
-// @ts-ignore
 import { render } from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
-// @ts-ignore
 import { Provider } from 'react-redux';
-// @ts-ignore
 import { Router, Route } from 'react-router';
-// @ts-ignore
 import { createBrowserHistory } from 'history';
 import createSagaMiddleware from 'redux-saga';
 import './config';
-// @ts-ignore
 import Application from './modules/Application';
-// @ts-ignore
 import Admin from './modules/Admin';
-// @ts-ignore
 import Posts from './modules/Posts';
-// @ts-ignore
 import PostEditor from './modules/PostEditor';
-// @ts-ignore
 import Post from './modules/Post';
-// @ts-ignore
 import Categories from './modules/Categories';
-// @ts-ignore
 import CategoryEditor from './modules/CategoryEditor';
-// @ts-ignore
 import sagas from './sagas';
-// @ts-ignore
 import reducers from './reducers';
 
 const appContainer = document.querySelector('.js-app');
@@ -39,6 +25,7 @@ sagaMiddleware.run(sagas);
 
 if (appContainer) {
   render(
+      // @ts-ignore - to be fixed
     <Provider store={store}>
       <Router history={createBrowserHistory({})}>
         <Application>

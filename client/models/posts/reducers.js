@@ -1,21 +1,15 @@
-// @flow
 import * as actionTypes from './actionTypes';
-import * as types from './types';
-
-const defaultState: types.State = {
-  posts: [],
+const defaultState = {
+    posts: [],
 };
-
-export default function reducers(
-  state: types.State = defaultState,
-  action: Function
-) {
-  switch (action.type) {
-    case actionTypes.FETCH_POSTS_SUCCESS:
-      return {
-        posts: action.posts,
-      };
-    default:
-      return state;
-  }
+export default function reducers(state = defaultState, action) {
+    switch (action.type) {
+        case actionTypes.FETCH_POSTS_SUCCESS:
+            return {
+                posts: action.posts,
+            };
+        default:
+            return state;
+    }
 }
+//# sourceMappingURL=reducers.js.map

@@ -1,15 +1,36 @@
 {
-  "extends": ["codait"],
-  "overrides": [
-    {
-      "files": ["client/**/*.ts", "client/**/*.tsx"],
-      "parserOptions": {
-        "project": ["tsconfig.json"]
-      },
-      "extends": "airbnb-typescript",
-      "rules": {
-        "import/no-unused-modules": ["error", { "unusedExports": true }]
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "tsconfig.json"
+  },
+  "extends": [
+    "airbnb-typescript",
+    "prettier"
+  ],
+  "plugins": ["import"],
+  "rules": {
+    "import/no-unresolved": "error"
+  },
+  "globals": {
+    "window": true,
+    "document": true,
+    "fetch": true,
+    "WebSocket": true,
+    "Request": true,
+    "FileReader": true
+  },
+  "env": {
+    "jest": true
+  },
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "client"
       }
     }
-  ]
+  }
 }

@@ -17,9 +17,7 @@ describe('Posts', () => {
     cy.get('.tst-posts')
       .children('[class*=tst-post-]')
       .should('have.length', 1);
-    cy.get('.tst-post-0')
-      .find('.tst-post-title-0')
-      .contains('Post title');
+    cy.get('.tst-post-0').find('.tst-post-title-0').contains('Post title');
     cy.screenshot();
 
     cy.get('.tst-nav-posts').click();
@@ -31,9 +29,7 @@ describe('Posts', () => {
     cy.get('.tst-nav-admin-posts').click();
 
     cy.get('.tst-post-edit-0').click();
-    cy.get('.tst-post-editor-title')
-      .clear()
-      .type('Post title updated');
+    cy.get('.tst-post-editor-title').clear().type('Post title updated');
     cy.get('.tst-post-editor-description')
       .clear()
       .type('Post description updated');

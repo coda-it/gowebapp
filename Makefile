@@ -43,6 +43,7 @@ integration-test:
 
 .PHONY: lint
 lint:
+    $(NPM) run tsc
 	$(NPM) run flow
 	$(NPM) run lint
 	$(NPM) run csslint

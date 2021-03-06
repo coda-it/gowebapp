@@ -1,36 +1,24 @@
-// @flow
 import * as actionTypes from './actionTypes';
-import * as types from './types';
-
-export const addCategory = (name: string, image: string | null) => ({
-  type: actionTypes.ADD_CATEGORY,
-  name,
-  image,
+export const addCategory = (name, image) => ({
+    type: actionTypes.ADD_CATEGORY,
+    name,
+    image,
 });
-
-export const updateCategory = (
-  id: string,
-  name: string,
-  image: string | null
-) => ({
-  type: actionTypes.UPDATE_CATEGORY,
-  id,
-  name,
-  image,
+export const updateCategory = (id, name, image) => ({
+    type: actionTypes.UPDATE_CATEGORY,
+    id,
+    name,
+    image,
 });
-
-export const deleteCategory = (id: string) => ({
-  type: actionTypes.DELETE_CATEGORY,
-  id,
+export const deleteCategory = (id) => ({
+    type: actionTypes.DELETE_CATEGORY,
+    id,
 });
-
 export const fetchCategories = () => ({
-  type: actionTypes.FETCH_CATEGORIES,
+    type: actionTypes.FETCH_CATEGORIES,
 });
-
-export const fetchCategoriesSuccess = (
-  categories: $ReadOnlyArray<types.Category>
-) => ({
-  type: actionTypes.FETCH_CATEGORIES_SUCCESS,
-  categories,
+export const fetchCategoriesSuccess = (categories) => ({
+    type: actionTypes.FETCH_CATEGORIES_SUCCESS,
+    categories,
 });
+//# sourceMappingURL=actions.js.map

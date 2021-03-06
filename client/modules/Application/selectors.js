@@ -1,6 +1,4 @@
-// @flow
-/* eslint-disable import/prefer-default-export */
-export const getIsLoaded = (state: Object): WebSocket => {
-  return state.application.isLoaded;
+export const getIsLoaded = (state) => {
+    return state.application?.isLoaded ?? false;
 };
-/* eslint-enable import/prefer-default-export */
+//# sourceMappingURL=selectors.js.map

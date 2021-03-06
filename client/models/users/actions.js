@@ -1,17 +1,13 @@
-// @flow
 import * as actionTypes from './actionTypes';
-import * as types from './types';
-
 export const fetchUser = () => ({
-  type: actionTypes.FETCH_USER,
+    type: actionTypes.FETCH_USER,
 });
-
-export const loadUser = (user: types.User) => ({
-  type: actionTypes.LOAD_USER,
-  user,
+export const loadUser = (user) => ({
+    type: actionTypes.LOAD_USER,
+    user,
 });
-
-export const fetchUserError = (error: string) => ({
-  type: actionTypes.FETCH_USER_FAILURE,
-  error,
+export const fetchUserError = (error) => ({
+    type: actionTypes.FETCH_USER_FAILURE,
+    error,
 });
+//# sourceMappingURL=actions.js.map

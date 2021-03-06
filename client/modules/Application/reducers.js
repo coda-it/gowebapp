@@ -1,19 +1,13 @@
-// @flow
 import * as actionTypes from './actionTypes';
-
-type State = {
-  isLoaded: boolean,
-};
-
 const defaultState = {
-  isLoaded: false,
+    isLoaded: false,
 };
-
-export default function reducers(state: State = defaultState, action: Object) {
-  switch (action.type) {
-    case actionTypes.LOADED:
-      return { ...state, isLoaded: true };
-    default:
-      return state;
-  }
+export default function reducers(state = defaultState, action) {
+    switch (action.type) {
+        case actionTypes.LOADED:
+            return { ...state, isLoaded: true };
+        default:
+            return state;
+    }
 }
+//# sourceMappingURL=reducers.js.map

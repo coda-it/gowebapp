@@ -1,47 +1,29 @@
-// @flow
-import * as userTypes from 'client/models/users/types';
 import * as actionTypes from './actionTypes';
-import * as types from './types';
-
-export const addPost = (
-  title: string,
-  description: string,
-  categoryId: string | null,
-  image: string | null
-) => ({
-  type: actionTypes.ADD_POST,
-  title,
-  description,
-  categoryId,
-  image,
+export const addPost = (title, description, categoryId, image) => ({
+    type: actionTypes.ADD_POST,
+    title,
+    description,
+    categoryId,
+    image,
 });
-
-export const updatePost = (
-  id: string,
-  title: string,
-  description: string,
-  categoryId: string | null,
-  image: string | null
-) => ({
-  type: actionTypes.UPDATE_POST,
-  id,
-  title,
-  description,
-  categoryId,
-  image,
+export const updatePost = (id, title, description, categoryId, image) => ({
+    type: actionTypes.UPDATE_POST,
+    id,
+    title,
+    description,
+    categoryId,
+    image,
 });
-
-export const deletePost = (id: string) => ({
-  type: actionTypes.DELETE_POST,
-  id,
+export const deletePost = (id) => ({
+    type: actionTypes.DELETE_POST,
+    id,
 });
-
-export const fetchPosts = (user?: userTypes.User) => ({
-  type: actionTypes.FETCH_POSTS,
-  user,
+export const fetchPosts = (user) => ({
+    type: actionTypes.FETCH_POSTS,
+    user,
 });
-
-export const fetchPostsSuccess = (posts: $ReadOnlyArray<types.Post>) => ({
-  type: actionTypes.FETCH_POSTS_SUCCESS,
-  posts,
+export const fetchPostsSuccess = (posts) => ({
+    type: actionTypes.FETCH_POSTS_SUCCESS,
+    posts,
 });
+//# sourceMappingURL=actions.js.map
