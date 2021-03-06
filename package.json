@@ -6,8 +6,8 @@
   "scripts": {
     "build:dev": "webpack --mode=development --config webpack.dev.config.js",
     "build:prod": "webpack --mode=production --config webpack.prod.config.js",
-    "lint": "eslint --config .eslintrc --ext .js,.jsx,.ts,.tsx .",
-    "lint:fix": "eslint --fix --config .eslintrc --ext .js,.jsx,.ts,.tsx .",
+    "lint": "eslint --config .eslintrc --ext .ts,.tsx ./client/",
+    "lint:fix": "eslint --fix --config .eslintrc --ext .ts,.tsx ./client/",
     "test": "jest --config ./config/jest.config.js --no-watchman",
     "test:update": "jest --config ./config/jest.config.js --no-watchman --updateSnapshot",
     "csslint": "stylelint \"./client/**/*.scss\" --config .stylelintrc",
