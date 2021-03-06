@@ -21,7 +21,7 @@ function CategoryEditor(props: types.Props) {
       setName(event.target.value);
       setIsDirty(true);
     },
-    [setName, setIsDirty],
+    [setName, setIsDirty]
   );
 
   const [image, setImage] = useState(null);
@@ -33,7 +33,7 @@ function CategoryEditor(props: types.Props) {
         }
       }
     },
-    [setImage],
+    [setImage]
   );
   const handleImageChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +42,7 @@ function CategoryEditor(props: types.Props) {
       fileReader.addEventListener('load', loadImage);
       fileReader.readAsDataURL(file);
     },
-    [loadImage],
+    [loadImage]
   );
 
   useEffect(() => {
@@ -75,7 +75,7 @@ function CategoryEditor(props: types.Props) {
     'tst-category-editor-update',
     {
       'gc-btn--disabled': isDirty,
-    },
+    }
   );
 
   return (

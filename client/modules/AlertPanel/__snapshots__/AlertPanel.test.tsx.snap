@@ -5,16 +5,22 @@ exports[`AlertPanel/AlertPanel should render correctly 1`] = `
   alerts={
     Array [
       Object {
+        "isOld": false,
         "message": "Message 1",
-        "type": "type-class",
+        "timestamp": 2020-03-01T00:00:00.000Z,
+        "type": "info",
       },
       Object {
+        "isOld": false,
         "message": "Message 2",
-        "type": "type-class",
+        "timestamp": 2020-03-01T00:00:00.000Z,
+        "type": "info",
       },
       Object {
+        "isOld": false,
         "message": "Message 3",
-        "type": "type-class",
+        "timestamp": 2020-03-01T00:00:00.000Z,
+        "type": "info",
       },
     ]
   }
@@ -24,30 +30,30 @@ exports[`AlertPanel/AlertPanel should render correctly 1`] = `
   >
     <Alert
       key="alert-0"
-      type="type-class"
+      type="info"
     >
       <div
-        className="alert-panel__alert alert-panel__alert--type-class  "
+        className="alert-panel__alert alert-panel__alert--info  "
       >
         Message 1
       </div>
     </Alert>
     <Alert
       key="alert-1"
-      type="type-class"
+      type="info"
     >
       <div
-        className="alert-panel__alert alert-panel__alert--type-class  "
+        className="alert-panel__alert alert-panel__alert--info  "
       >
         Message 2
       </div>
     </Alert>
     <Alert
       key="alert-2"
-      type="type-class"
+      type="info"
     >
       <div
-        className="alert-panel__alert alert-panel__alert--type-class  "
+        className="alert-panel__alert alert-panel__alert--info  "
       >
         Message 3
       </div>

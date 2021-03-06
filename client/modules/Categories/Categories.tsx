@@ -50,7 +50,7 @@ function Categories(props: types.Props) {
                 />
               </div>
             );
-          },
+          }
         )}
       </div>
     </div>

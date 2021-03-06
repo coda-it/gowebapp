@@ -1,13 +1,13 @@
 import React from 'react';
 
 type Props = {
-  type: string,
-  children: React.ReactNode,
+  type: string;
+  children: React.ReactNode;
 };
 
 type State = {
-  show: boolean,
-  hide: boolean,
+  show: boolean;
+  hide: boolean;
 };
 
 class Alert extends React.Component<Props, State> {

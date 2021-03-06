@@ -4,7 +4,7 @@ import type * as types from 'client/models/alerts/types';
 import Alert from './Alert';
 
 type Props = {
-  alerts: ReadonlyArray<types.Alert>,
+  alerts: ReadonlyArray<types.Alert>;
 };
 
 const AlertPanel = (props: Props) => {

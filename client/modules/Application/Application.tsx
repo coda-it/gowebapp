@@ -3,9 +3,9 @@ import AlertPanel from 'client/modules/AlertPanel';
 import { Loader } from 'graphen';
 
 type Props = {
-  isLoaded: boolean,
-  children: React.ReactNode,
-  mount: () => void,
+  isLoaded: boolean;
+  children: React.ReactNode;
+  mount: () => void;
 };
 
 class Application extends React.PureComponent<Props> {

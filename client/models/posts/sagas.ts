@@ -143,9 +143,7 @@ export function callFetchPosts(userId: string) {
     .catch(() => 'Fetch posts failed');
 }
 
-export function* onFetchPosts({
-  user,
-}: types.FetchPostsAction): Iterable<any> {
+export function* onFetchPosts({ user }: types.FetchPostsAction): Iterable<any> {
   const userId = user?.id;
   const response: types.ApiResponse = yield call(callFetchPosts, userId);
 

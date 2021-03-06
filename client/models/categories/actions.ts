@@ -2,7 +2,10 @@
 import * as actionTypes from './actionTypes';
 import type * as types from './types';
 
-export const addCategory = (name: string, image: string | null): types.AddCategoryAction => ({
+export const addCategory = (
+  name: string,
+  image: string | null
+): types.AddCategoryAction => ({
   type: actionTypes.ADD_CATEGORY,
   name,
   image,

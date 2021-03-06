@@ -8,7 +8,7 @@ import CategoryEditor from './CategoryEditor';
 
 const mapStateToProps = (
   state: globalTypes.State,
-  ownProps: types.OwnProps,
+  ownProps: types.OwnProps
 ) => {
   const {
     match: { params },

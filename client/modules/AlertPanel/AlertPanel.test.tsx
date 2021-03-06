@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import * as constants from 'client/models/alerts/constants';
 import AlertPanel from './AlertPanel';
 
 describe('AlertPanel/AlertPanel', () => {

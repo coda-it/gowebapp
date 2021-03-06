@@ -30,7 +30,7 @@ function PostEditor(props: types.Props) {
       setTitle(event.target.value);
       setIsDirty(true);
     },
-    [setTitle, setIsDirty],
+    [setTitle, setIsDirty]
   );
 
   const [image, setImage] = useState(null);
@@ -42,7 +42,7 @@ function PostEditor(props: types.Props) {
         }
       }
     },
-    [setImage],
+    [setImage]
   );
   const handleImageChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +51,7 @@ function PostEditor(props: types.Props) {
       fileReader.addEventListener('load', loadImage);
       fileReader.readAsDataURL(file);
     },
-    [loadImage],
+    [loadImage]
   );
 
   const [categoryId, setCategoryId] = useState(null);
@@ -60,7 +60,7 @@ function PostEditor(props: types.Props) {
       setCategoryId(event.target.value);
       setIsDirty(true);
     },
-    [setCategoryId, setIsDirty],
+    [setCategoryId, setIsDirty]
   );
 
   const [description, setDescription] = useState('');
@@ -69,7 +69,7 @@ function PostEditor(props: types.Props) {
       setDescription(event.target.value);
       setIsDirty(true);
     },
-    [setDescription, setIsDirty],
+    [setDescription, setIsDirty]
   );
 
   useEffect(() => {
@@ -115,7 +115,7 @@ function PostEditor(props: types.Props) {
     'tst-post-editor-update',
     {
       'gc-btn--disabled': isDirty,
-    },
+    }
   );
 
   return (

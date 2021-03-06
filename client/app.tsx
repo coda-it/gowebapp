@@ -25,7 +25,7 @@ sagaMiddleware.run(sagas);
 
 if (appContainer) {
   render(
-      // @ts-ignore - to be fixed
+    // @ts-ignore - to be fixed
     <Provider store={store}>
       <Router history={createBrowserHistory({})}>
         <Application>
@@ -55,6 +55,6 @@ if (appContainer) {
         </Application>
       </Router>
     </Provider>,
-    appContainer,
+    appContainer
   );
 }

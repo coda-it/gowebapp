@@ -1,18 +1,10 @@
-// @ts-ignore
 import { connect } from 'react-redux';
-// @ts-ignore
 import * as postActions from 'client/models/posts/actions';
-// @ts-ignore
 import * as postSelectors from 'client/models/posts/selectors';
-// @ts-ignore
 import * as categorySelectors from 'client/models/categories/selectors';
-// @ts-ignore
 import * as userSelectors from 'client/models/users/selectors';
-// @ts-ignore
 import * as userTypes from 'client/models/users/types';
-// @ts-ignore
 import * as globalTypes from 'client/types';
-// @ts-ignore
 import * as categoryActions from 'client/models/categories/actions';
 import Posts from './Posts';
 import type * as types from './types';

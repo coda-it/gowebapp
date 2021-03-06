@@ -7,7 +7,7 @@ const defaultState: types.State = {
 
 export default function reducers(
   state: types.State = defaultState,
-  action: types.Action,
+  action: types.Action
 ) {
   switch (action.type) {
     case actionTypes.FETCH_CATEGORIES_SUCCESS:

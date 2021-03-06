@@ -11,7 +11,7 @@ import PostEditor from './PostEditor';
 
 const mapStateToProps = (
   state: globalTypes.State,
-  ownProps: types.OwnProps,
+  ownProps: types.OwnProps
 ) => {
   const {
     match: { params },

@@ -77,7 +77,9 @@ function callDeleteCategory(id: string) {
     .catch(() => 'Removing category failed');
 }
 
-export function* onDeleteCategory({ id }: types.DeleteCategoryAction): Iterable<any> {
+export function* onDeleteCategory({
+  id,
+}: types.DeleteCategoryAction): Iterable<any> {
   const response = yield call(callDeleteCategory, id);
 
   if (typeof response === 'string') {
