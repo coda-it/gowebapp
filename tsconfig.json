@@ -13,8 +13,5 @@
     "sourceMap": true,
     "jsx": "react",
     "baseUrl": "./"
-  },
-  "include": [
-    "client/"
-  ]
+  }
 }
