@@ -15,14 +15,14 @@ module.exports = {
     filename: '[name].js',
   },
   entry: {
-    scripts: ['regenerator-runtime/runtime', './app.jsx'],
+    scripts: ['regenerator-runtime/runtime', './app.tsx'],
     css: './app.scss',
   },
   module: {
     rules: [{
-      test: /\.jsx?$/,
+      test: /\.(j|t)sx?$/,
       resolve: {
-        extensions: ['.js', '.jsx'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
       use: {
         loader: 'babel-loader',

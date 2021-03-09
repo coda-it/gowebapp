@@ -1,3 +1,47 @@
 {
-  "extends": ["codait"]
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "tsconfig.json"
+  },
+  "extends": [
+    "airbnb-typescript",
+    "prettier",
+    "plugin:cypress/recommended",
+    "plugin:react/recommended"
+  ],
+  "plugins": ["import"],
+  "rules": {
+    "import/no-unresolved": "error",
+    "no-underscore-dangle": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": ["./**"],
+        "optionalDependencies": false,
+        "peerDependencies": false
+      }
+    ]
+  },
+  "globals": {
+    "window": true,
+    "document": true,
+    "fetch": true,
+    "WebSocket": true,
+    "Request": true,
+    "FileReader": true
+  },
+  "env": {
+    "jest": true
+  },
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "client"
+      }
+    }
+  }
 }

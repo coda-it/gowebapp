@@ -6,16 +6,22 @@ describe('AlertPanel/AlertPanel', () => {
   it('should render correctly', () => {
     const alerts = [
       {
-        type: 'type-class',
+        type: 'info',
         message: 'Message 1',
+        timestamp: new Date('2020-03-01'),
+        isOld: false,
       },
       {
-        type: 'type-class',
+        type: 'info',
         message: 'Message 2',
+        timestamp: new Date('2020-03-01'),
+        isOld: false,
       },
       {
-        type: 'type-class',
+        type: 'info',
         message: 'Message 3',
+        timestamp: new Date('2020-03-01'),
+        isOld: false,
       },
     ];
 
