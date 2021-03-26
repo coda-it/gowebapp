@@ -118,7 +118,9 @@ function PostEditor(props: types.Props) {
       'gc-btn--disabled': isDirty,
     }
   );
-
+//let name;
+//let id;
+ let { name, id } = _.head(categories)
   return (
     <>
       <div className="gc-panel gc-panel--separator">
@@ -137,14 +139,16 @@ function PostEditor(props: types.Props) {
               className="gc-input__field tst-post-editor-title"
             />
           </div>
+
           {categories?.length > 0 ? (
-            <Dropdown
+              
+               <Dropdown
               initValue={{
-                label: _.head(categories).name,
-                value: _.head(categories).id,
+                label: name,
+                value: id,
               }}
               label="Categories"
-              items={_.map(categories, (category) => ({
+              items={_.map(categories, category => ({
                 label: category.name,
                 value: category.id,
               }))}
@@ -153,6 +157,7 @@ function PostEditor(props: types.Props) {
           ) : (
             <Loader />
           )}
+
         </article>
       </div>
       <div className="gc-panel gc-panel--separator gm-spacing-bl">
