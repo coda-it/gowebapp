@@ -17,6 +17,8 @@ function PostEditor(props: types.Props) {
     onDelete,
   } = props;
 
+
+
   useEffect(() => {
     loadPosts(user);
     loadCategories();
@@ -118,9 +120,11 @@ function PostEditor(props: types.Props) {
       'gc-btn--disabled': isDirty,
     }
   );
-//let name;
-//let id;
- let { name, id } = _.head(categories)
+
+let name;
+let id;
+
+ 
   return (
     <>
       <div className="gc-panel gc-panel--separator">
@@ -141,7 +145,7 @@ function PostEditor(props: types.Props) {
           </div>
 
           {categories?.length > 0 ? (
-              
+             { name, id } = _.head(categories),
                <Dropdown
               initValue={{
                 label: name,
