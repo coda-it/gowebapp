@@ -26,6 +26,13 @@ Key: `"navigation"` - array of objects
  } 
 ```
 
+#### Custom front-end application & skins
+WebApp is mostly a back-end binary with a default front-end application. In order to use the back-end binary with a custom front-end application static files should be overwritten on the build / deployment time.
+The following files can be modified:
+* `views/*` - to customize HTML templates
+* `public/scripts.js` - to customize front-end app
+* `public/styles.css` - to customize styling 
+
 ### Local development
 #### To run locally
 1. run `make run-services` in one terminal
