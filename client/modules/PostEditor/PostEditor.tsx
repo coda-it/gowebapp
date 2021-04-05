@@ -17,8 +17,6 @@ function PostEditor(props: types.Props) {
     onDelete,
   } = props;
 
-
-
   useEffect(() => {
     loadPosts(user);
     loadCategories();
@@ -121,10 +119,12 @@ function PostEditor(props: types.Props) {
     }
   );
 
-let name;
-let id;
+  const firstCategory = categories?.length > 0 ? _.head(categories) : null;
+  const actualCategory =
+    categories?.length > 0
+      ? categories.findIndex((category) => category.id === categoryId)
+      : null;
 
- 
   return (
     <>
       <div className="gc-panel gc-panel--separator">
@@ -144,15 +144,21 @@ let id;
             />
           </div>
 
-          {categories?.length > 0 ? (
-             { name, id } = _.head(categories),
-               <Dropdown
-              initValue={{
-                label: name,
-                value: id,
-              }}
+          {firstCategory ? (
+            <Dropdown
+              initValue={
+                categoryId
+                  ? {
+                      label: categories[actualCategory].name,
+                      value: categories[actualCategory].id,
+                    }
+                  : {
+                      label: firstCategory.name,
+                      value: firstCategory.id,
+                    }
+              }
               label="Categories"
-              items={_.map(categories, category => ({
+              items={_.map(categories, (category) => ({
                 label: category.name,
                 value: category.id,
               }))}
@@ -161,7 +167,6 @@ let id;
           ) : (
             <Loader />
           )}
-
         </article>
       </div>
       <div className="gc-panel gc-panel--separator gm-spacing-bl">

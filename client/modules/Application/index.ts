@@ -4,8 +4,8 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 
 const mapStateToProps = (state) => ({
-    isLoaded: selectors.getIsLoaded(state),
-  });
+  isLoaded: selectors.getIsLoaded(state),
+});
 
 const mapDispatchToProps = (dispatch) => ({
   mount: () => {
