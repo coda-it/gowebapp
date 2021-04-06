@@ -119,10 +119,16 @@ function PostEditor(props: types.Props) {
     }
   );
 
-  const firstCategory = categories?.length > 0 ? _.head(categories) : null;
-  const actualCategory =
+  const preSelectedCategory =
+    categories?.length > 0 ? _.head(categories) : null;
+  const selectedCategory =
     categories?.length > 0
-      ? categories.findIndex((category) => category.id === categoryId)
+      ? _.find(categories, (category) => {
+          if (category.id === categoryId) {
+            return true;
+          }
+          return false;
+        })
       : null;
 
   return (
@@ -144,17 +150,17 @@ function PostEditor(props: types.Props) {
             />
           </div>
 
-          {firstCategory ? (
+          {preSelectedCategory ? (
             <Dropdown
               initValue={
                 categoryId
                   ? {
-                      label: categories[actualCategory].name,
-                      value: categories[actualCategory].id,
+                      label: selectedCategory.name,
+                      value: selectedCategory.id,
                     }
                   : {
-                      label: firstCategory.name,
-                      value: firstCategory.id,
+                      label: preSelectedCategory.name,
+                      value: preSelectedCategory.id,
                     }
               }
               label="Categories"
