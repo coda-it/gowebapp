@@ -119,6 +119,11 @@ function PostEditor(props: types.Props) {
     }
   );
 
+  const preSelectedCategory =
+    categories?.length > 0 ? _.head(categories) : null;
+  const selectedCategory =
+    categories?.length > 0 ? _.find(categories, ['id', categoryId]) : null;
+
   return (
     <>
       <div className="gc-panel gc-panel--separator">
@@ -137,12 +142,20 @@ function PostEditor(props: types.Props) {
               className="gc-input__field tst-post-editor-title"
             />
           </div>
-          {categories?.length > 0 ? (
+
+          {preSelectedCategory ? (
             <Dropdown
-              initValue={{
-                label: _.head(categories).name,
-                value: _.head(categories).id,
-              }}
+              initValue={
+                categoryId
+                  ? {
+                      label: selectedCategory.name,
+                      value: selectedCategory.id,
+                    }
+                  : {
+                      label: preSelectedCategory.name,
+                      value: preSelectedCategory.id,
+                    }
+              }
               label="Categories"
               items={_.map(categories, (category) => ({
                 label: category.name,
