@@ -122,14 +122,7 @@ function PostEditor(props: types.Props) {
   const preSelectedCategory =
     categories?.length > 0 ? _.head(categories) : null;
   const selectedCategory =
-    categories?.length > 0
-      ? _.find(categories, (category) => {
-          if (category.id === categoryId) {
-            return true;
-          }
-          return false;
-        })
-      : null;
+    categories?.length > 0 ? _.find(categories, ['id', categoryId]) : null;
 
   return (
     <>
