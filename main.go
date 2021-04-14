@@ -172,7 +172,7 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/post",
+				Path:      "/",
 				Method:    "ALL",
 				Handler:   postsCtl.CtrPosts,
 				Protected: false,
