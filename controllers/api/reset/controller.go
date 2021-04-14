@@ -2,18 +2,19 @@ package reset
 
 import (
 	"github.com/coda-it/gowebapp/controllers/base"
+	platformUsecases "github.com/coda-it/gowebapp/domain/usecases/platform"
 )
 
-// Controller - reset controller
+// Controller - reset database controller
 type Controller struct {
 	*base.Controller
+	PlatformUsecases platformUsecases.Usecase
 }
 
-const resetHref string = "/api/reset"
-
-// New - creates instance of reset controller
-func New(b *base.Controller) *Controller {
+// New - creates new instance of reset database controller
+func New(b *base.Controller, pu platformUsecases.Usecase) *Controller {
 	return &Controller{
 		b,
+		pu,
 	}
 }
