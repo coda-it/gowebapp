@@ -28,21 +28,21 @@ func (r *Repository) Drop() error {
 }
 
 // Add - inserts platform config
-func (cr *Repository) Add(c platformModel.Config) error {
-	platformCollection := cr.Persistence.GetCollection(collectionName)
+func (r *Repository) Add(c platformModel.Config) error {
+	platformCollection := r.Persistence.GetCollection(collectionName)
 	return platformCollection.Insert(c)
 }
 
 // Update - update platform config
-func (cr *Repository) Update(c platformModel.Config) error {
-	platformCollection := cr.Persistence.GetCollection(collectionName)
+func (r *Repository) Update(c platformModel.Config) error {
+	platformCollection := r.Persistence.GetCollection(collectionName)
 	_, err := platformCollection.Upsert(bson.M{"_id": c.ID}, c)
 	return err
 }
 
 // Fetch - fetch platform config
-func (cr *Repository) Fetch() (platformModel.Config, error) {
-	platformCollection := cr.Persistence.GetCollection(collectionName)
+func (r *Repository) Fetch() (platformModel.Config, error) {
+	platformCollection := r.Persistence.GetCollection(collectionName)
 
 	var config platformModel.Config
 	var searchQuery bson.M
