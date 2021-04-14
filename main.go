@@ -11,6 +11,7 @@ import (
 	adminController "github.com/coda-it/gowebapp/controllers/admin"
 	categoryApiController "github.com/coda-it/gowebapp/controllers/api/category"
 	loginApiController "github.com/coda-it/gowebapp/controllers/api/login"
+	"github.com/coda-it/gowebapp/controllers/api/platform"
 	postApiController "github.com/coda-it/gowebapp/controllers/api/post"
 	"github.com/coda-it/gowebapp/controllers/api/reset"
 	"github.com/coda-it/gowebapp/controllers/api/user"
@@ -319,6 +320,7 @@ func main() {
 	}
 
 	resetCtl := reset.New(baseController, *platformUsecasesEntity)
+	platformCtl := platform.New(baseController, *platformUsecasesEntity)
 	platformModule := module.Module{
 		Enabled: true,
 		Routes: []route.Route{
@@ -327,6 +329,24 @@ func main() {
 				Method:    "ALL",
 				Handler:   resetCtl.CtrResetDb,
 				Protected: false,
+			},
+			{
+				Path:      "/api/platform",
+				Method:    "GET",
+				Handler:   platformCtl.CtrPlatformGet,
+				Protected: true,
+			},
+			{
+				Path:      "/api/platform",
+				Method:    "POST",
+				Handler:   platformCtl.CtrPlatformPost,
+				Protected: true,
+			},
+			{
+				Path:      "/api/platform",
+				Method:    "PUT",
+				Handler:   platformCtl.CtrPlatformPut,
+				Protected: true,
 			},
 		},
 	}
