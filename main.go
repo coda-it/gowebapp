@@ -24,9 +24,11 @@ import (
 	"github.com/coda-it/gowebapp/data/config"
 	"github.com/coda-it/gowebapp/data/persistence"
 	categoryRepository "github.com/coda-it/gowebapp/data/repositories/category"
+	platformRepository "github.com/coda-it/gowebapp/data/repositories/platform"
 	postRepository "github.com/coda-it/gowebapp/data/repositories/post"
 	userRepository "github.com/coda-it/gowebapp/data/repositories/user"
 	categoryUsecases "github.com/coda-it/gowebapp/domain/usecases/category"
+	platformUsecases "github.com/coda-it/gowebapp/domain/usecases/platform"
 	postUsecases "github.com/coda-it/gowebapp/domain/usecases/post"
 	userUsecases "github.com/coda-it/gowebapp/domain/usecases/user"
 	"github.com/coda-it/gowebapp/utils"
@@ -47,6 +49,7 @@ func main() {
 	logger.Log("WEBAPP_ENV = " + os.Getenv("WEBAPP_ENV"))
 
 	utils.VERSION = VERSION
+	appConfig := config.New()
 
 	baseController := base.New(mailer.New(
 		[]string{},
@@ -54,13 +57,15 @@ func main() {
 		os.Getenv("WEBAPP_MAILER_EMAIL_PASS"),
 		os.Getenv("WEBAPP_MAILER_SMTP_PORT"),
 		os.Getenv("WEBAPP_MAILER_SMTP_AUTHURL"),
-	), config.New())
+	), appConfig)
 
 	store := persistence.New(
 		webAppMongoURI,
 		webAppMongoDB,
 	)
 
+	platformRepositoryEntity := platformRepository.New(store)
+	platformUsecasesEntity := platformUsecases.New(platformRepositoryEntity)
 	categoryRepositoryEntity := categoryRepository.New(store)
 	categoryUsecasesEntity := categoryUsecases.New(&categoryRepositoryEntity)
 	postRepositoryEntity := postRepository.New(store)
@@ -313,9 +318,9 @@ func main() {
 		},
 	}
 
-	resetCtl := reset.New(baseController)
-	resetModule := module.Module{
-		Enabled: utils.IsTestEnv(),
+	resetCtl := reset.New(baseController, *platformUsecasesEntity)
+	platformModule := module.Module{
+		Enabled: true,
 		Routes: []route.Route{
 			{
 				Path:      "/api/reset",
@@ -328,22 +333,24 @@ func main() {
 
 	notFoundCtl := notfound.New(baseController)
 
+	modules := []module.Module{
+		apiLoginModule,
+		userModule,
+		categoryModule,
+		postModule,
+		postsModule,
+		categoriesModule,
+		adminModule,
+		userRegisterModule,
+		userActivationModule,
+		userLogoutModule,
+		userLoginModule,
+		platformModule,
+	}
+
 	appInstance := goappframe.New(goappframe.Internals{
-		Port: webAppHTTPPort,
-		Modules: []module.Module{
-			apiLoginModule,
-			userModule,
-			categoryModule,
-			postModule,
-			postsModule,
-			categoriesModule,
-			adminModule,
-			userRegisterModule,
-			userActivationModule,
-			userLogoutModule,
-			userLoginModule,
-			resetModule,
-		},
+		Port:    webAppHTTPPort,
+		Modules: modules,
 		Persistence: persistence.New(
 			webAppMongoURI,
 			webAppMongoDB,
