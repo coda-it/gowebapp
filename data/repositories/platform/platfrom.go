@@ -1,6 +1,14 @@
 package platform
 
-import "github.com/coda-it/gowebapp/data/persistence"
+import (
+	"github.com/coda-it/gowebapp/data/persistence"
+	platformModel "github.com/coda-it/gowebapp/domain/models/platform"
+	"gopkg.in/mgo.v2/bson"
+)
+
+const (
+	collectionName = "platform"
+)
 
 // Repository - platform repository
 type Repository struct {
@@ -17,4 +25,33 @@ func New(p persistence.IPersistance) *Repository {
 // Drop - drops whole database
 func (r *Repository) Drop() error {
 	return r.Persistence.DropDatabase()
+}
+
+// Add - inserts platform config
+func (r *Repository) Add(c platformModel.Config) error {
+	platformCollection := r.Persistence.GetCollection(collectionName)
+	return platformCollection.Insert(c)
+}
+
+// Update - update platform config
+func (r *Repository) Update(c platformModel.Config) error {
+	platformCollection := r.Persistence.GetCollection(collectionName)
+	_, err := platformCollection.Upsert(bson.M{"_id": c.ID}, c)
+	return err
+}
+
+// Fetch - fetch platform config
+func (r *Repository) Fetch() (platformModel.Config, error) {
+	platformCollection := r.Persistence.GetCollection(collectionName)
+
+	var config platformModel.Config
+	var searchQuery bson.M
+
+	err := platformCollection.Find(searchQuery).One(&config)
+
+	if err != nil {
+		return config, err
+	}
+
+	return config, nil
 }
