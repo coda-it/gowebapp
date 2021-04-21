@@ -37,6 +37,11 @@
           "id": "admin-add-post",
           "label": "Add Post",
           "href": "/admin/posts/new"
+        },
+        {
+          "id": "admin-landing-page",
+          "label": "Landing Page",
+          "href": "/admin/landingpage"
         }
       ]
     }

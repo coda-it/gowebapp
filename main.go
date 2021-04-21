@@ -252,6 +252,12 @@ func main() {
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
+			{
+				Path:      "/admin/landingpage",
+				Method:    "ALL",
+				Handler:   adminCtl.CtrAdmin,
+				Protected: true,
+			},
 		},
 	}
 
