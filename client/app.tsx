@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { Router, Route } from 'react-router';
 import { createBrowserHistory } from 'history';
 import createSagaMiddleware from 'redux-saga';
-import './config';
+import config from './config';
 import Application from './modules/Application';
 import Admin from './modules/Admin';
 import Posts from './modules/Posts';
@@ -23,13 +23,23 @@ const store = createStore(reducers, applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(sagas);
 
+const moduleRegistry = {
+  post: Posts,
+  category: Categories,
+};
+
 if (appContainer) {
   render(
     // @ts-ignore - to be fixed
     <Provider store={store}>
       <Router history={createBrowserHistory({})}>
         <Application>
-          <Route exact path="/" component={Posts} />
+          <Route
+            exact
+            path="/"
+            component={moduleRegistry[config.landingModule]}
+          />
+          <Route exact path="/post" component={Posts} />
           <Route exact path="/post/:postId" component={Post} />
           <Route exact path="/category" component={Categories} />
           <Route exact path="/category/:categoryId" component={Posts} />

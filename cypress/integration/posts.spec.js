@@ -20,7 +20,7 @@ describe('Posts', () => {
     cy.get('.tst-post-0').find('.tst-post-title-0').contains('Post title');
     cy.screenshot();
 
-    cy.get('.tst-nav-posts').click();
+    cy.get('.tst-nav-post').click();
     cy.get('.tst-post-link-0').click();
     cy.get('.tst-post-module').should('be.visible');
     cy.screenshot();

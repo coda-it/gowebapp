@@ -5,4 +5,6 @@ const (
 	ConfigFilePath = "./webapp-config.json"
 	// ConfigDataKey - config data key
 	ConfigDataKey = "config"
+	// DefaultLandingPage - default landing page
+	DefaultLandingPage = "post"
 )
