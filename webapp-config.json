@@ -3,7 +3,7 @@
     {
       "id": "posts",
       "label": "Posts",
-      "href": "/",
+      "href": "/posts",
       "isRoot":  false
     },
     {

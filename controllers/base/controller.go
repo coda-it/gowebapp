@@ -6,6 +6,9 @@ import (
 	"github.com/coda-it/goappframe/page"   // this probably should not depand on application layer
 	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/goutils/mailer"
+	"github.com/coda-it/gowebapp/constants"
+	platformModel "github.com/coda-it/gowebapp/domain/models/platform"
+	platformUsecases "github.com/coda-it/gowebapp/domain/usecases/platform"
 	userHelpers "github.com/coda-it/gowebapp/helpers/user"
 	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/helpers"
@@ -18,15 +21,17 @@ import (
 
 // Controller - base controller
 type Controller struct {
-	Mailer mailer.IMailer
-	Config config.Config
+	Mailer           mailer.IMailer
+	Config           config.Config
+	platformUsecases *platformUsecases.Usecase
 }
 
 // New - creates new instance of base Controller
-func New(m mailer.IMailer, c config.Config) *Controller {
+func New(m mailer.IMailer, c config.Config, pu *platformUsecases.Usecase) *Controller {
 	return &Controller{
 		m,
 		c,
+		pu,
 	}
 }
 
@@ -66,7 +71,23 @@ func (c *Controller) RenderTemplate(
 		logger.Log("reading template failed:" + err.Error())
 	}
 
-	jsConfig, _ := json.Marshal(c.Config)
+	platformConfig, err := c.platformUsecases.Fetch()
+
+	if err != nil {
+		platformConfig = platformModel.Config{
+			LandingModule: constants.DefaultLandingPage,
+		}
+	}
+
+	extendedConfig := struct {
+		LadingPage string
+		config.Config
+	}{
+		platformConfig.LandingModule,
+		c.Config,
+	}
+
+	jsConfig, _ := json.Marshal(extendedConfig)
 
 	templateModel := page.Page{
 		Version:    utils.VERSION,

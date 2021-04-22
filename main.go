@@ -17,6 +17,7 @@ import (
 	"github.com/coda-it/gowebapp/controllers/api/user"
 	"github.com/coda-it/gowebapp/controllers/base"
 	categoriesController "github.com/coda-it/gowebapp/controllers/categories"
+	landingController "github.com/coda-it/gowebapp/controllers/landing"
 	userLoginController "github.com/coda-it/gowebapp/controllers/login"
 	userLogoutController "github.com/coda-it/gowebapp/controllers/logout"
 	"github.com/coda-it/gowebapp/controllers/notfound"
@@ -52,14 +53,6 @@ func main() {
 	utils.VERSION = VERSION
 	appConfig := config.New()
 
-	baseController := base.New(mailer.New(
-		[]string{},
-		os.Getenv("WEBAPP_MAILER_EMAIL_NAME"),
-		os.Getenv("WEBAPP_MAILER_EMAIL_PASS"),
-		os.Getenv("WEBAPP_MAILER_SMTP_PORT"),
-		os.Getenv("WEBAPP_MAILER_SMTP_AUTHURL"),
-	), appConfig)
-
 	store := persistence.New(
 		webAppMongoURI,
 		webAppMongoDB,
@@ -73,6 +66,14 @@ func main() {
 	postUsecasesEntity := postUsecases.New(&postRepositoryEntity)
 	userRepositoryEntity := userRepository.New(store)
 	userUsecaseEntity := userUsecases.New(&userRepositoryEntity)
+
+	baseController := base.New(mailer.New(
+		[]string{},
+		os.Getenv("WEBAPP_MAILER_EMAIL_NAME"),
+		os.Getenv("WEBAPP_MAILER_EMAIL_PASS"),
+		os.Getenv("WEBAPP_MAILER_SMTP_PORT"),
+		os.Getenv("WEBAPP_MAILER_SMTP_AUTHURL"),
+	), appConfig, platformUsecasesEntity)
 
 	apiLoginCtl := loginApiController.New(baseController, *userUsecaseEntity)
 	apiLoginModule := module.Module{
@@ -168,12 +169,25 @@ func main() {
 		},
 	}
 
+	landingCtl := landingController.New(baseController, platformUsecasesEntity)
+	landingModule := module.Module{
+		Enabled: true,
+		Routes: []route.Route{
+			{
+				Path:      "/",
+				Method:    "GET",
+				Handler:   landingCtl.CtrLandingGet,
+				Protected: false,
+			},
+		},
+	}
+
 	postsCtl := postsController.New(baseController)
 	postsModule := module.Module{
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/",
+				Path:      "/post",
 				Method:    "ALL",
 				Handler:   postsCtl.CtrPosts,
 				Protected: false,
@@ -360,6 +374,7 @@ func main() {
 	notFoundCtl := notfound.New(baseController)
 
 	modules := []module.Module{
+		landingModule,
 		apiLoginModule,
 		userModule,
 		categoryModule,
