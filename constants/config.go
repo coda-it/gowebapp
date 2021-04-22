@@ -6,5 +6,5 @@ const (
 	// ConfigDataKey - config data key
 	ConfigDataKey = "config"
 	// DefaultLandingPage - default landing page
-	DefaultLandingPage = "posts"
+	DefaultLandingPage = "post"
 )
