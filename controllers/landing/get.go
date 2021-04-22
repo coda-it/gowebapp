@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-// CtrAdmin - controller for landing page
+// CtrLandingGet - controller for landing page
 func (c *Controller) CtrLandingGet(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	defer r.Body.Close()
 
