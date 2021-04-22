@@ -24,8 +24,8 @@ const store = createStore(reducers, applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(sagas);
 
 const moduleRegistry = {
-  posts: Posts,
-  categories: Categories,
+  post: Posts,
+  category: Categories,
 };
 
 if (appContainer) {

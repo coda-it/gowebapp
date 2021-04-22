@@ -1,13 +1,13 @@
 {
   "navigation": [
     {
-      "id": "posts",
+      "id": "post",
       "label": "Posts",
       "href": "/post",
       "isRoot":  false
     },
     {
-      "id": "categories",
+      "id": "category",
       "label": "Categories",
       "href": "/category",
       "isRoot":  false
