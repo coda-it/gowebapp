@@ -8,13 +8,15 @@ import (
 // Controller - platform controller
 type Controller struct {
 	*base.Controller
+	moduleID         string
 	PlatformUsecases platformUsecases.Usecase
 }
 
 // New - creates new instance of platform database controller
-func New(b *base.Controller, pu platformUsecases.Usecase) *Controller {
+func New(b *base.Controller, moduleID string, pu platformUsecases.Usecase) *Controller {
 	return &Controller{
 		b,
+		moduleID,
 		pu,
 	}
 }

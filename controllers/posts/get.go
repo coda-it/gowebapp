@@ -9,5 +9,5 @@ import (
 
 // CtrPosts - controller for posts
 func (c *Controller) CtrPosts(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
-	c.RenderTemplate(w, r, "post", sm, make(map[string]interface{}))
+	c.RenderTemplate(w, r, "post", sm, make(map[string]interface{}), c.moduleID)
 }

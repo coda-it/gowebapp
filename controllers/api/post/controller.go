@@ -8,13 +8,15 @@ import (
 // Controller - post controller
 type Controller struct {
 	*base.Controller
+	moduleID     string
 	PostUsecases postUsecases.Usecase
 }
 
 // New - creates instance of post Controller
-func New(b *base.Controller, pu postUsecases.Usecase) *Controller {
+func New(b *base.Controller, moduleID string, pu postUsecases.Usecase) *Controller {
 	return &Controller{
 		b,
+		moduleID,
 		pu,
 	}
 }

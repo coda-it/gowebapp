@@ -6,6 +6,11 @@ A simple GO based CMS application.
 ### Motivation
 Goal of this project is to create a flexible web-application CMS. 
 
+### Features
+* dynamic landing page
+* posts and categories management
+* users entitlements
+
 ### Configuration
 WebApp is a configurable application. Configuration can be made by overwriting the input file `webapp-config.json`.
 The config inside is a JSON object with the following properties that can be customised: 

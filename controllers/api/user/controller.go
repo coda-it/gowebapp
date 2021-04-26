@@ -7,11 +7,13 @@ import (
 // Controller - user controller
 type Controller struct {
 	*base.Controller
+	ModuleID string
 }
 
 // New - creates instance of user controller
-func New(b *base.Controller) *Controller {
+func New(b *base.Controller, moduleID string) *Controller {
 	return &Controller{
 		b,
+		moduleID,
 	}
 }

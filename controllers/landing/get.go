@@ -1,6 +1,7 @@
 package landing
 
 import (
+	"fmt"
 	"github.com/coda-it/gowebapp/constants"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
@@ -15,8 +16,10 @@ func (c *Controller) CtrLandingGet(w http.ResponseWriter, r *http.Request, opt r
 	appConfig, err := c.Usecase.Fetch()
 
 	if err != nil || appConfig.LandingModule == "" {
-		c.RenderTemplate(w, r, constants.DefaultLandingPage, sm, make(map[string]interface{}))
+		fmt.Println("xxx:aaaaaaaa")
+		c.RenderTemplate(w, r, constants.DefaultLandingPage, sm, make(map[string]interface{}), c.moduleID)
+		return
 	}
-
-	c.RenderTemplate(w, r, appConfig.LandingModule, sm, make(map[string]interface{}))
+	fmt.Println("xxx:bbbbbbb")
+	c.RenderTemplate(w, r, appConfig.LandingModule, sm, make(map[string]interface{}), c.moduleID)
 }
