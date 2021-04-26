@@ -8,13 +8,15 @@ import (
 // Controller - user activation controller
 type Controller struct {
 	*base.Controller
+	moduleID     string
 	UserUsecases userUsecases.Usecase
 }
 
 // New - creates instance of activation controller
-func New(b *base.Controller, uu userUsecases.Usecase) *Controller {
+func New(b *base.Controller, moduleID string, uu userUsecases.Usecase) *Controller {
 	return &Controller{
 		b,
+		moduleID,
 		uu,
 	}
 }

@@ -57,6 +57,7 @@ func (c *Controller) RenderTemplate(
 	name string,
 	sm session.ISessionManager,
 	params map[string]interface{},
+	moduleID string,
 ) {
 	isLogged := false
 
@@ -91,7 +92,7 @@ func (c *Controller) RenderTemplate(
 
 	templateModel := page.Page{
 		Version:    utils.VERSION,
-		Title:      "WEBAPP - " + name,
+		Title:      constants.AppName + " - " + name,
 		IsLogged:   isLogged,
 		IsRoot:     u.HasEntitlement("root"),
 		Params:     params,
@@ -100,11 +101,24 @@ func (c *Controller) RenderTemplate(
 		JSConfig:   string(jsConfig),
 	}
 
+	appPath := constants.DefaultAppID + "/"
+
+	if moduleID != "" {
+		for _, app := range c.Config.Apps {
+			for _, module := range app.Modules {
+				if module.ID == moduleID {
+					appPath = app.ID + "/"
+				}
+			}
+		}
+	}
+	logger.Log("APP-PATH:" + appPath + "|" + name)
+
 	tpl := template.Must(
 		template.ParseFiles(
-			dir+"/views/"+name+".html",
-			dir+"/views/navigation.html",
-			dir+"/views/view.html",
+			dir+"/views/"+appPath+name+".html",
+			dir+"/views/"+appPath+"navigation.html",
+			dir+"/views/"+appPath+"view.html",
 		),
 	)
 

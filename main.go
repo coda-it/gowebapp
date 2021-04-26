@@ -75,8 +75,9 @@ func main() {
 		os.Getenv("WEBAPP_MAILER_SMTP_AUTHURL"),
 	), appConfig, platformUsecasesEntity)
 
-	apiLoginCtl := loginApiController.New(baseController, *userUsecaseEntity)
+	apiLoginCtl := loginApiController.New(baseController, "api-login", *userUsecaseEntity)
 	apiLoginModule := module.Module{
+		ID:      "api-login",
 		Enabled: true,
 		Routes: []route.Route{
 			{
@@ -94,8 +95,9 @@ func main() {
 		},
 	}
 
-	userCtl := user.New(baseController)
+	userCtl := user.New(baseController, "api-user")
 	userModule := module.Module{
+		ID:      "api-user",
 		Enabled: true,
 		Routes: []route.Route{
 			{
@@ -107,9 +109,9 @@ func main() {
 		},
 	}
 
-	categoryCtl := categoryApiController.New(baseController, *categoryUsecasesEntity)
+	categoryCtl := categoryApiController.New(baseController, "api-category", *categoryUsecasesEntity)
 	categoryModule := module.Module{
-		Enabled: true,
+		ID: "api-category",
 		Routes: []route.Route{
 			{
 				Path:      "/api/category",
@@ -138,9 +140,9 @@ func main() {
 		},
 	}
 
-	postCtl := postApiController.New(baseController, *postUsecasesEntity)
+	postCtl := postApiController.New(baseController, "api-post", *postUsecasesEntity)
 	postModule := module.Module{
-		Enabled: true,
+		ID: "api-post",
 		Routes: []route.Route{
 			{
 				Path:      "/api/post/{id}",
@@ -169,8 +171,9 @@ func main() {
 		},
 	}
 
-	landingCtl := landingController.New(baseController, platformUsecasesEntity)
+	landingCtl := landingController.New(baseController, "lading-page", platformUsecasesEntity)
 	landingModule := module.Module{
+		ID:      "landing-page",
 		Enabled: true,
 		Routes: []route.Route{
 			{
@@ -182,9 +185,9 @@ func main() {
 		},
 	}
 
-	postsCtl := postsController.New(baseController)
+	postsCtl := postsController.New(baseController, "post")
 	postsModule := module.Module{
-		Enabled: true,
+		ID: "post",
 		Routes: []route.Route{
 			{
 				Path:      "/post",
@@ -201,9 +204,9 @@ func main() {
 		},
 	}
 
-	categoriesCtl := categoriesController.New(baseController)
+	categoriesCtl := categoriesController.New(baseController, "category")
 	categoriesModule := module.Module{
-		Enabled: true,
+		ID: "category",
 		Routes: []route.Route{
 			{
 				Path:      "/category",
@@ -220,9 +223,9 @@ func main() {
 		},
 	}
 
-	adminCtl := adminController.New(baseController)
+	adminCtl := adminController.New(baseController, "admin")
 	adminModule := module.Module{
-		Enabled: true,
+		ID: "admin",
 		Routes: []route.Route{
 			{
 				Path:      "/admin",
@@ -275,8 +278,9 @@ func main() {
 		},
 	}
 
-	userRegisterCtl := userRegisterController.New(baseController, *userUsecaseEntity)
+	userRegisterCtl := userRegisterController.New(baseController, "register", *userUsecaseEntity)
 	userRegisterModule := module.Module{
+		ID:      "register",
 		Enabled: true,
 		Routes: []route.Route{
 			{
@@ -294,8 +298,9 @@ func main() {
 		},
 	}
 
-	userActivationCtl := userActivationController.New(baseController, *userUsecaseEntity)
+	userActivationCtl := userActivationController.New(baseController, "activation", *userUsecaseEntity)
 	userActivationModule := module.Module{
+		ID:      "activation",
 		Enabled: true,
 		Routes: []route.Route{
 			{
@@ -307,8 +312,9 @@ func main() {
 		},
 	}
 
-	userLogoutCtl := userLogoutController.New(baseController, *userUsecaseEntity)
+	userLogoutCtl := userLogoutController.New(baseController, "logout", *userUsecaseEntity)
 	userLogoutModule := module.Module{
+		ID:      "logout",
 		Enabled: true,
 		Routes: []route.Route{
 			{
@@ -320,8 +326,9 @@ func main() {
 		},
 	}
 
-	userLoginCtl := userLoginController.New(baseController, *userUsecaseEntity)
+	userLoginCtl := userLoginController.New(baseController, "login", *userUsecaseEntity)
 	userLoginModule := module.Module{
+		ID:      "login",
 		Enabled: true,
 		Routes: []route.Route{
 			{
@@ -339,9 +346,10 @@ func main() {
 		},
 	}
 
-	resetCtl := reset.New(baseController, *platformUsecasesEntity)
-	platformCtl := platform.New(baseController, *platformUsecasesEntity)
+	resetCtl := reset.New(baseController, "platform", *platformUsecasesEntity)
+	platformCtl := platform.New(baseController, "platform", *platformUsecasesEntity)
 	platformModule := module.Module{
+		ID:      "platform",
 		Enabled: true,
 		Routes: []route.Route{
 			{
@@ -371,7 +379,7 @@ func main() {
 		},
 	}
 
-	notFoundCtl := notfound.New(baseController)
+	notFoundCtl := notfound.New(baseController, "not-found")
 
 	modules := []module.Module{
 		landingModule,
@@ -391,6 +399,7 @@ func main() {
 
 	appInstance := goappframe.New(goappframe.Internals{
 		Port:    webAppHTTPPort,
+		Config:  appConfig,
 		Modules: modules,
 		Persistence: persistence.New(
 			webAppMongoURI,

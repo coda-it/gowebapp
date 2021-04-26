@@ -8,13 +8,15 @@ import (
 // Controller - login controller
 type Controller struct {
 	*base.Controller
+	moduleID     string
 	UserUsecases userUsecases.Usecase
 }
 
 // New - creates instance of logout Controller
-func New(b *base.Controller, uu userUsecases.Usecase) *Controller {
+func New(b *base.Controller, moduleID string, uu userUsecases.Usecase) *Controller {
 	return &Controller{
 		b,
+		moduleID,
 		uu,
 	}
 }

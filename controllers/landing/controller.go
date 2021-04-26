@@ -8,13 +8,15 @@ import (
 // Controller - register controller
 type Controller struct {
 	*base.Controller
+	moduleID string
 	*platformUsecases.Usecase
 }
 
 // New - creates instance of landing Controller
-func New(b *base.Controller, pu *platformUsecases.Usecase) *Controller {
+func New(b *base.Controller, moduleID string, pu *platformUsecases.Usecase) *Controller {
 	return &Controller{
 		b,
+		moduleID,
 		pu,
 	}
 }

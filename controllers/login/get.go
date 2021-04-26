@@ -16,5 +16,5 @@ func (c *Controller) CtrLoginGet(w http.ResponseWriter, r *http.Request, opt rou
 		params["IsError"] = true
 	}
 
-	c.RenderTemplate(w, r, "login", sm, params)
+	c.RenderTemplate(w, r, "login", sm, params, c.moduleID)
 }
