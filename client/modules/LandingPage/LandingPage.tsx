@@ -9,19 +9,19 @@ function LandingPage() {
     setInput(event.target.value);
   };
 
-  function loadLanding() {
-    console.log('load landing');
-    fetch('http://localhost:3000/api/platform')
-      .then((res) => res.json())
-      .then((data) => {
+ async function loadLanding() {
+    
+     await fetch('/api/platform')
+      await ((res) => res.json())
+      await ((data) => {
         setId(data.config.id);
         setInput(data.config.landingModule);
       });
   }
 
   function putLanding() {
-    console.log('before another put sending');
-    fetch('http://localhost:3000/api/platform', {
+    
+    fetch('/api/platform', {
       method: 'put',
       headers: {
         'Content-Type': 'application/json',
@@ -30,12 +30,17 @@ function LandingPage() {
         id,
         landingModule: input,
       }),
-    }).then(loadLanding());
+    })
+    .then((res) => res.json())
+      .then((data) => {
+        setId(data.config.id);
+        setInput(data.config.landingModule);
+      });
   }
 
   function postLanding() {
-    console.log('before first post sending');
-    fetch('http://localhost:3000/api/platform', {
+    
+    fetch('/api/platform', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
@@ -43,7 +48,15 @@ function LandingPage() {
       body: JSON.stringify({
         landingModule: input,
       }),
-    }).then(loadLanding());
+    })
+   .then(response => response.text())
+.then(data => {
+  console.log('Success:', data);
+})
+.then(loadLanding());
+/*.catch((error) => {
+  console.error('Error:', error);
+}); */
   }
 
   useEffect(() => {
