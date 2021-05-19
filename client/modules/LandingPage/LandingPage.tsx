@@ -2,13 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import { Button } from 'graphen';
 
-function LandingPage() {
-  const [id, setId] = useState('');
-  const [input, setInput] = useState('');
+function LandingPage(props) {
+	const {input, id, setInput} = props
+	console.log(props)
+	console.log(input)
+    console.log(id)
+  //const [id, setId] = useState('');
+  //const [input, setInput] = useState('');
   const handleChange = (event) => {
+  	
     setInput(event.target.value);
+    
   };
 
+  const test = () => {
+  	setInput('test')
+  }
+
+/*
  async function loadLanding() {
     
      await fetch('/api/platform')
@@ -54,14 +65,12 @@ function LandingPage() {
   console.log('Success:', data);
 })
 .then(loadLanding());
-/*.catch((error) => {
-  console.error('Error:', error);
-}); */
   }
 
   useEffect(() => {
     loadLanding();
   }, []);
+*/
 
   return (
     <div className="gc-panel gc-panel--separator">
@@ -83,7 +92,8 @@ function LandingPage() {
       </article>
       <Button
         className="gc-btn--primary tst-post-editor-add gc-btn"
-        onClick={id ? putLanding : postLanding}
+        onClick={test}
+        //onClick={id ? putLanding : postLanding}
       >
         Add
       </Button>

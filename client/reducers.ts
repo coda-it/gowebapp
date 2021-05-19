@@ -4,6 +4,7 @@ import alerts from 'client/models/alerts/reducers';
 import posts from 'client/models/posts/reducers';
 import categories from 'client/models/categories/reducers';
 import users from 'client/models/users/reducers';
+import landing from 'client/models/landing/reducers';
 
 export default combineReducers({
   application,
@@ -11,4 +12,5 @@ export default combineReducers({
   posts,
   users,
   categories,
+  landing
 });
