@@ -6,13 +6,21 @@ import (
 	"github.com/coda-it/gowebapp/constants"
 	"github.com/coda-it/gowebserver/utils/logger"
 	"io/ioutil"
+	"os"
 )
 
 // New - Config factory
 func New() config.Config {
 	var cnf config.Config
 
-	configBytes, err := ioutil.ReadFile(constants.ConfigFilePath)
+	webAppConfigPath := constants.ConfigFilePath
+	customPath := os.Getenv("WEBAPP_CONFIG_PATH")
+
+	if customPath != "" {
+		webAppConfigPath = customPath
+	}
+
+	configBytes, err := ioutil.ReadFile(webAppConfigPath)
 	if err != nil {
 		logger.Log(logger.ERROR, err.Error())
 		return cnf
