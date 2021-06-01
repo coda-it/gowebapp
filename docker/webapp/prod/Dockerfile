@@ -10,6 +10,7 @@ WEBAPP_MONGO_DB=webapp \
 WEBAPP_HTTP_PORT=3000
 
 RUN mkdir -p /root/scripts
+RUN mkdir -p /root/volume
 RUN mkdir -p /root/go/src/github.com/coda-it/gowebapp/public
 RUN mkdir -p /root/go/src/github.com/coda-it/gowebapp/views
 
