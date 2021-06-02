@@ -45,7 +45,5 @@ deploy:
   password: $GITHUB_PASSWORD
   file_glob: true
   skip_cleanup: true
-  verbose: true
   on:
-    all_branches: true
-    condition: $TRAVIS_COMMIT_MESSAGE =~ ^Build.*
+    tags: true
