@@ -41,7 +41,8 @@ after_success:
 
 deploy:
   provider: releases
-  api_key: $GITHUB_OAUTH_TOKEN
+  username: $GITHUB_USER
+  password: $GITHUB_PASSWORD
   file_glob: true
   file:
     - "gowebapp"
