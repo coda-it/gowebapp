@@ -46,7 +46,7 @@ deploy:
   file:
     - "gowebapp"
     - "views/*"
-    - "- public/*"
+    - "public/*"
   skip_cleanup: true
   on:
     tags: true
