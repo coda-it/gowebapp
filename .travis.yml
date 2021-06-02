@@ -49,4 +49,5 @@ deploy:
     - "public/*"
   skip_cleanup: true
   on:
+    all_branches: true
     condition: $TRAVIS_COMMIT_MESSAGE =~ ^Build.*
