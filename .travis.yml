@@ -44,8 +44,6 @@ deploy:
   username: $GITHUB_USER
   password: $GITHUB_PASSWORD
   file_glob: true
-  file:
-    - main.go
   skip_cleanup: true
   verbose: true
   on:
