@@ -46,8 +46,6 @@ deploy:
   file_glob: true
   file:
     - "gowebapp"
-    - "views/*"
-    - "public/*"
   skip_cleanup: true
   verbose: true
   on:
