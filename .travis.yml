@@ -45,7 +45,7 @@ deploy:
   password: $GITHUB_PASSWORD
   file_glob: true
   file:
-    - "gowebapp"
+    - main.go
   skip_cleanup: true
   verbose: true
   on:
