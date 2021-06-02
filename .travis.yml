@@ -41,9 +41,9 @@ after_success:
 
 deploy:
   provider: releases
-  username: $GITHUB_USER
-  password: $GITHUB_PASSWORD
+  api_key: $GITHUB_OAUTH_TOKEN
   file_glob: true
   skip_cleanup: true
   on:
+    all_branches: true
     tags: true
