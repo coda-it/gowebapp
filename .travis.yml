@@ -38,18 +38,3 @@ after_success:
       docker push oszura/webapp-prod
       docker push oszura/webapp-dev
     fi
-
-deploy:
-  provider: releases
-  username: $GITHUB_USER
-  password: $GITHUB_PASSWORD
-  file_glob: true
-  file:
-    - "gowebapp"
-    - "views/*"
-    - "public/*"
-  skip_cleanup: true
-  verbose: true
-  on:
-    all_branches: true
-    condition: $TRAVIS_COMMIT_MESSAGE =~ ^Build.*
