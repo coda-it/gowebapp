@@ -6,6 +6,11 @@ go:
 env:
   - GO111MODULE=on APP_VERSION=v1.0.11
 
+branches:
+  only:
+    - master
+    - /.*/
+
 install:
   - sudo apt-get update
   - sudo apt-get install libgconf-2-4 # required by Cypress
@@ -41,15 +46,9 @@ after_success:
 
 deploy:
   provider: releases
-  username: $GITHUB_USER
-  password: $GITHUB_PASSWORD
+  api_key: $GITHUB_OAUTH_TOKEN
   file_glob: true
-  file:
-    - "gowebapp"
-    - "views/*"
-    - "public/*"
   skip_cleanup: true
-  verbose: true
   on:
     all_branches: true
-    condition: $TRAVIS_COMMIT_MESSAGE =~ ^Build.*
+    tags: true
