@@ -8,4 +8,5 @@ import (
 type Config struct {
 	ID            bson.ObjectId `json:"id" bson:"_id,omitempty"`
 	LandingModule string        `json:"landingModule" bson:"landingModule"`
+	StaticPage    string        `json:"staticPage" bson:"staticPage"`
 }
