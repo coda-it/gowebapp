@@ -129,6 +129,36 @@ func (c *Controller) RenderTemplate(
 	}
 }
 
+// RenderStaticTemplate - renders static page template
+func (c *Controller) RenderStaticTemplate(
+	w http.ResponseWriter,
+	name string,
+) {
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+
+	appPath := constants.DefaultAppID + "/"
+
+	for _, app := range c.Config.Apps {
+		for _, module := range app.Modules {
+			if module.ID == constants.StaticModule {
+				appPath = app.ID + "/"
+			}
+		}
+	}
+
+	tpl := template.Must(
+		template.ParseFiles(
+			dir + "/views/" + appPath + name + ".html",
+		),
+	)
+
+	err = tpl.ExecuteTemplate(w, "static", struct{}{})
+
+	if err != nil {
+		c.HandleErrorResponse(w, err.Error())
+	}
+}
+
 // HandleJSONResponse - renders JSON output
 func (c *Controller) HandleJSONResponse(w http.ResponseWriter, data interface{}, embedded interface{}, links map[string]map[string]string, status int) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")

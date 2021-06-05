@@ -7,4 +7,6 @@ const (
 	ConfigDataKey = "config"
 	// DefaultLandingPage - default landing page
 	DefaultLandingPage = "post"
+	// DefaultStaticPage - default static page
+	DefaultStaticPage = "static"
 )
