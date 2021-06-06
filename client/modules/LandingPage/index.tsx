@@ -6,14 +6,17 @@ import * as globalTypes from 'client/types';
 import * as types from './types';
 
 const mapStateToProps = (state) => {
+	console.log('state', state.landing)
 	return {
-	input: state.input,
-        id: state.id
+	landingModule: state.landing.landingModule,
+        id: state.landing.id
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
-	setInput: () => dispatch(landingActions.putLanding())
+	loadLanding: () => dispatch(landingActions.fetchLanding()),
+	onUpdate: (input) => dispatch(landingActions.updateLanding(input)),
+	onAdd: (input) => dispatch(landingActions.addLanding(input))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);

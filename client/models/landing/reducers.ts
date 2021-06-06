@@ -2,21 +2,24 @@ import * as actionTypes from './actionTypes';
 import type * as types from './types';
 
 
-const defaultState: types.State = {
-  input: "default",
+const defaultState = {
+  landingModule: "default",
   id: ""
 };
 
 export default function reducers(
-  state: types.State = defaultState,
+  state = defaultState,
   action: types.Action
 ) {
   switch (action.type) {
-    case actionTypes.PUT_LANDING:
+    case actionTypes.FETCH_LANDING_SUCCESS:
+    console.log('action', action)
       return {
-        input: action.input,
-        id: action.id
-      };
+        ...state,
+        landingModule: action.input,
+        id: action.id,
+        
+      }
     default:
       return state;
   }

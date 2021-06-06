@@ -37,6 +37,9 @@ function* root() {
       categoriesSagas.onFetchCategories
     ),
     takeEvery(usersActionTypes.FETCH_USER, usersSagas.onFetchUser),
+    takeEvery(landingActionTypes.FETCH_LANDING, landingSagas.onFetchLanding),
+    takeEvery(landingActionTypes.UPDATE_LANDING, landingSagas.onUpdateLanding),
+    takeEvery(landingActionTypes.ADD_LANDING, landingSagas.onAddLanding),
   ];
 }
 

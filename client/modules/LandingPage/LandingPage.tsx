@@ -3,74 +3,26 @@ import { withRouter } from 'react-router';
 import { Button } from 'graphen';
 
 function LandingPage(props) {
-	const {input, id, setInput} = props
-	console.log(props)
-	console.log(input)
-    console.log(id)
-  //const [id, setId] = useState('');
-  //const [input, setInput] = useState('');
-  const handleChange = (event) => {
-  	
-    setInput(event.target.value);
-    
-  };
-
-  const test = () => {
-  	setInput('test')
-  }
-
-/*
- async function loadLanding() {
-    
-     await fetch('/api/platform')
-      await ((res) => res.json())
-      await ((data) => {
-        setId(data.config.id);
-        setInput(data.config.landingModule);
-      });
-  }
-
-  function putLanding() {
-    
-    fetch('/api/platform', {
-      method: 'put',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        id,
-        landingModule: input,
-      }),
-    })
-    .then((res) => res.json())
-      .then((data) => {
-        setId(data.config.id);
-        setInput(data.config.landingModule);
-      });
-  }
-
-  function postLanding() {
-    
-    fetch('/api/platform', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        landingModule: input,
-      }),
-    })
-   .then(response => response.text())
-.then(data => {
-  console.log('Success:', data);
-})
-.then(loadLanding());
-  }
+	const {landingModule, id, loadLanding, onUpdate, onAdd} = props
+	console.log('props', props)
+  const [input, setInput] = useState('');
+  const [localId, setLocalId] = useState('');
 
   useEffect(() => {
-    loadLanding();
-  }, []);
-*/
+    props.loadLanding();
+    setLocalId(props.id)
+    console.log('useeffect id', props.id)
+  }, [props.loadLanding]); 
+
+  const handleChange = (event) => {	
+    setInput(event.target.value);
+  };
+
+  const add = () => {
+
+  	props.onAdd(input);
+  	setLocalId(props.id)
+  }
 
   return (
     <div className="gc-panel gc-panel--separator">
@@ -85,14 +37,15 @@ function LandingPage(props) {
           <input
             id="landing page"
             className="gc-input__field tst-landing-page-title"
-            value={input}
+            //value={input}
             onChange={handleChange}
           />
         </div>
       </article>
       <Button
         className="gc-btn--primary tst-post-editor-add gc-btn"
-        onClick={test}
+       
+        onClick = {(props.id) ? () => props.onUpdate(input, props.id) : () => props.onAdd(input)}
         //onClick={id ? putLanding : postLanding}
       >
         Add
