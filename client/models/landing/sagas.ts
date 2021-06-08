@@ -71,20 +71,22 @@ export function callAddLanding(input) {
 
     return fetch(request)
     .then((response) => response.json())
-    .catch(() => 'Adding landing page failed');
+    .then((data) => console.log('data', data))
+    .catch((e) => console.log(e));
   }
 
   export function* onAddLanding(input) {
       const response: types.ApiResponse = yield call(callAddLanding, input);
+      yield console.log('response ADD', response)
 
      // if (typeof response === 'string') {
     //yield put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
     //return;
      // }
      
-         const landingModule = 'state test';
-          const id = 'state id test';
-        yield put(actions.fetchLandingSuccess(landingModule, id));
+        // const landingModule = 'state test';
+        //  const id = 'state id test';
+      //  yield put(actions.fetchLandingSuccess(landingModule, id));
     }
 
 
