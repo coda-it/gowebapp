@@ -32,12 +32,20 @@ func (c *Controller) CtrPlatformPost(w http.ResponseWriter, r *http.Request, opt
 	err = c.PlatformUsecases.Add(newConfig)
 
 	if err != nil {
-		c.HandleErrorResponse(w, "error adding new platfrom config")
+		c.HandleErrorResponse(w, "error adding new platform config")
 		return
 	}
 
-	data := map[string]interface{}{
-		"config": newConfig,
+	var data map[string]interface{}
+	data = map[string]interface{}{
+		"config": struct{}{},
+	}
+
+	appConfig, err := c.PlatformUsecases.Fetch()
+	if err == nil {
+		data = map[string]interface{}{
+			"config": appConfig,
+		}
 	}
 
 	links := map[string]map[string]string{
