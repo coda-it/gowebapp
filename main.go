@@ -23,6 +23,7 @@ import (
 	"github.com/coda-it/gowebapp/controllers/notfound"
 	postsController "github.com/coda-it/gowebapp/controllers/posts"
 	userRegisterController "github.com/coda-it/gowebapp/controllers/register"
+	staticController "github.com/coda-it/gowebapp/controllers/static"
 	"github.com/coda-it/gowebapp/data/config"
 	"github.com/coda-it/gowebapp/data/persistence"
 	categoryRepository "github.com/coda-it/gowebapp/data/repositories/category"
@@ -167,6 +168,20 @@ func main() {
 				Method:    "PUT",
 				Handler:   postCtl.CtrPostPut,
 				Protected: true,
+			},
+		},
+	}
+
+	staticCtl := staticController.New(baseController, constants.StaticModule, platformUsecasesEntity)
+	staticModule := module.Module{
+		ID:      "static-page",
+		Enabled: true,
+		Routes: []route.Route{
+			{
+				Path:      "/page",
+				Method:    "GET",
+				Handler:   staticCtl.CtrStaticGet,
+				Protected: false,
 			},
 		},
 	}
@@ -382,6 +397,7 @@ func main() {
 	notFoundCtl := notfound.New(baseController, "not-found")
 
 	modules := []module.Module{
+		staticModule,
 		landingModule,
 		apiLoginModule,
 		userModule,

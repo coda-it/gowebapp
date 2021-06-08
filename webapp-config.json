@@ -3,6 +3,9 @@
     "id": "default",
     "modules": [
       {
+        "id": "static"
+      },
+      {
         "id": "post"
       },
       {

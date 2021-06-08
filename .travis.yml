@@ -4,7 +4,7 @@ go:
   - 1.x
 
 env:
-  - GO111MODULE=on APP_VERSION=v1.0.2
+  - GO111MODULE=on APP_VERSION=v1.1.0
 
 install:
   - sudo apt-get update
@@ -38,10 +38,3 @@ after_success:
       docker push oszura/webapp-prod
       docker push oszura/webapp-dev
     fi
-
-deploy:
-  provider: script
-  script: bash scripts/deploy.sh
-  on:
-    branch: master
-    condition: $TRAVIS_COMMIT_MESSAGE =~ ^Build.*

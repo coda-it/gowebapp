@@ -31,6 +31,7 @@ func (c *Controller) CtrPlatformPut(w http.ResponseWriter, r *http.Request, opt 
 
 	if err != nil {
 		c.HandleErrorResponse(w, "error updating platform config")
+		return
 	}
 
 	data := struct {
