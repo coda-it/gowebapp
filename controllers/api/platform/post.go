@@ -33,5 +33,20 @@ func (c *Controller) CtrPlatformPost(w http.ResponseWriter, r *http.Request, opt
 
 	if err != nil {
 		c.HandleErrorResponse(w, "error adding new platfrom config")
+		return
 	}
+
+	data := map[string]interface{}{
+		"config": newConfig,
+	}
+
+	links := map[string]map[string]string{
+		"self": map[string]string{
+			"href": href,
+		},
+	}
+
+	embedded := map[string]interface{}{}
+
+	c.HandleJSONResponse(w, data, embedded, links, http.StatusOK)
 }
