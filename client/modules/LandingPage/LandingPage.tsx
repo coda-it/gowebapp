@@ -32,7 +32,7 @@ function LandingPage(props) {
           <input
             id="landing page"
             className="gc-input__field tst-landing-page-title"
-            value={landingModule}
+            defaultValue={id ? landingModule : ''}
             onChange={handleChange}
           />
         </div>
