@@ -3,8 +3,8 @@ import type * as types from './types';
 
 
 const defaultState = {
-  landingModule: "default",
-  id: ""
+  landingModule: null,
+  id: null
 };
 
 export default function reducers(

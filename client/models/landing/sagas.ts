@@ -4,7 +4,6 @@ import * as alertConstants from 'client/models/alerts/constants';
 import * as actions from './actions';
 import * as constants from './constants';
 import type * as types from './types';
-import * as landingSelectors from 'client/models/landing/selectors';
 
 export function callFetchLanding() {
   const request = new Request(constants.LANDING_ENDPOINT, {
@@ -30,8 +29,9 @@ export function callFetchLanding() {
      
     }
 
-export function callUpdateLanding(input) {
-  console.log('callUpdate', input)
+export function callUpdateLanding(input, id) {
+  console.log('callUpdate input', input)
+  console.log('callUpdate id', id)
   const request = new Request(constants.LANDING_ENDPOINT, {
     method: 'put',
       headers: {
@@ -39,17 +39,17 @@ export function callUpdateLanding(input) {
       },
       body: JSON.stringify({
         landingModule: input.input,
-        id,
+        id: input.id,
       }),
   });
 
     return fetch(request)
     .then((response) => response.json())
-    .catch(() => 'Updating landing page failed');
+    .catch(() => 'Update landing page failed');
   }
 
-  export function* onUpdateLanding(input) {
-      const response: types.ApiResponse = yield call(callUpdateLanding, input);
+  export function* onUpdateLanding(input, id) {
+      const response: types.ApiResponse = yield call(callUpdateLanding, input, id);
 
       if (typeof response === 'string') {
     yield put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
@@ -71,22 +71,22 @@ export function callAddLanding(input) {
 
     return fetch(request)
     .then((response) => response.json())
-    .then((data) => console.log('data', data))
-    .catch((e) => console.log(e));
+    
+    .catch(() => console.log('Add landing page failed'));
   }
 
   export function* onAddLanding(input) {
       const response: types.ApiResponse = yield call(callAddLanding, input);
-      yield console.log('response ADD', response)
+      console.log('response ADD', response)
 
-     // if (typeof response === 'string') {
-    //yield put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
-    //return;
-     // }
+      if (typeof response === 'string') {
+    yield put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
+    return;
+      }
      
-        // const landingModule = 'state test';
-        //  const id = 'state id test';
-      //  yield put(actions.fetchLandingSuccess(landingModule, id));
+         const landingModule = response?.config?.landingModule;
+    const id = response?.config?.id;
+        yield put(actions.fetchLandingSuccess(landingModule, id));
     }
 
 
