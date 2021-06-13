@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import { Button } from 'graphen';
+import * as types from './types';
 
-function LandingPage(props) {
-  const {landingModule, id, loadLanding, onUpdate, onAdd} = props
+function LandingPage(props: types.Props) {
+  const { landingModule, id, loadLanding, onUpdate, onAdd } = props;
   const [input, setInput] = useState('');
-  
 
   useEffect(() => {
     loadLanding();
-    
-  }, []); 
+  }, []);
 
-  const handleChange = (event) => {	
+  const handleChange = (event) => {
     setInput(event.target.value);
   };
-
-  
 
   return (
     <div className="gc-panel gc-panel--separator">
@@ -38,7 +35,7 @@ function LandingPage(props) {
       </article>
       <Button
         className="gc-btn--primary tst-post-editor-add gc-btn"
-        onClick = {(id) ? () => onUpdate(input, id) : () => onAdd(input)}
+        onClick={id ? () => onUpdate(input, id) : () => onAdd(input)}
       >
         Add
       </Button>

@@ -1,9 +1,5 @@
-import _ from 'lodash';
 import * as globalTypes from 'client/types';
-import * as types from './types';
 
-export const getLanding = (
-  state: globalTypes.State
-) => state.landing;
-
-
+/* eslint-disable import/prefer-default-export */
+export const getLanding = (state: globalTypes.State) => state.landing;
+/* eslint-enable import/prefer-default-export */

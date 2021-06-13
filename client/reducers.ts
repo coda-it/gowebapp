@@ -12,5 +12,5 @@ export default combineReducers({
   posts,
   users,
   categories,
-  landing
+  landing,
 });

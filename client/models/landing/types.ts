@@ -1,3 +1,14 @@
+export type LandingModule = string | null;
+export type Id = string | null;
+/*
+export type LandingModule = {
+  landingModule: string | null;
+};
+
+export type Id = {
+  id: string | null;
+};
+*/
 export type AddLandingAction = {
   type: string;
   input: string;
@@ -10,8 +21,8 @@ export type UpdateLandingAction = {
 };
 
 export type State = {
-  landingModule: string || null;
-  id: string || null;
+  landingModule: string | null;
+  id: string | null;
 };
 
 export type Action = {
@@ -20,3 +31,14 @@ export type Action = {
   id: string;
 };
 
+type ApiResponseEmbedded = {
+  id: string;
+  landingModule: string;
+};
+
+export type ApiResponse =
+  | {
+      config: ApiResponseEmbedded;
+    }
+  | string
+  | undefined;

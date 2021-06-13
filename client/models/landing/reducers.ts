@@ -1,10 +1,9 @@
 import * as actionTypes from './actionTypes';
 import type * as types from './types';
 
-
 const defaultState = {
   landingModule: null,
-  id: null
+  id: null,
 };
 
 export default function reducers(
@@ -17,13 +16,8 @@ export default function reducers(
         ...state,
         landingModule: action.input,
         id: action.id,
-        
-      }
+      };
     default:
       return state;
   }
-
 }
-
-
-
