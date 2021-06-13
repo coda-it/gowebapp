@@ -30,16 +30,15 @@ export function callFetchLanding() {
     }
 
 export function callUpdateLanding(input, id) {
-  console.log('callUpdate input', input)
-  console.log('callUpdate id', id)
+  
   const request = new Request(constants.LANDING_ENDPOINT, {
     method: 'put',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        landingModule: input.input,
-        id: input.id,
+        landingModule: input,
+        id: id,
       }),
   });
 
@@ -48,7 +47,7 @@ export function callUpdateLanding(input, id) {
     .catch(() => 'Update landing page failed');
   }
 
-  export function* onUpdateLanding(input, id) {
+  export function* onUpdateLanding({ input, id }) {
       const response: types.ApiResponse = yield call(callUpdateLanding, input, id);
 
       if (typeof response === 'string') {
@@ -65,17 +64,17 @@ export function callAddLanding(input) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        landingModule: input.input,
+        landingModule: input,
       }),
   });
 
     return fetch(request)
     .then((response) => response.json())
     
-    .catch(() => console.log('Add landing page failed'));
+    .catch(() => 'Add landing page failed');
   }
 
-  export function* onAddLanding(input) {
+  export function* onAddLanding({ input }) {
       const response: types.ApiResponse = yield call(callAddLanding, input);
       console.log('response ADD', response)
 

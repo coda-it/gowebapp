@@ -8,10 +8,12 @@ export const fetchLanding = () => ({
   type: actionTypes.FETCH_LANDING,
 }); 
 
-export const updateLanding = (input, id) => ({
+export const updateLanding = (input, id) => (
+{
   type: actionTypes.UPDATE_LANDING,
   input,
   id,
+
 }); 
 
 export const addLanding = (input) => ({

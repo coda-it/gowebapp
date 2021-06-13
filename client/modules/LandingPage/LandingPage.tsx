@@ -3,8 +3,7 @@ import { withRouter } from 'react-router';
 import { Button } from 'graphen';
 
 function LandingPage(props) {
-	const {landingModule, id, loadLanding, onUpdate, onAdd} = props
-	console.log('props', props)
+  const {landingModule, id, loadLanding, onUpdate, onAdd} = props
   const [input, setInput] = useState('');
   
 
@@ -39,9 +38,7 @@ function LandingPage(props) {
       </article>
       <Button
         className="gc-btn--primary tst-post-editor-add gc-btn"
-       
         onClick = {(id) ? () => onUpdate(input, id) : () => onAdd(input)}
-        
       >
         Add
       </Button>

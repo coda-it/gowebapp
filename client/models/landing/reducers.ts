@@ -13,7 +13,6 @@ export default function reducers(
 ) {
   switch (action.type) {
     case actionTypes.FETCH_LANDING_SUCCESS:
-    console.log('action', action)
       return {
         ...state,
         landingModule: action.input,

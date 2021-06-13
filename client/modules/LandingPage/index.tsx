@@ -7,7 +7,6 @@ import * as types from './types';
 
 const mapStateToProps = (state) => {
 	const landing = landingSelectors.getLanding(state)
-	console.log('state', landing)
 	return {
 	landingModule: landing.landingModule,
         id: landing.id
