@@ -3,7 +3,7 @@ import * as globalTypes from 'client/types';
 import * as types from './types';
 
 export const getLanding = (
-  state: State
+  state: globalTypes.State
 ) => state.landing;
 
 

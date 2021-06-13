@@ -8,7 +8,7 @@ const defaultState = {
 };
 
 export default function reducers(
-  state = defaultState,
+  state: types.State = defaultState,
   action: types.Action
 ) {
   switch (action.type) {
