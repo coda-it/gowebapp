@@ -9,7 +9,7 @@ function LandingPage(props: types.Props) {
 
   useEffect(() => {
     loadLanding();
-  }, []);
+  }, [loadLanding]);
 
   const handleChange = (event) => {
     setInput(event.target.value);
