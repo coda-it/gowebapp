@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { withRouter } from 'react-router';
 import { Button } from 'graphen';
 import * as types from './types';
@@ -11,9 +11,9 @@ function LandingPage(props: types.Props) {
     loadLanding();
   }, [loadLanding]);
 
-  const handleChange = (event) => {
+  const handleInputChange = useCallback((event) => {
     setInput(event.target.value);
-  };
+  }, [setInput]);
 
   return (
     <div className="gc-panel gc-panel--separator">
@@ -29,7 +29,7 @@ function LandingPage(props: types.Props) {
             id="landing page"
             className="gc-input__field tst-landing-page-title"
             defaultValue={id ? landingModule : ''}
-            onChange={handleChange}
+            onChange={handleInputChange}
           />
         </div>
       </article>
