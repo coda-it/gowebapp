@@ -11,9 +11,12 @@ function LandingPage(props: types.Props) {
     loadLanding();
   }, [loadLanding]);
 
-  const handleInputChange = useCallback((event) => {
-    setInput(event.target.value);
-  }, [setInput]);
+  const handleInputChange = useCallback(
+    (event) => {
+      setInput(event.target.value);
+    },
+    [setInput]
+  );
 
   return (
     <div className="gc-panel gc-panel--separator">

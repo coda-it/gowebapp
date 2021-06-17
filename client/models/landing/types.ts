@@ -1,14 +1,6 @@
 export type LandingModule = string | null;
 export type Id = string | null;
-/*
-export type LandingModule = {
-  landingModule: string | null;
-};
 
-export type Id = {
-  id: string | null;
-};
-*/
 export type AddLandingAction = {
   type: string;
   input: string;
