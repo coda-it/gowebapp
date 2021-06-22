@@ -36,12 +36,21 @@ function LandingPage(props: types.Props) {
           />
         </div>
       </article>
-      <Button
-        className="gc-btn--primary tst-post-editor-add gc-btn"
-        onClick={id ? () => onUpdate(input, id) : () => onAdd(input)}
-      >
-        Add
-      </Button>
+      {id ? (
+        <Button
+          className="gc-btn--primary tst-post-editor-add gc-btn"
+          onClick={() => onUpdate(input, id)}
+        >
+          Update
+        </Button>
+      ) : (
+        <Button
+          className="gc-btn--primary tst-post-editor-add gc-btn"
+          onClick={() => onAdd(input)}
+        >
+          Add
+        </Button>
+      )}
     </div>
   );
 }

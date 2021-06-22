@@ -65,7 +65,6 @@ export function callAddLanding(input: string) {
 
   return fetch(request)
     .then((response) => response.json())
-
     .catch(() => 'Add landing page failed');
 }
 
