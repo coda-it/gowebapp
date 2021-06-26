@@ -36,8 +36,16 @@ func (c *Controller) CtrPlatformPost(w http.ResponseWriter, r *http.Request, opt
 		return
 	}
 
-	data := map[string]interface{}{
-		"config": newConfig,
+	var data map[string]interface{}
+	data = map[string]interface{}{
+		"config": struct{}{},
+	}
+
+	appConfig, err := c.PlatformUsecases.Fetch()
+	if err == nil {
+		data = map[string]interface{}{
+			"config": appConfig,
+		}
 	}
 
 	links := map[string]map[string]string{
