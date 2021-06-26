@@ -32,7 +32,7 @@ func (c *Controller) CtrPlatformPost(w http.ResponseWriter, r *http.Request, opt
 	err = c.PlatformUsecases.Add(newConfig)
 
 	if err != nil {
-		c.HandleErrorResponse(w, "error adding new platfrom config")
+		c.HandleErrorResponse(w, "error adding new platform config")
 		return
 	}
 
