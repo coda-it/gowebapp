@@ -6,7 +6,7 @@
     <title>
         {{.Title}}
     </title>
-    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/default/styles.css">
 </head>
 <body class="gc-body">
     {{template "navigation" .}}
@@ -17,7 +17,7 @@
     <script type="text/javascript">
         window.config = JSON.parse({{.JSConfig}})
     </script>
-    <script type="text/javascript" src="/static/scripts.js"></script>
+    <script type="text/javascript" src="/static/default/scripts.js"></script>
 </body>
 </html>
 {{end}}
