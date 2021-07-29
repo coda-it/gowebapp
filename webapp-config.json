@@ -27,19 +27,19 @@
       "id": "post",
       "label": "Posts",
       "href": "/post",
-      "isRoot":  false
+      "isRoot": false
     },
     {
       "id": "category",
       "label": "Categories",
       "href": "/category",
-      "isRoot":  false
+      "isRoot": false
     },
     {
       "id": "admin",
       "label": "Admin",
       "href": "/admin",
-      "isRoot":  true,
+      "isRoot": true,
       "children": [
         {
           "id": "admin-categories",
@@ -68,5 +68,7 @@
         }
       ]
     }
-  ]
+  ],
+  "certificate": "",
+  "certificatePrivateKey": ""
 }
