@@ -285,7 +285,7 @@ func main() {
 				Protected: true,
 			},
 			{
-				Path:      "/admin/landingpage",
+				Path:      "/admin/platform/edit",
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,

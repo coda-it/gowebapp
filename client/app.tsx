@@ -13,7 +13,7 @@ import PostEditor from './modules/PostEditor';
 import Post from './modules/Post';
 import Categories from './modules/Categories';
 import CategoryEditor from './modules/CategoryEditor';
-import LandingPage from './modules/LandingPage';
+import PlatformEditor from './modules/PlatformEditor';
 import sagas from './sagas';
 import reducers from './reducers';
 
@@ -48,7 +48,7 @@ if (appContainer) {
           <Route exact path="/admin/posts" render={() => <Posts isAdmin />} />
           <Route exact path="/admin/posts/new" component={PostEditor} />
           <Route exact path="/admin/posts/edit/:id?" component={PostEditor} />
-          <Route exact path="/admin/landingpage" component={LandingPage} />
+          <Route exact path="/admin/platform/edit" component={PlatformEditor} />
           <Route
             exact
             path="/admin/categories"

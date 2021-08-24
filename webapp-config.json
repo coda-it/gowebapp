@@ -63,8 +63,8 @@
         },
         {
           "id": "admin-landing-page",
-          "label": "Landing Page",
-          "href": "/admin/landingpage"
+          "label": "Platform",
+          "href": "/admin/platform/edit"
         }
       ]
     }

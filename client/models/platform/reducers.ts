@@ -2,8 +2,7 @@ import * as actionTypes from './actionTypes';
 import type * as types from './types';
 
 const defaultState = {
-  landingModule: null,
-  id: null,
+  config: null,
 };
 
 export default function reducers(
@@ -11,11 +10,10 @@ export default function reducers(
   action: types.Action
 ) {
   switch (action.type) {
-    case actionTypes.FETCH_LANDING_SUCCESS:
+    case actionTypes.FETCH_PLATFORM_SUCCESS:
       return {
         ...state,
-        landingModule: action.input,
-        id: action.id,
+        config: action.config,
       };
     default:
       return state;
