@@ -2,9 +2,5 @@ $gc-icon-font-url: '~graphen/src/assets/font';
 $gc-font-url: '~graphen/src/assets/font';
 
 @import '~graphen/src/style.scss';
-@import 'components/Editor/styles';
-@import 'components/NoImage/styles';
 @import 'modules/AlertPanel/styles';
-@import 'modules/CategoryEditor/styles';
-@import 'modules/PostEditor/styles';
 @import 'modules/LoginBox/styles';

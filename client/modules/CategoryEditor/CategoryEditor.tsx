@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React, { useState, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import { Button } from 'graphen';
-import NoImage from 'client/components/NoImage';
+import Previewer from 'client/components/Previewer';
 import * as types from './types';
 
 function CategoryEditor(props: types.Props) {
@@ -107,15 +107,7 @@ function CategoryEditor(props: types.Props) {
           onChange={handleImageChange}
           className="gm-spacing-bl"
         />
-        {image ? (
-          <img
-            className="category-editor__preview"
-            src={image}
-            alt="category"
-          />
-        ) : (
-          <NoImage />
-        )}
+        <Previewer image={image} />
       </div>
       <div className="gc-panel gc-panel--separator">
         {_.isEmpty(category) && (
