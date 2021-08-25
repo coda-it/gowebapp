@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import React, { useState, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import { Button, Dropdown, Loader } from 'graphen';
+import Previewer from 'client/components/Previewer';
 import * as types from './types';
 
 function PostEditor(props: types.Props) {
@@ -177,7 +178,7 @@ function PostEditor(props: types.Props) {
           onChange={handleImageChange}
           className="gm-spacing-bl"
         />
-        <img src={image} alt="post" />
+        <Previewer image={image} />
       </div>
       <div className="gc-panel gc-panel--separator">
         <header className="gc-panel__title">Description</header>

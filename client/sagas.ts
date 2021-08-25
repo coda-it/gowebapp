@@ -7,8 +7,8 @@ import * as postsSagas from './models/posts/sagas';
 import * as postsActionTypes from './models/posts/actionTypes';
 import * as usersSagas from './models/users/sagas';
 import * as usersActionTypes from './models/users/actionTypes';
-import * as landingSagas from './models/landing/sagas';
-import * as landingActionTypes from './models/landing/actionTypes';
+import * as platformSagas from './models/platform/sagas';
+import * as platformActionTypes from './models/platform/actionTypes';
 
 function* root() {
   yield [
@@ -37,9 +37,15 @@ function* root() {
       categoriesSagas.onFetchCategories
     ),
     takeEvery(usersActionTypes.FETCH_USER, usersSagas.onFetchUser),
-    takeEvery(landingActionTypes.FETCH_LANDING, landingSagas.onFetchLanding),
-    takeEvery(landingActionTypes.UPDATE_LANDING, landingSagas.onUpdateLanding),
-    takeEvery(landingActionTypes.ADD_LANDING, landingSagas.onAddLanding),
+    takeEvery(
+      platformActionTypes.FETCH_PLATFORM,
+      platformSagas.onFetchPlatform
+    ),
+    takeEvery(
+      platformActionTypes.UPDATE_PLATFORM,
+      platformSagas.onUpdatePlatform
+    ),
+    takeEvery(platformActionTypes.ADD_PLATFORM, platformSagas.onAddPlatform),
   ];
 }
 

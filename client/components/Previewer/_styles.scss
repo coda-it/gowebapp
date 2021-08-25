@@ -1,0 +1,12 @@
+.l-previewer {
+  &__image {
+    max-width: 40vw;
+    max-height: 40vw;
+    margin: 0 auto;
+  }
+
+  &__no-image {
+    margin: 15px;
+    text-align: center;
+  }
+}
