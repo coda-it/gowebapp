@@ -14,6 +14,8 @@ github.com/coda-it/goappframe v0.3.1 h1:3qStEssxm8UKl6TvMVxc5h7UUrtbO7kpCYNTPJH2
 github.com/coda-it/goappframe v0.3.1/go.mod h1:X5Zp0Zs7Z/dJGvuKETFHGnoVtEsKoZ0wddDpxZqrIT4=
 github.com/coda-it/goappframe v0.3.2 h1:jPWmA8l3SkUL75ypyclBFQS+PX0eMSE6diZ5lGAvVNY=
 github.com/coda-it/goappframe v0.3.2/go.mod h1:X5Zp0Zs7Z/dJGvuKETFHGnoVtEsKoZ0wddDpxZqrIT4=
+github.com/coda-it/goappframe v0.3.3 h1:mDPn+Ie7bRV1pDyl+11Gc3LXeZh5NTFo5XqyadD3kjQ=
+github.com/coda-it/goappframe v0.3.3/go.mod h1:X5Zp0Zs7Z/dJGvuKETFHGnoVtEsKoZ0wddDpxZqrIT4=
 github.com/coda-it/goutils v0.0.1 h1:1oh77r/w3alKktV1tZxD4ga28YXxsMJrz4c712JeTBU=
 github.com/coda-it/goutils v0.0.1/go.mod h1:JDLjsDAubl3lvopKddkM1vZK8Ckq3FIeS6Ap5H6jTH0=
 github.com/coda-it/goutils v0.1.0 h1:cK2xlksT2yD9uIVOJHxQcHGtbY3v6m0pcL/xiB7WX/I=

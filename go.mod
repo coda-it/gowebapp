@@ -3,7 +3,7 @@ module github.com/coda-it/gowebapp
 go 1.12
 
 require (
-	github.com/coda-it/goappframe v0.3.2
+	github.com/coda-it/goappframe v0.3.3
 	github.com/coda-it/goutils v0.1.0
 	github.com/coda-it/gowebserver v1.2.0
 	gopkg.in/configcat/go-sdk.v1 v1.4.0

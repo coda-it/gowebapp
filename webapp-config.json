@@ -69,6 +69,7 @@
       ]
     }
   ],
+  "defaultLanguage": "en",
   "certificate": "",
   "certificatePrivateKey": ""
 }

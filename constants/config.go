@@ -1,7 +1,7 @@
 package constants
 
 const (
-	// TranslationsFilePath
+	// TranslationsDirectory - directory where translations are placed
 	TranslationsDirectory = "./translations"
 	// ConfigFilePath - config file path
 	ConfigFilePath = "./webapp-config.json"

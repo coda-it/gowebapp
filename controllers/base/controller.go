@@ -83,10 +83,11 @@ func (c *Controller) buildViewModel(
 
 	jsConfig, _ := json.Marshal(extendedConfig)
 
-	userLanguage := "en"
+	userLanguage := c.Config.DefaultLanguage
 
 	languageCookie, err := r.Cookie("language")
-	if err != nil {
+
+	if err == nil {
 		userLanguage = languageCookie.Value
 	}
 
