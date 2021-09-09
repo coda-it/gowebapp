@@ -2,13 +2,14 @@ package base
 
 import (
 	"encoding/json"
-	"github.com/coda-it/goappframe/config" // this probably should not depand on application layer
-	"github.com/coda-it/goappframe/page"   // this probably should not depand on application layer
+	"github.com/coda-it/goappframe/config" // this probably should not rely on application layer
+	"github.com/coda-it/goappframe/page"   // this probably should not rely on application layer
 	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/goutils/mailer"
 	"github.com/coda-it/gowebapp/constants"
 	platformModel "github.com/coda-it/gowebapp/domain/models/platform"
 	platformUsecases "github.com/coda-it/gowebapp/domain/usecases/platform"
+	translationUsecases "github.com/coda-it/gowebapp/domain/usecases/translation"
 	userHelpers "github.com/coda-it/gowebapp/helpers/user"
 	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/helpers"
@@ -21,17 +22,19 @@ import (
 
 // Controller - base controller
 type Controller struct {
-	Mailer           mailer.IMailer
-	Config           config.Config
-	platformUsecases *platformUsecases.Usecase
+	Mailer              mailer.IMailer
+	Config              config.Config
+	platformUsecases    *platformUsecases.Usecase
+	translationUsecases *translationUsecases.Usecase
 }
 
 // New - creates new instance of base Controller
-func New(m mailer.IMailer, c config.Config, pu *platformUsecases.Usecase) *Controller {
+func New(m mailer.IMailer, c config.Config, pu *platformUsecases.Usecase, tu *translationUsecases.Usecase) *Controller {
 	return &Controller{
 		m,
 		c,
 		pu,
+		tu,
 	}
 }
 
@@ -50,26 +53,16 @@ func (c *Controller) HandleErrorResponse(w http.ResponseWriter, msg string) {
 	http.Error(w, msg, http.StatusInternalServerError)
 }
 
-// RenderTemplate - renders regular page template
-func (c *Controller) RenderTemplate(
-	w http.ResponseWriter,
+func (c *Controller) buildViewModel(
 	r *http.Request,
 	name string,
 	sm session.ISessionManager,
-	params map[string]interface{},
-	moduleID string,
-) {
+	params map[string]interface{}) page.Page {
 	isLogged := false
 
 	u, err := userHelpers.GetLoggedUser(r, sm)
 	if err == nil {
 		isLogged = true
-	}
-
-	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
-
-	if err != nil {
-		logger.Log("reading template failed:" + err.Error())
 	}
 
 	platformConfig, err := c.platformUsecases.Fetch()
@@ -90,17 +83,45 @@ func (c *Controller) RenderTemplate(
 
 	jsConfig, _ := json.Marshal(extendedConfig)
 
-	templateModel := page.Page{
-		Version:    utils.VERSION,
-		Title:      constants.AppName + " - " + name,
-		IsLogged:   isLogged,
-		IsRoot:     u.HasEntitlement("root"),
-		Params:     params,
-		Name:       name,
-		Navigation: c.Config.Navigation,
-		JSConfig:   string(jsConfig),
+	userLanguage := "en"
+
+	languageCookie, err := r.Cookie("language")
+	if err != nil {
+		userLanguage = languageCookie.Value
 	}
 
+	translations := c.translationUsecases.Fetch(userLanguage)
+	translationsJSON, _ := json.Marshal(translations)
+
+	return page.Page{
+		Version:        utils.VERSION,
+		Title:          constants.AppName + " - " + name,
+		IsLogged:       isLogged,
+		IsRoot:         u.HasEntitlement("root"),
+		Params:         params,
+		Name:           name,
+		Navigation:     c.Config.Navigation,
+		JSConfig:       string(jsConfig),
+		JSTranslations: string(translationsJSON),
+		Translations:   translations,
+	}
+}
+
+// RenderTemplate - renders regular page template
+func (c *Controller) RenderTemplate(
+	w http.ResponseWriter,
+	r *http.Request,
+	name string,
+	sm session.ISessionManager,
+	params map[string]interface{},
+	moduleID string,
+) {
+	templateModel := c.buildViewModel(
+		r,
+		name,
+		sm,
+		params,
+	)
 	appPath := constants.DefaultAppID + "/"
 
 	if moduleID != "" {
@@ -113,6 +134,12 @@ func (c *Controller) RenderTemplate(
 		}
 	}
 	logger.Log("APP-PATH:" + appPath + "|" + name)
+
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+
+	if err != nil {
+		logger.Log("reading template failed:" + err.Error())
+	}
 
 	tpl := template.Must(
 		template.ParseFiles(
@@ -132,8 +159,18 @@ func (c *Controller) RenderTemplate(
 // RenderStaticTemplate - renders static page template
 func (c *Controller) RenderStaticTemplate(
 	w http.ResponseWriter,
+	r *http.Request,
 	name string,
+	sm session.ISessionManager,
+	params map[string]interface{},
 ) {
+	templateModel := c.buildViewModel(
+		r,
+		name,
+		sm,
+		params,
+	)
+
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 
 	appPath := constants.DefaultAppID + "/"
@@ -152,7 +189,7 @@ func (c *Controller) RenderStaticTemplate(
 		),
 	)
 
-	err = tpl.ExecuteTemplate(w, "static", struct{}{})
+	err = tpl.ExecuteTemplate(w, "static", templateModel)
 
 	if err != nil {
 		c.HandleErrorResponse(w, err.Error())

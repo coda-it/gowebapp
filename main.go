@@ -29,10 +29,12 @@ import (
 	categoryRepository "github.com/coda-it/gowebapp/data/repositories/category"
 	platformRepository "github.com/coda-it/gowebapp/data/repositories/platform"
 	postRepository "github.com/coda-it/gowebapp/data/repositories/post"
+	translationRepository "github.com/coda-it/gowebapp/data/repositories/translation"
 	userRepository "github.com/coda-it/gowebapp/data/repositories/user"
 	categoryUsecases "github.com/coda-it/gowebapp/domain/usecases/category"
 	platformUsecases "github.com/coda-it/gowebapp/domain/usecases/platform"
 	postUsecases "github.com/coda-it/gowebapp/domain/usecases/post"
+	translationUsecases "github.com/coda-it/gowebapp/domain/usecases/translation"
 	userUsecases "github.com/coda-it/gowebapp/domain/usecases/user"
 	"github.com/coda-it/gowebapp/utils"
 	"os"
@@ -61,6 +63,8 @@ func main() {
 
 	platformRepositoryEntity := platformRepository.New(store)
 	platformUsecasesEntity := platformUsecases.New(platformRepositoryEntity)
+	translationRepositoryEntity := translationRepository.New()
+	translationUsecasesEntity := translationUsecases.New(translationRepositoryEntity)
 	categoryRepositoryEntity := categoryRepository.New(store)
 	categoryUsecasesEntity := categoryUsecases.New(&categoryRepositoryEntity)
 	postRepositoryEntity := postRepository.New(store)
@@ -74,7 +78,7 @@ func main() {
 		os.Getenv("WEBAPP_MAILER_EMAIL_PASS"),
 		os.Getenv("WEBAPP_MAILER_SMTP_PORT"),
 		os.Getenv("WEBAPP_MAILER_SMTP_AUTHURL"),
-	), appConfig, platformUsecasesEntity)
+	), appConfig, platformUsecasesEntity, translationUsecasesEntity)
 
 	apiLoginCtl := loginApiController.New(baseController, "api-login", *userUsecaseEntity)
 	apiLoginModule := module.Module{
