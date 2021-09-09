@@ -1,8 +1,9 @@
 import type * as config from 'client/models/config/types';
 
-// @ts-ignore - its a hack to load platform config from the application template
 const platformConfig: config.Config = {
+  // @ts-ignore - its a hack to load platform config from the application template
   ...window.config,
+  // @ts-ignore - its a hack to load platform translations from the application template
   translation: window.translation,
 };
 
