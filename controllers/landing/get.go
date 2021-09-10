@@ -21,11 +21,11 @@ func (c *Controller) CtrLandingGet(w http.ResponseWriter, r *http.Request, opt r
 
 	if appConfig.LandingModule == constants.StaticModule {
 		if appConfig.StaticPage == "" {
-			c.RenderStaticTemplate(w, constants.DefaultStaticPage)
+			c.RenderStaticTemplate(w, r, constants.DefaultStaticPage, sm, make(map[string]interface{}))
 			return
 		}
 
-		c.RenderStaticTemplate(w, appConfig.StaticPage)
+		c.RenderStaticTemplate(w, r, constants.DefaultStaticPage, sm, make(map[string]interface{}))
 		return
 	}
 

@@ -15,9 +15,9 @@ func (c *Controller) CtrStaticGet(w http.ResponseWriter, r *http.Request, opt ro
 	appConfig, err := c.Usecase.Fetch()
 
 	if err != nil || appConfig.StaticPage == "" {
-		c.RenderStaticTemplate(w, constants.DefaultStaticPage)
+		c.RenderStaticTemplate(w, r, constants.DefaultStaticPage, sm, make(map[string]interface{}))
 		return
 	}
 
-	c.RenderStaticTemplate(w, appConfig.StaticPage)
+	c.RenderStaticTemplate(w, r, constants.DefaultStaticPage, sm, make(map[string]interface{}))
 }
