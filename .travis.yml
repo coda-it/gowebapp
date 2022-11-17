@@ -21,8 +21,8 @@ script:
   - make all ENV=prod
   - |
     echo "$DOCKER_PASS" | docker login -u "$DOCKER_LOGIN" --password-stdin
-    docker pull mongo:latest
-    docker run -d --net=host mongo:latest
+    docker pull mongo:4.2.23
+    docker run -d --net=host mongo:4.2.23
     sleep 10
   - make image IMAGE_NAME=webapp ENV=prod V=$APP_VERSION
   - |
