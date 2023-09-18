@@ -25,7 +25,6 @@ all:
 
 .PHONY: build-frontend
 build-frontend:
-	$(NPM) rebuild node-sass
 	$(NPM) run build:$(ENV)
 
 .PHONY: build-backend
