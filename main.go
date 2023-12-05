@@ -17,6 +17,7 @@ import (
 	"github.com/coda-it/gowebapp/controllers/api/user"
 	"github.com/coda-it/gowebapp/controllers/base"
 	categoriesController "github.com/coda-it/gowebapp/controllers/categories"
+	helpdeskController "github.com/coda-it/gowebapp/controllers/helpdesk"
 	landingController "github.com/coda-it/gowebapp/controllers/landing"
 	userLoginController "github.com/coda-it/gowebapp/controllers/login"
 	userLogoutController "github.com/coda-it/gowebapp/controllers/logout"
@@ -242,6 +243,19 @@ func main() {
 		},
 	}
 
+	helpdeskCtl := helpdeskController.New(baseController, "helpdesk")
+	helpdeskModule := module.Module{
+		ID: "helpdesk",
+		Routes: []route.Route{
+			{
+				Path:      "/helpdesk",
+				Method:    "ALL",
+				Handler:   helpdeskCtl.CtrHelpdesk,
+				Protected: false,
+			},
+		},
+	}
+
 	adminCtl := adminController.New(baseController, "admin")
 	adminModule := module.Module{
 		ID: "admin",
@@ -409,6 +423,7 @@ func main() {
 		postModule,
 		postsModule,
 		categoriesModule,
+		helpdeskModule,
 		adminModule,
 		userRegisterModule,
 		userActivationModule,

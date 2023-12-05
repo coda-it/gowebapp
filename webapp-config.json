@@ -15,6 +15,9 @@
         "id": "category"
       },
       {
+        "id": "helpdesk"
+      },
+      {
         "id": "api-category"
       },
       {
@@ -33,6 +36,12 @@
       "id": "category",
       "label": "Categories",
       "href": "/category",
+      "isRoot": false
+    },
+    {
+      "id": "helpdesk",
+      "label": "Helpdesk",
+      "href": "/helpdesk",
       "isRoot": false
     },
     {

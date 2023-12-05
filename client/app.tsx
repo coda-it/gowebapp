@@ -12,6 +12,7 @@ import Posts from './modules/Posts';
 import PostEditor from './modules/PostEditor';
 import Post from './modules/Post';
 import Categories from './modules/Categories';
+import Helpdesk from './modules/Helpdesk';
 import CategoryEditor from './modules/CategoryEditor';
 import PlatformEditor from './modules/PlatformEditor';
 import sagas from './sagas';
@@ -44,6 +45,7 @@ if (appContainer) {
           <Route exact path="/post/:postId" component={Post} />
           <Route exact path="/category" component={Categories} />
           <Route exact path="/category/:categoryId" component={Posts} />
+          <Route exact path="/helpdesk" component={Helpdesk} />
           <Route exact path="/admin" component={Admin} />
           <Route exact path="/admin/posts" render={() => <Posts isAdmin />} />
           <Route exact path="/admin/posts/new" component={PostEditor} />
