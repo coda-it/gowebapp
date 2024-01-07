@@ -1,4 +1,3 @@
-// @flow
 import * as actionTypes from './actionTypes';
 import type * as types from './types';
 

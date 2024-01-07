@@ -45,7 +45,7 @@ if (appContainer) {
           <Route exact path="/post/:postId" component={Post} />
           <Route exact path="/category" component={Categories} />
           <Route exact path="/category/:categoryId" component={Posts} />
-          <Route exact path="/helpdesk" component={Helpdesk} />
+          <Route exact path="/helpdesk/:id?" component={Helpdesk} />
           <Route exact path="/admin" component={Admin} />
           <Route exact path="/admin/posts" render={() => <Posts isAdmin />} />
           <Route exact path="/admin/posts/new" component={PostEditor} />

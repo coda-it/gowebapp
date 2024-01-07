@@ -10,6 +10,7 @@ import (
 	userActivationController "github.com/coda-it/gowebapp/controllers/activation"
 	adminController "github.com/coda-it/gowebapp/controllers/admin"
 	categoryApiController "github.com/coda-it/gowebapp/controllers/api/category"
+	helpdeskApiController "github.com/coda-it/gowebapp/controllers/api/helpdesk"
 	loginApiController "github.com/coda-it/gowebapp/controllers/api/login"
 	"github.com/coda-it/gowebapp/controllers/api/platform"
 	postApiController "github.com/coda-it/gowebapp/controllers/api/post"
@@ -28,11 +29,13 @@ import (
 	"github.com/coda-it/gowebapp/data/config"
 	"github.com/coda-it/gowebapp/data/persistence"
 	categoryRepository "github.com/coda-it/gowebapp/data/repositories/category"
+	helpdeskRepository "github.com/coda-it/gowebapp/data/repositories/helpdesk"
 	platformRepository "github.com/coda-it/gowebapp/data/repositories/platform"
 	postRepository "github.com/coda-it/gowebapp/data/repositories/post"
 	translationRepository "github.com/coda-it/gowebapp/data/repositories/translation"
 	userRepository "github.com/coda-it/gowebapp/data/repositories/user"
 	categoryUsecases "github.com/coda-it/gowebapp/domain/usecases/category"
+	helpdeskUsecases "github.com/coda-it/gowebapp/domain/usecases/helpdesk"
 	platformUsecases "github.com/coda-it/gowebapp/domain/usecases/platform"
 	postUsecases "github.com/coda-it/gowebapp/domain/usecases/post"
 	translationUsecases "github.com/coda-it/gowebapp/domain/usecases/translation"
@@ -72,6 +75,8 @@ func main() {
 	postUsecasesEntity := postUsecases.New(&postRepositoryEntity)
 	userRepositoryEntity := userRepository.New(store)
 	userUsecaseEntity := userUsecases.New(&userRepositoryEntity)
+	helpdeskRepository := helpdeskRepository.New(store)
+	helpdeskUsecases := helpdeskUsecases.New(&helpdeskRepository)
 
 	baseController := base.New(mailer.New(
 		[]string{},
@@ -177,6 +182,25 @@ func main() {
 		},
 	}
 
+	helpdeskApiCtl := helpdeskApiController.New(baseController, "api-helpdesk", *helpdeskUsecases)
+	helpdeskApiModule := module.Module{
+		ID: "api-helpdesk",
+		Routes: []route.Route{
+			{
+				Path:      "/api/ticket",
+				Method:    "POST",
+				Handler:   helpdeskApiCtl.CtrTicketPost,
+				Protected: false,
+			},
+			{
+				Path:      "/api/ticket/{id}",
+				Method:    "GET",
+				Handler:   helpdeskApiCtl.CtrTicketGet,
+				Protected: false,
+			},
+		},
+	}
+
 	staticCtl := staticController.New(baseController, constants.StaticModule, platformUsecasesEntity)
 	staticModule := module.Module{
 		ID:      "static-page",
@@ -249,6 +273,12 @@ func main() {
 		Routes: []route.Route{
 			{
 				Path:      "/helpdesk",
+				Method:    "ALL",
+				Handler:   helpdeskCtl.CtrHelpdesk,
+				Protected: false,
+			},
+			{
+				Path:      "/helpdesk/{id}",
 				Method:    "ALL",
 				Handler:   helpdeskCtl.CtrHelpdesk,
 				Protected: false,
@@ -430,6 +460,7 @@ func main() {
 		userLogoutModule,
 		userLoginModule,
 		platformModule,
+		helpdeskApiModule,
 	}
 
 	appInstance := goappframe.New(goappframe.Internals{
