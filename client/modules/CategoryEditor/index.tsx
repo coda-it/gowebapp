@@ -1,4 +1,3 @@
-// @flow
 import { connect } from 'react-redux';
 import * as globalTypes from 'client/types';
 import * as categorySelectors from 'client/models/categories/selectors';

@@ -15,10 +15,13 @@
         "id": "category"
       },
       {
+        "id": "api-category"
+      },
+      {
         "id": "helpdesk"
       },
       {
-        "id": "api-category"
+        "id": "api-helpdesk"
       },
       {
         "id": "admin"

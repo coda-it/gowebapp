@@ -9,6 +9,8 @@ import * as usersSagas from './models/users/sagas';
 import * as usersActionTypes from './models/users/actionTypes';
 import * as platformSagas from './models/platform/sagas';
 import * as platformActionTypes from './models/platform/actionTypes';
+import * as helpdeskSagas from './models/helpdesk/sagas';
+import * as helpdeskActionTypes from './models/helpdesk/actionTypes';
 
 function* root() {
   yield [
@@ -46,6 +48,8 @@ function* root() {
       platformSagas.onUpdatePlatform
     ),
     takeEvery(platformActionTypes.ADD_PLATFORM, platformSagas.onAddPlatform),
+    takeEvery(helpdeskActionTypes.CREATE_TICKET, helpdeskSagas.onCreateTicket),
+    takeEvery(helpdeskActionTypes.FETCH_TICKET, helpdeskSagas.onFetchTicket),
   ];
 }
 
