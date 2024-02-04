@@ -21,9 +21,9 @@ async function callPostTicket(title: string, description: string) {
 export async function onCreateTicket({ title, description }: types.Action) {
   const response: utilTypes.HALResponse<types.Ticket, any, any> =
     await callPostTicket(title, description);
-  const { id } = response;
+  const { shortHash } = response;
 
-  window.location.href = `/helpdesk/${id}`;
+  window.location.href = `/helpdesk/${shortHash}`;
 }
 
 function callFetchTicket(id: string) {
@@ -45,6 +45,7 @@ export function* onFetchTicket({ id }: types.Action) {
       id: response.id,
       title: response.title,
       description: response.description,
+      shortHash: response.shortHash,
     })
   );
 }

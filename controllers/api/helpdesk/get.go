@@ -9,8 +9,8 @@ import (
 
 // CtrTicketGet - renders ticket view
 func (c *Controller) CtrTicketGet(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
-	ticketID := opt.Params["id"]
-	ticket, err := c.HelpdeskUsecases.Get(ticketID)
+	shortHash := opt.Params["id"]
+	ticket, err := c.HelpdeskUsecases.Get(shortHash)
 
 	if err != nil {
 		c.HandleErrorResponse(w, err.Error())
