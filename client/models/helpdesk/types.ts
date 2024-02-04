@@ -2,6 +2,7 @@ export type CreateTicketAction = {};
 
 export type Ticket = {
   id?: string;
+  shortHash: string;
   title: string;
   description: string;
 };

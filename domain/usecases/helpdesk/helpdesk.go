@@ -22,6 +22,6 @@ func (p *Usecase) Add(ticket ticketModel.Ticket) (ticketModel.Ticket, error) {
 }
 
 // Get - get helpdesk ticket
-func (p *Usecase) Get(ticketID string) (ticketModel.Ticket, error) {
-	return p.ticketRepository.Get(ticketID)
+func (p *Usecase) Get(shortHash string) (ticketModel.Ticket, error) {
+	return p.ticketRepository.Get(shortHash)
 }
