@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import AlertPanel from './AlertPanel';
 
 describe('AlertPanel/AlertPanel', () => {
@@ -25,8 +25,8 @@ describe('AlertPanel/AlertPanel', () => {
       },
     ];
 
-    const component = mount(<AlertPanel alerts={alerts} />);
+    const { container } = render(<AlertPanel alerts={alerts} />);
 
-    expect(component).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
   });
 });

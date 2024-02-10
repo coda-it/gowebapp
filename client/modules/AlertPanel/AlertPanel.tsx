@@ -1,18 +1,14 @@
-import _ from 'lodash';
 import React from 'react';
-import type * as types from 'client/models/alerts/types';
+import { useSelector } from 'react-redux';
+import * as selectors from 'client/models/alerts/selectors';
 import Alert from './Alert';
 
-type Props = {
-  alerts: ReadonlyArray<types.Alert>;
-};
-
-const AlertPanel = (props: Props) => {
-  const { alerts } = props;
+const AlertPanel = () => {
+  const alerts = useSelector(selectors.getLimitedAlerts);
 
   return (
     <div className="alert-panel">
-      {_.map(alerts, (alert, index) => {
+      {alerts.map((alert, index) => {
         const { type, message } = alert;
         const key = `alert-${index}`;
 

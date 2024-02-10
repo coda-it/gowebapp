@@ -6,7 +6,7 @@ import * as helpdeskTypes from './models/helpdesk/types';
 import * as platformTypes from './models/platform/types';
 
 /* eslint-disable import/prefer-default-export */
-export type State = {
+export type State = Partial<{
   posts: postTypes.State;
   alerts: alertTypes.State;
   categories: categoryTypes.State;
@@ -16,5 +16,5 @@ export type State = {
   };
   platform: platformTypes.State;
   helpdesk: helpdeskTypes.State;
-};
+}>;
 /* eslint-enable import/prefer-default-export */
