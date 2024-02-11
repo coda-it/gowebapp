@@ -1,10 +1,15 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import configureStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
 import AlertPanel from './AlertPanel';
 
-describe('AlertPanel/AlertPanel', () => {
-  it('should render correctly', () => {
-    const alerts = [
+const middlewares = [];
+const mockStore = configureStore(middlewares);
+
+const initialState = {
+  alerts: {
+    alerts: [
       {
         type: 'info',
         message: 'Message 1',
@@ -23,9 +28,18 @@ describe('AlertPanel/AlertPanel', () => {
         timestamp: new Date('2020-03-01'),
         isOld: false,
       },
-    ];
+    ],
+  },
+};
+const store = mockStore(initialState);
 
-    const { container } = render(<AlertPanel alerts={alerts} />);
+describe('AlertPanel/AlertPanel', () => {
+  it('should render correctly', () => {
+    const { container } = render(
+      <Provider store={store}>
+        <AlertPanel />
+      </Provider>
+    );
 
     expect(container.firstChild).toMatchSnapshot();
   });
