@@ -52,12 +52,17 @@ function Helpdesk(props: types.Props) {
         </div>
       </article>
       <div className="gc-panel gc-panel--separator">
-        <header className="gc-panel__title">Description</header>
+        {/* eslint-disable jsx-a11y/label-has-associated-control */}
+        <label htmlFor="post-description" className="gc-input__label">
+          Description
+        </label>
+        {/* eslint-enable jsx-a11y/label-has-associated-control */}
         {ticket ? (
           <p>{ticket.description}</p>
         ) : (
           <article className="gc-panel__content">
             <textarea
+              id="post-description"
               value={description}
               onChange={handleDescriptionChange}
               className="gc-textarea  tst-post-editor-description"

@@ -1,4 +1,4 @@
-import { takeEvery } from 'redux-saga/effects';
+import { takeEvery, all } from 'redux-saga/effects';
 import * as applicationSagas from './modules/Application/sagas';
 import * as applicationActionTypes from './modules/Application/actionTypes';
 import * as categoriesSagas from './models/categories/sagas';
@@ -13,7 +13,7 @@ import * as helpdeskSagas from './models/helpdesk/sagas';
 import * as helpdeskActionTypes from './models/helpdesk/actionTypes';
 
 function* root() {
-  yield [
+  yield all([
     takeEvery(
       applicationActionTypes.MOUNT,
       applicationSagas.onApplicationMount
@@ -50,7 +50,7 @@ function* root() {
     takeEvery(platformActionTypes.ADD_PLATFORM, platformSagas.onAddPlatform),
     takeEvery(helpdeskActionTypes.CREATE_TICKET, helpdeskSagas.onCreateTicket),
     takeEvery(helpdeskActionTypes.FETCH_TICKET, helpdeskSagas.onFetchTicket),
-  ];
+  ]);
 }
 
 export default root;

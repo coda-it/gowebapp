@@ -1,5 +1,5 @@
 import React from 'react';
-import AlertPanel from 'client/modules/AlertPanel';
+import AlertPanel from 'client/modules/AlertPanel/AlertPanel';
 import { Loader } from 'graphen';
 
 type Props = {

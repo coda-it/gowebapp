@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Application should render with children 1`] = `
+<div>
+  <div
+    class="application"
+  >
+    <p>
+      Some content
+    </p>
+    <div
+      class="alert-panel"
+    >
+      <div
+        class="alert-panel__alert alert-panel__alert--info  "
+      >
+        Message 1
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Application should render with loader 1`] = `
+<div>
+  <div
+    class="application"
+  >
+    <div
+      class="gc-loader"
+    />
+    <div
+      class="alert-panel"
+    >
+      <div
+        class="alert-panel__alert alert-panel__alert--info  "
+      >
+        Message 1
+      </div>
+    </div>
+  </div>
+</div>
+`;
