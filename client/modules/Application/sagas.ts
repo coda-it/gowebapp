@@ -5,7 +5,6 @@ import * as actions from './actions';
 
 /* eslint-disable import/prefer-default-export */
 export function* onApplicationMount(): Iterable<any> {
-  console.log('xxx:onApplicationMount');
   yield put(userActions.fetchUser());
   yield take([userActionTypes.LOAD_USER]);
 

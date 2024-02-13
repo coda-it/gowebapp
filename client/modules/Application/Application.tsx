@@ -10,7 +10,6 @@ type Props = {
 
 function Application({ isLoaded, children, mount }: Props) {
   useEffect(() => {
-    console.log('xxx:app-useeffect');
     mount();
   }, [mount]);
 
