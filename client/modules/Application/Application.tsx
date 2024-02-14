@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AlertPanel from 'client/modules/AlertPanel/AlertPanel';
 import { Loader } from 'graphen';
 
@@ -8,23 +8,18 @@ type Props = {
   mount: () => void;
 };
 
-class Application extends React.PureComponent<Props> {
-  componentDidMount() {
-    const { mount } = this.props;
+function Application({ isLoaded, children, mount }: Props) {
+  useEffect(() => {
     mount();
-  }
+  }, [mount]);
 
-  render() {
-    const { children, isLoaded } = this.props;
-
-    return (
-      <div className="application">
-        {isLoaded && children}
-        {!isLoaded && <Loader />}
-        <AlertPanel />
-      </div>
-    );
-  }
+  return (
+    <div className="application">
+      {isLoaded && children}
+      {!isLoaded && <Loader />}
+      <AlertPanel />
+    </div>
+  );
 }
 
 export default Application;

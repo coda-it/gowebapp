@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { createStore, applyMiddleware } from 'redux';
+import { configureStore, Tuple } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { Router, Route } from 'react-router';
 import { createBrowserHistory } from 'history';
@@ -21,8 +21,10 @@ import reducers from './reducers';
 const appContainer = document.querySelector('.js-app');
 const sagaMiddleware = createSagaMiddleware();
 
-// @ts-ignore
-const store = createStore(reducers, applyMiddleware(sagaMiddleware));
+const store = configureStore({
+  reducer: reducers,
+  middleware: () => new Tuple(sagaMiddleware),
+});
 
 sagaMiddleware.run(sagas);
 
@@ -34,7 +36,6 @@ const moduleRegistry = {
 
 if (appContainer) {
   createRoot(appContainer).render(
-    // @ts-ignore - to be fixed
     <Provider store={store}>
       <Router history={createBrowserHistory({})}>
         <Application>

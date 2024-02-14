@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from '@reduxjs/toolkit';
 import application from 'client/modules/Application/reducers';
 import alerts from 'client/models/alerts/reducers';
 import posts from 'client/models/posts/reducers';
