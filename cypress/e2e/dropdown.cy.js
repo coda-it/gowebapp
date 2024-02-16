@@ -29,7 +29,7 @@ describe('Categories', () => {
     cy.get('.tst-category').should('have.length', 2);
     cy.get('.tst-category')
       .find('.tst-category-name')
-      .contains('Category second');
+      .contains('Category first');
     cy.get('.tst-category');
     cy.screenshot();
 
