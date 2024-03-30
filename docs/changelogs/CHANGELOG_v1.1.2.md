@@ -1,0 +1,15 @@
+# Changelog from v1.1.2
+### Commits
+* [[`a9b3e19`](http://github.com/coda-it/gowebapp/commit/a9b3e1947dbbaeb5116ab0acd7d74a90278bb572)] - CODA-274 - Default application for domain (#87) (Oskar Szura)
+* [[`0c25735`](http://github.com/coda-it/gowebapp/commit/0c2573549e9a1c6594da4f752e22fa86206a8270)] - CODA-273 - Bump Cypress version (#86) (Oskar Szura)
+* [[`243cbf1`](http://github.com/coda-it/gowebapp/commit/243cbf1e6866c18f93c4774c35f92ff564f8b487)] - CODA-272 - Migration Redux to RTK (#85) (Oskar Szura)
+* [[`e38b254`](http://github.com/coda-it/gowebapp/commit/e38b254878f968677614ca988829cc310a4ae2e3)] - CODA-266 - UI upgrade and cleanups (#84) (Oskar Szura)
+* [[`55bece1`](http://github.com/coda-it/gowebapp/commit/55bece1cb54ea69836f0e9072a9f36bceea0fe75)] - CODA-267 - Human readable ticket hash (#83) (Oskar Szura)
+* [[`c382218`](http://github.com/coda-it/gowebapp/commit/c38221832782161f68b6a0648acb58c90e8c1f44)] - CODA-265 - Helpdesk form (#82) (Oskar Szura)
+* [[`d7a0e12`](http://github.com/coda-it/gowebapp/commit/d7a0e124da6cfd1fbfcf9130f891e2339f5a7e9f)] - CODA-264 - Helpdesk scaffolding (#81) (Oskar Szura)
+* [[`d70f01e`](http://github.com/coda-it/gowebapp/commit/d70f01e181e0316192588b54a945dc7f0d085e83)] - CODA-262 - Migrate webpack 4 to 5 (#80) (Oskar Szura)
+* [[`a41525a`](http://github.com/coda-it/gowebapp/commit/a41525afc9cdbbe546c94bda6c385fcd8987bee9)] - CODA-257 - Lock mongo version (#71) (Oskar Szura)
+* [[`8a9be26`](http://github.com/coda-it/gowebapp/commit/8a9be26c0c12fce203d9e8a72df9d88f4bd207ed)] - CODA-157 - Migration to AppService (#69) (Oskar Szura)
+* [[`2434d0b`](http://github.com/coda-it/gowebapp/commit/2434d0b1ef88e4a39d29ed531824a3ecad8826f0)] - CODA-220 - Localization (#68) (Oskar Szura)
+* [[`bb34d32`](http://github.com/coda-it/gowebapp/commit/bb34d32c00c4677d740e7c6f08a3e722c17b889b)] - CODA-213 - UI cleanup (#67) (Oskar Szura)
+* [[`6d9d225`](http://github.com/coda-it/gowebapp/commit/6d9d225444aac3d8e633f4c1bab2563fb847aa63)] - CODA-195 - SSL from appConfig (#66) (Oskar Szura)
