@@ -1,7 +1,7 @@
 {
   "apps": [{
     "id": "default",
-    "domain": "localhostx:3000",
+    "domain": "localhost:3000",
     "modules": [
       {
         "id": "static"
