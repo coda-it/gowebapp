@@ -1,10 +1,10 @@
-github.com/coda-it/goappframe v0.3.3 h1:mDPn+Ie7bRV1pDyl+11Gc3LXeZh5NTFo5XqyadD3kjQ=
-github.com/coda-it/goappframe v0.3.3/go.mod h1:X5Zp0Zs7Z/dJGvuKETFHGnoVtEsKoZ0wddDpxZqrIT4=
+github.com/coda-it/goappframe v0.4.0 h1:Q+8xcl5N74+S5xV/w/b4bjkcXD6FnOTGa3zO+CiGRk0=
+github.com/coda-it/goappframe v0.4.0/go.mod h1:3NHJpGFfspsEApi09i14y/+Y5VeQl6WsEis+wOmlugs=
 github.com/coda-it/goutils v0.1.0/go.mod h1:JDLjsDAubl3lvopKddkM1vZK8Ckq3FIeS6Ap5H6jTH0=
 github.com/coda-it/goutils v0.2.2 h1:Rsy3bXhV1gpeh1hB5OAO4tdKb4AjfCILZNwo85+79MM=
 github.com/coda-it/goutils v0.2.2/go.mod h1:LzMG50VN0shtLI45XdSyeYMmOAuOZA8GNvM4dE2QVLM=
-github.com/coda-it/gowebserver v1.2.0 h1:09OMtd/YGF4oZ+g3Ukfv1tjHQyA7NrHCv3fw4gKtA+o=
-github.com/coda-it/gowebserver v1.2.0/go.mod h1:o+uiz08s1yFRU7uT6+iNheCxfUBjWDyamSGkgfZ+kig=
+github.com/coda-it/gowebserver v1.3.0 h1:iuwzdilXviPYI685uEeuHdlx50mlmx8q1vtpmyPWN7Q=
+github.com/coda-it/gowebserver v1.3.0/go.mod h1:o+uiz08s1yFRU7uT6+iNheCxfUBjWDyamSGkgfZ+kig=
 github.com/kr/pretty v0.2.1 h1:Fmg33tUaq4/8ym9TJN1x7sLJnHVwhP33CNkpYV/7rwI=
 github.com/kr/pretty v0.2.1/go.mod h1:ipq/a2n7PKx3OHsz4KJII5eveXtPO4qwEXGdVfWzfnI=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
