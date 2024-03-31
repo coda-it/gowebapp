@@ -4,15 +4,15 @@ on:
   push:
     branches: [ CODA-277 ]
 
-  jobs:
-    build:
-      runs-on: ubuntu-latest
-      steps:
-        - name: checkout repository
-          uses: actions/checkout@CODA-277
-        - name: install dependencies
-          run: make install
-        - name: build application
-          run: make all ENV=prod
-        - name: build docker image
-          run: make image IMAGE_NAME=webapp ENV=prod V=v1.1.2
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@CODA-277
+      - name: install dependencies
+        run: make install
+      - name: build application
+        run: make all ENV=prod
+      - name: build docker image
+        run: make image IMAGE_NAME=webapp ENV=prod V=v1.1.2
