@@ -3,7 +3,7 @@ FROM debian:bookworm
 # Install generictools
 RUN apt-get -y update && apt-get upgrade -y && apt-get install -y \
 curl \
-libc6 \
+libc6
 
 # Set env variables
 ENV WEBAPP_MONGO_URI=mongodb://localhost:27017 \
