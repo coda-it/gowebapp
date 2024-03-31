@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bullseye-stable
 
 # Install generictools
 RUN apt-get -y update && apt-get upgrade -y && apt-get install -y \
