@@ -13,7 +13,7 @@ jobs:
         with:
           ref: ${{ github.ref }}
       - name: Log in to Docker Hub
-        run: echo "$DOCKER_PASS" | docker login -u "$DOCKER_LOGIN" --password-stdin
+        run: echo "$DOCKER_PASS" | docker login --username "$DOCKER_LOGIN" --password-stdin
       - name: install dependencies
         run: make install
       - name: build application
