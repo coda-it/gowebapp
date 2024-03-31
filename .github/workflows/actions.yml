@@ -12,9 +12,13 @@ jobs:
         uses: actions/checkout@master
         with:
           ref: ${{ github.ref }}
+      - name: Log in to Docker Hub
+        run: echo "$DOCKER_PASS" | docker login -u "$DOCKER_LOGIN" --password-stdin
       - name: install dependencies
         run: make install
       - name: build application
         run: make all ENV=prod
       - name: build docker image
         run: make image IMAGE_NAME=webapp ENV=prod V=v1.1.2
+      - name: publish docker image
+        run: docker push oszura/webapp-prod
