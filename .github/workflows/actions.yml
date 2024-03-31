@@ -24,4 +24,4 @@ jobs:
       - name: build docker image
         run: make image IMAGE_NAME=webapp ENV=prod V=v1.1.2
       - name: publish docker image
-        run: docker push ${{ secrets.DOCKER_LOGIN }}/webapp-prod@v1.1.2
+        run: docker image push ${{ secrets.DOCKER_LOGIN }}/webapp-prod@v1.1.2
