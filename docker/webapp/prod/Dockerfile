@@ -1,8 +1,9 @@
-FROM debian:bullseye-stable
+FROM debian:bookworm
 
 # Install generictools
 RUN apt-get -y update && apt-get upgrade -y && apt-get install -y \
-curl
+curl \
+RUN apt-get install libc6
 
 # Set env variables
 ENV WEBAPP_MONGO_URI=mongodb://localhost:27017 \
