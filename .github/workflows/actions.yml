@@ -16,6 +16,8 @@ jobs:
         uses: actions/checkout@master
         with:
           ref: ${{ github.ref }}
+      - name: Install dependencies
+        run: make install
       - name: Lint
         run: make lint
       - name: Test
