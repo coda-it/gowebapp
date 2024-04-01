@@ -22,10 +22,14 @@ jobs:
 #        run: make lint
       - name: Test
         run: make test
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKER_LOGIN }}
+          password: ${{ secrets.DOCKER_TOKEN }}
       - name: Integration
         run: |
           make all ENV=prod
-          echo "$DOCKER_PASS" | docker login -u "$DOCKER_LOGIN" --password-stdin
           docker pull mongo:4.2.23
           docker run -d --net=host mongo:4.2.23
           sleep 10
