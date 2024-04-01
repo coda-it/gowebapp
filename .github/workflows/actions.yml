@@ -39,6 +39,6 @@ jobs:
       - name: Build application
         run: make all ENV=prod
       - name: Build docker image
-        run: make image IMAGE_NAME=webapp ENV=prod V=${{ APP_VERSION }}
+        run: make image IMAGE_NAME=webapp ENV=prod V=$APP_VERSION
       - name: Publish docker image
-        run: docker image push ${{ vars.DOCKER_LOGIN }}/webapp-prod:${{ APP_VERSION }}
+        run: docker image push ${{ vars.DOCKER_LOGIN }}/webapp-prod:$APP_VERSION
