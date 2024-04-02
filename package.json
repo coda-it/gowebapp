@@ -48,7 +48,6 @@
     "@babel/preset-flow": "^7.12.13",
     "@babel/preset-react": "^7.12.13",
     "@babel/preset-typescript": "^7.13.0",
-    "@jest/globals": "^29.7.0",
     "@testing-library/react": "^14.2.1",
     "@types/jest": "^26.0.20",
     "@types/react": "^18.2.0",

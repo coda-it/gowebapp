@@ -1,6 +1,5 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { expect } from '@jest/globals';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import AlertPanel from './AlertPanel';
@@ -42,6 +41,7 @@ describe('AlertPanel/AlertPanel', () => {
       </Provider>
     );
 
+    // @ts-ignore
     expect(container.firstChild).toMatchSnapshot();
   });
 });
