@@ -1,12 +1,7 @@
-name: gowebapp-test
+name: Test
 
 on:
-  push:
   pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
 
 env:
   GO111MODULE: on
