@@ -1,0 +1,40 @@
+name: Test
+
+on:
+  pull_request:
+
+env:
+  GO111MODULE: on
+  APP_VERSION: v1.1.2
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
+        with:
+          ref: ${{ github.ref }}
+      - name: Install dependencies
+        run: make install
+      #      - name: Lint
+      #        run: make lint
+      - name: Test
+        run: make test
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKER_LOGIN }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+      - name: Integration
+        run: |
+          make all ENV=prod
+          docker pull mongo:4.2.23
+          docker run -d --net=host mongo:4.2.23
+          sleep 10
+          make image IMAGE_NAME=webapp ENV=prod V=$APP_VERSION
+          docker run -d --net=host -e WEBAPP_ENV=test -e WEBAPP_CONFIGCAT_KEY=$WEBAPP_CONFIGCAT_KEY  oszura/webapp-prod:$APP_VERSION
+          sleep 5
+          npm run cypress:run
+      - name: Build application
+        run: make all ENV=prod

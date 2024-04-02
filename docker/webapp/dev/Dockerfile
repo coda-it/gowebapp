@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bookworm
 
 # Install generictools
 RUN apt-get -y update && apt-get upgrade -y && apt-get install -y \
@@ -14,8 +14,8 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
 apt-get install -y nodejs
 
 # Install golang
-RUN wget https://dl.google.com/go/go1.12.7.linux-amd64.tar.gz && \
-tar -C /usr/local -xvf go1.12.7.linux-amd64.tar.gz
+RUN wget https://dl.google.com/go/go1.21.0.linux-amd64.tar.gz && \
+tar -C /usr/local -xvf go1.21.0.linux-amd64.tar.gz
 ENV PATH="${PATH}:/usr/local/go/bin"
 
 # Set env variables
