@@ -32,6 +32,7 @@ describe('Application', () => {
       </Provider>
     );
 
+    // @ts-ignore
     expect(container).toMatchSnapshot();
   });
 
@@ -46,6 +47,7 @@ describe('Application', () => {
       </Provider>
     );
 
+    // @ts-ignore
     expect(container).toMatchSnapshot();
   });
 });

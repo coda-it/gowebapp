@@ -41,6 +41,7 @@ describe('AlertPanel/AlertPanel', () => {
       </Provider>
     );
 
+    // @ts-ignore
     expect(container.firstChild).toMatchSnapshot();
   });
 });
