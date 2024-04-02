@@ -33,8 +33,8 @@ jobs:
           docker pull mongo:4.2.23
           docker run -d --net=host mongo:4.2.23
           sleep 10
-          make image IMAGE_NAME=webapp ENV=prod V=$APP_VERSION
-          docker run -d --net=host -e WEBAPP_ENV=test -e WEBAPP_CONFIGCAT_KEY=$WEBAPP_CONFIGCAT_KEY  oszura/webapp-prod:$APP_VERSION
+          make image IMAGE_NAME=webapp ENV=prod V=$APP_VERSION: v1.1.3
+          docker run -d --net=host -e WEBAPP_ENV=test -e WEBAPP_CONFIGCAT_KEY=$WEBAPP_CONFIGCAT_KEY  oszura/webapp-prod:$APP_VERSION: v1.1.3
           sleep 5
           npm run cypress:run
 
@@ -56,6 +56,6 @@ jobs:
       - name: Build application
         run: make all ENV=prod
       - name: Build docker image
-        run: make image IMAGE_NAME=webapp ENV=prod V=$APP_VERSION
+        run: make image IMAGE_NAME=webapp ENV=prod V=$APP_VERSION: v1.1.3
       - name: Publish docker image
-        run: docker image push ${{ vars.DOCKER_LOGIN }}/webapp-prod:$APP_VERSION
+        run: docker image push ${{ vars.DOCKER_LOGIN }}/webapp-prod:$APP_VERSION: v1.1.3
