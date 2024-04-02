@@ -85,8 +85,10 @@ version:
 	$(NPM) version $(V) --no-git-tag-version
 	git add package.json
 	git add package-lock.json
-	sed -i "" "s/APP_VERSION:.*/APP_VERSION: $(V)/g" ./github/workflows/actions.yml
-	git add ./github/workflows/actions.yml
+	sed -i "" "s/APP_VERSION:.*/APP_VERSION: $(V)/g" ./github/workflows/test.yml
+	git add ./github/workflows/test.yml
+	sed -i "" "s/APP_VERSION:.*/APP_VERSION: $(V)/g" ./github/workflows/build.yml
+	git add ./github/workflows/build.yml
 	git add ./version.go || true
 	git add ./docs/changelogs/CHANGELOG_$(V).md
 	git commit --allow-empty -m "Build $(V)"

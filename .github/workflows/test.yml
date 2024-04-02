@@ -1,8 +1,9 @@
-name: gowebapp
+name: gowebapp-test
 
 on:
-  push:
-    branches: [ CODA-277 ]
+  pull_request:
+    types:
+      - opened
 
 env:
   GO111MODULE: on
@@ -18,8 +19,8 @@ jobs:
           ref: ${{ github.ref }}
       - name: Install dependencies
         run: make install
-#      - name: Lint
-#        run: make lint
+      #      - name: Lint
+      #        run: make lint
       - name: Test
         run: make test
       - name: Log in to Docker Hub
@@ -37,25 +38,5 @@ jobs:
           docker run -d --net=host -e WEBAPP_ENV=test -e WEBAPP_CONFIGCAT_KEY=$WEBAPP_CONFIGCAT_KEY  oszura/webapp-prod:$APP_VERSION
           sleep 5
           npm run cypress:run
-
-  build:
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@master
-        with:
-          ref: ${{ github.ref }}
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ vars.DOCKER_LOGIN }}
-          password: ${{ secrets.DOCKER_TOKEN }}
-      - name: Install dependencies
-        run: make install
       - name: Build application
         run: make all ENV=prod
-      - name: Build docker image
-        run: make image IMAGE_NAME=webapp ENV=prod V=$APP_VERSION
-      - name: Publish docker image
-        run: docker image push ${{ vars.DOCKER_LOGIN }}/webapp-prod:$APP_VERSION
