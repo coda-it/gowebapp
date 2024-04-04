@@ -60,7 +60,10 @@ func (p *Repository) Add(post postModel.Post) error {
 // Update - update existing post
 func (p *Repository) Update(post postModel.Post) error {
 	postsCollection := p.Persistence.GetCollection(collectionName)
-	_, err := postsCollection.UpdateOne(context.TODO(), bson.M{"_id": post.ID}, post)
+	_, err := postsCollection.UpdateOne(context.TODO(), bson.M{"_id": post.ID}, bson.D{{"$set",
+		post,
+	}})
+
 	return err
 }
 

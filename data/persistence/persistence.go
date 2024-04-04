@@ -22,7 +22,6 @@ type Persistance struct {
 func New(dbURI string, dbName string) *Persistance {
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
 	opts := options.Client().ApplyURI(dbURI).SetServerAPIOptions(serverAPI)
-	// Create a new client and connect to the server
 	client, err := mongo.Connect(context.TODO(), opts)
 
 	if err != nil {

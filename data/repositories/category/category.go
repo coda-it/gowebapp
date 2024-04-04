@@ -54,7 +54,10 @@ func (cr *Repository) Add(c categoryModel.Category) error {
 // Update - update existing category
 func (cr *Repository) Update(c categoryModel.Category) error {
 	categoriesCollection := cr.Persistence.GetCollection(collectionName)
-	_, err := categoriesCollection.UpdateOne(context.TODO(), bson.M{"_id": c.ID}, c)
+	_, err := categoriesCollection.UpdateOne(context.TODO(), bson.M{"_id": c.ID}, bson.D{{"$set",
+		c,
+	}})
+
 	return err
 }
 
