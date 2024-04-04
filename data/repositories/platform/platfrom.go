@@ -49,9 +49,12 @@ func (r *Repository) Fetch() (platformModel.Config, error) {
 	var config platformModel.Config
 	var searchQuery bson.M
 
-	cursor, _ := platformCollection.Find(context.TODO(), searchQuery)
-	err := cursor.Decode(config)
+	cursor, err := platformCollection.Find(context.TODO(), searchQuery)
+	if err != nil {
+		return config, err
+	}
 
+	err = cursor.Decode(config)
 	if err != nil {
 		return config, err
 	}

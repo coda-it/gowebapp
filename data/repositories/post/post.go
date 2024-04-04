@@ -37,9 +37,12 @@ func (p *Repository) FetchAll(userID string) ([]postModel.Post, error) {
 		searchQuery = bson.M{}
 	}
 
-	cursor, _ := postsCollection.Find(context.TODO(), searchQuery)
-	err := cursor.All(context.TODO(), &posts)
+	cursor, err := postsCollection.Find(context.TODO(), searchQuery)
+	if err != nil {
+		return posts, err
+	}
 
+	err = cursor.All(context.TODO(), &posts)
 	if err != nil {
 		return posts, err
 	}

@@ -31,9 +31,12 @@ func (cr *Repository) FetchAll() ([]categoryModel.Category, error) {
 	var categories []categoryModel.Category
 	var searchQuery bson.M
 
-	cursor, _ := categoriesCollection.Find(context.TODO(), searchQuery)
-	err := cursor.All(context.TODO(), &categories)
+	cursor, err := categoriesCollection.Find(context.TODO(), searchQuery)
+	if err != nil {
+		return categories, err
+	}
 
+	err = cursor.All(context.TODO(), &categories)
 	if err != nil {
 		return categories, err
 	}
