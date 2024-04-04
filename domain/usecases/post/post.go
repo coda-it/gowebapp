@@ -2,7 +2,7 @@ package post
 
 import (
 	postModel "github.com/coda-it/gowebapp/domain/models/post"
-	"gopkg.in/mgo.v2/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // Usecase - post usecases
@@ -33,6 +33,6 @@ func (p *Usecase) Update(post postModel.Post) error {
 }
 
 // Delete - delete post
-func (p *Usecase) Delete(id bson.ObjectId) error {
+func (p *Usecase) Delete(id primitive.ObjectID) error {
 	return p.postRepository.Delete(id)
 }

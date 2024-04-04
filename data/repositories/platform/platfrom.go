@@ -1,9 +1,10 @@
 package platform
 
 import (
+	"context"
 	"github.com/coda-it/gowebapp/data/persistence"
 	platformModel "github.com/coda-it/gowebapp/domain/models/platform"
-	"gopkg.in/mgo.v2/bson"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 const (
@@ -30,13 +31,14 @@ func (r *Repository) Drop() error {
 // Add - inserts platform config
 func (r *Repository) Add(c platformModel.Config) error {
 	platformCollection := r.Persistence.GetCollection(collectionName)
-	return platformCollection.Insert(c)
+	_, err := platformCollection.InsertOne(context.TODO(), c)
+	return err
 }
 
 // Update - update platform config
 func (r *Repository) Update(c platformModel.Config) error {
 	platformCollection := r.Persistence.GetCollection(collectionName)
-	_, err := platformCollection.Upsert(bson.M{"_id": c.ID}, c)
+	_, err := platformCollection.UpdateOne(context.TODO(), bson.M{"_id": c.ID}, c)
 	return err
 }
 
@@ -47,7 +49,8 @@ func (r *Repository) Fetch() (platformModel.Config, error) {
 	var config platformModel.Config
 	var searchQuery bson.M
 
-	err := platformCollection.Find(searchQuery).One(&config)
+	cursor, _ := platformCollection.Find(context.TODO(), searchQuery)
+	err := cursor.Decode(config)
 
 	if err != nil {
 		return config, err

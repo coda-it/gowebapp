@@ -2,7 +2,7 @@ package user
 
 import (
 	userModel "github.com/coda-it/gowebapp/domain/models/user"
-	"gopkg.in/mgo.v2/bson"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 // IRepository - user repository interface

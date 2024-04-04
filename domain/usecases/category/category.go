@@ -2,7 +2,7 @@ package user
 
 import (
 	categoryModel "github.com/coda-it/gowebapp/domain/models/category"
-	"gopkg.in/mgo.v2/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // Usecase - category usecases
@@ -33,6 +33,6 @@ func (cr *Usecase) Update(c categoryModel.Category) error {
 }
 
 // Delete - delete category
-func (cr *Usecase) Delete(id bson.ObjectId) error {
+func (cr *Usecase) Delete(id primitive.ObjectID) error {
 	return cr.categoryRepository.Delete(id)
 }

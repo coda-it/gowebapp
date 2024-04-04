@@ -2,7 +2,7 @@ package user
 
 import (
 	categoryModel "github.com/coda-it/gowebapp/domain/models/category"
-	"gopkg.in/mgo.v2/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // IRepository - category repository interface
@@ -10,5 +10,5 @@ type IRepository interface {
 	FetchAll() ([]categoryModel.Category, error)
 	Add(c categoryModel.Category) error
 	Update(c categoryModel.Category) error
-	Delete(id bson.ObjectId) error
+	Delete(id primitive.ObjectID) error
 }

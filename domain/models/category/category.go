@@ -1,12 +1,12 @@
 package category
 
 import (
-	"gopkg.in/mgo.v2/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // Category - model representing category
 type Category struct {
-	ID    bson.ObjectId `json:"id" bson:"_id,omitempty"`
-	Name  string        `json:"name" bson:"name"`
-	Image string        `json:"image" bson:"image"`
+	ID    primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	Name  string             `json:"name" bson:"name"`
+	Image string             `json:"image" bson:"image"`
 }

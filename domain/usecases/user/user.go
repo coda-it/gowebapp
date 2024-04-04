@@ -7,7 +7,8 @@ import (
 	userModel "github.com/coda-it/gowebapp/domain/models/user"
 	userHelpers "github.com/coda-it/gowebapp/helpers/user"
 	"github.com/coda-it/gowebserver/session"
-	"gopkg.in/mgo.v2/bson"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"net/http"
 	"time"
 )
@@ -38,7 +39,8 @@ func (u *Usecase) Logout(sid string) error {
 
 // Activate - activates user
 func (u *Usecase) Activate(ID string) error {
-	return u.userRepository.Update(bson.M{"_id": bson.ObjectIdHex(ID)}, bson.M{"$set": bson.M{"isActivated": true}})
+	id, _ := primitive.ObjectIDFromHex(ID)
+	return u.userRepository.Update(bson.M{"_id": id}, bson.M{"$set": bson.M{"isActivated": true}})
 }
 
 func (u *Usecase) authenticate(username string, password string, sid string) (userModel.User, error) {

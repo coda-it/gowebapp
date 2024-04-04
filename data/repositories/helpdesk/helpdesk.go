@@ -1,10 +1,12 @@
 package helpdesk
 
 import (
+	"context"
 	"github.com/coda-it/goutils/fixedhash"
 	"github.com/coda-it/gowebapp/data/persistence"
 	ticketModel "github.com/coda-it/gowebapp/domain/models/ticket"
-	"gopkg.in/mgo.v2/bson"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 const (
@@ -27,7 +29,7 @@ func New(p persistence.IPersistance) Repository {
 func (p *Repository) Add(ticket ticketModel.Ticket) (ticketModel.Ticket, error) {
 	ticketsCollection := p.Persistence.GetCollection(collectionName)
 
-	newID := bson.NewObjectId()
+	newID := primitive.NewObjectID()
 	shortHash, err := fixedhash.FixedHash(8)
 
 	if err != nil {
@@ -41,7 +43,7 @@ func (p *Repository) Add(ticket ticketModel.Ticket) (ticketModel.Ticket, error) 
 		Description: ticket.Description,
 	}
 
-	err = ticketsCollection.Insert(newTicket)
+	_, err = ticketsCollection.InsertOne(context.TODO(), newTicket)
 
 	if err != nil {
 		return ticketModel.Ticket{}, err
@@ -56,7 +58,8 @@ func (p *Repository) Get(shortHash string) (ticketModel.Ticket, error) {
 	var ticket ticketModel.Ticket
 	searchQuery := bson.M{"shortHash": shortHash}
 
-	err := ticketsCollection.Find(searchQuery).One(&ticket)
+	result := ticketsCollection.FindOne(context.TODO(), searchQuery)
+	err := result.Decode(&ticket)
 
 	if err != nil {
 		return ticket, err
