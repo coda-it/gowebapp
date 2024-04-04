@@ -64,7 +64,7 @@ func (u *Usecase) CreateClientSession(w http.ResponseWriter, r *http.Request, us
 	authenticatedUser, err := u.authenticate(username, password, cookieValue)
 	isActivated := userHelpers.IsActivated(authenticatedUser)
 
-	if err == nil && isActivated {
+	if isActivated {
 		cookie := http.Cookie{
 			Name:    constants.SessionKey,
 			Value:   cookieValue,
