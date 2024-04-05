@@ -1,48 +1,51 @@
 package persistence
 
 import (
-	"gopkg.in/mgo.v2"
+	"context"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 // IPersistance - interface for user settings and general purpose storage
 type IPersistance interface {
-	GetCollection(string) *mgo.Collection
+	GetCollection(string) *mongo.Collection
 	DropDatabase() error
 }
 
 // Persistance - data source keeping system state and user data
 type Persistance struct {
-	session *mgo.Session
-	dbName  string
+	client *mongo.Client
+	dbName string
 }
 
 // New - creates new instance of Persistance
 func New(dbURI string, dbName string) *Persistance {
-	session, err := mgo.Dial(dbURI)
+	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
+	opts := options.Client().ApplyURI(dbURI).SetServerAPIOptions(serverAPI)
+	client, err := mongo.Connect(context.TODO(), opts)
+
 	if err != nil {
 		panic(err)
 	}
 
-	session.SetMode(mgo.Monotonic, true)
-
 	return &Persistance{
-		session,
+		client,
 		dbName,
 	}
 }
 
-func (p *Persistance) getDatabase() *mgo.Database {
-	return p.session.DB(p.dbName)
+func (p *Persistance) getDatabase() *mongo.Database {
+	return p.client.Database(p.dbName)
 }
 
 // GetCollection - gets collection from Persistance instance
-func (p *Persistance) GetCollection(name string) *mgo.Collection {
+func (p *Persistance) GetCollection(name string) *mongo.Collection {
 	ds := p.getDatabase()
-	return ds.C(name)
+	return ds.Collection(name)
 }
 
 // DropDatabase - clear whole database
 func (p *Persistance) DropDatabase() error {
 	ds := p.getDatabase()
-	return ds.DropDatabase()
+	return ds.Drop(context.TODO())
 }

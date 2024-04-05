@@ -1,9 +1,11 @@
 package post
 
 import (
+	"context"
 	"github.com/coda-it/gowebapp/data/persistence"
 	postModel "github.com/coda-it/gowebapp/domain/models/post"
-	"gopkg.in/mgo.v2/bson"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 const (
@@ -35,8 +37,12 @@ func (p *Repository) FetchAll(userID string) ([]postModel.Post, error) {
 		searchQuery = bson.M{}
 	}
 
-	err := postsCollection.Find(searchQuery).All(&posts)
+	cursor, err := postsCollection.Find(context.TODO(), searchQuery)
+	if err != nil {
+		return posts, err
+	}
 
+	err = cursor.All(context.TODO(), &posts)
 	if err != nil {
 		return posts, err
 	}
@@ -47,18 +53,23 @@ func (p *Repository) FetchAll(userID string) ([]postModel.Post, error) {
 // Add - add post to persistence
 func (p *Repository) Add(post postModel.Post) error {
 	postsCollection := p.Persistence.GetCollection(collectionName)
-	return postsCollection.Insert(post)
+	_, err := postsCollection.InsertOne(context.TODO(), post)
+	return err
 }
 
 // Update - update existing post
 func (p *Repository) Update(post postModel.Post) error {
 	postsCollection := p.Persistence.GetCollection(collectionName)
-	_, err := postsCollection.Upsert(bson.M{"_id": post.ID}, post)
+	_, err := postsCollection.UpdateOne(context.TODO(), bson.M{"_id": post.ID}, bson.D{{"$set",
+		post,
+	}})
+
 	return err
 }
 
 // Delete - delete post
-func (p *Repository) Delete(id bson.ObjectId) error {
+func (p *Repository) Delete(id primitive.ObjectID) error {
 	postsCollection := p.Persistence.GetCollection(collectionName)
-	return postsCollection.Remove(bson.M{"_id": id})
+	_, err := postsCollection.DeleteOne(context.TODO(), bson.M{"_id": id})
+	return err
 }

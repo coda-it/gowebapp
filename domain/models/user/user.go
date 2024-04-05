@@ -1,15 +1,17 @@
 package user
 
-import "gopkg.in/mgo.v2/bson"
+import (
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 // User - model representing user
 type User struct {
-	ID           bson.ObjectId `json:"id" bson:"_id,omitempty"`
-	Username     string        `json:"username" bson:"username"`
-	Password     string        `json:"password" bson:"password"`
-	SessionID    string        `json:"sessionId" bson:"sessionId"`
-	Entitlements []string      `json:"entitlements" bson:"entitlements"`
-	Activated    bool          `json:"isActivated" bson:"isActivated"`
+	ID           primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	Username     string             `json:"username" bson:"username"`
+	Password     string             `json:"password" bson:"password"`
+	SessionID    string             `json:"sessionId" bson:"sessionId"`
+	Entitlements []string           `json:"entitlements" bson:"entitlements"`
+	Activated    bool               `json:"isActivated" bson:"isActivated"`
 }
 
 // HasEntitlement - checks whether user has a particular entitlement

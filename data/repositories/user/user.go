@@ -1,9 +1,11 @@
 package user
 
 import (
+	"context"
 	"github.com/coda-it/gowebapp/data/persistence"
 	userModel "github.com/coda-it/gowebapp/domain/models/user"
-	"gopkg.in/mgo.v2/bson"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 const (
@@ -24,7 +26,7 @@ func New(p persistence.IPersistance) Repository {
 
 // Update - updates particular user
 func (u *Repository) Update(where bson.M, data bson.M) error {
-	err := u.Persistence.GetCollection(collectionName).Update(where, data)
+	_, err := u.Persistence.GetCollection(collectionName).UpdateOne(context.TODO(), where, data)
 	if err != nil {
 		return err
 	}
@@ -37,7 +39,8 @@ func (u *Repository) Find(user bson.M) (userModel.User, error) {
 	var usr userModel.User
 
 	c := u.Persistence.GetCollection(collectionName)
-	err := c.Find(user).One(&usr)
+	result := c.FindOne(context.TODO(), user)
+	err := result.Decode(&usr)
 
 	return usr, err
 }
@@ -52,13 +55,13 @@ func (u *Repository) Add(username string, password string, isRoot bool) error {
 	}
 
 	newUser := &userModel.User{
-		ID:           bson.NewObjectId(),
+		ID:           primitive.NewObjectID(),
 		Username:     username,
 		Password:     password,
 		Entitlements: entitlements,
 	}
 
-	err := c.Insert(newUser)
+	_, err := c.InsertOne(context.TODO(), newUser)
 
 	return err
 }

@@ -1,9 +1,11 @@
 package category
 
 import (
+	"context"
 	"github.com/coda-it/gowebapp/data/persistence"
 	categoryModel "github.com/coda-it/gowebapp/domain/models/category"
-	"gopkg.in/mgo.v2/bson"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 const (
@@ -29,8 +31,12 @@ func (cr *Repository) FetchAll() ([]categoryModel.Category, error) {
 	var categories []categoryModel.Category
 	var searchQuery bson.M
 
-	err := categoriesCollection.Find(searchQuery).All(&categories)
+	cursor, err := categoriesCollection.Find(context.TODO(), searchQuery)
+	if err != nil {
+		return categories, err
+	}
 
+	err = cursor.All(context.TODO(), &categories)
 	if err != nil {
 		return categories, err
 	}
@@ -41,18 +47,23 @@ func (cr *Repository) FetchAll() ([]categoryModel.Category, error) {
 // Add - add category to persistence
 func (cr *Repository) Add(c categoryModel.Category) error {
 	categoriesCollection := cr.Persistence.GetCollection(collectionName)
-	return categoriesCollection.Insert(c)
+	_, err := categoriesCollection.InsertOne(context.TODO(), c)
+	return err
 }
 
 // Update - update existing category
 func (cr *Repository) Update(c categoryModel.Category) error {
 	categoriesCollection := cr.Persistence.GetCollection(collectionName)
-	_, err := categoriesCollection.Upsert(bson.M{"_id": c.ID}, c)
+	_, err := categoriesCollection.UpdateOne(context.TODO(), bson.M{"_id": c.ID}, bson.D{{"$set",
+		c,
+	}})
+
 	return err
 }
 
 // Delete - delete category
-func (cr *Repository) Delete(id bson.ObjectId) error {
+func (cr *Repository) Delete(id primitive.ObjectID) error {
 	categoriesCollection := cr.Persistence.GetCollection(collectionName)
-	return categoriesCollection.Remove(bson.M{"_id": id})
+	_, err := categoriesCollection.DeleteOne(context.TODO(), bson.M{"_id": id})
+	return err
 }
