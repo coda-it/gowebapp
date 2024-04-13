@@ -127,9 +127,11 @@ func (c *Controller) RenderTemplate(
 
 	if moduleID != "" {
 		for _, app := range c.Config.Apps {
-			for _, module := range app.Modules {
-				if module.ID == moduleID {
-					appPath = app.ID + "/"
+			if app.Domain == "" || r.Host == app.Domain {
+				for _, module := range app.Modules {
+					if module.ID == moduleID {
+						appPath = app.ID + "/"
+					}
 				}
 			}
 		}
