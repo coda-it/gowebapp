@@ -56,6 +56,7 @@ func main() {
 	logger.Log("WEBAPP_MONGO_DB = " + webAppMongoDB)
 	logger.Log("WEBAPP_HTTP_PORT = " + webAppHTTPPort)
 	logger.Log("WEBAPP_ENV = " + os.Getenv("WEBAPP_ENV"))
+	logger.Log("WEBAPP_CONFIG = " + os.Getenv("WEBAPP_CONFIG"))
 	logger.Log("WEBAPP_CONFIG_PATH = " + os.Getenv("WEBAPP_CONFIG_PATH"))
 
 	utils.VERSION = VERSION
