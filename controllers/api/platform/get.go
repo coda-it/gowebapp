@@ -16,10 +16,10 @@ func (c *Controller) CtrPlatformGet(w http.ResponseWriter, r *http.Request, opt 
 		data = map[string]interface{}{
 			"config": struct{}{},
 		}
-	}
-
-	data = map[string]interface{}{
-		"config": config,
+	} else {
+		data = map[string]interface{}{
+			"config": config,
+		}
 	}
 
 	links := map[string]map[string]string{
