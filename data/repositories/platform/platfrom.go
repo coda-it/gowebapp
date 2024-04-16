@@ -38,7 +38,9 @@ func (r *Repository) Add(c platformModel.Config) error {
 // Update - update platform config
 func (r *Repository) Update(c platformModel.Config) error {
 	platformCollection := r.Persistence.GetCollection(collectionName)
-	_, err := platformCollection.UpdateOne(context.TODO(), bson.M{"_id": c.ID}, c)
+	_, err := platformCollection.UpdateOne(context.TODO(), bson.M{"_id": c.ID}, bson.D{{"$set",
+		c,
+	}})
 	return err
 }
 
@@ -49,12 +51,10 @@ func (r *Repository) Fetch() (platformModel.Config, error) {
 	var config platformModel.Config
 	var searchQuery bson.M
 
-	cursor, err := platformCollection.Find(context.TODO(), searchQuery)
-	if err != nil {
-		return config, err
-	}
+	result := platformCollection.FindOne(context.TODO(), searchQuery)
 
-	err = cursor.Decode(config)
+	err := result.Decode(&config)
+
 	if err != nil {
 		return config, err
 	}
