@@ -179,9 +179,11 @@ func (c *Controller) RenderStaticTemplate(
 	appPath := constants.DefaultAppID + "/"
 
 	for _, app := range c.Config.Apps {
-		for _, module := range app.Modules {
-			if module.ID == constants.StaticModule {
-				appPath = app.ID + "/"
+		if app.Domain == "" || r.Host == app.Domain {
+			for _, module := range app.Modules {
+				if module.ID == constants.StaticModule {
+					appPath = app.ID + "/"
+				}
 			}
 		}
 	}
