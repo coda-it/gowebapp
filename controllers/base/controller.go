@@ -94,6 +94,14 @@ func (c *Controller) buildViewModel(
 	translations := c.translationUsecases.Fetch(userLanguage)
 	translationsJSON, _ := json.Marshal(translations)
 
+	var application config.App
+
+	for _, app := range c.Config.Apps {
+		if app.Domain == "" || r.Host == app.Domain {
+			application = app
+		}
+	}
+
 	return page.Page{
 		Version:        utils.VERSION,
 		Title:          constants.AppName + " - " + name,
@@ -101,7 +109,7 @@ func (c *Controller) buildViewModel(
 		IsRoot:         u.HasEntitlement("root"),
 		Params:         params,
 		Name:           name,
-		Navigation:     c.Config.Navigation,
+		Navigation:     application.Navigation,
 		JSConfig:       string(jsConfig),
 		JSTranslations: string(translationsJSON),
 		Translations:   translations,

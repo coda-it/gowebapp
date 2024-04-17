@@ -26,61 +26,61 @@
       {
         "id": "admin"
       }
+    ],
+    "navigation": [
+      {
+        "id": "post",
+        "label": "Posts",
+        "href": "/post",
+        "isRoot": false
+      },
+      {
+        "id": "category",
+        "label": "Categories",
+        "href": "/category",
+        "isRoot": false
+      },
+      {
+        "id": "helpdesk",
+        "label": "Helpdesk",
+        "href": "/helpdesk",
+        "isRoot": false
+      },
+      {
+        "id": "admin",
+        "label": "Admin",
+        "href": "/admin",
+        "isRoot": true,
+        "children": [
+          {
+            "id": "admin-categories",
+            "label": "Categories",
+            "href": "/admin/categories"
+          },
+          {
+            "id": "admin-add-category",
+            "label": "Add Category",
+            "href": "/admin/categories/new"
+          },
+          {
+            "id": "admin-posts",
+            "label": "Posts",
+            "href": "/admin/posts"
+          },
+          {
+            "id": "admin-add-post",
+            "label": "Add Post",
+            "href": "/admin/posts/new"
+          },
+          {
+            "id": "admin-landing-page",
+            "label": "Platform",
+            "href": "/admin/platform/edit"
+          }
+        ]
+      }
     ]
   }],
-  "navigation": [
-    {
-      "id": "post",
-      "label": "Posts",
-      "href": "/post",
-      "isRoot": false
-    },
-    {
-      "id": "category",
-      "label": "Categories",
-      "href": "/category",
-      "isRoot": false
-    },
-    {
-      "id": "helpdesk",
-      "label": "Helpdesk",
-      "href": "/helpdesk",
-      "isRoot": false
-    },
-    {
-      "id": "admin",
-      "label": "Admin",
-      "href": "/admin",
-      "isRoot": true,
-      "children": [
-        {
-          "id": "admin-categories",
-          "label": "Categories",
-          "href": "/admin/categories"
-        },
-        {
-          "id": "admin-add-category",
-          "label": "Add Category",
-          "href": "/admin/categories/new"
-        },
-        {
-          "id": "admin-posts",
-          "label": "Posts",
-          "href": "/admin/posts"
-        },
-        {
-          "id": "admin-add-post",
-          "label": "Add Post",
-          "href": "/admin/posts/new"
-        },
-        {
-          "id": "admin-landing-page",
-          "label": "Platform",
-          "href": "/admin/platform/edit"
-        }
-      ]
-    }
-  ],
   "defaultLanguage": "en",
   "certificate": "",
   "certificatePrivateKey": ""
