@@ -65,7 +65,15 @@ func (c *Controller) buildViewModel(
 		isLogged = true
 	}
 
-	platformConfig, err := c.platformUsecases.Fetch()
+	var application config.App
+
+	for _, app := range c.Config.Apps {
+		if app.Domain == "" || r.Host == app.Domain {
+			application = app
+		}
+	}
+
+	platformConfig, err := c.platformUsecases.Fetch(application.ID)
 
 	if err != nil {
 		platformConfig = platformModel.Config{
@@ -93,14 +101,6 @@ func (c *Controller) buildViewModel(
 
 	translations := c.translationUsecases.Fetch(userLanguage)
 	translationsJSON, _ := json.Marshal(translations)
-
-	var application config.App
-
-	for _, app := range c.Config.Apps {
-		if app.Domain == "" || r.Host == app.Domain {
-			application = app
-		}
-	}
 
 	return page.Page{
 		Version:        utils.VERSION,

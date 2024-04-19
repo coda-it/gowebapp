@@ -22,8 +22,8 @@ func (u *Usecase) Drop() error {
 }
 
 // Fetch - fetch platform config
-func (u *Usecase) Fetch() (platformModel.Config, error) {
-	return u.repository.Fetch()
+func (u *Usecase) Fetch(appID string) (platformModel.Config, error) {
+	return u.repository.Fetch(appID)
 }
 
 // Add - add platform config

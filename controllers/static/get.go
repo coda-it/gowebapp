@@ -1,6 +1,7 @@
 package landing
 
 import (
+	"github.com/coda-it/goappframe/config"
 	"github.com/coda-it/gowebapp/constants"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
@@ -12,7 +13,15 @@ import (
 func (c *Controller) CtrStaticGet(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	defer r.Body.Close()
 
-	appConfig, err := c.Usecase.Fetch()
+	var application config.App
+
+	for _, app := range c.Config.Apps {
+		if app.Domain == "" || r.Host == app.Domain {
+			application = app
+		}
+	}
+
+	appConfig, err := c.Usecase.Fetch(application.ID)
 
 	if err != nil || appConfig.StaticPage == "" {
 		c.RenderStaticTemplate(w, r, constants.DefaultStaticPage, sm, make(map[string]interface{}))

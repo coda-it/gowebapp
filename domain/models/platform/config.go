@@ -7,6 +7,7 @@ import (
 // Config - model representing platform config
 type Config struct {
 	ID            primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	AppID         string             `json:"appId" bson:"appId"`
 	LandingModule string             `json:"landingModule" bson:"landingModule"`
 	StaticPage    string             `json:"staticPage" bson:"staticPage"`
 }
