@@ -5,7 +5,7 @@ on:
 
 env:
   GO111MODULE: on
-  APP_VERSION: v1.1.7
+  APP_VERSION: v1.1.8
 
 jobs:
   test:
