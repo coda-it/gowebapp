@@ -1,6 +1,7 @@
 package platform
 
 import (
+	"github.com/coda-it/goappframe/config"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
@@ -9,7 +10,15 @@ import (
 
 // CtrPlatformGet - gets platform config
 func (c *Controller) CtrPlatformGet(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
-	config, err := c.PlatformUsecases.Fetch()
+	var application config.App
+
+	for _, app := range c.Config.Apps {
+		if app.Domain == "" || r.Host == app.Domain {
+			application = app
+		}
+	}
+
+	platformConfig, err := c.PlatformUsecases.Fetch(application.ID)
 	var data map[string]interface{}
 
 	if err != nil {
@@ -18,7 +27,7 @@ func (c *Controller) CtrPlatformGet(w http.ResponseWriter, r *http.Request, opt 
 		}
 	} else {
 		data = map[string]interface{}{
-			"config": config,
+			"config": platformConfig,
 		}
 	}
 

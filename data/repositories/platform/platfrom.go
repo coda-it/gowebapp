@@ -45,11 +45,11 @@ func (r *Repository) Update(c platformModel.Config) error {
 }
 
 // Fetch - fetch platform config
-func (r *Repository) Fetch() (platformModel.Config, error) {
+func (r *Repository) Fetch(appID string) (platformModel.Config, error) {
 	platformCollection := r.Persistence.GetCollection(collectionName)
 
 	var config platformModel.Config
-	var searchQuery bson.M
+	var searchQuery = bson.M{"appId": appID}
 
 	result := platformCollection.FindOne(context.TODO(), searchQuery)
 

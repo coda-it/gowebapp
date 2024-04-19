@@ -9,5 +9,5 @@ type IRepository interface {
 	Drop() error
 	Add(c platformModel.Config) error
 	Update(c platformModel.Config) error
-	Fetch() (platformModel.Config, error)
+	Fetch(appID string) (platformModel.Config, error)
 }

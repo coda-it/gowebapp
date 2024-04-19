@@ -2,6 +2,7 @@ package platform
 
 import (
 	"encoding/json"
+	"github.com/coda-it/goappframe/config"
 	"github.com/coda-it/gowebapp/domain/models/platform"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
@@ -29,6 +30,16 @@ func (c *Controller) CtrPlatformPost(w http.ResponseWriter, r *http.Request, opt
 		return
 	}
 
+	var application config.App
+
+	for _, app := range c.Config.Apps {
+		if app.Domain == "" || r.Host == app.Domain {
+			application = app
+		}
+	}
+
+	newConfig.AppID = application.ID
+
 	err = c.PlatformUsecases.Add(newConfig)
 
 	if err != nil {
@@ -41,7 +52,7 @@ func (c *Controller) CtrPlatformPost(w http.ResponseWriter, r *http.Request, opt
 		"config": struct{}{},
 	}
 
-	appConfig, err := c.PlatformUsecases.Fetch()
+	appConfig, err := c.PlatformUsecases.Fetch(application.ID)
 	if err == nil {
 		data = map[string]interface{}{
 			"config": appConfig,
