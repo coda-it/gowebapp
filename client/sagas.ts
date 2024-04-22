@@ -50,6 +50,10 @@ function* root() {
     takeEvery(platformActionTypes.ADD_PLATFORM, platformSagas.onAddPlatform),
     takeEvery(helpdeskActionTypes.CREATE_TICKET, helpdeskSagas.onCreateTicket),
     takeEvery(helpdeskActionTypes.FETCH_TICKET, helpdeskSagas.onFetchTicket),
+    takeEvery(
+      helpdeskActionTypes.FETCH_ALL_TICKETS,
+      helpdeskSagas.onFetchAllTickets
+    ),
   ]);
 }
 

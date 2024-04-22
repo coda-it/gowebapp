@@ -25,3 +25,5 @@ func (p *Usecase) Add(ticket ticketModel.Ticket) (ticketModel.Ticket, error) {
 func (p *Usecase) Get(shortHash string) (ticketModel.Ticket, error) {
 	return p.ticketRepository.Get(shortHash)
 }
+
+func (p *Usecase) FetchAll() ([]ticketModel.Ticket, error) { return p.ticketRepository.FetchAll() }

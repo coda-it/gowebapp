@@ -76,6 +76,11 @@
             "id": "admin-landing-page",
             "label": "Platform",
             "href": "/admin/platform/edit"
+          },
+          {
+            "id": "admin-helpdesk",
+            "label": "Helpdesk",
+            "href": "/admin/helpdesk"
           }
         ]
       }

@@ -15,6 +15,7 @@ import Categories from './modules/Categories';
 import Helpdesk from './modules/Helpdesk';
 import CategoryEditor from './modules/CategoryEditor';
 import PlatformEditor from './modules/PlatformEditor';
+import HelpdeskAdmin from './modules/HelpdeskAdmin';
 import sagas from './sagas';
 import reducers from './reducers';
 
@@ -69,6 +70,7 @@ if (appContainer) {
             path="/admin/categories/edit/:id?"
             component={CategoryEditor}
           />
+          <Route exact path="/admin/helpdesk" component={HelpdeskAdmin} />
         </Application>
       </Router>
     </Provider>

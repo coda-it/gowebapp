@@ -18,7 +18,10 @@ async function callPostTicket(title: string, description: string) {
 }
 
 /* eslint-disable import/prefer-default-export */
-export async function onCreateTicket({ title, description }: types.Action) {
+export async function onCreateTicket({
+  title,
+  description,
+}: types.GetTicketAction) {
   const response: utilTypes.HALResponse<types.Ticket, any, any> =
     await callPostTicket(title, description);
   const { shortHash } = response;
@@ -36,7 +39,7 @@ function callFetchTicket(id: string) {
 }
 
 /* eslint-disable import/prefer-default-export */
-export function* onFetchTicket({ id }: types.Action) {
+export function* onFetchTicket({ id }: types.GetTicketAction) {
   const response: utilTypes.HALResponse<types.Ticket, any, any> =
     yield callFetchTicket(id);
 
@@ -48,4 +51,24 @@ export function* onFetchTicket({ id }: types.Action) {
       shortHash: response.shortHash,
     })
   );
+}
+
+function callFetchAllTickets() {
+  const request = new Request(`${constants.HELPDESK_ENDPOINT}`, {
+    method: 'GET',
+  });
+  return fetch(request)
+    .then((response) => response.json())
+    .catch(() => 'Fetching helpdesk ticket failed');
+}
+
+/* eslint-disable import/prefer-default-export */
+export function* onFetchAllTickets() {
+  const response: utilTypes.HALResponse<
+    { tickets: ReadonlyArray<types.Ticket> },
+    any,
+    any
+  > = yield callFetchAllTickets();
+
+  yield put(actions.fetchAllTicketsSuccess(response._embedded.tickets));
 }
