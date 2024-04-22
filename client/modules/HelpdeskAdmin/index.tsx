@@ -16,15 +16,16 @@ function HelpdeskAdmin() {
   return (
     <div className="gc-panel">
       <div className="gc-panel__title">Helppdesk admin</div>
-      <div className="gc-panel__content gc-flex gc-flex--wrap tst-posts">
-        <ul className="gc-list">
-          {tickets.map((ticket, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <li className="gc-list__item" key={`ticket-item-${index}`}>
+      <div className="gc-panel__content gc-flex--wrap tst-posts">
+        {tickets.map((ticket, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <div className="gc-card gc-card--default gc-panel gm-spacing-tl" key={`ticket-item-${index}`}>
+            <div className="gc-panel__title">
               #{ticket.shortHash} - {ticket.title}
-            </li>
-          ))}
-        </ul>
+            </div>
+            <div className="gc-panel__content">{ticket.description}</div>
+          </div>
+        ))}
       </div>
     </div>
   );

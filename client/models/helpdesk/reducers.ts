@@ -28,7 +28,7 @@ export default function reducers(
 
       return {
         ...state,
-        tickets: action.tickets,
+        tickets: typedAction.tickets,
       };
     default:
       return state;
