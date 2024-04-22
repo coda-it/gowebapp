@@ -15,7 +15,7 @@ function HelpdeskAdmin() {
 
   return (
     <div className="gc-panel">
-      <div className="gc-panel__title">Helppdesk admin</div>
+      <div className="gc-panel__title">Helpdesk admin</div>
       <div className="gc-panel__content gc-flex--wrap tst-posts">
         {tickets.map((ticket, index) => (
           <div
