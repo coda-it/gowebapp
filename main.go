@@ -195,6 +195,12 @@ func main() {
 				Protected: false,
 			},
 			{
+				Path:      "/api/ticket",
+				Method:    "GET",
+				Handler:   helpdeskApiCtl.CtrTicketGetAll,
+				Protected: false,
+			},
+			{
 				Path:      "/api/ticket/{id}",
 				Method:    "GET",
 				Handler:   helpdeskApiCtl.CtrTicketGet,
@@ -336,6 +342,12 @@ func main() {
 			},
 			{
 				Path:      "/admin/platform/edit",
+				Method:    "ALL",
+				Handler:   adminCtl.CtrAdmin,
+				Protected: true,
+			},
+			{
+				Path:      "/admin/helpdesk",
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,

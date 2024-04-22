@@ -8,4 +8,5 @@ import (
 type IRepository interface {
 	Add(ticket ticketModel.Ticket) (ticketModel.Ticket, error)
 	Get(ticketID string) (ticketModel.Ticket, error)
+	FetchAll() ([]ticketModel.Ticket, error)
 }

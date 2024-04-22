@@ -19,3 +19,14 @@ export const fetchTicketSuccess = (ticket: types.Ticket) => ({
   type: actionTypes.FETCH_TICKET_SUCCESS,
   ...ticket,
 });
+
+export const fetchAllTickets = () => ({
+  type: actionTypes.FETCH_ALL_TICKETS,
+});
+
+export const fetchAllTicketsSuccess = (
+  tickets: ReadonlyArray<types.Ticket>
+) => ({
+  type: actionTypes.FETCH_ALL_TICKETS_SUCCESS,
+  tickets,
+});
