@@ -1,3 +1,5 @@
+import * as actionTypes from './actionTypes';
+
 export type CreateTicketAction = {};
 
 export type Ticket = {
@@ -12,12 +14,13 @@ export type State = {
   tickets: ReadonlyArray<Ticket>;
 };
 
-export type Action = {
-  type: string;
+export type GetTicketAction = Ticket & {
+  type: typeof actionTypes.FETCH_TICKET_SUCCESS;
 };
 
-export type GetTicketAction = Action & Ticket;
-
-export type GetAllTicketsAction = Action & {
+export type GetAllTicketsAction = {
+  type: typeof actionTypes.FETCH_ALL_TICKETS_SUCCESS;
   tickets: ReadonlyArray<Ticket>;
 };
+
+export type Action = GetTicketAction | GetAllTicketsAction;

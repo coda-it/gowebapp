@@ -9,26 +9,20 @@ export default function reducers(
   state: types.State = defaultState,
   action: types.Action
 ) {
-  let typedAction;
-
   switch (action.type) {
     case actionTypes.FETCH_TICKET_SUCCESS:
-      typedAction = action as types.GetTicketAction;
-
       return {
         ...state,
         ticket: {
-          id: typedAction.id,
-          title: typedAction.title,
-          description: typedAction.description,
+          id: action.id,
+          title: action.title,
+          description: action.description,
         },
       };
     case actionTypes.FETCH_ALL_TICKETS_SUCCESS:
-      typedAction = action as types.GetAllTicketsAction;
-
       return {
         ...state,
-        tickets: typedAction.tickets,
+        tickets: action.tickets,
       };
     default:
       return state;

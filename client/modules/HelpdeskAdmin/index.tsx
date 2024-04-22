@@ -18,8 +18,11 @@ function HelpdeskAdmin() {
       <div className="gc-panel__title">Helppdesk admin</div>
       <div className="gc-panel__content gc-flex--wrap tst-posts">
         {tickets.map((ticket, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <div className="gc-card gc-card--default gc-panel gm-spacing-tl" key={`ticket-item-${index}`}>
+          <div
+            className="gc-card gc-card--default gc-panel gm-spacing-tl"
+            /* eslint-disable-next-line react/no-array-index-key */
+            key={`ticket-item-${index}`}
+          >
             <div className="gc-panel__title">
               #{ticket.shortHash} - {ticket.title}
             </div>
