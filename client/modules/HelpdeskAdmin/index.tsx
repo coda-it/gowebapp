@@ -13,10 +13,14 @@ function HelpdeskAdmin() {
 
   const tickets = useSelector(selectors.getTickets);
 
+  const handleRemoveTicket = (ticketId: string) => () => {
+    dispatch(actions.deleteTicket(ticketId));
+  };
+
   return (
     <div className="gc-panel">
       <div className="gc-panel__title">Helpdesk admin</div>
-      <div className="gc-panel__content gc-flex--wrap tst-posts">
+      <div className="gc-panel__content gc-flex--wrap tst-helpdesk">
         {tickets.map((ticket, index) => (
           <div
             className="gc-card gc-card--default gc-panel gm-spacing-tl"
@@ -27,6 +31,15 @@ function HelpdeskAdmin() {
               #{ticket.shortHash} - {ticket.title}
             </div>
             <div className="gc-panel__content">{ticket.description}</div>
+            <div className="gc-panel__footer">
+              <button
+                type="button"
+                className="gc-btn gc-btn--small gc-btn--danger"
+                onClick={handleRemoveTicket(ticket.id)}
+              >
+                Remove
+              </button>
+            </div>
           </div>
         ))}
       </div>

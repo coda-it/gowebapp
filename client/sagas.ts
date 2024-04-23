@@ -54,6 +54,7 @@ function* root() {
       helpdeskActionTypes.FETCH_ALL_TICKETS,
       helpdeskSagas.onFetchAllTickets
     ),
+    takeEvery(helpdeskActionTypes.DELETE_TICKET, helpdeskSagas.onDeleteTicket),
   ]);
 }
 

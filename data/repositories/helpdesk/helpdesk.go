@@ -88,3 +88,10 @@ func (p *Repository) FetchAll() ([]ticketModel.Ticket, error) {
 
 	return tickets, nil
 }
+
+// Delete - delete category
+func (p *Repository) Delete(id primitive.ObjectID) error {
+	ticketsCollection := p.Persistence.GetCollection(collectionName)
+	_, err := ticketsCollection.DeleteOne(context.TODO(), bson.M{"_id": id})
+	return err
+}
