@@ -1,8 +1,10 @@
 import type * as utilTypes from 'client/utils/types';
-import { put } from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 import type * as types from './types';
 import * as constants from './constants';
 import * as actions from './actions';
+import * as alertActions from '../alerts/actions';
+import * as alertConstants from '../alerts/constants';
 
 async function callPostTicket(title: string, description: string) {
   const request = new Request(constants.HELPDESK_ENDPOINT, {
@@ -71,4 +73,30 @@ export function* onFetchAllTickets() {
   > = yield callFetchAllTickets();
 
   yield put(actions.fetchAllTicketsSuccess(response._embedded.tickets));
+}
+
+function callDeleteTicket(id: string) {
+  const request = new Request(constants.HELPDESK_ENDPOINT, {
+    method: 'DELETE',
+    body: JSON.stringify({
+      id,
+    }),
+  });
+
+  return fetch(request)
+    .then((response) => response.json())
+    .catch(() => 'Removing helpdesk ticket failed');
+}
+
+export function* onDeleteTicket({
+  id,
+}: types.DeleteTicketAction): Iterable<any> {
+  const response = yield call(callDeleteTicket, id);
+
+  if (typeof response === 'string') {
+    yield put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
+    return;
+  }
+
+  yield put(actions.fetchAllTickets());
 }

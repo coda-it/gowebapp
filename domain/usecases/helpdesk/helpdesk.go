@@ -2,6 +2,7 @@ package helpdesk
 
 import (
 	ticketModel "github.com/coda-it/gowebapp/domain/models/ticket"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // Usecase - helpdesk usecases
@@ -19,6 +20,11 @@ func New(tr IRepository) *Usecase {
 // Add - add helpdesk to persistence
 func (p *Usecase) Add(ticket ticketModel.Ticket) (ticketModel.Ticket, error) {
 	return p.ticketRepository.Add(ticket)
+}
+
+// Delete - delete helpdesk ticket
+func (p *Usecase) Delete(id primitive.ObjectID) error {
+	return p.ticketRepository.Delete(id)
 }
 
 // Get - get helpdesk ticket

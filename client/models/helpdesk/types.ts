@@ -23,4 +23,9 @@ export type GetAllTicketsAction = {
   tickets: ReadonlyArray<Ticket>;
 };
 
+export type DeleteTicketAction = {
+  type: typeof actionTypes.DELETE_TICKET;
+  id: string;
+};
+
 export type Action = GetTicketAction | GetAllTicketsAction;

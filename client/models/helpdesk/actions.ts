@@ -30,3 +30,8 @@ export const fetchAllTicketsSuccess = (
   type: actionTypes.FETCH_ALL_TICKETS_SUCCESS,
   tickets,
 });
+
+export const deleteTicket = (id: string) => ({
+  type: actionTypes.DELETE_TICKET,
+  id,
+});
