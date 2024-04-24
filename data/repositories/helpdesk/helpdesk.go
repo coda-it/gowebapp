@@ -41,6 +41,7 @@ func (p *Repository) Add(ticket ticketModel.Ticket) (ticketModel.Ticket, error) 
 		ShortHash:   shortHash,
 		Title:       ticket.Title,
 		Description: ticket.Description,
+		Status:      ticket.Status,
 	}
 
 	_, err = ticketsCollection.InsertOne(context.TODO(), newTicket)
@@ -94,4 +95,14 @@ func (p *Repository) Delete(id primitive.ObjectID) error {
 	ticketsCollection := p.Persistence.GetCollection(collectionName)
 	_, err := ticketsCollection.DeleteOne(context.TODO(), bson.M{"_id": id})
 	return err
+}
+
+// Update - update existing helpdesk ticket
+func (p *Repository) Update(ticket ticketModel.Ticket) (ticketModel.Ticket, error) {
+	ticketsCollection := p.Persistence.GetCollection(collectionName)
+	_, err := ticketsCollection.UpdateOne(context.TODO(), bson.M{"_id": ticket.ID}, bson.D{{"$set",
+		ticket,
+	}})
+
+	return ticket, err
 }

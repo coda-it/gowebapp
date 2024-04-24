@@ -27,6 +27,11 @@ func (p *Usecase) Delete(id primitive.ObjectID) error {
 	return p.ticketRepository.Delete(id)
 }
 
+// Update - updates helpdesk ticket
+func (p *Usecase) Update(ticket ticketModel.Ticket) (ticketModel.Ticket, error) {
+	return p.ticketRepository.Update(ticket)
+}
+
 // Get - get helpdesk ticket
 func (p *Usecase) Get(shortHash string) (ticketModel.Ticket, error) {
 	return p.ticketRepository.Get(shortHash)

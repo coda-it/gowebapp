@@ -35,3 +35,8 @@ export const deleteTicket = (id: string) => ({
   type: actionTypes.DELETE_TICKET,
   id,
 });
+
+export const updateTicket = (ticket: types.Ticket) => ({
+  type: actionTypes.UPDATE_TICKET,
+  ticket,
+});

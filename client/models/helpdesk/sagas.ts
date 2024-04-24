@@ -12,6 +12,7 @@ async function callPostTicket(title: string, description: string) {
     body: JSON.stringify({
       title,
       description,
+      status: constants.TICKET_STATUS_OPENED,
     }),
   });
   return fetch(request)
@@ -51,6 +52,7 @@ export function* onFetchTicket({ id }: types.GetTicketAction) {
       title: response.title,
       description: response.description,
       shortHash: response.shortHash,
+      status: response.status,
     })
   );
 }
@@ -92,6 +94,30 @@ export function* onDeleteTicket({
   id,
 }: types.DeleteTicketAction): Iterable<any> {
   const response = yield call(callDeleteTicket, id);
+
+  if (typeof response === 'string') {
+    yield put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
+    return;
+  }
+
+  yield put(actions.fetchAllTickets());
+}
+
+function callUpdateTicket(ticket: types.Ticket) {
+  const request = new Request(constants.HELPDESK_ENDPOINT, {
+    method: 'PUT',
+    body: JSON.stringify(ticket),
+  });
+
+  return fetch(request)
+    .then((response) => response.json())
+    .catch(() => 'Updating category failed');
+}
+
+export function* onUpdateTicket({
+  ticket,
+}: types.UpdateTicketAction): Iterable<any> {
+  const response = yield call(callUpdateTicket, ticket);
 
   if (typeof response === 'string') {
     yield put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
