@@ -196,6 +196,12 @@ func main() {
 			},
 			{
 				Path:      "/api/ticket",
+				Method:    "PUT",
+				Handler:   helpdeskApiCtl.CtrTicketPut,
+				Protected: false,
+			},
+			{
+				Path:      "/api/ticket",
 				Method:    "DELETE",
 				Handler:   helpdeskApiCtl.CtrTicketDelete,
 				Protected: false,
