@@ -1,8 +1,8 @@
 github.com/coda-it/goappframe v0.4.3 h1:E83++Jezm4VfPo5RyjaX440B7mApFf9MBRGixUh6ptk=
 github.com/coda-it/goappframe v0.4.3/go.mod h1:AlvpkSGTxquS16DdJmPcZW1R/Ee/xUcfH8z8ClIudKI=
 github.com/coda-it/goutils v0.1.0/go.mod h1:JDLjsDAubl3lvopKddkM1vZK8Ckq3FIeS6Ap5H6jTH0=
-github.com/coda-it/goutils v0.2.2 h1:Rsy3bXhV1gpeh1hB5OAO4tdKb4AjfCILZNwo85+79MM=
-github.com/coda-it/goutils v0.2.2/go.mod h1:LzMG50VN0shtLI45XdSyeYMmOAuOZA8GNvM4dE2QVLM=
+github.com/coda-it/goutils v0.2.3 h1:tnBy/GteRX6b8EGoouI0+sDzqAEyLpDlQu9w3VX23Dg=
+github.com/coda-it/goutils v0.2.3/go.mod h1:LzMG50VN0shtLI45XdSyeYMmOAuOZA8GNvM4dE2QVLM=
 github.com/coda-it/gowebserver v1.3.1 h1:HFzp4Wjl/eP6DffscpccsUHlMPMM5T8uub+/+K0WnD8=
 github.com/coda-it/gowebserver v1.3.1/go.mod h1:o+uiz08s1yFRU7uT6+iNheCxfUBjWDyamSGkgfZ+kig=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
