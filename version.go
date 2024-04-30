@@ -1,4 +1,4 @@
 package main
 
 // VERSION - current gowebapp webserver version
-var VERSION = "v1.1.9"
+var VERSION = "v1.1.10"
