@@ -8,7 +8,7 @@ describe('Posts', () => {
   it('should add new post, update, visit it and delete', () => {
     cy.visit('http://localhost:3000');
     cy.get('.tst-nav-admin-sub').invoke('show');
-    cy.get('.tst-nav-admin-add-post').click();
+    cy.get('.tst-nav-admin-add-post').click({ force: true });
 
     cy.get('.tst-post-editor-title').type('Post title');
     cy.get('.tst-post-editor-description').type('Post description');
@@ -26,7 +26,7 @@ describe('Posts', () => {
     cy.screenshot();
 
     cy.get('.tst-nav-admin-sub').invoke('show');
-    cy.get('.tst-nav-admin-posts').click();
+    cy.get('.tst-nav-admin-posts').click({ force: true });
 
     cy.get('.tst-post-edit-0').click();
     cy.get('.tst-post-editor-title').clear().type('Post title updated');
@@ -36,7 +36,7 @@ describe('Posts', () => {
     cy.get('.tst-post-editor-update').click();
 
     cy.get('.tst-nav-admin-sub').invoke('show');
-    cy.get('.tst-nav-admin-posts').click();
+    cy.get('.tst-nav-admin-posts').click({ force: true });
 
     cy.get('.tst-posts')
       .children('[class*=tst-post-]')

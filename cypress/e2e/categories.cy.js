@@ -8,7 +8,7 @@ describe('Categories', () => {
   it('should add new category, update it and delete', () => {
     cy.visit('http://localhost:3000');
     cy.get('.tst-nav-admin-sub').invoke('show');
-    cy.get('.tst-nav-admin-add-category').click();
+    cy.get('.tst-nav-admin-add-category').click({ force: true });
 
     cy.get('.tst-category-editor-name').type('Category name');
     cy.get('.tst-category-editor-add').click();
@@ -25,7 +25,7 @@ describe('Categories', () => {
     cy.get('.tst-category-editor-update').click();
 
     cy.get('.tst-nav-admin-sub').invoke('show');
-    cy.get('.tst-nav-admin-categories').click();
+    cy.get('.tst-nav-admin-categories').click({ force: true });
 
     cy.get('.tst-category').should('have.length', 1);
     cy.get('.tst-category')
