@@ -26,7 +26,7 @@ func New(ur IRepository) *Usecase {
 }
 
 // Register - registers new user
-func (u *Usecase) Register(username string, password string, isRoot bool) error {
+func (u *Usecase) Register(username string, password string, isRoot bool) (userModel.User, error) {
 	return u.userRepository.Add(username, password, isRoot)
 }
 

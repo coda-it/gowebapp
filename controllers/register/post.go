@@ -15,12 +15,20 @@ func (c *Controller) CtrRegisterPost(w http.ResponseWriter, r *http.Request, opt
 	username := r.PostFormValue("username")
 	password := hash.EncryptString(r.PostFormValue("password"))
 
-	err := c.UserUsecases.Register(username, password, utils.IsTestEnv())
+	user, err := c.UserUsecases.Register(username, password, utils.IsTestEnv())
 
 	if err != nil {
 		logger.Log("error registering user '" + username + "'")
 		return
 	}
+
+	activationMessage := `Welcome in prismsapps.com!
+		You have been successfully registered.
+		In order to complete the registration process please visit http://prismsapp.com/login/activation/` + user.ID.String() + `
+	`
+
+	c.Mailer.SendEmail(activationMessage, username)
+
 	logger.Log("registered user '" + username + "'")
 
 	http.Redirect(w, r, "/", http.StatusSeeOther)

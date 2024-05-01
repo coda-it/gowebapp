@@ -58,6 +58,10 @@ func main() {
 	logger.Log("WEBAPP_ENV = " + os.Getenv("WEBAPP_ENV"))
 	logger.Log("WEBAPP_CONFIG = " + os.Getenv("WEBAPP_CONFIG"))
 	logger.Log("WEBAPP_CONFIG_PATH = " + os.Getenv("WEBAPP_CONFIG_PATH"))
+	logger.Log("WEBAPP_MAILER_EMAIL_NAME = " + os.Getenv("WEBAPP_MAILER_EMAIL_NAME"))
+	logger.Log("WEBAPP_MAILER_EMAIL_PASS = " + os.Getenv("WEBAPP_MAILER_EMAIL_PASS"))
+	logger.Log("WEBAPP_MAILER_SMTP_PORT = " + os.Getenv("WEBAPP_MAILER_SMTP_PORT"))
+	logger.Log("WEBAPP_MAILER_SMTP_AUTHURL = " + os.Getenv("WEBAPP_MAILER_SMTP_AUTHURL"))
 
 	utils.VERSION = VERSION
 	appConfig := config.New()
@@ -374,6 +378,12 @@ func main() {
 		Routes: []route.Route{
 			{
 				Path:      "/login/register",
+				Method:    "GET",
+				Handler:   userRegisterCtl.CtrRegisterGet,
+				Protected: false,
+			},
+			{
+				Path:      "/login/register/activate",
 				Method:    "GET",
 				Handler:   userRegisterCtl.CtrRegisterGet,
 				Protected: false,
