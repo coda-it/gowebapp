@@ -383,12 +383,6 @@ func main() {
 				Protected: false,
 			},
 			{
-				Path:      "/login/register/activate",
-				Method:    "GET",
-				Handler:   userRegisterCtl.CtrRegisterGet,
-				Protected: false,
-			},
-			{
 				Path:      "/login/register",
 				Method:    "POST",
 				Handler:   userRegisterCtl.CtrRegisterPost,
