@@ -1,6 +1,7 @@
 package register
 
 import (
+	"github.com/coda-it/goappframe/config"
 	"github.com/coda-it/goutils/hash"
 	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/gowebapp/utils"
@@ -22,9 +23,17 @@ func (c *Controller) CtrRegisterPost(w http.ResponseWriter, r *http.Request, opt
 		return
 	}
 
-	activationMessage := `Welcome in prismsapps.com!
+	var application config.App
+
+	for _, app := range c.Config.Apps {
+		if app.Domain == "" || r.Host == app.Domain {
+			application = app
+		}
+	}
+
+	activationMessage := `Welcome!
 		You have been successfully registered.
-		In order to complete the registration process please visit http://prismsapp.com/login/activation/` + user.ID.String() + `
+		In order to complete the registration process please visit ` + application.Domain + `/login/activation/` + user.ID.String() + `
 	`
 
 	c.Mailer.SendEmail(activationMessage, username)
