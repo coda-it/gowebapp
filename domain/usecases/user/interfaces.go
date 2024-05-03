@@ -9,5 +9,5 @@ import (
 type IRepository interface {
 	Update(data bson.M, where bson.M) error
 	Find(user bson.M) (userModel.User, error)
-	Add(username string, password string, isRoot bool) error
+	Add(username string, password string, isRoot bool) (userModel.User, error)
 }

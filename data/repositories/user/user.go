@@ -46,7 +46,7 @@ func (u *Repository) Find(user bson.M) (userModel.User, error) {
 }
 
 // Add - adds new user
-func (u *Repository) Add(username string, password string, isRoot bool) error {
+func (u *Repository) Add(username string, password string, isRoot bool) (userModel.User, error) {
 	c := u.Persistence.GetCollection(collectionName)
 	entitlements := []string{}
 
@@ -63,5 +63,5 @@ func (u *Repository) Add(username string, password string, isRoot bool) error {
 
 	_, err := c.InsertOne(context.TODO(), newUser)
 
-	return err
+	return *newUser, err
 }
