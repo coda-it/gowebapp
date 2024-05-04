@@ -1,7 +1,9 @@
 package platform
 
 import (
+	"github.com/coda-it/goappframe/config"
 	platformModel "github.com/coda-it/gowebapp/domain/models/platform"
+	"net/http"
 )
 
 // Usecase - platform usecases
@@ -34,4 +36,17 @@ func (u *Usecase) Add(c platformModel.Config) error {
 // Update - update platform config
 func (u *Usecase) Update(c platformModel.Config) error {
 	return u.repository.Update(c)
+}
+
+// GetApplicationByDomain - get application by request domain
+func (u *Usecase) GetApplicationByDomain(cnf config.Config, r *http.Request) config.App {
+	var application config.App
+
+	for _, app := range cnf.Apps {
+		if app.Domain == "" || r.Host == app.Domain {
+			application = app
+		}
+	}
+
+	return application
 }

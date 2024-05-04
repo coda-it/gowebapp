@@ -65,13 +65,7 @@ func (c *Controller) buildViewModel(
 		isLogged = true
 	}
 
-	var application config.App
-
-	for _, app := range c.Config.Apps {
-		if app.Domain == "" || r.Host == app.Domain {
-			application = app
-		}
-	}
+	application := c.platformUsecases.GetApplicationByDomain(c.Config, r)
 
 	platformConfig, err := c.platformUsecases.Fetch(application.ID)
 
@@ -134,13 +128,11 @@ func (c *Controller) RenderTemplate(
 	appPath := constants.DefaultAppID + "/"
 
 	if moduleID != "" {
-		for _, app := range c.Config.Apps {
-			if app.Domain == "" || r.Host == app.Domain {
-				for _, module := range app.Modules {
-					if module.ID == moduleID {
-						appPath = app.ID + "/"
-					}
-				}
+		application := c.platformUsecases.GetApplicationByDomain(c.Config, r)
+
+		for _, module := range application.Modules {
+			if module.ID == moduleID {
+				appPath = application.ID + "/"
 			}
 		}
 	}
@@ -186,13 +178,11 @@ func (c *Controller) RenderStaticTemplate(
 
 	appPath := constants.DefaultAppID + "/"
 
-	for _, app := range c.Config.Apps {
-		if app.Domain == "" || r.Host == app.Domain {
-			for _, module := range app.Modules {
-				if module.ID == constants.StaticModule {
-					appPath = app.ID + "/"
-				}
-			}
+	application := c.platformUsecases.GetApplicationByDomain(c.Config, r)
+
+	for _, module := range application.Modules {
+		if module.ID == constants.StaticModule {
+			appPath = application.ID + "/"
 		}
 	}
 

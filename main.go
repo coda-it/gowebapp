@@ -371,7 +371,7 @@ func main() {
 		},
 	}
 
-	userRegisterCtl := userRegisterController.New(baseController, "register", *userUsecaseEntity)
+	userRegisterCtl := userRegisterController.New(baseController, "register", *userUsecaseEntity, *platformUsecasesEntity)
 	userRegisterModule := module.Module{
 		ID:      "register",
 		Enabled: true,
