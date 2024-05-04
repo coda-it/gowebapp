@@ -1,7 +1,6 @@
 package register
 
 import (
-	"github.com/coda-it/goappframe/config"
 	"github.com/coda-it/goutils/hash"
 	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/gowebapp/utils"
@@ -23,13 +22,7 @@ func (c *Controller) CtrRegisterPost(w http.ResponseWriter, r *http.Request, opt
 		return
 	}
 
-	var application config.App
-
-	for _, app := range c.Config.Apps {
-		if app.Domain == "" || r.Host == app.Domain {
-			application = app
-		}
-	}
+	application := c.PlatformUsecases.GetApplicationByDomain(c.Config, r)
 
 	activationMessage := `Welcome!
 		You have been successfully registered.
