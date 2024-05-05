@@ -9,5 +9,12 @@ import (
 
 // CtrRegisterGet - handler for rendering register page
 func (c *Controller) CtrRegisterGet(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
-	c.RenderTemplate(w, r, "register", sm, make(map[string]interface{}), c.moduleID)
+	_, ok := r.URL.Query()["err"]
+	params := make(map[string]interface{})
+
+	if ok {
+		params["IsError"] = true
+	}
+
+	c.RenderTemplate(w, r, "register", sm, params, c.moduleID)
 }

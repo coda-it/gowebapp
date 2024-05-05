@@ -19,6 +19,7 @@ func (c *Controller) CtrRegisterPost(w http.ResponseWriter, r *http.Request, opt
 
 	if err != nil {
 		logger.Log("error registering user '" + username + "'")
+		http.Redirect(w, r, "/login/register?err", http.StatusSeeOther)
 		return
 	}
 
@@ -29,7 +30,7 @@ func (c *Controller) CtrRegisterPost(w http.ResponseWriter, r *http.Request, opt
 		In order to complete the registration process please visit ` + application.Domain + `/login/activation/` + user.ID.String() + `
 	`
 
-	c.Mailer.SendEmail(activationMessage, username)
+	c.Mailer.SendEmail("Activation email", activationMessage, username)
 
 	logger.Log("registered user '" + username + "'")
 
