@@ -5,6 +5,12 @@
                 Register new user
             </h2>
 
+          {{if .Params.IsError}}
+            <div class="login-box__alert">
+              Error registering user
+            </div>
+          {{end}}
+
             <form action="/login/register" method="post">
                 <div class="gc-input">
                     <label class="gc-input__label"
