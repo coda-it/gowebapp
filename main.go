@@ -86,8 +86,9 @@ func main() {
 
 	baseController := base.New(mailer.New(
 		[]string{},
-		os.Getenv("WEBAPP_MAILER_EMAIL_NAME"),
-		os.Getenv("WEBAPP_MAILER_EMAIL_PASS"),
+		os.Getenv("WEBAPP_MAILER_EMAIL"),
+		os.Getenv("WEBAPP_MAILER_USERNAME"),
+		os.Getenv("WEBAPP_MAILER_PASSWORD"),
 		os.Getenv("WEBAPP_MAILER_SMTP_PORT"),
 		os.Getenv("WEBAPP_MAILER_SMTP_AUTHURL"),
 	), appConfig, platformUsecasesEntity, translationUsecasesEntity)
@@ -504,8 +505,9 @@ func main() {
 		DataKey: constants.PersistenceDataKey,
 		Mailer: mailer.New(
 			[]string{},
-			os.Getenv("WEBAPP_MAILER_EMAIL_NAME"),
-			os.Getenv("WEBAPP_MAILER_EMAIL_PASS"),
+			os.Getenv("WEBAPP_MAILER_EMAIL"),
+			os.Getenv("WEBAPP_MAILER_USERNAME"),
+			os.Getenv("WEBAPP_MAILER_PASSWORD"),
 			os.Getenv("WEBAPP_MAILER_SMTP_PORT"),
 			os.Getenv("WEBAPP_MAILER_SMTP_AUTHURL"),
 		),

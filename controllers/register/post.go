@@ -27,7 +27,7 @@ func (c *Controller) CtrRegisterPost(w http.ResponseWriter, r *http.Request, opt
 
 	activationMessage := `Welcome!
 		You have been successfully registered.
-		In order to complete the registration process please visit ` + application.Domain + `/login/activation/` + user.ID.String() + `
+		In order to complete the registration process please visit ` + application.Domain + `/login/activation/` + user.ID.Hex() + `
 	`
 
 	c.Mailer.SendEmail("Activation email", activationMessage, username)
