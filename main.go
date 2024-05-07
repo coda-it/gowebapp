@@ -58,8 +58,9 @@ func main() {
 	logger.Log("WEBAPP_ENV = " + os.Getenv("WEBAPP_ENV"))
 	logger.Log("WEBAPP_CONFIG = " + os.Getenv("WEBAPP_CONFIG"))
 	logger.Log("WEBAPP_CONFIG_PATH = " + os.Getenv("WEBAPP_CONFIG_PATH"))
-	logger.Log("WEBAPP_MAILER_EMAIL_NAME = " + os.Getenv("WEBAPP_MAILER_EMAIL_NAME"))
-	logger.Log("WEBAPP_MAILER_EMAIL_PASS = " + os.Getenv("WEBAPP_MAILER_EMAIL_PASS"))
+	logger.Log("WEBAPP_MAILER_EMAIL = " + os.Getenv("WEBAPP_MAILER_EMAIL"))
+	logger.Log("WEBAPP_MAILER_USERNAME = " + os.Getenv("WEBAPP_MAILER_USERNAME"))
+	logger.Log("WEBAPP_MAILER_PASSWORD = " + os.Getenv("WEBAPP_MAILER_PASSWORD"))
 	logger.Log("WEBAPP_MAILER_SMTP_PORT = " + os.Getenv("WEBAPP_MAILER_SMTP_PORT"))
 	logger.Log("WEBAPP_MAILER_SMTP_AUTHURL = " + os.Getenv("WEBAPP_MAILER_SMTP_AUTHURL"))
 
