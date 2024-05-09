@@ -83,6 +83,13 @@
             "href": "/admin/helpdesk"
           }
         ]
+      },
+      {
+        "id": "account",
+        "label": "Account",
+        "href": "/account",
+        "isRoot": false,
+        "isLogged": true
       }
     ]
   }],

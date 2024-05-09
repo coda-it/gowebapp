@@ -13,7 +13,6 @@ function callUser() {
     .catch(() => 'Fetching user data failed');
 }
 
-/* eslint-disable import/prefer-default-export */
 export function* onFetchUser(): Iterable<any> {
   const user: types.ApiResponse = yield call(callUser);
 
@@ -35,4 +34,27 @@ export function* onFetchUser(): Iterable<any> {
     );
   }
 }
-/* eslint-enable import/prefer-default-export */
+
+function callDeleteUser() {
+  return fetch(constants.USER_ENDPOINT, {
+    method: 'DELETE',
+  })
+    .then((response) => response.json())
+    .catch(() => 'Deleting user failed');
+}
+
+export function* onDeleteUser(): Iterable<any> {
+  const user: types.ApiResponse = yield call(callDeleteUser);
+
+  if (typeof user === 'object') {
+    window.location.href = '/login/logout';
+    return;
+  }
+
+  yield put(
+    alertsActions.addAlert(
+      'Deleting user failed',
+      alertsConstants.ALERT_TYPE_ERROR
+    )
+  );
+}

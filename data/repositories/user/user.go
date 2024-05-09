@@ -65,3 +65,10 @@ func (u *Repository) Add(username string, password string, isRoot bool) (userMod
 
 	return *newUser, err
 }
+
+// Delete - delete user
+func (p *Repository) Delete(id primitive.ObjectID) error {
+	usersCollection := p.Persistence.GetCollection(collectionName)
+	_, err := usersCollection.DeleteOne(context.TODO(), bson.M{"_id": id})
+	return err
+}

@@ -16,8 +16,10 @@
         <ul class="gc-navigation">
             {{ $template := .Name }}
             {{ $isRoot := .IsRoot }}
+            {{ $isLogged := .IsLogged }}
             {{range $index, $element := .Navigation}}
                 {{if or (eq $element.IsRoot false) (and (eq $element.IsRoot true) (eq $isRoot true)) }}
+                {{if or (eq $element.IsLogged false) (and (eq $element.IsLogged true) (eq $isLogged true)) }}
                 <li {{if eq $template $element.ID}}class="gc-navigation__option gc-navigation__option--active"{{else}}class="gc-navigation__option"{{end}}
                         role="presentation">
                     <a class="gc-navigation__link gc-link gc-link--primary tst-nav-{{$element.ID}}" href="{{$element.Href}}">
@@ -36,7 +38,8 @@
                         </li>
                     {{end}}
                 </li>
-            {{end}}
+              {{end}}
+              {{end}}
             {{end}}
             {{if not .IsLogged}}
                 {{template "nav-login" .}}

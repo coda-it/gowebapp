@@ -14,3 +14,7 @@ export const fetchUserError = (error: string) => ({
   type: actionTypes.FETCH_USER_FAILURE,
   error,
 });
+
+export const deleteUser = () => ({
+  type: actionTypes.DELETE_USER,
+});
