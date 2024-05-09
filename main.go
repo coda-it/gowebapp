@@ -7,6 +7,7 @@ import (
 	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/goutils/mailer"
 	"github.com/coda-it/gowebapp/constants"
+	"github.com/coda-it/gowebapp/controllers/account"
 	userActivationController "github.com/coda-it/gowebapp/controllers/activation"
 	adminController "github.com/coda-it/gowebapp/controllers/admin"
 	categoryApiController "github.com/coda-it/gowebapp/controllers/api/category"
@@ -125,12 +126,12 @@ func main() {
 				Handler:   userCtl.CtrUsersGet,
 				Protected: false,
 			},
-			//{
-			//	Path:      "/api/user",
-			//	Method:    "DELETE",
-			//	Handler:   userCtl.CtrUserDelete,
-			//	Protected: true,
-			//},
+			{
+				Path:      "/api/user",
+				Method:    "DELETE",
+				Handler:   userCtl.CtrUserDelete,
+				Protected: true,
+			},
 		},
 	}
 
@@ -480,19 +481,19 @@ func main() {
 		},
 	}
 
-	//accountCtl := account.New(baseController, "account", *userUsecaseEntity)
-	//accountModule := module.Module{
-	//	ID:      "account",
-	//	Enabled: true,
-	//	Routes: []route.Route{
-	//		{
-	//			Path:      "/account",
-	//			Method:    "GET",
-	//			Handler:   accountCtl.CtrAccount,
-	//			Protected: true,
-	//		},
-	//	},
-	//}
+	accountCtl := account.New(baseController, "account", *userUsecaseEntity)
+	accountModule := module.Module{
+		ID:      "account",
+		Enabled: true,
+		Routes: []route.Route{
+			{
+				Path:      "/account",
+				Method:    "GET",
+				Handler:   accountCtl.CtrAccount,
+				Protected: true,
+			},
+		},
+	}
 
 	notFoundCtl := notfound.New(baseController, "not-found")
 
@@ -513,7 +514,7 @@ func main() {
 		userLoginModule,
 		platformModule,
 		helpdeskApiModule,
-		// accountModule,
+		accountModule,
 	}
 
 	appInstance := goappframe.New(goappframe.Internals{
