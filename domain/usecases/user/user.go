@@ -89,3 +89,8 @@ func (u *Usecase) CreateClientSession(w http.ResponseWriter, r *http.Request, us
 	}
 	return userModel.User{}, err
 }
+
+// Delete - deletes user
+func (u *Usecase) Delete(id primitive.ObjectID) error {
+	return u.userRepository.Delete(id)
+}

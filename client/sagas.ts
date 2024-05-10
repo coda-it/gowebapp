@@ -39,6 +39,7 @@ function* root() {
       categoriesSagas.onFetchCategories
     ),
     takeEvery(usersActionTypes.FETCH_USER, usersSagas.onFetchUser),
+    takeEvery(usersActionTypes.DELETE_USER, usersSagas.onDeleteUser),
     takeEvery(
       platformActionTypes.FETCH_PLATFORM,
       platformSagas.onFetchPlatform

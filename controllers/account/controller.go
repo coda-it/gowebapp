@@ -1,18 +1,18 @@
-package user
+package account
 
 import (
 	"github.com/coda-it/gowebapp/controllers/base"
 	userUsecases "github.com/coda-it/gowebapp/domain/usecases/user"
 )
 
-// Controller - user controller
+// Controller - user account controller
 type Controller struct {
 	*base.Controller
-	ModuleID     string
+	moduleID     string
 	UserUsecases userUsecases.Usecase
 }
 
-// New - creates instance of user controller
+// New - creates instance of user account controller
 func New(b *base.Controller, moduleID string, uu userUsecases.Usecase) *Controller {
 	return &Controller{
 		b,

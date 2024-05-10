@@ -16,6 +16,7 @@ import Helpdesk from './modules/Helpdesk';
 import CategoryEditor from './modules/CategoryEditor';
 import PlatformEditor from './modules/PlatformEditor';
 import HelpdeskAdmin from './modules/HelpdeskAdmin';
+import Account from './modules/Account';
 import sagas from './sagas';
 import reducers from './reducers';
 
@@ -71,6 +72,7 @@ if (appContainer) {
             component={CategoryEditor}
           />
           <Route exact path="/admin/helpdesk" component={HelpdeskAdmin} />
+          <Route exact path="/account" component={Account} />
         </Application>
       </Router>
     </Provider>
