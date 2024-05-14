@@ -18,8 +18,8 @@ func New(cr IRepository) *Usecase {
 }
 
 // FetchAll - fetch categories from persistence
-func (cr *Usecase) FetchAll() ([]categoryModel.Category, error) {
-	return cr.categoryRepository.FetchAll()
+func (cr *Usecase) FetchAll(appID string) ([]categoryModel.Category, error) {
+	return cr.categoryRepository.FetchAll(appID)
 }
 
 // Add - add category to persistence

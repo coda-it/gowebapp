@@ -7,7 +7,7 @@ import (
 
 // IRepository - category repository interface
 type IRepository interface {
-	FetchAll() ([]categoryModel.Category, error)
+	FetchAll(appID string) ([]categoryModel.Category, error)
 	Add(c categoryModel.Category) error
 	Update(c categoryModel.Category) error
 	Delete(id primitive.ObjectID) error

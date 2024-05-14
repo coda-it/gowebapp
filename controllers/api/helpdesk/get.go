@@ -31,7 +31,8 @@ func (c *Controller) CtrTicketGet(w http.ResponseWriter, r *http.Request, opt ro
 
 // CtrTicketGetAll - renders ticket view
 func (c *Controller) CtrTicketGetAll(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
-	tickets, err := c.HelpdeskUsecases.FetchAll()
+	application := c.PlatformUsecases.GetApplicationByDomain(c.Config, r)
+	tickets, err := c.HelpdeskUsecases.FetchAll(application.ID)
 
 	if err != nil {
 		c.HandleErrorResponse(w, err.Error())

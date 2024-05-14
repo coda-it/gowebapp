@@ -23,6 +23,9 @@ func (c *Controller) CtrCategoryPost(w http.ResponseWriter, r *http.Request, opt
 	var newCategory category.Category
 	err = json.Unmarshal(requestBody, &newCategory)
 
+	application := c.PlatformUsecases.GetApplicationByDomain(c.Config, r)
+	newCategory.AppID = application.ID
+
 	err = c.CategoryUsecases.Add(newCategory)
 
 	if err != nil {

@@ -27,6 +27,9 @@ func (c *Controller) CtrTicketPost(w http.ResponseWriter, r *http.Request, opt r
 		return
 	}
 
+	application := c.PlatformUsecases.GetApplicationByDomain(c.Config, r)
+	newTicket.AppID = application.ID
+
 	createdTicket, err := c.HelpdeskUsecases.Add(newTicket)
 
 	if err != nil {

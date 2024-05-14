@@ -11,4 +11,5 @@ type Ticket struct {
 	Title       string             `json:"title" bson:"title"`
 	Description string             `json:"description" bson:"description"`
 	Status      string             `json:"status" bson:"status"`
+	AppID       string             `json:"appId" bson:"appId"`
 }

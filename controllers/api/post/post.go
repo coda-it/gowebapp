@@ -27,6 +27,9 @@ func (c *Controller) CtrPostPost(w http.ResponseWriter, r *http.Request, opt rou
 		return
 	}
 
+	application := c.PlatformUsecases.GetApplicationByDomain(c.Config, r)
+	newPost.AppID = application.ID
+
 	err = c.PostUsecases.Add(newPost)
 
 	if err != nil {

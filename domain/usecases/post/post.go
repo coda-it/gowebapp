@@ -18,8 +18,8 @@ func New(pr IRepository) *Usecase {
 }
 
 // FetchAll - fetch posts from persistence
-func (p *Usecase) FetchAll(userID string) ([]postModel.Post, error) {
-	return p.postRepository.FetchAll(userID)
+func (p *Usecase) FetchAll(appID string, userID string) ([]postModel.Post, error) {
+	return p.postRepository.FetchAll(appID, userID)
 }
 
 // Add - add post to persistence

@@ -12,4 +12,5 @@ type Post struct {
 	Title       string             `json:"title" bson:"title"`
 	Description string             `json:"description" bson:"description"`
 	Image       string             `json:"image" bson:"image"`
+	AppID       string             `json:"appId" bson:"appId"`
 }
