@@ -38,4 +38,6 @@ func (p *Usecase) Get(shortHash string) (ticketModel.Ticket, error) {
 }
 
 // FetchAll - fetches all helpdesk tickets
-func (p *Usecase) FetchAll() ([]ticketModel.Ticket, error) { return p.ticketRepository.FetchAll() }
+func (p *Usecase) FetchAll(appID string) ([]ticketModel.Ticket, error) {
+	return p.ticketRepository.FetchAll(appID)
+}

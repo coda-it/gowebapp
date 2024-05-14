@@ -10,7 +10,8 @@ import (
 
 // CtrCategoryGet - gets categories
 func (c *Controller) CtrCategoryGet(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
-	categories, err := c.CategoryUsecases.FetchAll()
+	application := c.PlatformUsecases.GetApplicationByDomain(c.Config, r)
+	categories, err := c.CategoryUsecases.FetchAll(application.ID)
 
 	if err != nil {
 		c.HandleErrorResponse(w, err.Error())

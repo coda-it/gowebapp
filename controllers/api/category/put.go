@@ -28,6 +28,9 @@ func (c *Controller) CtrCategoryPut(w http.ResponseWriter, r *http.Request, opt 
 		return
 	}
 
+	application := c.PlatformUsecases.GetApplicationByDomain(c.Config, r)
+	editedCategory.AppID = application.ID
+
 	err = c.CategoryUsecases.Update(editedCategory)
 	if err != nil {
 		c.HandleErrorResponse(w, "error updating category")

@@ -14,16 +14,15 @@ import (
 func (c *Controller) CtrRegisterPost(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	username := r.PostFormValue("username")
 	password := hash.EncryptString(r.PostFormValue("password"))
+	application := c.PlatformUsecases.GetApplicationByDomain(c.Config, r)
 
-	user, err := c.UserUsecases.Register(username, password, utils.IsTestEnv())
+	user, err := c.UserUsecases.Register(application.ID, username, password, utils.IsTestEnv())
 
 	if err != nil {
 		logger.Log("error registering user '" + username + "'")
 		http.Redirect(w, r, "/login/register?err", http.StatusSeeOther)
 		return
 	}
-
-	application := c.PlatformUsecases.GetApplicationByDomain(c.Config, r)
 
 	activationMessage := `Welcome!
 		You have been successfully registered.

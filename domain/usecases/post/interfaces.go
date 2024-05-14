@@ -7,7 +7,7 @@ import (
 
 // IRepository - post repository interface
 type IRepository interface {
-	FetchAll(userID string) ([]postModel.Post, error)
+	FetchAll(appID string, userID string) ([]postModel.Post, error)
 	Add(post postModel.Post) error
 	Update(post postModel.Post) error
 	Delete(id primitive.ObjectID) error

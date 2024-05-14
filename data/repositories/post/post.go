@@ -25,16 +25,16 @@ func New(p persistence.IPersistance) Repository {
 }
 
 // FetchAll - fetch posts from persistence
-func (p *Repository) FetchAll(userID string) ([]postModel.Post, error) {
+func (p *Repository) FetchAll(appID string, userID string) ([]postModel.Post, error) {
 	postsCollection := p.Persistence.GetCollection(collectionName)
 
 	var posts []postModel.Post
 	var searchQuery bson.M
 
 	if userID != "" {
-		searchQuery = bson.M{"userId": userID}
+		searchQuery = bson.M{"userId": userID, "appId": appID}
 	} else {
-		searchQuery = bson.M{}
+		searchQuery = bson.M{"appId": appID}
 	}
 
 	cursor, err := postsCollection.Find(context.TODO(), searchQuery)

@@ -25,11 +25,11 @@ func New(p persistence.IPersistance) Repository {
 }
 
 // FetchAll - fetch categories from persistence
-func (cr *Repository) FetchAll() ([]categoryModel.Category, error) {
+func (cr *Repository) FetchAll(appID string) ([]categoryModel.Category, error) {
 	categoriesCollection := cr.Persistence.GetCollection(collectionName)
 
 	var categories []categoryModel.Category
-	var searchQuery bson.M
+	var searchQuery = bson.M{"appId": appID}
 
 	cursor, err := categoriesCollection.Find(context.TODO(), searchQuery)
 	if err != nil {

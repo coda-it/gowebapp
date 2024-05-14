@@ -42,6 +42,7 @@ func (p *Repository) Add(ticket ticketModel.Ticket) (ticketModel.Ticket, error) 
 		Title:       ticket.Title,
 		Description: ticket.Description,
 		Status:      ticket.Status,
+		AppID:       ticket.AppID,
 	}
 
 	_, err = ticketsCollection.InsertOne(context.TODO(), newTicket)
@@ -71,11 +72,11 @@ func (p *Repository) Get(shortHash string) (ticketModel.Ticket, error) {
 }
 
 // FetchAll - fetches all tickets
-func (p *Repository) FetchAll() ([]ticketModel.Ticket, error) {
+func (p *Repository) FetchAll(appID string) ([]ticketModel.Ticket, error) {
 	ticketsCollection := p.Persistence.GetCollection(collectionName)
 
 	var tickets []ticketModel.Ticket
-	var searchQuery bson.M
+	var searchQuery = bson.M{"appId": appID}
 
 	cursor, err := ticketsCollection.Find(context.TODO(), searchQuery)
 	if err != nil {

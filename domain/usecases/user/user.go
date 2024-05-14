@@ -26,7 +26,7 @@ func New(ur IRepository) *Usecase {
 }
 
 // Register - registers new user
-func (u *Usecase) Register(username string, password string, isRoot bool) (userModel.User, error) {
+func (u *Usecase) Register(appID string, username string, password string, isRoot bool) (userModel.User, error) {
 	_, err := u.userRepository.Find(bson.M{
 		"username": username,
 		"password": password,
@@ -36,7 +36,7 @@ func (u *Usecase) Register(username string, password string, isRoot bool) (userM
 		return userModel.User{}, errors.New("User already exists")
 	}
 
-	return u.userRepository.Add(username, password, isRoot)
+	return u.userRepository.Add(appID, username, password, isRoot)
 }
 
 // Logout - logout user

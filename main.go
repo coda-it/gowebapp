@@ -135,7 +135,7 @@ func main() {
 		},
 	}
 
-	categoryCtl := categoryApiController.New(baseController, "api-category", *categoryUsecasesEntity)
+	categoryCtl := categoryApiController.New(baseController, "api-category", *categoryUsecasesEntity, *platformUsecasesEntity)
 	categoryModule := module.Module{
 		ID: "api-category",
 		Routes: []route.Route{
@@ -166,7 +166,7 @@ func main() {
 		},
 	}
 
-	postCtl := postApiController.New(baseController, "api-post", *postUsecasesEntity)
+	postCtl := postApiController.New(baseController, "api-post", *postUsecasesEntity, *platformUsecasesEntity)
 	postModule := module.Module{
 		ID: "api-post",
 		Routes: []route.Route{
@@ -197,7 +197,7 @@ func main() {
 		},
 	}
 
-	helpdeskApiCtl := helpdeskApiController.New(baseController, "api-helpdesk", *helpdeskUsecases)
+	helpdeskApiCtl := helpdeskApiController.New(baseController, "api-helpdesk", *helpdeskUsecases, *platformUsecasesEntity)
 	helpdeskApiModule := module.Module{
 		ID: "api-helpdesk",
 		Routes: []route.Route{

@@ -11,5 +11,5 @@ type IRepository interface {
 	Update(ticket ticketModel.Ticket) (ticketModel.Ticket, error)
 	Delete(id primitive.ObjectID) error
 	Get(ticketID string) (ticketModel.Ticket, error)
-	FetchAll() ([]ticketModel.Ticket, error)
+	FetchAll(appID string) ([]ticketModel.Ticket, error)
 }
