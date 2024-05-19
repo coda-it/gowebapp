@@ -1,6 +1,14 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router';
-import { Button } from 'graphen';
+import {
+  Button,
+  Panel,
+  PanelTitle,
+  PanelContent,
+  Flex,
+  FlexItem,
+  PanelFooter,
+} from 'graphen';
 import type * as types from './types';
 
 function Helpdesk(props: types.Props) {
@@ -30,57 +38,62 @@ function Helpdesk(props: types.Props) {
   );
 
   return (
-    <div className="gc-panel">
-      <header className="gc-panel__title">Helpdesk</header>
-      <article className="gc-panel__content gc-flex gc-flex--wrap">
-        <div className="gc-input gc-input--full">
-          {/* eslint-disable jsx-a11y/label-has-associated-control */}
-          <label htmlFor="post-title" className="gc-input__label">
-            Title
-          </label>
-          {/* eslint-enable jsx-a11y/label-has-associated-control */}
-          {ticket ? (
-            <p>{ticket.title}</p>
-          ) : (
-            <input
-              id="post-title"
-              value={title}
-              onChange={handleTitleChange}
-              className="gc-input__field tst-post-editor-title"
-            />
-          )}
-        </div>
-      </article>
-      <div className="gc-panel gc-panel--separator">
-        {/* eslint-disable jsx-a11y/label-has-associated-control */}
-        <label htmlFor="post-description" className="gc-input__label">
-          Description
-        </label>
-        {/* eslint-enable jsx-a11y/label-has-associated-control */}
-        {ticket ? (
-          <p>{ticket.description}</p>
-        ) : (
-          <article className="gc-panel__content">
-            <textarea
-              id="post-description"
-              value={description}
-              onChange={handleDescriptionChange}
-              className="gc-textarea  tst-post-editor-description"
-            />
-          </article>
+    <Panel>
+      <PanelTitle>Helpdesk</PanelTitle>
+      <PanelContent>
+        <Flex wrap="wrap" isVertical>
+          <FlexItem>
+            <div className="gc-input gc-input--full">
+              {/* eslint-disable jsx-a11y/label-has-associated-control */}
+              <label htmlFor="ticket-title" className="gc-input__label">
+                Title
+              </label>
+              {/* eslint-enable jsx-a11y/label-has-associated-control */}
+              {ticket ? (
+                <p>{ticket.title}</p>
+              ) : (
+                <input
+                  id="ticket-title"
+                  value={title}
+                  onChange={handleTitleChange}
+                  className="gc-input__field tst-ticket-title"
+                />
+              )}
+            </div>
+          </FlexItem>
+          <FlexItem>
+            {/* eslint-disable jsx-a11y/label-has-associated-control */}
+            <label htmlFor="post-description" className="gc-input__label">
+              Description
+            </label>
+            {/* eslint-enable jsx-a11y/label-has-associated-control */}
+            {ticket ? (
+              <p>{ticket.description}</p>
+            ) : (
+              <textarea
+                id="ticket-description"
+                value={description}
+                onChange={handleDescriptionChange}
+                className="gc-textarea"
+              />
+            )}
+          </FlexItem>
+        </Flex>
+      </PanelContent>
+      <PanelFooter>
+        {!id && (
+          <Button
+            className="gc-btn--primary"
+            isFull
+            onClick={() => {
+              createTicket(title, description);
+            }}
+          >
+            Create ticket
+          </Button>
         )}
-      </div>
-      {!id && (
-        <Button
-          className="gc-btn--primary tst-post-editor-add gc-btn"
-          onClick={() => {
-            createTicket(title, description);
-          }}
-        >
-          Create ticket
-        </Button>
-      )}
-    </div>
+      </PanelFooter>
+    </Panel>
   );
 }
 

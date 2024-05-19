@@ -1,11 +1,21 @@
-import _ from 'lodash';
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router';
-import { Image, Link, constants } from 'graphen';
-import * as categoryModelTypes from 'client/models/categories/types';
+import {
+  Image,
+  Link,
+  constants,
+  Panel,
+  PanelContent,
+  PanelTitle,
+  Flex,
+  FlexItem,
+  Card,
+} from 'graphen';
 import * as types from './types';
 
-function Categories(props: types.Props) {
+function Categories(
+  props: types.Props = { categories: [], loadCategories: () => {} }
+) {
   const { loadCategories, categories, isAdmin } = props;
 
   useEffect(() => {
@@ -13,47 +23,61 @@ function Categories(props: types.Props) {
   }, [loadCategories]);
 
   return (
-    <div className="gc-panel">
-      <div className="gc-panel__title">Categories</div>
-      <div className="gc-panel__content gc-flex gc-flex--wrap">
-        {_.map(
-          categories,
-          ({ id, name, image }: categoryModelTypes.Category, key: string) => {
-            const link = `/admin/categories/edit/${id}`;
-            const editButton = isAdmin ? (
-              <a
-                className="gc-btn gc-btn--small gc-btn--primary tst-category-edit"
-                href={link}
-              >
-                Edit
-              </a>
-            ) : null;
+    <Panel>
+      <PanelTitle>Categories</PanelTitle>
+      <PanelContent>
+        <Panel>
+          <Flex wrap="wrap">
+            {categories.map(({ id, name, image }) => {
+              const link = `/admin/categories/edit/${id}`;
+              const editButton = isAdmin ? (
+                <a
+                  className="gc-btn gc-btn--small gc-btn--primary tst-category-edit"
+                  href={link}
+                >
+                  Edit
+                </a>
+              ) : null;
 
-            return (
-              <div
-                key={key}
-                className="gc-flex__item gc-card gc-card--gradient gc-panel gm-spacing-l tst-category"
-              >
-                <div className="gc-panel__title tst-category-name">
-                  {/* eslint-disable jsx-a11y/anchor-is-valid */}
-                  <Link skin={constants.SKINS.default} link={`/category/${id}`}>
-                    {name}
-                  </Link>
-                  {/* eslint-enable jsx-a11y/anchor-is-valid */}
-                  {editButton}
-                </div>
-                <Image
-                  className="gm-margin-center"
-                  src={image}
-                  height={200}
-                  width={300}
-                />
-              </div>
-            );
-          }
-        )}
-      </div>
-    </div>
+              return (
+                <FlexItem
+                  key={`category-${id}`}
+                  className="gm-spacing-l tst-category"
+                >
+                  <Card isGradient>
+                    <Panel>
+                      <PanelTitle className="tst-category-name">
+                        <Flex>
+                          <FlexItem isGrow>
+                            {/* eslint-disable jsx-a11y/anchor-is-valid */}
+                            <Link
+                              skin={constants.SKIN_DEFAULT}
+                              link={`/category/${id}`}
+                            >
+                              {name}
+                            </Link>
+                            {/* eslint-enable jsx-a11y/anchor-is-valid */}
+                          </FlexItem>
+                          <FlexItem isShrink>{editButton}</FlexItem>
+                        </Flex>
+                      </PanelTitle>
+                      <PanelContent>
+                        <Image
+                          className="gm-margin-center"
+                          src={image}
+                          height={200}
+                          width={300}
+                        />
+                      </PanelContent>
+                    </Panel>
+                  </Card>
+                </FlexItem>
+              );
+            })}
+          </Flex>
+        </Panel>
+      </PanelContent>
+    </Panel>
   );
 }
 

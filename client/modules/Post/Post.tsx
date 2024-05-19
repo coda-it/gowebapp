@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router';
-import { Image } from 'graphen';
+import { Image, Panel, PanelTitle, PanelContent } from 'graphen';
 import * as types from './types';
 
 function Post(props: types.Props) {
@@ -11,18 +11,18 @@ function Post(props: types.Props) {
   }, [loadPosts]);
 
   return (
-    <div className="gc-panel tst-post-module">
-      <div className="gc-panel__title">{post?.title}</div>
-      <div className="gc-panel__content">
+    <Panel className="tst-post-module">
+      <PanelTitle>{post?.title}</PanelTitle>
+      <PanelContent>
         <Image
           className="gm-margin-center"
           src={post?.image}
           height={200}
           width={300}
         />
-      </div>
+      </PanelContent>
       <div className="gc-panel__content">{post?.description}</div>
-    </div>
+    </Panel>
   );
 }
 

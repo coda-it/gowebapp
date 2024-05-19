@@ -1,7 +1,18 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Button, Dialog } from 'graphen';
+import {
+  Button,
+  Dialog,
+  Panel,
+  PanelTitle,
+  PanelContent,
+  Flex,
+  FlexItem,
+  Card,
+  PanelFooter,
+  Separator,
+} from 'graphen';
 import * as userActions from 'client/models/users/actions';
 
 function Account() {
@@ -22,16 +33,32 @@ function Account() {
   }, [dispatch]);
 
   return (
-    <div className="gc-panel gc-panel--separator gm-spacing-bl">
-      <header className="gc-panel__title">Account</header>
-      <div className="gc-panel__content">
-        <Button
-          className="gc-btn--danger tst-post-editor-add gc-btn"
-          onClick={handleDeleteAccountClick}
-        >
-          Update
-        </Button>
-      </div>
+    <Panel className="gm-spacing-bl">
+      <PanelTitle>Account</PanelTitle>
+      <PanelContent>
+        <Flex isVertical>
+          <FlexItem>
+            <Card isGradient>
+              <Panel>
+                <PanelTitle>Delete account</PanelTitle>
+                <PanelContent>
+                  In order to delete your account, press the below button and
+                  confirm the action.
+                </PanelContent>
+                <PanelFooter>
+                  <Separator />
+                  <Button
+                    className="gc-btn--danger"
+                    onClick={handleDeleteAccountClick}
+                  >
+                    Delete account
+                  </Button>
+                </PanelFooter>
+              </Panel>
+            </Card>
+          </FlexItem>
+        </Flex>
+      </PanelContent>
 
       {isDialogShown && (
         <Dialog>
@@ -63,7 +90,7 @@ function Account() {
           </article>
         </Dialog>
       )}
-    </div>
+    </Panel>
   );
 }
 

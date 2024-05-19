@@ -2,7 +2,14 @@ import _ from 'lodash';
 import classNames from 'classnames';
 import React, { useState, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router';
-import { Button } from 'graphen';
+import {
+  Button,
+  Flex,
+  FlexItem,
+  Panel,
+  PanelContent,
+  PanelTitle,
+} from 'graphen';
 import Previewer from 'client/components/Previewer';
 import * as types from './types';
 
@@ -80,61 +87,77 @@ function CategoryEditor(props: types.Props) {
 
   return (
     <>
-      <div className="gc-panel gc-panel--separator">
-        <header className="gc-panel__title">Name</header>
-        <article className="gc-panel__content">
-          <div className="gc-input gc-input--full">
-            {/* eslint-disable jsx-a11y/label-has-associated-control */}
-            <label htmlFor="category-name" className="gc-input__label">
-              Name
-            </label>
-            {/* eslint-enable jsx-a11y/label-has-associated-control */}
-            <input
-              id="category-name"
-              value={name}
-              onChange={handleNameChange}
-              className="gc-input__field tst-category-editor-name"
-            />
-          </div>
-        </article>
-      </div>
-      <div className="gc-panel gc-panel--separator gm-spacing-bl">
-        <header className="gc-panel__title">Category image</header>
-        <input
-          type="file"
-          name="category-image"
-          accept="image/png, image/jpeg"
-          onChange={handleImageChange}
-          className="gm-spacing-bl"
-        />
-        <Previewer image={image} />
-      </div>
-      <div className="gc-panel gc-panel--separator">
-        {_.isEmpty(category) && (
-          <Button
-            className="gc-btn--primary tst-category-editor-add"
-            onClick={handleAddCategory}
-          >
-            Add
-          </Button>
-        )}
-        {!_.isEmpty(category) && (
-          <>
-            <Button
-              className={updateButtonClasses}
-              onClick={handleUpdateCategory}
-            >
-              Update
-            </Button>
-            <Button
-              className="gc-btn--danger tst-category-editor-delete"
-              onClick={handleDeleteCategory}
-            >
-              Delete
-            </Button>
-          </>
-        )}
-      </div>
+      <Panel isSeparator>
+        <PanelTitle>Category editor</PanelTitle>
+        <PanelContent>
+          <Flex isVertical>
+            <FlexItem>
+              <div className="gc-input gc-input--full">
+                {/* eslint-disable jsx-a11y/label-has-associated-control */}
+                <label htmlFor="category-name" className="gc-input__label">
+                  Name
+                </label>
+                {/* eslint-enable jsx-a11y/label-has-associated-control */}
+                <input
+                  id="category-name"
+                  value={name}
+                  onChange={handleNameChange}
+                  className="gc-input__field tst-category-editor-name"
+                />
+              </div>
+            </FlexItem>
+            <FlexItem className="gm-spacing-bm">
+              <Flex isVertical alignItems="center">
+                <FlexItem>
+                  <input
+                    type="file"
+                    name="category-image"
+                    accept="image/png, image/jpeg"
+                    onChange={handleImageChange}
+                    className="gm-spacing-bl"
+                  />
+                </FlexItem>
+                <FlexItem>
+                  <Previewer image={image} />
+                </FlexItem>
+              </Flex>
+            </FlexItem>
+            <FlexItem>
+              {_.isEmpty(category) && (
+                <Button
+                  isFull
+                  className="gc-btn--primary tst-category-editor-add"
+                  onClick={handleAddCategory}
+                >
+                  Add
+                </Button>
+              )}
+              {!_.isEmpty(category) && (
+                <Flex isVertical>
+                  <FlexItem>
+                    <Button
+                      isFull
+                      className={updateButtonClasses}
+                      onClick={handleUpdateCategory}
+                    >
+                      Update
+                    </Button>
+                  </FlexItem>
+                  <FlexItem>
+                    <Button
+                      isFull
+                      className="gc-btn--danger tst-category-editor-delete"
+                      onClick={handleDeleteCategory}
+                    >
+                      Delete
+                    </Button>
+                  </FlexItem>
+                </Flex>
+              )}
+            </FlexItem>
+          </Flex>
+        </PanelContent>
+      </Panel>
     </>
   );
 }

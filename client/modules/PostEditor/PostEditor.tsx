@@ -2,7 +2,16 @@ import _ from 'lodash';
 import classNames from 'classnames';
 import React, { useState, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router';
-import { Button, Dropdown, Loader } from 'graphen';
+import {
+  Button,
+  Dropdown,
+  Loader,
+  Flex,
+  FlexItem,
+  Panel,
+  PanelContent,
+  PanelTitle,
+} from 'graphen';
 import Previewer from 'client/components/Previewer';
 import * as types from './types';
 
@@ -126,92 +135,107 @@ function PostEditor(props: types.Props) {
     categories?.length > 0 ? _.find(categories, ['id', categoryId]) : null;
 
   return (
-    <>
-      <div className="gc-panel gc-panel--separator">
-        <header className="gc-panel__title">Title</header>
-        <article className="gc-panel__content">
-          <div className="gc-input gc-input--full">
-            {/* eslint-disable jsx-a11y/label-has-associated-control */}
-            <label htmlFor="post-title" className="gc-input__label">
-              Title
-            </label>
-            {/* eslint-enable jsx-a11y/label-has-associated-control */}
-            <input
-              id="post-title"
-              value={title}
-              onChange={handleTitleChange}
-              className="gc-input__field tst-post-editor-title"
-            />
-          </div>
+    <Panel isSeparator>
+      <PanelTitle>Post editor</PanelTitle>
+      <PanelContent>
+        <Flex isVertical>
+          <FlexItem>
+            <div className="gc-input gc-input--full">
+              {/* eslint-disable jsx-a11y/label-has-associated-control */}
+              <label htmlFor="post-title" className="gc-input__label">
+                Title
+              </label>
+              {/* eslint-enable jsx-a11y/label-has-associated-control */}
+              <input
+                id="post-title"
+                value={title}
+                onChange={handleTitleChange}
+                className="gc-input__field tst-post-editor-title"
+              />
+            </div>
 
-          {preSelectedCategory ? (
-            <Dropdown
-              initValue={
-                categoryId
-                  ? {
-                      label: selectedCategory.name,
-                      value: selectedCategory.id,
-                    }
-                  : {
-                      label: preSelectedCategory.name,
-                      value: preSelectedCategory.id,
-                    }
-              }
-              label="Categories"
-              items={_.map(categories, (category) => ({
-                label: category.name,
-                value: category.id,
-              }))}
-              onChange={handleCategoryChange}
+            {preSelectedCategory ? (
+              <Dropdown
+                initValue={
+                  categoryId
+                    ? {
+                        label: selectedCategory.name,
+                        value: selectedCategory.id,
+                      }
+                    : {
+                        label: preSelectedCategory.name,
+                        value: preSelectedCategory.id,
+                      }
+                }
+                label="Categories"
+                items={categories.map((category) => ({
+                  label: category.name,
+                  value: category.id,
+                }))}
+                onChange={handleCategoryChange}
+              />
+            ) : (
+              <Loader />
+            )}
+          </FlexItem>
+          <FlexItem className="gm-spacing-bl">
+            <Flex isVertical alignItems="center">
+              <FlexItem>
+                <input
+                  type="file"
+                  name="post-image"
+                  accept="image/png, image/jpeg"
+                  onChange={handleImageChange}
+                />
+              </FlexItem>
+              <FlexItem>
+                <Previewer image={image} />
+              </FlexItem>
+            </Flex>
+          </FlexItem>
+          <FlexItem className="gm-spacing-bl">
+            <textarea
+              value={description}
+              onChange={handleDescriptionChange}
+              className="gc-textarea  tst-post-editor-description"
             />
-          ) : (
-            <Loader />
-          )}
-        </article>
-      </div>
-      <div className="gc-panel gc-panel--separator gm-spacing-bl">
-        <header className="gc-panel__title">Post image</header>
-        <input
-          type="file"
-          name="post-image"
-          accept="image/png, image/jpeg"
-          onChange={handleImageChange}
-          className="gm-spacing-bl"
-        />
-        <Previewer image={image} />
-      </div>
-      <div className="gc-panel gc-panel--separator">
-        <header className="gc-panel__title">Description</header>
-        <article className="gc-panel__content">
-          <textarea
-            value={description}
-            onChange={handleDescriptionChange}
-            className="gc-textarea  tst-post-editor-description"
-          />
-        </article>
-        {_.isEmpty(post) && (
-          <Button
-            className="gc-btn--primary tst-post-editor-add"
-            onClick={handleAddPost}
-          >
-            Add
-          </Button>
-        )}
-        {!_.isEmpty(post) && (
-          <>
-            <Button className={updateButtonClasses} onClick={handleUpdatePost}>
-              Update
-            </Button>
-            <Button
-              className="gc-btn--danger tst-post-editor-delete"
-              onClick={handleDeletePost}
-            >
-              Delete
-            </Button>
-          </>
-        )}
-      </div>
-    </>
+          </FlexItem>
+          <FlexItem>
+            {_.isEmpty(post) && (
+              <Button
+                isFull
+                className="gc-btn--primary tst-post-editor-add"
+                onClick={handleAddPost}
+              >
+                Add
+              </Button>
+            )}
+            {!_.isEmpty(post) && (
+              <Flex isVertical>
+                <FlexItem>
+                  <Button
+                    isFull
+                    className={updateButtonClasses}
+                    onClick={handleUpdatePost}
+                  >
+                    Update
+                  </Button>
+                </FlexItem>
+                <FlexItem>
+                  <Button
+                    isFull
+                    className="gc-btn--danger tst-post-editor-delete"
+                    onClick={handleDeletePost}
+                  >
+                    Delete
+                  </Button>
+                </FlexItem>
+              </Flex>
+            )}
+          </FlexItem>
+        </Flex>
+      </PanelContent>
+    </Panel>
   );
 }
 
