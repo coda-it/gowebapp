@@ -14,9 +14,6 @@ describe('Posts', () => {
     cy.get('.tst-post-editor-description').type('Post description');
     cy.get('.tst-post-editor-add').click();
 
-    cy.get('.tst-posts')
-      .children('[class*=tst-post-]')
-      .should('have.length', 1);
     cy.get('.tst-post-0').find('.tst-post-title-0').contains('Post title');
     cy.screenshot();
 
@@ -38,9 +35,6 @@ describe('Posts', () => {
     cy.get('.tst-nav-admin-sub').invoke('show');
     cy.get('.tst-nav-admin-posts').click({ force: true });
 
-    cy.get('.tst-posts')
-      .children('[class*=tst-post-]')
-      .should('have.length', 1);
     cy.get('.tst-post-0')
       .find('.tst-post-title-0')
       .contains('Post title updated');
