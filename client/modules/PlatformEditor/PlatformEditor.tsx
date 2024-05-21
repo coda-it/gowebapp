@@ -14,26 +14,32 @@ import * as types from './types';
 
 function PlatformEditor(props: types.Props) {
   const { config, load, onUpdate, onAdd } = props;
-  const { id, landingModule, staticPage } = config ?? {};
+  const { id, landingModule, staticPage, language } = config ?? {};
   const [landingPageInput, setLandingPageInput] = useState(landingModule);
   const [staticPageInput, setStaticPageInput] = useState(staticPage);
+  const [languageInput, setLanguageInput] = useState(language);
 
   useEffect(() => {
     load();
   }, [load]);
 
-  const handleLangingPageInputChange = useCallback(
+  const handleLandingPageInputChange = useCallback(
     (event) => {
       setLandingPageInput(event.target.value);
     },
     [setLandingPageInput]
   );
-
   const handleStaticPageInputChange = useCallback(
     (event) => {
       setStaticPageInput(event.target.value);
     },
     [setStaticPageInput]
+  );
+  const handleLanguageInputChange = useCallback(
+    (event) => {
+      setLanguageInput(event.target.value);
+    },
+    [setLanguageInput]
   );
 
   return (
@@ -64,7 +70,7 @@ function PlatformEditor(props: types.Props) {
                       id="landing-page"
                       className="gc-input__field tst-landing-page-title"
                       defaultValue={id ? landingModule : ''}
-                      onChange={handleLangingPageInputChange}
+                      onChange={handleLandingPageInputChange}
                     />
                   </div>
                 </PanelContent>
@@ -96,6 +102,33 @@ function PlatformEditor(props: types.Props) {
               </Panel>
             </Card>
           </FlexItem>
+          <FlexItem className="gm-spacing-bl">
+            <Card>
+              <Panel>
+                <PanelTitle>Language</PanelTitle>
+                <PanelContent>
+                  <p>
+                    This language will be used as a default for this
+                    application.
+                  </p>
+                  <Separator />
+                  <div className="gc-input gc-input--full">
+                    {/* eslint-disable jsx-a11y/label-has-associated-control */}
+                    <label htmlFor="language" className="gc-input__label">
+                      Language
+                    </label>
+                    {/* eslint-enable jsx-a11y/label-has-associated-control */}
+                    <input
+                      id="language"
+                      className="gc-input__field tst-language"
+                      defaultValue={id ? language : ''}
+                      onChange={handleLanguageInputChange}
+                    />
+                  </div>
+                </PanelContent>
+              </Panel>
+            </Card>
+          </FlexItem>
           <FlexItem>
             {id ? (
               <Button
@@ -106,6 +139,7 @@ function PlatformEditor(props: types.Props) {
                     id,
                     landingModule: landingPageInput,
                     staticPage: staticPageInput,
+                    language: languageInput,
                   })
                 }
               >
@@ -119,6 +153,7 @@ function PlatformEditor(props: types.Props) {
                   onAdd({
                     landingModule: landingPageInput,
                     staticPage: staticPageInput,
+                    language: languageInput,
                   })
                 }
               >

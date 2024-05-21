@@ -1,7 +1,8 @@
 export type PlatformConfig = {
   id?: string;
-  landingModule: string;
-  staticPage: string;
+  landingModule?: string;
+  staticPage?: string;
+  language?: string;
 };
 
 export type State = {

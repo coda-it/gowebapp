@@ -54,6 +54,7 @@ func (c *Controller) HandleErrorResponse(w http.ResponseWriter, msg string) {
 }
 
 func (c *Controller) buildViewModel(
+	w http.ResponseWriter,
 	r *http.Request,
 	name string,
 	sm session.ISessionManager,
@@ -66,8 +67,16 @@ func (c *Controller) buildViewModel(
 	}
 
 	application := c.platformUsecases.GetApplicationByDomain(c.Config, r)
-
 	platformConfig, err := c.platformUsecases.Fetch(application.ID)
+
+	if platformConfig.Language != "" {
+		langCookie := &http.Cookie{
+			Name:     "language",
+			Value:    platformConfig.Language,
+			HttpOnly: false,
+		}
+		http.SetCookie(w, langCookie)
+	}
 
 	if err != nil {
 		platformConfig = platformModel.Config{
@@ -120,6 +129,7 @@ func (c *Controller) RenderTemplate(
 	moduleID string,
 ) {
 	templateModel := c.buildViewModel(
+		w,
 		r,
 		name,
 		sm,
@@ -168,6 +178,7 @@ func (c *Controller) RenderStaticTemplate(
 	params map[string]interface{},
 ) {
 	templateModel := c.buildViewModel(
+		w,
 		r,
 		name,
 		sm,
