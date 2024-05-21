@@ -69,19 +69,19 @@ func (c *Controller) buildViewModel(
 	application := c.platformUsecases.GetApplicationByDomain(c.Config, r)
 	platformConfig, err := c.platformUsecases.Fetch(application.ID)
 
-	if platformConfig.Language != "" {
-		langCookie := &http.Cookie{
-			Name:     "language",
-			Value:    platformConfig.Language,
-			HttpOnly: false,
-		}
-		http.SetCookie(w, langCookie)
-	}
-
 	if err != nil {
 		platformConfig = platformModel.Config{
 			LandingModule: constants.DefaultLandingPage,
 		}
+	}
+
+	if platformConfig.Language != "" {
+		langCookie := &http.Cookie{
+			Name:     constants.CookieLanguage,
+			Value:    platformConfig.Language,
+			HttpOnly: false,
+		}
+		http.SetCookie(w, langCookie)
 	}
 
 	extendedConfig := struct {
@@ -96,7 +96,7 @@ func (c *Controller) buildViewModel(
 
 	userLanguage := c.Config.DefaultLanguage
 
-	languageCookie, err := r.Cookie("language")
+	languageCookie, err := r.Cookie(constants.CookieLanguage)
 
 	if err == nil {
 		userLanguage = languageCookie.Value
