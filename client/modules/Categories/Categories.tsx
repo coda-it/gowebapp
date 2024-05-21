@@ -11,6 +11,7 @@ import {
   FlexItem,
   Card,
 } from 'graphen';
+import * as utils from 'client/utils/translations';
 import * as types from './types';
 
 function Categories(
@@ -24,7 +25,9 @@ function Categories(
 
   return (
     <Panel>
-      <PanelTitle>Categories</PanelTitle>
+      <PanelTitle>
+        {utils.getLocalization('Categories_Header') ?? 'Categories'}
+      </PanelTitle>
       <PanelContent>
         <Panel>
           <Flex wrap="wrap">

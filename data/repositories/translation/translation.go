@@ -8,15 +8,14 @@ import (
 )
 
 // Repository - translations repository
-type Repository struct {
-}
+type Repository struct{}
 
 // New - translations factory
 func New() *Repository {
 	return &Repository{}
 }
 
-// FetchTranslation - fetch translactions for one language
+// FetchTranslation - fetch translations for one language
 func (tr *Repository) FetchTranslation(lang string) map[string]string {
 	var translations map[string]string
 
