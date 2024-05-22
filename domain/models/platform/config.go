@@ -10,4 +10,5 @@ type Config struct {
 	AppID         string             `json:"appId" bson:"appId"`
 	LandingModule string             `json:"landingModule" bson:"landingModule"`
 	StaticPage    string             `json:"staticPage" bson:"staticPage"`
+	Language      string             `json:"language" bson:"language"`
 }

@@ -11,6 +11,7 @@ import {
   FlexItem,
   Card,
 } from 'graphen';
+import * as utils from 'client/utils/translations';
 import * as types from './types';
 
 function Posts(
@@ -27,9 +28,13 @@ function Posts(
     loadCategories();
   }, [loadPosts, loadCategories]);
 
+  const sectionTitle = utils.getLocalization('Posts_Header') ?? 'Category: ';
+
   return (
     <Panel>
-      <PanelTitle>{`Category: ${category ? category.name : 'All'}`}</PanelTitle>
+      <PanelTitle>{`${sectionTitle} ${
+        category ? category.name : 'All'
+      }`}</PanelTitle>
       <PanelContent className="gc-flex gc-flex--wrap tst-posts">
         <Flex wrap="wrap">
           {posts.map(({ id, title, image }, key) => {

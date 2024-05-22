@@ -5,4 +5,6 @@ const (
 	DefaultAppID = "default"
 	// AppName - application name
 	AppName = "WEBAPP"
+	// CookieLanguage - cookie key for selected language
+	CookieLanguage = "language"
 )

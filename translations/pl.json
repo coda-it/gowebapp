@@ -1,3 +1,17 @@
 {
-  "HelloWorld": "Witaj Świecie"
+  "HelloWorld": "Witaj Świecie",
+  "Navigation_post": "Posty",
+  "Navigation_category": "Kategorie",
+  "Navigation_helpdesk": "Helpdesk",
+  "Navigation_admin": "Admin",
+  "Navigation_admin-categories": "Kategorie",
+  "Navigation_admin-add-category": "Dodaj kategorię",
+  "Navigation_admin-posts": "Posty",
+  "Navigation_admin-add-post": "Dodaj post",
+  "Navigation_admin-landing-page": "Platforma",
+  "Navigation_admin-helpdesk": "Helpdesk",
+  "Navigation_account": "Konto",
+  "Navigation_login": "Logowanie",
+  "Categories_Header": "Kategorie",
+  "Posts_Header": "Kategoria: "
 }

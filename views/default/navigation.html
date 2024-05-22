@@ -8,6 +8,7 @@
 {{end}}
 
 {{define "navigation"}}
+{{ $root := . }}
 <header class="gc-header gc-header--default">
     <a class="gc-header__logo" href="/">
         <span class="gc-logo">APP_</span>
@@ -18,19 +19,30 @@
             {{ $isRoot := .IsRoot }}
             {{ $isLogged := .IsLogged }}
             {{range $index, $element := .Navigation}}
+                {{ $elementId := $element.ID }}
                 {{if or (eq $element.IsRoot false) (and (eq $element.IsRoot true) (eq $isRoot true)) }}
                 {{if or (eq $element.IsLogged false) (and (eq $element.IsLogged true) (eq $isLogged true)) }}
                 <li {{if eq $template $element.ID}}class="gc-navigation__option gc-navigation__option--active"{{else}}class="gc-navigation__option"{{end}}
                         role="presentation">
                     <a class="gc-navigation__link gc-link gc-link--primary tst-nav-{{$element.ID}}" href="{{$element.Href}}">
-                        {{$element.Label}}
+                      {{ $translationValue := (index $root.Translations (printf "%s%s" "Navigation_" $element.ID)) }}
+                      {{ if ne $translationValue "" }}
+                        {{ $translationValue }}
+                      {{ else }}
+                        {{ $element.Label }}
+                      {{ end }}
                     </a>
                     {{if $element.Children}}
                         <div class="gc-navigation__suboption gc-submenu tst-nav-{{$element.ID}}-sub">
                             <div class="gc-submenu__content">
                                 {{range $subindex, $subelement := $element.Children}}
                                 <a class="gc-submenu__item gc-link gc-link--primary tst-nav-{{$subelement.ID}}" href="{{$subelement.Href}}">
-                                    {{$subelement.Label}}
+                                  {{ $translationValue := (index $root.Translations (printf "%s%s" "Navigation_" $subelement.ID)) }}
+                                  {{ if ne $translationValue "" }}
+                                    {{ $translationValue }}
+                                  {{ else }}
+                                    {{ $subelement.Label }}
+                                  {{ end }}
                                 </a>
                                 {{end}}
                             </div>
