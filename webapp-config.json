@@ -94,6 +94,7 @@
     ]
   }],
   "defaultLanguage": "en",
+  "languages": ["en", "pl"],
   "certificate": "",
   "certificatePrivateKey": ""
 }

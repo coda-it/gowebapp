@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { withRouter } from 'react-router';
 import {
   Button,
+  Dropdown,
   Panel,
   PanelTitle,
   PanelContent,
@@ -10,6 +11,7 @@ import {
   Card,
   Separator,
 } from 'graphen';
+import globalConfig from 'client/config';
 import * as types from './types';
 
 function PlatformEditor(props: types.Props) {
@@ -17,11 +19,17 @@ function PlatformEditor(props: types.Props) {
   const { id, landingModule, staticPage, language } = config ?? {};
   const [landingPageInput, setLandingPageInput] = useState(landingModule);
   const [staticPageInput, setStaticPageInput] = useState(staticPage);
-  const [languageInput, setLanguageInput] = useState(language);
+  const [languageInput, setLanguageInput] = useState(
+    language ?? globalConfig.defaultLanguage
+  );
 
   useEffect(() => {
     load();
   }, [load]);
+
+  useEffect(() => {
+    setLanguageInput(language ?? globalConfig.defaultLanguage);
+  }, [language, setLanguageInput]);
 
   const handleLandingPageInputChange = useCallback(
     (event) => {
@@ -36,8 +44,8 @@ function PlatformEditor(props: types.Props) {
     [setStaticPageInput]
   );
   const handleLanguageInputChange = useCallback(
-    (event) => {
-      setLanguageInput(event.target.value);
+    (value) => {
+      setLanguageInput(value);
     },
     [setLanguageInput]
   );
@@ -102,33 +110,33 @@ function PlatformEditor(props: types.Props) {
               </Panel>
             </Card>
           </FlexItem>
-          <FlexItem className="gm-spacing-bl">
-            <Card>
-              <Panel>
-                <PanelTitle>Language</PanelTitle>
-                <PanelContent>
-                  <p>
-                    This language will be used as a default for this
-                    application.
-                  </p>
-                  <Separator />
-                  <div className="gc-input gc-input--full">
-                    {/* eslint-disable jsx-a11y/label-has-associated-control */}
-                    <label htmlFor="language" className="gc-input__label">
-                      Language
-                    </label>
-                    {/* eslint-enable jsx-a11y/label-has-associated-control */}
-                    <input
-                      id="language"
-                      className="gc-input__field tst-language"
-                      defaultValue={id ? language : ''}
+          {globalConfig.languages.length > 1 && (
+            <FlexItem className="gm-spacing-bl">
+              <Card>
+                <Panel>
+                  <PanelTitle>Language</PanelTitle>
+                  <PanelContent>
+                    <p>
+                      This language will be used as a default for this
+                      application.
+                    </p>
+                    <Separator />
+                    <Dropdown
+                      initValue={{
+                        label: languageInput,
+                        value: languageInput,
+                      }}
+                      items={globalConfig.languages.map((lang) => ({
+                        label: lang,
+                        value: lang,
+                      }))}
                       onChange={handleLanguageInputChange}
                     />
-                  </div>
-                </PanelContent>
-              </Panel>
-            </Card>
-          </FlexItem>
+                  </PanelContent>
+                </Panel>
+              </Card>
+            </FlexItem>
+          )}
           <FlexItem>
             {id ? (
               <Button
