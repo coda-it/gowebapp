@@ -17,3 +17,4 @@ services:
       - ${WEBAPP_STORAGE_HOME}/site/wwwroot/config:/root/volume
       - ${WEBAPP_STORAGE_HOME}/site/wwwroot/public:/root/go/src/github.com/coda-it/gowebapp/public
       - ${WEBAPP_STORAGE_HOME}/site/wwwroot/views:/root/go/src/github.com/coda-it/gowebapp/views
+      - ${WEBAPP_STORAGE_HOME}/site/wwwroot/translations:/root/go/src/github.com/coda-it/gowebapp/translations
