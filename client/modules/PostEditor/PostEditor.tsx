@@ -12,6 +12,7 @@ import {
   PanelContent,
   PanelTitle,
 } from 'graphen';
+import * as utils from 'client/utils/translations';
 import Previewer from 'client/components/Previewer';
 import * as types from './types';
 
@@ -197,7 +198,7 @@ function PostEditor(props: types.Props) {
             <textarea
               value={description}
               onChange={handleDescriptionChange}
-              className="gc-textarea  tst-post-editor-description"
+              className="gc-textarea tst-post-editor-description"
             />
           </FlexItem>
           <FlexItem>
@@ -207,7 +208,7 @@ function PostEditor(props: types.Props) {
                 className="gc-btn--primary tst-post-editor-add"
                 onClick={handleAddPost}
               >
-                Add
+                {utils.getLocalization('AddButton') ?? 'Add'}
               </Button>
             )}
             {!_.isEmpty(post) && (
@@ -218,7 +219,7 @@ function PostEditor(props: types.Props) {
                     className={updateButtonClasses}
                     onClick={handleUpdatePost}
                   >
-                    Update
+                    {utils.getLocalization('UpdateButton') ?? 'Update'}
                   </Button>
                 </FlexItem>
                 <FlexItem>
@@ -227,7 +228,7 @@ function PostEditor(props: types.Props) {
                     className="gc-btn--danger tst-post-editor-delete"
                     onClick={handleDeletePost}
                   >
-                    Delete
+                    {utils.getLocalization('DeleteButton') ?? 'Delete'}
                   </Button>
                 </FlexItem>
               </Flex>

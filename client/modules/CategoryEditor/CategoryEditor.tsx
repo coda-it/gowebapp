@@ -12,6 +12,7 @@ import {
 } from 'graphen';
 import Previewer from 'client/components/Previewer';
 import * as types from './types';
+import * as utils from '../../utils/translations';
 
 function CategoryEditor(props: types.Props) {
   const { onAdd, onUpdate, category, loadCategories, onDelete } = props;
@@ -129,7 +130,7 @@ function CategoryEditor(props: types.Props) {
                   className="gc-btn--primary tst-category-editor-add"
                   onClick={handleAddCategory}
                 >
-                  Add
+                  {utils.getLocalization('AddButton') ?? 'Add'}
                 </Button>
               )}
               {!_.isEmpty(category) && (
@@ -140,7 +141,7 @@ function CategoryEditor(props: types.Props) {
                       className={updateButtonClasses}
                       onClick={handleUpdateCategory}
                     >
-                      Update
+                      {utils.getLocalization('UpdateButton') ?? 'Update'}
                     </Button>
                   </FlexItem>
                   <FlexItem>
@@ -149,7 +150,7 @@ function CategoryEditor(props: types.Props) {
                       className="gc-btn--danger tst-category-editor-delete"
                       onClick={handleDeleteCategory}
                     >
-                      Delete
+                      {utils.getLocalization('DeleteButton') ?? 'Delete'}
                     </Button>
                   </FlexItem>
                 </Flex>

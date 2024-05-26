@@ -9,6 +9,7 @@ import {
   FlexItem,
   PanelFooter,
 } from 'graphen';
+import * as utils from 'client/utils/translations';
 import type * as types from './types';
 
 function Helpdesk(props: types.Props) {
@@ -46,7 +47,7 @@ function Helpdesk(props: types.Props) {
             <div className="gc-input gc-input--full">
               {/* eslint-disable jsx-a11y/label-has-associated-control */}
               <label htmlFor="ticket-title" className="gc-input__label">
-                Title
+                {utils.getLocalization('Helpdesk_Title') ?? 'Title'}
               </label>
               {/* eslint-enable jsx-a11y/label-has-associated-control */}
               {ticket ? (
@@ -64,7 +65,7 @@ function Helpdesk(props: types.Props) {
           <FlexItem>
             {/* eslint-disable jsx-a11y/label-has-associated-control */}
             <label htmlFor="post-description" className="gc-input__label">
-              Description
+              {utils.getLocalization('Helpdesk_Description') ?? 'Description'}
             </label>
             {/* eslint-enable jsx-a11y/label-has-associated-control */}
             {ticket ? (
@@ -89,7 +90,7 @@ function Helpdesk(props: types.Props) {
               createTicket(title, description);
             }}
           >
-            Create ticket
+            {utils.getLocalization('AddButton') ?? 'Add'}
           </Button>
         )}
       </PanelFooter>

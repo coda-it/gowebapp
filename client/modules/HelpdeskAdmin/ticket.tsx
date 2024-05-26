@@ -13,6 +13,7 @@ import {
   Card,
 } from 'graphen';
 import * as actions from 'client/models/helpdesk/actions';
+import * as utils from 'client/utils/translations';
 import * as constants from 'client/models/helpdesk/constants';
 import type * as types from 'client/models/helpdesk/types';
 
@@ -64,7 +65,7 @@ function TicketCard({ ticket }: Props) {
                     className="gc-btn gc-btn--primary"
                     onClick={handleUpdateTicket}
                   >
-                    Update
+                    {utils.getLocalization('UpdateButton') ?? 'Update'}
                   </button>
                 </div>
                 <div className="gm-spacing-rl">
@@ -73,7 +74,7 @@ function TicketCard({ ticket }: Props) {
                     className="gc-btn gc-btn--danger"
                     onClick={handleRemoveTicket}
                   >
-                    Remove
+                    {utils.getLocalization('DeleteButton') ?? 'Remove'}
                   </button>
                 </div>
                 <div>
@@ -97,11 +98,16 @@ function TicketCard({ ticket }: Props) {
       {ticketRemove && (
         <Dialog>
           <Panel>
-            <PanelTitle>Delete ticket</PanelTitle>
+            <PanelTitle>
+              {utils.getLocalization('Helpdesk_TicketRemoveDialogTitle') ??
+                'Delete ticket'}
+            </PanelTitle>
             <PanelContent>
               <p>
-                Are you sure you want to delete ticket #{ticketRemove.shortHash}
-                ?
+                {utils.getLocalization(
+                  'Helpdesk_TicketRemoveDialogDescription'
+                ) ?? 'Are you sure you want to delete ticket'}
+                #{ticketRemove.shortHash}?
               </p>
             </PanelContent>
             <PanelFooter>
@@ -111,7 +117,7 @@ function TicketCard({ ticket }: Props) {
                     onClick={handleCancelRemoveTicket}
                     className="gc-btn--secondary"
                   >
-                    Cancel
+                    {utils.getLocalization('CancelButton') ?? 'Cancel'}
                   </Button>
                 </div>
                 <div>
@@ -119,7 +125,7 @@ function TicketCard({ ticket }: Props) {
                     onClick={handleConfirmRemoveTicket}
                     className="gc-btn--danger"
                   >
-                    Delete
+                    {utils.getLocalization('DeleteButton') ?? 'Delete'}
                   </Button>
                 </div>
               </Flex>
