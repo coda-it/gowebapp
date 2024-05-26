@@ -14,6 +14,7 @@ import {
   Separator,
 } from 'graphen';
 import * as userActions from 'client/models/users/actions';
+import * as utils from 'client/utils/translations';
 
 function Account() {
   const dispatch = useDispatch();
@@ -34,16 +35,22 @@ function Account() {
 
   return (
     <Panel className="gm-spacing-bl">
-      <PanelTitle>Account</PanelTitle>
+      <PanelTitle>
+        {utils.getLocalization('Account_Header') ?? 'Account'}
+      </PanelTitle>
       <PanelContent>
         <Flex isVertical>
           <FlexItem>
             <Card isGradient>
               <Panel>
-                <PanelTitle>Delete account</PanelTitle>
+                <PanelTitle>
+                  {utils.getLocalization('Account_RemoveAccountHeader') ??
+                    'Delete account'}
+                </PanelTitle>
                 <PanelContent>
-                  In order to delete your account, press the below button and
-                  confirm the action.
+                  {utils.getLocalization('Account_RemoveAccountDescription') ??
+                    'In order to delete your account, press the below button and\n' +
+                      '                  confirm the action.'}
                 </PanelContent>
                 <PanelFooter>
                   <Separator />
@@ -51,7 +58,8 @@ function Account() {
                     className="gc-btn--danger"
                     onClick={handleDeleteAccountClick}
                   >
-                    Delete account
+                    {utils.getLocalization('Account_RemoveAccountButton') ??
+                      'Delete account'}
                   </Button>
                 </PanelFooter>
               </Panel>
@@ -63,9 +71,16 @@ function Account() {
       {isDialogShown && (
         <Dialog>
           <article className="gc-panel">
-            <header className="gc-panel__title">Delete account</header>
+            <header className="gc-panel__title">
+              {utils.getLocalization('Account_RemoveAccountHeader') ??
+                'Delete account'}
+            </header>
             <div className="gc-panel__content">
-              <p>Are you sure you want to delete your account?</p>
+              <p>
+                {utils.getLocalization(
+                  'Account_RemoveAccountDialogDescription'
+                ) ?? 'Are you sure you want to delete your account?'}
+              </p>
             </div>
             <div className="gc-panel__footer">
               <div className="gc-flex">
@@ -74,7 +89,7 @@ function Account() {
                     onClick={handleCancelClick}
                     className="gc-btn--secondary"
                   >
-                    Cancel
+                    {utils.getLocalization('CancelButton') ?? 'Cancel'}
                   </Button>
                 </div>
                 <div>
@@ -82,7 +97,7 @@ function Account() {
                     onClick={handleConfirmDelete}
                     className="gc-btn--danger"
                   >
-                    Delete
+                    {utils.getLocalization('DeleteButton') ?? 'Delete'}
                   </Button>
                 </div>
               </div>
