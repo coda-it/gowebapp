@@ -100,6 +100,8 @@ func (c *Controller) buildViewModel(
 
 	if err == nil {
 		userLanguage = languageCookie.Value
+	} else if platformConfig.Language != "" {
+		userLanguage = platformConfig.Language
 	}
 
 	translations := c.translationUsecases.Fetch(userLanguage)
