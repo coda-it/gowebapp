@@ -16,6 +16,7 @@ import (
 	"github.com/coda-it/gowebapp/controllers/api/platform"
 	postApiController "github.com/coda-it/gowebapp/controllers/api/post"
 	"github.com/coda-it/gowebapp/controllers/api/reset"
+	translationsApiController "github.com/coda-it/gowebapp/controllers/api/translations"
 	"github.com/coda-it/gowebapp/controllers/api/user"
 	"github.com/coda-it/gowebapp/controllers/base"
 	categoriesController "github.com/coda-it/gowebapp/controllers/categories"
@@ -30,6 +31,7 @@ import (
 	"github.com/coda-it/gowebapp/data/config"
 	"github.com/coda-it/gowebapp/data/persistence"
 	categoryRepository "github.com/coda-it/gowebapp/data/repositories/category"
+	dynamictranslationRepository "github.com/coda-it/gowebapp/data/repositories/dynamictranslation"
 	helpdeskRepository "github.com/coda-it/gowebapp/data/repositories/helpdesk"
 	platformRepository "github.com/coda-it/gowebapp/data/repositories/platform"
 	postRepository "github.com/coda-it/gowebapp/data/repositories/post"
@@ -76,7 +78,8 @@ func main() {
 	platformRepositoryEntity := platformRepository.New(store)
 	platformUsecasesEntity := platformUsecases.New(platformRepositoryEntity)
 	translationRepositoryEntity := translationRepository.New()
-	translationUsecasesEntity := translationUsecases.New(translationRepositoryEntity)
+	dynamicTranslationRepositoryEntity := dynamictranslationRepository.New(store)
+	translationUsecasesEntity := translationUsecases.New(translationRepositoryEntity, dynamicTranslationRepositoryEntity)
 	categoryRepositoryEntity := categoryRepository.New(store)
 	categoryUsecasesEntity := categoryUsecases.New(&categoryRepositoryEntity)
 	postRepositoryEntity := postRepository.New(store)
@@ -234,6 +237,20 @@ func main() {
 		},
 	}
 
+	translationsApiCtl := translationsApiController.New(baseController, "api-translations", *translationUsecasesEntity, *platformUsecasesEntity)
+	translationsApiModule := module.Module{
+		ID:      "translations",
+		Enabled: true,
+		Routes: []route.Route{
+			{
+				Path:      "/api/translations",
+				Method:    "POST",
+				Handler:   translationsApiCtl.CtrTranslationsPost,
+				Protected: true,
+			},
+		},
+	}
+
 	staticCtl := staticController.New(baseController, constants.StaticModule, platformUsecasesEntity)
 	staticModule := module.Module{
 		ID:      "static-page",
@@ -377,6 +394,12 @@ func main() {
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
+			{
+				Path:      "/admin/translations",
+				Method:    "ALL",
+				Handler:   adminCtl.CtrAdmin,
+				Protected: true,
+			},
 		},
 	}
 
@@ -515,6 +538,7 @@ func main() {
 		platformModule,
 		helpdeskApiModule,
 		accountModule,
+		translationsApiModule,
 	}
 
 	appInstance := goappframe.New(goappframe.Internals{

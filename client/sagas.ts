@@ -11,6 +11,8 @@ import * as platformSagas from './models/platform/sagas';
 import * as platformActionTypes from './models/platform/actionTypes';
 import * as helpdeskSagas from './models/helpdesk/sagas';
 import * as helpdeskActionTypes from './models/helpdesk/actionTypes';
+import * as translationsSagas from './models/translations/sagas';
+import * as translationActionTypes from './models/translations/actionTypes';
 
 function* root() {
   yield all([
@@ -57,6 +59,10 @@ function* root() {
     ),
     takeEvery(helpdeskActionTypes.DELETE_TICKET, helpdeskSagas.onDeleteTicket),
     takeEvery(helpdeskActionTypes.UPDATE_TICKET, helpdeskSagas.onUpdateTicket),
+    takeEvery(
+      translationActionTypes.ADD_TRANSLATION,
+      translationsSagas.onAddTranslation
+    ),
   ]);
 }
 

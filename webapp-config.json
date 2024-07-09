@@ -81,6 +81,11 @@
             "id": "admin-helpdesk",
             "label": "Helpdesk",
             "href": "/admin/helpdesk"
+          },
+          {
+            "id": "admin-translations",
+            "label": "Translations",
+            "href": "/admin/translations"
           }
         ]
       },
