@@ -17,7 +17,7 @@ function callAddTranslation(key, value, language) {
 
   return fetch(request)
     .then((response) => response.json())
-    .catch(() => 'Adding post failed');
+    .catch(() => 'Adding translation failed');
 }
 
 export function* onAddTranslation({
@@ -29,7 +29,10 @@ export function* onAddTranslation({
 
   if (typeof response === 'string') {
     put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
+    return;
   }
+
+  yield put(actions.fetchTranslations());
 }
 
 export function callFetchTranslations() {
@@ -39,7 +42,7 @@ export function callFetchTranslations() {
 
   return fetch(request)
     .then((response) => response.json())
-    .catch(() => 'Fetch posts failed');
+    .catch(() => 'Fetch translations failed');
 }
 
 export function* onFetchTranslations(): Iterable<any> {
@@ -72,7 +75,7 @@ function callUpdateTranslation(
 
   return fetch(request)
     .then((response) => response.json())
-    .catch(() => 'Updating post failed');
+    .catch(() => 'Updating translation failed');
 }
 
 export function* onUpdateTranslation({

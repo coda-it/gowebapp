@@ -39,6 +39,10 @@ function Translations() {
         translationLanguage
       )
     );
+
+    setTranslationKey('');
+    setTranslationValue('');
+    setTranslationLanguage(globalConfig.defaultLanguage);
   }, [dispatch, translationKey, translationValue, translationLanguage]);
   const handleLanguageChange = useCallback(
     (value) => {
@@ -72,11 +76,6 @@ function Translations() {
             <Flex>
               <FlexItem className="gm-spacing-rl">
                 <div className="gc-input gc-input--full">
-                  {/* eslint-disable jsx-a11y/label-has-associated-control */}
-                  <label htmlFor="key" className="gc-input__label">
-                    Key
-                  </label>
-                  {/* eslint-enable jsx-a11y/label-has-associated-control */}
                   <input
                     id="key"
                     value={translationKey}
@@ -89,11 +88,6 @@ function Translations() {
               </FlexItem>
               <FlexItem className="gm-spacing-rl">
                 <div className="gc-input gc-input--full">
-                  {/* eslint-disable jsx-a11y/label-has-associated-control */}
-                  <label htmlFor="value" className="gc-input__label">
-                    Value
-                  </label>
-                  {/* eslint-enable jsx-a11y/label-has-associated-control */}
                   <input
                     id="value"
                     value={translationValue}
@@ -106,7 +100,6 @@ function Translations() {
               </FlexItem>
               <FlexItem>
                 <Dropdown
-                  label="Language"
                   initValue={{
                     label: translationLanguage,
                     value: translationLanguage,

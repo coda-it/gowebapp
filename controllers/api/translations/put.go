@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-// CtrTranslationPut - update post
+// CtrTranslationPut - update translation
 func (c *Controller) CtrTranslationPut(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	requestBody, err := ioutil.ReadAll(r.Body)
 

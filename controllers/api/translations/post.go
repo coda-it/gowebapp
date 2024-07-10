@@ -33,6 +33,27 @@ func (c *Controller) CtrTranslationsPost(w http.ResponseWriter, r *http.Request,
 	err = c.TranslationsUsecases.AddDynamicTranslation(newTranslation)
 
 	if err != nil {
-		c.HandleErrorResponse(w, "error adding new post")
+		c.HandleErrorResponse(w, "error adding new translation")
 	}
+
+	var data map[string]interface{}
+	data = map[string]interface{}{
+		"translation": struct{}{},
+	}
+
+	if err == nil {
+		data = map[string]interface{}{
+			"translation": newTranslation,
+		}
+	}
+
+	links := map[string]map[string]string{
+		"self": map[string]string{
+			"href": href,
+		},
+	}
+
+	embedded := map[string]interface{}{}
+
+	c.HandleJSONResponse(w, data, embedded, links, http.StatusOK)
 }

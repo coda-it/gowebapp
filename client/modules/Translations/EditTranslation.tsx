@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Button, Flex, FlexItem, Dropdown } from 'graphen';
 import globalConfig from 'client/config';
 import * as actions from 'client/models/translations/actions';
+import * as utils from 'client/utils/translations';
 
 type Props = {
   id: string;
@@ -38,11 +39,6 @@ export default function EditTranslation({
     <Flex>
       <FlexItem className="gm-spacing-rl">
         <div className="gc-input gc-input--full">
-          {/* eslint-disable jsx-a11y/label-has-associated-control */}
-          <label htmlFor="key" className="gc-input__label">
-            Key
-          </label>
-          {/* eslint-enable jsx-a11y/label-has-associated-control */}
           <input
             id="key"
             value={translationKey}
@@ -55,11 +51,6 @@ export default function EditTranslation({
       </FlexItem>
       <FlexItem className="gm-spacing-rl">
         <div className="gc-input gc-input--full">
-          {/* eslint-disable jsx-a11y/label-has-associated-control */}
-          <label htmlFor="value" className="gc-input__label">
-            Value
-          </label>
-          {/* eslint-enable jsx-a11y/label-has-associated-control */}
           <input
             id="value"
             value={translationValue}
@@ -70,9 +61,8 @@ export default function EditTranslation({
           />
         </div>
       </FlexItem>
-      <FlexItem>
+      <FlexItem className="gm-spacing-rl">
         <Dropdown
-          label="Language"
           initValue={{
             label: translationLanguage,
             value: translationLanguage,
@@ -88,7 +78,7 @@ export default function EditTranslation({
       </FlexItem>
       <FlexItem>
         <Button className="gc-btn--primary" onClick={handleUpdate}>
-          Update
+          {utils.getLocalization('UpdateButton') ?? 'Update'}
         </Button>
       </FlexItem>
     </Flex>
