@@ -6,6 +6,7 @@ import categories from 'client/models/categories/reducers';
 import users from 'client/models/users/reducers';
 import platform from 'client/models/platform/reducers';
 import helpdesk from 'client/models/helpdesk/reducers';
+import translations from 'client/models/translations/reducers';
 
 export default combineReducers({
   application,
@@ -15,4 +16,5 @@ export default combineReducers({
   categories,
   platform,
   helpdesk,
+  translations,
 });

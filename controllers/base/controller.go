@@ -15,6 +15,7 @@ import (
 	"github.com/coda-it/gowebserver/helpers"
 	"github.com/coda-it/gowebserver/session"
 	"html/template"
+	"maps"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -105,6 +106,9 @@ func (c *Controller) buildViewModel(
 	}
 
 	translations := c.translationUsecases.Fetch(userLanguage)
+	dynamicTranslations, _ := c.translationUsecases.GetDynamicTranslationsAsMap(application.ID, userLanguage)
+	maps.Copy(translations, dynamicTranslations)
+
 	translationsJSON, _ := json.Marshal(translations)
 
 	return page.Page{
