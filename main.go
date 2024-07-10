@@ -248,6 +248,18 @@ func main() {
 				Handler:   translationsApiCtl.CtrTranslationsPost,
 				Protected: true,
 			},
+			{
+				Path:      "/api/translations",
+				Method:    "GET",
+				Handler:   translationsApiCtl.CtrTranslationsGet,
+				Protected: true,
+			},
+			{
+				Path:      "/api/translations",
+				Method:    "PUT",
+				Handler:   translationsApiCtl.CtrTranslationPut,
+				Protected: true,
+			},
 		},
 	}
 

@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 import type * as types from './types';
-/* eslint-disable import/prefer-default-export */
+
 export const addTranslation = (
   key: string,
   value: string,
@@ -11,4 +11,27 @@ export const addTranslation = (
   value,
   language,
 });
-/* eslint-enable import/prefer-default-export */
+
+export const fetchTranslations = (): types.GetTranslationsAction => ({
+  type: actionTypes.FETCH_TRANSLATIONS,
+});
+
+export const fetchTranslationsSuccess = (
+  translations: ReadonlyArray<types.Translation>
+): types.GetTranslationsSuccessAction => ({
+  type: actionTypes.FETCH_TRANSLATIONS_SUCCESS,
+  translations,
+});
+
+export const updateTranslation = (
+  id: string,
+  key: string,
+  value: string,
+  language: string
+): types.UpdateTranslationAction => ({
+  type: actionTypes.UPDATE_TRANSLATION,
+  id,
+  key,
+  value,
+  language,
+});

@@ -3,6 +3,7 @@ import * as alertActions from 'client/models/alerts/actions';
 import * as alertConstants from 'client/models/alerts/constants';
 import * as constants from './constants';
 import type * as types from './types';
+import * as actions from './actions';
 
 function callAddTranslation(key, value, language) {
   const request = new Request(constants.TRANSLATION_ENDPOINT, {
@@ -19,7 +20,6 @@ function callAddTranslation(key, value, language) {
     .catch(() => 'Adding post failed');
 }
 
-/* eslint-disable import/prefer-default-export */
 export function* onAddTranslation({
   key,
   value,
@@ -31,4 +31,62 @@ export function* onAddTranslation({
     put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
   }
 }
-/* eslint-enable import/prefer-default-export */
+
+export function callFetchTranslations() {
+  const request = new Request(constants.TRANSLATION_ENDPOINT, {
+    method: 'GET',
+  });
+
+  return fetch(request)
+    .then((response) => response.json())
+    .catch(() => 'Fetch posts failed');
+}
+
+export function* onFetchTranslations(): Iterable<any> {
+  const response: types.ApiResponse = yield call(callFetchTranslations);
+
+  if (typeof response === 'string') {
+    yield put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
+    return;
+  }
+
+  const translations = response?._embedded?.translations || [];
+  yield put(actions.fetchTranslationsSuccess(translations));
+}
+
+function callUpdateTranslation(
+  id: string,
+  key: string,
+  value: string,
+  language: string
+) {
+  const request = new Request(constants.TRANSLATION_ENDPOINT, {
+    method: 'PUT',
+    body: JSON.stringify({
+      id,
+      key,
+      value,
+      language,
+    }),
+  });
+
+  return fetch(request)
+    .then((response) => response.json())
+    .catch(() => 'Updating post failed');
+}
+
+export function* onUpdateTranslation({
+  id,
+  key,
+  value,
+  language,
+}: types.UpdateTranslationAction): Iterable<any> {
+  const response = yield call(callUpdateTranslation, id, key, value, language);
+
+  if (typeof response === 'string') {
+    yield put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
+    return;
+  }
+
+  yield put(actions.fetchTranslations());
+}

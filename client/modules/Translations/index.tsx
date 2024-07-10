@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useCallback, useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 import {
   Button,
@@ -9,19 +9,43 @@ import {
   Flex,
   FlexItem,
   PanelFooter,
+  Dropdown,
 } from 'graphen';
+import globalConfig from 'client/config';
 import * as utils from 'client/utils/translations';
 import * as actions from 'client/models/translations/actions';
+import * as selectors from 'client/models/translations/selectors';
+import EditTranslation from './EditTranslation';
 
 function Translations() {
   const dispatch = useDispatch();
-  const [key, setKey] = useState('');
-  const [value, setValue] = useState('');
-  const [language, setLanguage] = useState('');
+  const [translationKey, setTranslationKey] = useState('');
+  const [translationValue, setTranslationValue] = useState('');
+  const [translationLanguage, setTranslationLanguage] = useState(
+    globalConfig.defaultLanguage
+  );
+
+  const translations = useSelector(selectors.getTranslations);
+
+  useEffect(() => {
+    dispatch(actions.fetchTranslations());
+  }, [dispatch]);
 
   const handleAddTranslation = useCallback(() => {
-    dispatch(actions.addTranslation(key, value, language));
-  }, [dispatch, key, value, language]);
+    dispatch(
+      actions.addTranslation(
+        translationKey,
+        translationValue,
+        translationLanguage
+      )
+    );
+  }, [dispatch, translationKey, translationValue, translationLanguage]);
+  const handleLanguageChange = useCallback(
+    (value) => {
+      setTranslationLanguage(value);
+    },
+    [setTranslationLanguage]
+  );
 
   return (
     <Panel>
@@ -30,9 +54,23 @@ function Translations() {
       </PanelTitle>
       <PanelContent>
         <Flex wrap="wrap" isVertical>
+          {translations.map((translation) => {
+            const { key, value, language, id } = translation;
+
+            return (
+              <FlexItem key={`translation-item-${key}-${language}`}>
+                <EditTranslation
+                  id={id}
+                  initialKey={key}
+                  initialValue={value}
+                  initialLanguage={language}
+                />
+              </FlexItem>
+            );
+          })}
           <FlexItem>
             <Flex>
-              <FlexItem>
+              <FlexItem className="gm-spacing-rl">
                 <div className="gc-input gc-input--full">
                   {/* eslint-disable jsx-a11y/label-has-associated-control */}
                   <label htmlFor="key" className="gc-input__label">
@@ -41,15 +79,15 @@ function Translations() {
                   {/* eslint-enable jsx-a11y/label-has-associated-control */}
                   <input
                     id="key"
-                    value={key}
+                    value={translationKey}
                     onChange={(event) => {
-                      setKey(event.target.value);
+                      setTranslationKey(event.target.value);
                     }}
                     className="gc-input__field"
                   />
                 </div>
               </FlexItem>
-              <FlexItem>
+              <FlexItem className="gm-spacing-rl">
                 <div className="gc-input gc-input--full">
                   {/* eslint-disable jsx-a11y/label-has-associated-control */}
                   <label htmlFor="value" className="gc-input__label">
@@ -58,30 +96,27 @@ function Translations() {
                   {/* eslint-enable jsx-a11y/label-has-associated-control */}
                   <input
                     id="value"
-                    value={value}
+                    value={translationValue}
                     onChange={(event) => {
-                      setValue(event.target.value);
+                      setTranslationValue(event.target.value);
                     }}
                     className="gc-input__field"
                   />
                 </div>
               </FlexItem>
               <FlexItem>
-                <div className="gc-input gc-input--full">
-                  {/* eslint-disable jsx-a11y/label-has-associated-control */}
-                  <label htmlFor="language" className="gc-input__label">
-                    Language
-                  </label>
-                  {/* eslint-enable jsx-a11y/label-has-associated-control */}
-                  <input
-                    id="language"
-                    value={language}
-                    onChange={(event) => {
-                      setLanguage(event.target.value);
-                    }}
-                    className="gc-input__field"
-                  />
-                </div>
+                <Dropdown
+                  label="Language"
+                  initValue={{
+                    label: translationLanguage,
+                    value: translationLanguage,
+                  }}
+                  items={globalConfig.languages.map((lang) => ({
+                    label: lang,
+                    value: lang,
+                  }))}
+                  onChange={handleLanguageChange}
+                />
               </FlexItem>
             </Flex>
           </FlexItem>

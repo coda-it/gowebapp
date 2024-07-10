@@ -4,6 +4,7 @@ import * as categoryTypes from './models/categories/types';
 import * as userTypes from './models/users/types';
 import * as helpdeskTypes from './models/helpdesk/types';
 import * as platformTypes from './models/platform/types';
+import * as translationTypes from './models/translations/types';
 
 /* eslint-disable import/prefer-default-export */
 export type State = Partial<{
@@ -16,5 +17,6 @@ export type State = Partial<{
   };
   platform: platformTypes.State;
   helpdesk: helpdeskTypes.State;
+  translations: translationTypes.State;
 }>;
 /* eslint-enable import/prefer-default-export */

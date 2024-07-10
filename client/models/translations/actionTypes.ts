@@ -1,3 +1,4 @@
-/* eslint-disable import/prefer-default-export */
 export const ADD_TRANSLATION = 'translations/add';
-/* eslint-enable import/prefer-default-export */
+export const FETCH_TRANSLATIONS = 'translations/fetch';
+export const FETCH_TRANSLATIONS_SUCCESS = 'translations/fetch-success';
+export const UPDATE_TRANSLATION = 'translations/update';

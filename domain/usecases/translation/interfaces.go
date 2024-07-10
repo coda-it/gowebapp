@@ -10,4 +10,6 @@ type ITranslationRepository interface {
 // IDynamicTranslationRepository - dynamic translations repository interface
 type IDynamicTranslationRepository interface {
 	AddTranslation(translation translation.Translation) error
+	GetTranslations(appID string, lang string) ([]translation.Translation, error)
+	UpdateTranslation(translation translation.Translation) error
 }

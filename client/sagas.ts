@@ -63,6 +63,14 @@ function* root() {
       translationActionTypes.ADD_TRANSLATION,
       translationsSagas.onAddTranslation
     ),
+    takeEvery(
+      translationActionTypes.FETCH_TRANSLATIONS,
+      translationsSagas.onFetchTranslations
+    ),
+    takeEvery(
+      translationActionTypes.UPDATE_TRANSLATION,
+      translationsSagas.onUpdateTranslation
+    ),
   ]);
 }
 
