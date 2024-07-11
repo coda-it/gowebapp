@@ -71,6 +71,10 @@ function* root() {
       translationActionTypes.UPDATE_TRANSLATION,
       translationsSagas.onUpdateTranslation
     ),
+    takeEvery(
+      translationActionTypes.DELETE_TRANSLATION,
+      translationsSagas.onDeletePost
+    ),
   ]);
 }
 

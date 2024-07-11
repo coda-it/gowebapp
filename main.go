@@ -260,6 +260,12 @@ func main() {
 				Handler:   translationsApiCtl.CtrTranslationPut,
 				Protected: true,
 			},
+			{
+				Path:      "/api/translations",
+				Method:    "DELETE",
+				Handler:   translationsApiCtl.CtrTranslationDelete,
+				Protected: true,
+			},
 		},
 	}
 

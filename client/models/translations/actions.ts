@@ -35,3 +35,8 @@ export const updateTranslation = (
   value,
   language,
 });
+
+export const deleteTranslation = (id: string) => ({
+  type: actionTypes.DELETE_TRANSLATION,
+  id,
+});

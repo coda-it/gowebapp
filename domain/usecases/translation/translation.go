@@ -1,6 +1,9 @@
 package translation
 
-import "github.com/coda-it/gowebapp/domain/models/translation"
+import (
+	"github.com/coda-it/gowebapp/domain/models/translation"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 // Usecase - translations usecases
 type Usecase struct {
@@ -51,4 +54,9 @@ func (u *Usecase) GetDynamicTranslationsAsMap(appID string, lang string) (map[st
 // UpdateDynamicTranslation - update dynamic translations
 func (u *Usecase) UpdateDynamicTranslation(translation translation.Translation) error {
 	return u.dynamicTranslationRepository.UpdateTranslation(translation)
+}
+
+// UpdateDynamicTranslation - update dynamic translations
+func (u *Usecase) DeleteDynamicTranslation(id primitive.ObjectID) error {
+	return u.dynamicTranslationRepository.DeleteTranslation(id)
 }

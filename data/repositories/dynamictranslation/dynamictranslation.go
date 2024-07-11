@@ -5,6 +5,7 @@ import (
 	"github.com/coda-it/gowebapp/data/persistence"
 	"github.com/coda-it/gowebapp/domain/models/translation"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 const (
@@ -57,5 +58,12 @@ func (tr *Repository) UpdateTranslation(translation translation.Translation) err
 		translation,
 	}})
 
+	return err
+}
+
+// DeleteTranslation - delete translation
+func (tr *Repository) DeleteTranslation(id primitive.ObjectID) error {
+	postsCollection := tr.Persistence.GetCollection(collectionName)
+	_, err := postsCollection.DeleteOne(context.TODO(), bson.M{"_id": id})
 	return err
 }
