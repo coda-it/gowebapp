@@ -35,6 +35,10 @@ export default function EditTranslation({
     );
   }, [dispatch, id, translationKey, translationValue, translationLanguage]);
 
+  const handleDelete = useCallback(() => {
+    dispatch(actions.deleteTranslation(id));
+  }, [dispatch, id]);
+
   return (
     <Flex>
       <FlexItem className="gm-spacing-rl">
@@ -76,9 +80,14 @@ export default function EditTranslation({
           }}
         />
       </FlexItem>
-      <FlexItem>
+      <FlexItem className="gm-spacing-rl">
         <Button className="gc-btn--primary" onClick={handleUpdate}>
           {utils.getLocalization('UpdateButton') ?? 'Update'}
+        </Button>
+      </FlexItem>
+      <FlexItem>
+        <Button className="gc-btn--danger" onClick={handleDelete}>
+          {utils.getLocalization('DeleteButton') ?? 'Delete'}
         </Button>
       </FlexItem>
     </Flex>

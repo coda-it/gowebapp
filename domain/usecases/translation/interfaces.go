@@ -1,6 +1,9 @@
 package translation
 
-import "github.com/coda-it/gowebapp/domain/models/translation"
+import (
+	"github.com/coda-it/gowebapp/domain/models/translation"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 // ITranslationRepository - static translations repository interface
 type ITranslationRepository interface {
@@ -12,4 +15,5 @@ type IDynamicTranslationRepository interface {
 	AddTranslation(translation translation.Translation) error
 	GetTranslations(appID string, lang string) ([]translation.Translation, error)
 	UpdateTranslation(translation translation.Translation) error
+	DeleteTranslation(id primitive.ObjectID) error
 }

@@ -24,6 +24,11 @@ export type UpdateTranslationAction = {
   language: string;
 };
 
+export type DeleteTranslationAction = {
+  id: string;
+  type: string;
+};
+
 export type GetTranslationsAction = {
   type: string;
 };

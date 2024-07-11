@@ -93,3 +93,29 @@ export function* onUpdateTranslation({
 
   yield put(actions.fetchTranslations());
 }
+
+function callDeleteTranslation(id: string) {
+  const request = new Request(constants.TRANSLATION_ENDPOINT, {
+    method: 'DELETE',
+    body: JSON.stringify({
+      id,
+    }),
+  });
+
+  return fetch(request)
+    .then((response) => response.json())
+    .catch(() => 'Removing translation failed');
+}
+
+export function* onDeletePost({
+  id,
+}: types.DeleteTranslationAction): Iterable<any> {
+  const response = yield call(callDeleteTranslation, id);
+
+  if (typeof response === 'string') {
+    yield put(alertActions.addAlert(response, alertConstants.ALERT_TYPE_ERROR));
+    return;
+  }
+
+  yield put(actions.fetchTranslations());
+}
