@@ -72,10 +72,14 @@ function Translations() {
               </FlexItem>
             );
           })}
-          <FlexItem>
+          <FlexItem className="gm-spacing-tvl">
             <Flex>
               <FlexItem className="gm-spacing-rl">
                 <div className="gc-input gc-input--full">
+                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                  <label htmlFor="key" className="gc-input__label">
+                    Translation key
+                  </label>
                   <input
                     id="key"
                     value={translationKey}
@@ -88,6 +92,10 @@ function Translations() {
               </FlexItem>
               <FlexItem className="gm-spacing-rl">
                 <div className="gc-input gc-input--full">
+                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                  <label htmlFor="key" className="gc-input__label">
+                    Translation value
+                  </label>
                   <input
                     id="value"
                     value={translationValue}
@@ -109,6 +117,7 @@ function Translations() {
                     value: lang,
                   }))}
                   onChange={handleLanguageChange}
+                  label="Language"
                 />
               </FlexItem>
             </Flex>
