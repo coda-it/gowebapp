@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, Flex, FlexItem, Dropdown } from 'graphen';
+import { Button, Flex, FlexItem, Dropdown, Dialog } from 'graphen';
+import classNames from 'classnames';
 import globalConfig from 'client/config';
 import * as actions from 'client/models/translations/actions';
 import * as utils from 'client/utils/translations';
@@ -19,11 +20,18 @@ export default function EditTranslation({
   initialLanguage,
 }: Props) {
   const dispatch = useDispatch();
+  const [isEditing, setIsEditing] = useState(false);
   const [translationKey, setTranslationKey] = useState(initialKey);
   const [translationValue, setTranslationValue] = useState(initialValue);
   const [translationLanguage, setTranslationLanguage] =
     useState(initialLanguage);
 
+  const handleClose = useCallback(() => {
+    setIsEditing(false);
+  }, [setIsEditing]);
+  const handleEdit = useCallback(() => {
+    setIsEditing(true);
+  }, [setIsEditing]);
   const handleUpdate = useCallback(() => {
     dispatch(
       actions.updateTranslation(
@@ -39,9 +47,14 @@ export default function EditTranslation({
     dispatch(actions.deleteTranslation(id));
   }, [dispatch, id]);
 
-  return (
-    <Flex>
-      <FlexItem className="gm-spacing-rl">
+  const wrapperClasses = classNames({
+    'gm-spacing-rl': !isEditing,
+    'gm-spacing-bl': isEditing,
+  });
+
+  const body = (
+    <Flex isVertical={isEditing}>
+      <FlexItem className={wrapperClasses}>
         <div className="gc-input gc-input--full">
           <input
             id="key"
@@ -50,10 +63,11 @@ export default function EditTranslation({
               setTranslationKey(event.target.value);
             }}
             className="gc-input__field"
+            disabled={!isEditing}
           />
         </div>
       </FlexItem>
-      <FlexItem className="gm-spacing-rl">
+      <FlexItem className={wrapperClasses}>
         <div className="gc-input gc-input--full">
           <input
             id="value"
@@ -62,10 +76,11 @@ export default function EditTranslation({
               setTranslationValue(event.target.value);
             }}
             className="gc-input__field"
+            disabled={!isEditing}
           />
         </div>
       </FlexItem>
-      <FlexItem className="gm-spacing-rl">
+      <FlexItem className={wrapperClasses}>
         <Dropdown
           initValue={{
             label: translationLanguage,
@@ -80,16 +95,52 @@ export default function EditTranslation({
           }}
         />
       </FlexItem>
-      <FlexItem className="gm-spacing-rl">
-        <Button className="gc-btn--primary" onClick={handleUpdate}>
-          {utils.getLocalization('UpdateButton') ?? 'Update'}
-        </Button>
-      </FlexItem>
-      <FlexItem>
-        <Button className="gc-btn--danger" onClick={handleDelete}>
-          {utils.getLocalization('DeleteButton') ?? 'Delete'}
-        </Button>
-      </FlexItem>
+      {!isEditing && (
+        <FlexItem className={wrapperClasses}>
+          <Button
+            className="gc-btn--secondary gc-btn--full"
+            onClick={handleEdit}
+          >
+            {utils.getLocalization('EditButton') ?? 'Edit'}
+          </Button>
+        </FlexItem>
+      )}
+      {isEditing && (
+        <FlexItem className={wrapperClasses}>
+          <Button
+            className="gc-btn--primary gc-btn--full"
+            onClick={handleUpdate}
+          >
+            {utils.getLocalization('UpdateButton') ?? 'Update'}
+          </Button>
+        </FlexItem>
+      )}
+      {isEditing && (
+        <FlexItem className={wrapperClasses}>
+          <Button
+            className="gc-btn--danger gc-btn--full"
+            onClick={handleDelete}
+          >
+            {utils.getLocalization('DeleteButton') ?? 'Delete'}
+          </Button>
+        </FlexItem>
+      )}
+      {isEditing && (
+        <FlexItem className={wrapperClasses}>
+          <Button
+            className="gc-btn--secondary gc-btn--full"
+            onClick={handleClose}
+          >
+            {utils.getLocalization('CloseButton') ?? 'Close'}
+          </Button>
+        </FlexItem>
+      )}
     </Flex>
+  );
+
+  return isEditing ? (
+    <Dialog className="translation-dialog">{body}</Dialog>
+  ) : (
+    body
   );
 }
