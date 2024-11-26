@@ -93,6 +93,7 @@ export default function EditTranslation({
           onChange={(value) => {
             setTranslationLanguage(value);
           }}
+          isDisabled={!isEditing}
         />
       </FlexItem>
       {!isEditing && (
