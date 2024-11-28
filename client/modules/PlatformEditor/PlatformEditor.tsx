@@ -37,6 +37,12 @@ function PlatformEditor(props: types.Props) {
   useEffect(() => {
     setLoginRedirectURLInput(loginRedirectURL);
   }, [loginRedirectURL, setLoginRedirectURLInput]);
+  useEffect(() => {
+    setLandingPageInput(landingModule);
+  }, [landingModule, setLandingPageInput]);
+  useEffect(() => {
+    setStaticPageInput(staticPage);
+  }, [staticPage, setStaticPageInput]);
 
   const handleLandingPageInputChange = useCallback(
     (event) => {
@@ -190,6 +196,7 @@ function PlatformEditor(props: types.Props) {
                     landingModule: landingPageInput,
                     staticPage: staticPageInput,
                     language: languageInput,
+                    loginRedirectURL: loginRedirectURLInput,
                   })
                 }
               >
