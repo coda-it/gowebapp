@@ -3,6 +3,7 @@ export type PlatformConfig = {
   landingModule?: string;
   staticPage?: string;
   language?: string;
+  loginRedirectURL?: string;
 };
 
 export type State = {
