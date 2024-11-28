@@ -30,7 +30,6 @@ func (c *Controller) CtrPlatformPost(w http.ResponseWriter, r *http.Request, opt
 	}
 
 	application := c.PlatformUsecases.GetApplicationByDomain(c.Config, r)
-
 	newConfig.AppID = application.ID
 
 	err = c.PlatformUsecases.Add(newConfig)

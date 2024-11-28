@@ -27,6 +27,9 @@ func (c *Controller) CtrPlatformPut(w http.ResponseWriter, r *http.Request, opt 
 		return
 	}
 
+	application := c.PlatformUsecases.GetApplicationByDomain(c.Config, r)
+	editedConfig.AppID = application.ID
+
 	err = c.PlatformUsecases.Update(editedConfig)
 
 	if err != nil {
