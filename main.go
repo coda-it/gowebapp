@@ -469,7 +469,7 @@ func main() {
 		},
 	}
 
-	userLoginCtl := userLoginController.New(baseController, "login", *userUsecaseEntity)
+	userLoginCtl := userLoginController.New(baseController, "login", *userUsecaseEntity, *platformUsecasesEntity)
 	userLoginModule := module.Module{
 		ID:      "login",
 		Enabled: true,

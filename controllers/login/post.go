@@ -27,7 +27,20 @@ func (c *Controller) CtrLoginPost(w http.ResponseWriter, r *http.Request, opt ro
 			return
 		}
 
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+		application := c.PlatformUsecases.GetApplicationByDomain(c.Config, r)
+		config, err := c.PlatformUsecases.Fetch(application.ID)
+
+		loginRedirectURL := "/"
+
+		if err == nil {
+			if config.LoginRedirectURL != "" {
+				loginRedirectURL = config.LoginRedirectURL
+			}
+		} else {
+			logger.Log("while logging in config fetching failed: " + err.Error())
+		}
+
+		http.Redirect(w, r, loginRedirectURL, http.StatusSeeOther)
 		return
 	}
 

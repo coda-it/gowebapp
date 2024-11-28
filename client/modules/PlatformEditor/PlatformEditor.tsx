@@ -16,12 +16,16 @@ import * as types from './types';
 
 function PlatformEditor(props: types.Props) {
   const { config, load, onUpdate, onAdd } = props;
-  const { id, landingModule, staticPage, language } = config ?? {};
+  const { id, landingModule, staticPage, language, loginRedirectURL } =
+    config ?? {};
+
   const [landingPageInput, setLandingPageInput] = useState(landingModule);
   const [staticPageInput, setStaticPageInput] = useState(staticPage);
   const [languageInput, setLanguageInput] = useState(
     language ?? globalConfig.defaultLanguage
   );
+  const [loginRedirectURLInput, setLoginRedirectURLInput] =
+    useState(loginRedirectURL);
 
   useEffect(() => {
     load();
@@ -30,6 +34,9 @@ function PlatformEditor(props: types.Props) {
   useEffect(() => {
     setLanguageInput(language ?? globalConfig.defaultLanguage);
   }, [language, setLanguageInput]);
+  useEffect(() => {
+    setLoginRedirectURLInput(loginRedirectURL);
+  }, [loginRedirectURL, setLoginRedirectURLInput]);
 
   const handleLandingPageInputChange = useCallback(
     (event) => {
@@ -48,6 +55,12 @@ function PlatformEditor(props: types.Props) {
       setLanguageInput(value);
     },
     [setLanguageInput]
+  );
+  const handleLoginRedirectURLInputChange = useCallback(
+    (event) => {
+      setLoginRedirectURLInput(event.target.value);
+    },
+    [setLoginRedirectURLInput]
   );
 
   return (
@@ -137,6 +150,35 @@ function PlatformEditor(props: types.Props) {
               </Card>
             </FlexItem>
           )}
+          <FlexItem className="gm-spacing-bl">
+            <Card>
+              <Panel>
+                <PanelTitle>Default page after login</PanelTitle>
+                <PanelContent>
+                  <p>
+                    This URL will be used as a default redirection after logging
+                    into admin
+                  </p>
+                  <div className="gc-input gc-input--full">
+                    {/* eslint-disable jsx-a11y/label-has-associated-control */}
+                    <label
+                      htmlFor="default-login-url"
+                      className="gc-input__label"
+                    >
+                      Default login URL
+                    </label>
+                    {/* eslint-enable jsx-a11y/label-has-associated-control */}
+                    <input
+                      id="default-login-url"
+                      className="gc-input__field"
+                      defaultValue={id ? loginRedirectURLInput : ''}
+                      onChange={handleLoginRedirectURLInputChange}
+                    />
+                  </div>
+                </PanelContent>
+              </Panel>
+            </Card>
+          </FlexItem>
           <FlexItem>
             {id ? (
               <Button
@@ -162,6 +204,7 @@ function PlatformEditor(props: types.Props) {
                     landingModule: landingPageInput,
                     staticPage: staticPageInput,
                     language: languageInput,
+                    loginRedirectURL: loginRedirectURLInput,
                   })
                 }
               >
