@@ -21,5 +21,5 @@ func (c *Controller) CtrStaticGet(w http.ResponseWriter, r *http.Request, opt ro
 		return
 	}
 
-	c.RenderStaticTemplate(w, r, constants.DefaultStaticPage, sm, make(map[string]interface{}))
+	c.RenderStaticTemplate(w, r, appConfig.StaticPage, sm, make(map[string]interface{}))
 }
