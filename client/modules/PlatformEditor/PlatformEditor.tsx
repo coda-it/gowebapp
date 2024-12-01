@@ -79,10 +79,7 @@ function PlatformEditor(props: types.Props) {
               <Panel>
                 <PanelTitle>Landing page</PanelTitle>
                 <PanelContent>
-                  <p>
-                    Landing page module is a name of view template of a
-                    particular module that will be loaded on the root URL
-                  </p>
+                  <p>Module name that will be loaded on the root URL</p>
                   <Separator />
                   <div className="gc-input gc-input--full">
                     <Dropdown
@@ -120,6 +117,8 @@ function PlatformEditor(props: types.Props) {
               <Panel>
                 <PanelTitle>Static module</PanelTitle>
                 <PanelContent>
+                  <p>File name for static page view template</p>
+                  <Separator />
                   <div className="gc-input gc-input--full">
                     {/* eslint-disable jsx-a11y/label-has-associated-control */}
                     <label
@@ -132,7 +131,7 @@ function PlatformEditor(props: types.Props) {
                     <input
                       id="static-page"
                       className="gc-input__field tst-static-page-title"
-                      defaultValue={id ? staticPage : ''}
+                      defaultValue={id ? staticPage : 'static'}
                       onChange={handleStaticPageInputChange}
                     />
                   </div>
