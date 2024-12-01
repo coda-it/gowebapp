@@ -45,8 +45,8 @@ function PlatformEditor(props: types.Props) {
   }, [staticPage, setStaticPageInput]);
 
   const handleLandingPageInputChange = useCallback(
-    (event) => {
-      setLandingPageInput(event.target.value);
+    (value) => {
+      setLandingPageInput(value);
     },
     [setLandingPageInput]
   );
@@ -85,18 +85,29 @@ function PlatformEditor(props: types.Props) {
                   </p>
                   <Separator />
                   <div className="gc-input gc-input--full">
-                    {/* eslint-disable jsx-a11y/label-has-associated-control */}
-                    <label
-                      htmlFor="landing-page-title"
-                      className="gc-input__label"
-                    >
-                      Landing Page Module
-                    </label>
-                    {/* eslint-enable jsx-a11y/label-has-associated-control */}
-                    <input
-                      id="landing-page"
-                      className="gc-input__field tst-landing-page-title"
-                      defaultValue={id ? landingModule : ''}
+                    <Dropdown
+                      initValue={{
+                        label: landingPageInput,
+                        value: landingPageInput,
+                      }}
+                      items={[
+                        {
+                          label: 'post',
+                          value: 'post',
+                        },
+                        {
+                          label: 'category',
+                          value: 'category',
+                        },
+                        {
+                          label: 'helpdesk',
+                          value: 'helpdesk',
+                        },
+                        {
+                          label: 'static',
+                          value: 'static',
+                        },
+                      ]}
                       onChange={handleLandingPageInputChange}
                     />
                   </div>
