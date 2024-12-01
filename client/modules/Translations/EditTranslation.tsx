@@ -69,15 +69,23 @@ export default function EditTranslation({
       </FlexItem>
       <FlexItem className={wrapperClasses}>
         <div className="gc-input gc-input--full">
-          <input
-            id="value"
-            value={translationValue}
-            onChange={(event) => {
-              setTranslationValue(event.target.value);
-            }}
-            className="gc-input__field"
-            disabled={!isEditing}
-          />
+          {isEditing ? (
+            <textarea
+              id="value"
+              value={translationValue}
+              onChange={(event) => {
+                setTranslationValue(event.target.value);
+              }}
+              className="gc-input__field"
+            />
+          ) : (
+            <input
+              id="value"
+              value={translationValue}
+              className="gc-input__field"
+              disabled
+            />
+          )}
         </div>
       </FlexItem>
       <FlexItem className={wrapperClasses}>
