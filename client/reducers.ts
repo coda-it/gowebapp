@@ -7,6 +7,7 @@ import users from 'client/models/users/reducers';
 import platform from 'client/models/platform/reducers';
 import helpdesk from 'client/models/helpdesk/reducers';
 import translations from 'client/models/translations/reducers';
+import featureFlags from 'client/models/featureFlags/reducers';
 
 export default combineReducers({
   application,
@@ -17,4 +18,5 @@ export default combineReducers({
   platform,
   helpdesk,
   translations,
+  featureFlags,
 });

@@ -51,12 +51,12 @@ func (u *Usecase) GetDynamicTranslationsAsMap(appID string, lang string) (map[st
 	return translationMap, nil
 }
 
-// UpdateDynamicTranslation - update dynamic translations
+// UpdateDynamicTranslation - update dynamic translation
 func (u *Usecase) UpdateDynamicTranslation(translation translation.Translation) error {
 	return u.dynamicTranslationRepository.UpdateTranslation(translation)
 }
 
-// UpdateDynamicTranslation - update dynamic translations
+// DeleteDynamicTranslation - delete dynamic translation
 func (u *Usecase) DeleteDynamicTranslation(id primitive.ObjectID) error {
 	return u.dynamicTranslationRepository.DeleteTranslation(id)
 }

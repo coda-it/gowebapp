@@ -8,6 +8,7 @@ import (
 	"github.com/coda-it/goutils/mailer"
 	"github.com/coda-it/gowebapp/constants"
 	platformModel "github.com/coda-it/gowebapp/domain/models/platform"
+	"github.com/coda-it/gowebapp/domain/usecases/featureflag"
 	platformUsecases "github.com/coda-it/gowebapp/domain/usecases/platform"
 	translationUsecases "github.com/coda-it/gowebapp/domain/usecases/translation"
 	userHelpers "github.com/coda-it/gowebapp/helpers/user"
@@ -23,19 +24,21 @@ import (
 
 // Controller - base controller
 type Controller struct {
-	Mailer              mailer.IMailer
-	Config              config.Config
-	platformUsecases    *platformUsecases.Usecase
-	translationUsecases *translationUsecases.Usecase
+	Mailer               mailer.IMailer
+	Config               config.Config
+	platformUsecases     *platformUsecases.Usecase
+	translationUsecases  *translationUsecases.Usecase
+	featureflagsUsecases *featureflag.Usecase
 }
 
 // New - creates new instance of base Controller
-func New(m mailer.IMailer, c config.Config, pu *platformUsecases.Usecase, tu *translationUsecases.Usecase) *Controller {
+func New(m mailer.IMailer, c config.Config, pu *platformUsecases.Usecase, tu *translationUsecases.Usecase, ffu *featureflag.Usecase) *Controller {
 	return &Controller{
 		m,
 		c,
 		pu,
 		tu,
+		ffu,
 	}
 }
 
@@ -111,17 +114,22 @@ func (c *Controller) buildViewModel(
 
 	translationsJSON, _ := json.Marshal(translations)
 
+	featureFlags, _ := c.featureflagsUsecases.GetFeatureFlagsAsMap(application.ID)
+	featureFlagsJSON, _ := json.Marshal(featureFlags)
+
 	return page.Page{
-		Version:        utils.VERSION,
-		Title:          constants.AppName + " - " + name,
-		IsLogged:       isLogged,
-		IsRoot:         u.HasEntitlement("root"),
-		Params:         params,
-		Name:           name,
-		Navigation:     application.Navigation,
-		JSConfig:       string(jsConfig),
-		JSTranslations: string(translationsJSON),
-		Translations:   translations,
+		Version:         utils.VERSION,
+		Title:           constants.AppName + " - " + name,
+		IsLogged:        isLogged,
+		IsRoot:          u.HasEntitlement("root"),
+		Params:          params,
+		Name:            name,
+		Navigation:      application.Navigation,
+		JSConfig:        string(jsConfig),
+		JSTranslations:  string(translationsJSON),
+		Translations:    translations,
+		FeatureFlags:    featureFlags,
+		JSFeaturesFlags: string(featureFlagsJSON),
 	}
 }
 

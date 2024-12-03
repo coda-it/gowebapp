@@ -13,12 +13,14 @@ import * as helpdeskSagas from './models/helpdesk/sagas';
 import * as helpdeskActionTypes from './models/helpdesk/actionTypes';
 import * as translationsSagas from './models/translations/sagas';
 import * as translationActionTypes from './models/translations/actionTypes';
+import * as featureFlagsActionTypes from './models/featureFlags/actionTypes';
+import * as featureFlagsSagas from './models/featureFlags/sagas';
 
 function* root() {
   yield all([
     takeEvery(
       applicationActionTypes.MOUNT,
-      applicationSagas.onApplicationMount
+      applicationSagas.onApplicationMount,
     ),
     takeEvery(postsActionTypes.ADD_POST, postsSagas.onAddPost),
     takeEvery(postsActionTypes.UPDATE_POST, postsSagas.onUpdatePost),
@@ -26,54 +28,70 @@ function* root() {
     takeEvery(postsActionTypes.FETCH_POSTS, postsSagas.onFetchPosts),
     takeEvery(
       categoriesActionTypes.ADD_CATEGORY,
-      categoriesSagas.onAddCategory
+      categoriesSagas.onAddCategory,
     ),
     takeEvery(
       categoriesActionTypes.UPDATE_CATEGORY,
-      categoriesSagas.onUpdateCategory
+      categoriesSagas.onUpdateCategory,
     ),
     takeEvery(
       categoriesActionTypes.DELETE_CATEGORY,
-      categoriesSagas.onDeleteCategory
+      categoriesSagas.onDeleteCategory,
     ),
     takeEvery(
       categoriesActionTypes.FETCH_CATEGORIES,
-      categoriesSagas.onFetchCategories
+      categoriesSagas.onFetchCategories,
     ),
     takeEvery(usersActionTypes.FETCH_USER, usersSagas.onFetchUser),
     takeEvery(usersActionTypes.DELETE_USER, usersSagas.onDeleteUser),
     takeEvery(
       platformActionTypes.FETCH_PLATFORM,
-      platformSagas.onFetchPlatform
+      platformSagas.onFetchPlatform,
     ),
     takeEvery(
       platformActionTypes.UPDATE_PLATFORM,
-      platformSagas.onUpdatePlatform
+      platformSagas.onUpdatePlatform,
     ),
     takeEvery(platformActionTypes.ADD_PLATFORM, platformSagas.onAddPlatform),
     takeEvery(helpdeskActionTypes.CREATE_TICKET, helpdeskSagas.onCreateTicket),
     takeEvery(helpdeskActionTypes.FETCH_TICKET, helpdeskSagas.onFetchTicket),
     takeEvery(
       helpdeskActionTypes.FETCH_ALL_TICKETS,
-      helpdeskSagas.onFetchAllTickets
+      helpdeskSagas.onFetchAllTickets,
     ),
     takeEvery(helpdeskActionTypes.DELETE_TICKET, helpdeskSagas.onDeleteTicket),
     takeEvery(helpdeskActionTypes.UPDATE_TICKET, helpdeskSagas.onUpdateTicket),
     takeEvery(
       translationActionTypes.ADD_TRANSLATION,
-      translationsSagas.onAddTranslation
+      translationsSagas.onAddTranslation,
     ),
     takeEvery(
       translationActionTypes.FETCH_TRANSLATIONS,
-      translationsSagas.onFetchTranslations
+      translationsSagas.onFetchTranslations,
     ),
     takeEvery(
       translationActionTypes.UPDATE_TRANSLATION,
-      translationsSagas.onUpdateTranslation
+      translationsSagas.onUpdateTranslation,
     ),
     takeEvery(
       translationActionTypes.DELETE_TRANSLATION,
-      translationsSagas.onDeletePost
+      translationsSagas.onDeleteTranslation,
+    ),
+    takeEvery(
+      featureFlagsActionTypes.ADD_FEATURE_FLAG,
+      featureFlagsSagas.onAddFeatureFlag,
+    ),
+    takeEvery(
+      featureFlagsActionTypes.FETCH_FEATURE_FLAGS,
+      featureFlagsSagas.onFetchFeatureFlags,
+    ),
+    takeEvery(
+      featureFlagsActionTypes.UPDATE_FEATURE_FLAG,
+      featureFlagsSagas.onUpdateFeatureFlag,
+    ),
+    takeEvery(
+      featureFlagsActionTypes.DELETE_FATURE_FLAG,
+      featureFlagsSagas.onDeleteFeatureFlag,
     ),
   ]);
 }

@@ -11,6 +11,7 @@ import (
 	userActivationController "github.com/coda-it/gowebapp/controllers/activation"
 	adminController "github.com/coda-it/gowebapp/controllers/admin"
 	categoryApiController "github.com/coda-it/gowebapp/controllers/api/category"
+	"github.com/coda-it/gowebapp/controllers/api/featureflags"
 	helpdeskApiController "github.com/coda-it/gowebapp/controllers/api/helpdesk"
 	loginApiController "github.com/coda-it/gowebapp/controllers/api/login"
 	"github.com/coda-it/gowebapp/controllers/api/platform"
@@ -32,12 +33,14 @@ import (
 	"github.com/coda-it/gowebapp/data/persistence"
 	categoryRepository "github.com/coda-it/gowebapp/data/repositories/category"
 	dynamictranslationRepository "github.com/coda-it/gowebapp/data/repositories/dynamictranslation"
+	featureflagRepository "github.com/coda-it/gowebapp/data/repositories/featureflag"
 	helpdeskRepository "github.com/coda-it/gowebapp/data/repositories/helpdesk"
 	platformRepository "github.com/coda-it/gowebapp/data/repositories/platform"
 	postRepository "github.com/coda-it/gowebapp/data/repositories/post"
 	translationRepository "github.com/coda-it/gowebapp/data/repositories/translation"
 	userRepository "github.com/coda-it/gowebapp/data/repositories/user"
 	categoryUsecases "github.com/coda-it/gowebapp/domain/usecases/category"
+	featureflagUsecases "github.com/coda-it/gowebapp/domain/usecases/featureflag"
 	helpdeskUsecases "github.com/coda-it/gowebapp/domain/usecases/helpdesk"
 	platformUsecases "github.com/coda-it/gowebapp/domain/usecases/platform"
 	postUsecases "github.com/coda-it/gowebapp/domain/usecases/post"
@@ -86,8 +89,10 @@ func main() {
 	postUsecasesEntity := postUsecases.New(&postRepositoryEntity)
 	userRepositoryEntity := userRepository.New(store)
 	userUsecaseEntity := userUsecases.New(&userRepositoryEntity)
-	helpdeskRepository := helpdeskRepository.New(store)
-	helpdeskUsecases := helpdeskUsecases.New(&helpdeskRepository)
+	helpdeskRepositoryEntity := helpdeskRepository.New(store)
+	helpdeskUsecasesEntity := helpdeskUsecases.New(&helpdeskRepositoryEntity)
+	featureflagsRepositoryEntity := featureflagRepository.New(store)
+	featureflagUsecasesEntity := featureflagUsecases.New(&featureflagsRepositoryEntity)
 
 	baseController := base.New(mailer.New(
 		[]string{},
@@ -96,7 +101,7 @@ func main() {
 		os.Getenv("WEBAPP_MAILER_PASSWORD"),
 		os.Getenv("WEBAPP_MAILER_SMTP_PORT"),
 		os.Getenv("WEBAPP_MAILER_SMTP_AUTHURL"),
-	), appConfig, platformUsecasesEntity, translationUsecasesEntity)
+	), appConfig, platformUsecasesEntity, translationUsecasesEntity, featureflagUsecasesEntity)
 
 	apiLoginCtl := loginApiController.New(baseController, "api-login", *userUsecaseEntity)
 	apiLoginModule := module.Module{
@@ -200,7 +205,7 @@ func main() {
 		},
 	}
 
-	helpdeskApiCtl := helpdeskApiController.New(baseController, "api-helpdesk", *helpdeskUsecases, *platformUsecasesEntity)
+	helpdeskApiCtl := helpdeskApiController.New(baseController, "api-helpdesk", *helpdeskUsecasesEntity, *platformUsecasesEntity)
 	helpdeskApiModule := module.Module{
 		ID: "api-helpdesk",
 		Routes: []route.Route{
@@ -264,6 +269,38 @@ func main() {
 				Path:      "/api/translations",
 				Method:    "DELETE",
 				Handler:   translationsApiCtl.CtrTranslationDelete,
+				Protected: true,
+			},
+		},
+	}
+
+	featureflagsApiCtl := featureflags.New(baseController, "api-featureflag", *featureflagUsecasesEntity, *platformUsecasesEntity)
+	featureflagsApiModule := module.Module{
+		ID:      "featureflag",
+		Enabled: true,
+		Routes: []route.Route{
+			{
+				Path:      "/api/featureflag",
+				Method:    "POST",
+				Handler:   featureflagsApiCtl.CtrFeatureFlagsPost,
+				Protected: true,
+			},
+			{
+				Path:      "/api/featureflag",
+				Method:    "GET",
+				Handler:   featureflagsApiCtl.CtrFeatureFlagsGet,
+				Protected: true,
+			},
+			{
+				Path:      "/api/featureflag",
+				Method:    "PUT",
+				Handler:   featureflagsApiCtl.CtrFeatureFlagPut,
+				Protected: true,
+			},
+			{
+				Path:      "/api/featureflag",
+				Method:    "DELETE",
+				Handler:   featureflagsApiCtl.CtrFeatureFlagDelete,
 				Protected: true,
 			},
 		},
@@ -418,6 +455,12 @@ func main() {
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
+			{
+				Path:      "/admin/featureflags",
+				Method:    "ALL",
+				Handler:   adminCtl.CtrAdmin,
+				Protected: true,
+			},
 		},
 	}
 
@@ -557,6 +600,7 @@ func main() {
 		helpdeskApiModule,
 		accountModule,
 		translationsApiModule,
+		featureflagsApiModule,
 	}
 
 	appInstance := goappframe.New(goappframe.Internals{

@@ -86,6 +86,11 @@
             "id": "admin-translations",
             "label": "Translations",
             "href": "/admin/translations"
+          },
+          {
+            "id": "admin-featureflags",
+            "label": "Feature Flags",
+            "href": "/admin/featureflags"
           }
         ]
       },

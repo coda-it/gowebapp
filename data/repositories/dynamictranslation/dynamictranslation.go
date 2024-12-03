@@ -26,8 +26,8 @@ func New(p persistence.IPersistance) *Repository {
 
 // AddTranslation - add translation
 func (tr *Repository) AddTranslation(translation translation.Translation) error {
-	translationsCollection := tr.Persistence.GetCollection(collectionName)
-	_, err := translationsCollection.InsertOne(context.TODO(), translation)
+	collection := tr.Persistence.GetCollection(collectionName)
+	_, err := collection.InsertOne(context.TODO(), translation)
 	return err
 }
 
@@ -35,10 +35,10 @@ func (tr *Repository) AddTranslation(translation translation.Translation) error 
 func (tr *Repository) GetTranslations(appID string, lang string) ([]translation.Translation, error) {
 	var translations []translation.Translation
 
-	translationsCollection := tr.Persistence.GetCollection(collectionName)
+	collection := tr.Persistence.GetCollection(collectionName)
 	searchQuery := bson.M{"appId": appID, "language": lang}
 
-	cursor, err := translationsCollection.Find(context.TODO(), searchQuery)
+	cursor, err := collection.Find(context.TODO(), searchQuery)
 	if err != nil {
 		return translations, err
 	}
@@ -53,8 +53,8 @@ func (tr *Repository) GetTranslations(appID string, lang string) ([]translation.
 
 // UpdateTranslation - update translation
 func (tr *Repository) UpdateTranslation(translation translation.Translation) error {
-	translationsCollection := tr.Persistence.GetCollection(collectionName)
-	_, err := translationsCollection.UpdateOne(context.TODO(), bson.M{"_id": translation.ID}, bson.D{{"$set",
+	collection := tr.Persistence.GetCollection(collectionName)
+	_, err := collection.UpdateOne(context.TODO(), bson.M{"_id": translation.ID}, bson.D{{"$set",
 		translation,
 	}})
 
@@ -63,7 +63,7 @@ func (tr *Repository) UpdateTranslation(translation translation.Translation) err
 
 // DeleteTranslation - delete translation
 func (tr *Repository) DeleteTranslation(id primitive.ObjectID) error {
-	postsCollection := tr.Persistence.GetCollection(collectionName)
-	_, err := postsCollection.DeleteOne(context.TODO(), bson.M{"_id": id})
+	collection := tr.Persistence.GetCollection(collectionName)
+	_, err := collection.DeleteOne(context.TODO(), bson.M{"_id": id})
 	return err
 }
