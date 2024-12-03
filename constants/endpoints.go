@@ -1,10 +1,12 @@
 package constants
 
-const CategoryEndpointURL = "/api/category"
-const FeatureFlagEndpointURL = "/api/featureflag"
-const HelpdeskEndpointURL = "/api/ticket"
-const PlatformEndpointURL = "/api/platform"
-const PostEndpointURL = "/api/post"
-const ResetEndpointURL = "/api/reset"
-const TranslationEndpointURL = "/api/translations"
-const UserEndpointURL = "/api/user"
+const ApiURL = "/api"
+
+const CategoryEndpointURL = ApiURL + "/category"
+const FeatureFlagEndpointURL = ApiURL + "/featureflag"
+const HelpdeskEndpointURL = ApiURL + "/ticket"
+const PlatformEndpointURL = ApiURL + "/platform"
+const PostEndpointURL = ApiURL + "/post"
+const ResetEndpointURL = ApiURL + "reset"
+const TranslationEndpointURL = ApiURL + "/translations"
+const UserEndpointURL = ApiURL + "/user"

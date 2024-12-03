@@ -21,7 +21,7 @@ func (c *Controller) CtrTicketGet(w http.ResponseWriter, r *http.Request, opt ro
 
 	links := map[string]map[string]string{
 		"self": map[string]string{
-			"href": href,
+			"href": constants.HelpdeskEndpointURL,
 		},
 	}
 
