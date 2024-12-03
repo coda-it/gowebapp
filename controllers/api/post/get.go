@@ -1,6 +1,7 @@
 package post
 
 import (
+	"github.com/coda-it/gowebapp/constants"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
@@ -25,7 +26,7 @@ func (c *Controller) CtrPostGet(w http.ResponseWriter, r *http.Request, opt rout
 
 	links := map[string]map[string]string{
 		"self": map[string]string{
-			"href": href,
+			"href": constants.PostEndpointURL,
 		},
 	}
 

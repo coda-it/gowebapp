@@ -129,13 +129,13 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/api/user",
+				Path:      constants.UserEndpointURL,
 				Method:    "GET",
 				Handler:   userCtl.CtrUsersGet,
 				Protected: false,
 			},
 			{
-				Path:      "/api/user",
+				Path:      constants.UserEndpointURL,
 				Method:    "DELETE",
 				Handler:   userCtl.CtrUserDelete,
 				Protected: true,
@@ -148,25 +148,25 @@ func main() {
 		ID: "api-category",
 		Routes: []route.Route{
 			{
-				Path:      "/api/category",
+				Path:      constants.CategoryEndpointURL,
 				Method:    "GET",
 				Handler:   categoryCtl.CtrCategoryGet,
 				Protected: false,
 			},
 			{
-				Path:      "/api/category",
+				Path:      constants.CategoryEndpointURL,
 				Method:    "POST",
 				Handler:   categoryCtl.CtrCategoryPost,
 				Protected: true,
 			},
 			{
-				Path:      "/api/category",
+				Path:      constants.CategoryEndpointURL,
 				Method:    "DELETE",
 				Handler:   categoryCtl.CtrCategoryDelete,
 				Protected: true,
 			},
 			{
-				Path:      "/api/category",
+				Path:      constants.CategoryEndpointURL,
 				Method:    "PUT",
 				Handler:   categoryCtl.CtrCategoryPut,
 				Protected: true,
@@ -179,25 +179,25 @@ func main() {
 		ID: "api-post",
 		Routes: []route.Route{
 			{
-				Path:      "/api/post/{id}",
+				Path:      constants.PostEndpointURL + "/{id}",
 				Method:    "GET",
 				Handler:   postCtl.CtrPostGet,
 				Protected: false,
 			},
 			{
-				Path:      "/api/post/{id}",
+				Path:      constants.PostEndpointURL + "/{id}",
 				Method:    "POST",
 				Handler:   postCtl.CtrPostPost,
 				Protected: true,
 			},
 			{
-				Path:      "/api/post/{id}",
+				Path:      constants.PostEndpointURL + "/{id}",
 				Method:    "DELETE",
 				Handler:   postCtl.CtrPostDelete,
 				Protected: true,
 			},
 			{
-				Path:      "/api/post/{id}",
+				Path:      constants.PostEndpointURL + "/{id}",
 				Method:    "PUT",
 				Handler:   postCtl.CtrPostPut,
 				Protected: true,
@@ -210,31 +210,31 @@ func main() {
 		ID: "api-helpdesk",
 		Routes: []route.Route{
 			{
-				Path:      "/api/ticket",
+				Path:      constants.HelpdeskEndpointURL,
 				Method:    "POST",
 				Handler:   helpdeskApiCtl.CtrTicketPost,
 				Protected: false,
 			},
 			{
-				Path:      "/api/ticket",
+				Path:      constants.HelpdeskEndpointURL,
 				Method:    "PUT",
 				Handler:   helpdeskApiCtl.CtrTicketPut,
 				Protected: false,
 			},
 			{
-				Path:      "/api/ticket",
+				Path:      constants.HelpdeskEndpointURL,
 				Method:    "DELETE",
 				Handler:   helpdeskApiCtl.CtrTicketDelete,
 				Protected: false,
 			},
 			{
-				Path:      "/api/ticket",
+				Path:      constants.HelpdeskEndpointURL,
 				Method:    "GET",
 				Handler:   helpdeskApiCtl.CtrTicketGetAll,
 				Protected: false,
 			},
 			{
-				Path:      "/api/ticket/{id}",
+				Path:      constants.HelpdeskEndpointURL + "/{id}",
 				Method:    "GET",
 				Handler:   helpdeskApiCtl.CtrTicketGet,
 				Protected: false,
@@ -248,25 +248,25 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/api/translations",
+				Path:      constants.TranslationEndpointURL,
 				Method:    "POST",
 				Handler:   translationsApiCtl.CtrTranslationsPost,
 				Protected: true,
 			},
 			{
-				Path:      "/api/translations",
+				Path:      constants.TranslationEndpointURL,
 				Method:    "GET",
 				Handler:   translationsApiCtl.CtrTranslationsGet,
 				Protected: true,
 			},
 			{
-				Path:      "/api/translations",
+				Path:      constants.TranslationEndpointURL,
 				Method:    "PUT",
 				Handler:   translationsApiCtl.CtrTranslationPut,
 				Protected: true,
 			},
 			{
-				Path:      "/api/translations",
+				Path:      constants.TranslationEndpointURL,
 				Method:    "DELETE",
 				Handler:   translationsApiCtl.CtrTranslationDelete,
 				Protected: true,
@@ -280,25 +280,25 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/api/featureflag",
+				Path:      constants.FeatureFlagEndpointURL,
 				Method:    "POST",
 				Handler:   featureflagsApiCtl.CtrFeatureFlagsPost,
 				Protected: true,
 			},
 			{
-				Path:      "/api/featureflag",
+				Path:      constants.FeatureFlagEndpointURL,
 				Method:    "GET",
 				Handler:   featureflagsApiCtl.CtrFeatureFlagsGet,
 				Protected: true,
 			},
 			{
-				Path:      "/api/featureflag",
+				Path:      constants.FeatureFlagEndpointURL,
 				Method:    "PUT",
 				Handler:   featureflagsApiCtl.CtrFeatureFlagPut,
 				Protected: true,
 			},
 			{
-				Path:      "/api/featureflag",
+				Path:      constants.FeatureFlagEndpointURL,
 				Method:    "DELETE",
 				Handler:   featureflagsApiCtl.CtrFeatureFlagDelete,
 				Protected: true,
@@ -539,25 +539,25 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/api/reset",
+				Path:      constants.ResetEndpointURL,
 				Method:    "ALL",
 				Handler:   resetCtl.CtrResetDb,
 				Protected: false,
 			},
 			{
-				Path:      "/api/platform",
+				Path:      constants.PlatformEndpointURL,
 				Method:    "GET",
 				Handler:   platformCtl.CtrPlatformGet,
 				Protected: true,
 			},
 			{
-				Path:      "/api/platform",
+				Path:      constants.PlatformEndpointURL,
 				Method:    "POST",
 				Handler:   platformCtl.CtrPlatformPost,
 				Protected: true,
 			},
 			{
-				Path:      "/api/platform",
+				Path:      constants.PlatformEndpointURL,
 				Method:    "PUT",
 				Handler:   platformCtl.CtrPlatformPut,
 				Protected: true,

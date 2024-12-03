@@ -2,6 +2,7 @@ package featureflags
 
 import (
 	"encoding/json"
+	"github.com/coda-it/gowebapp/constants"
 	"github.com/coda-it/gowebapp/domain/models/featureflag"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
@@ -42,7 +43,7 @@ func (c *Controller) CtrFeatureFlagDelete(w http.ResponseWriter, r *http.Request
 
 	links := map[string]map[string]string{
 		"self": map[string]string{
-			"href": href,
+			"href": constants.FeatureFlagEndpointURL,
 		},
 	}
 

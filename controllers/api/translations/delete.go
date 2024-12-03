@@ -2,6 +2,7 @@ package translations
 
 import (
 	"encoding/json"
+	"github.com/coda-it/gowebapp/constants"
 	"github.com/coda-it/gowebapp/domain/models/translation"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
@@ -42,7 +43,7 @@ func (c *Controller) CtrTranslationDelete(w http.ResponseWriter, r *http.Request
 
 	links := map[string]map[string]string{
 		"self": map[string]string{
-			"href": href,
+			"href": constants.TranslationEndpointURL,
 		},
 	}
 

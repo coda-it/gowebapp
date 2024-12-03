@@ -2,6 +2,7 @@ package post
 
 import (
 	"encoding/json"
+	"github.com/coda-it/gowebapp/constants"
 	"github.com/coda-it/gowebapp/domain/models/post"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
@@ -44,7 +45,7 @@ func (c *Controller) CtrPostPut(w http.ResponseWriter, r *http.Request, opt rout
 
 	links := map[string]map[string]string{
 		"self": map[string]string{
-			"href": "/api/posts",
+			"href": constants.PostEndpointURL,
 		},
 	}
 

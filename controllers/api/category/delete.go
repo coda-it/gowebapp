@@ -2,6 +2,7 @@ package category
 
 import (
 	"encoding/json"
+	"github.com/coda-it/gowebapp/constants"
 	"github.com/coda-it/gowebapp/domain/models/category"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
@@ -36,7 +37,7 @@ func (c *Controller) CtrCategoryDelete(w http.ResponseWriter, r *http.Request, o
 
 	links := map[string]map[string]string{
 		"self": map[string]string{
-			"href": "/api/categories",
+			"href": constants.CategoryEndpointURL,
 		},
 	}
 
