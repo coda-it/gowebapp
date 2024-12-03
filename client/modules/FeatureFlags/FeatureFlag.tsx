@@ -1,8 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, Flex, FlexItem, Dropdown, Dialog, Switch } from 'graphen';
+import { Button, Flex, FlexItem, Dialog, Switch } from 'graphen';
 import classNames from 'classnames';
-import globalConfig from 'client/config';
 import * as actions from 'client/models/featureFlags/actions';
 import * as utils from 'client/utils/translations';
 
@@ -12,11 +11,7 @@ type Props = {
   isSwitched: boolean;
 };
 
-export default function FeatureFlag({
-  id,
-  initialKey,
-  isSwitched,
-}: Props) {
+export default function FeatureFlag({ id, initialKey, isSwitched }: Props) {
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
   const [featureFlagKey, setFeatureFlagKey] = useState(initialKey);
@@ -30,13 +25,7 @@ export default function FeatureFlag({
   }, [setIsEditing]);
 
   const handleUpdate = useCallback(() => {
-    dispatch(
-      actions.updateFeatureFlag(
-        id,
-        featureFlagKey,
-        featureFlagValue,
-      )
-    );
+    dispatch(actions.updateFeatureFlag(id, featureFlagKey, featureFlagValue));
   }, [dispatch, id, featureFlagKey, featureFlagValue]);
 
   const handleDelete = useCallback(() => {

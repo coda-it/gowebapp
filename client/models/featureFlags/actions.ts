@@ -3,7 +3,7 @@ import type * as types from './types';
 
 export const addFeatureFlag = (
   key: string,
-  value: boolean,
+  value: boolean
 ): types.AddFeatureFlagAction => ({
   type: actionTypes.ADD_FEATURE_FLAG,
   key,
@@ -24,7 +24,7 @@ export const fetchFeatureFlagsSuccess = (
 export const updateFeatureFlag = (
   id: string,
   key: string,
-  value: boolean,
+  value: boolean
 ): types.UpdateFeatureFlagAction => ({
   type: actionTypes.UPDATE_FEATURE_FLAG,
   id,

@@ -56,11 +56,7 @@ export function* onFetchFeatureFlags(): Iterable<any> {
   yield put(actions.fetchFeatureFlagsSuccess(featureFlags));
 }
 
-function callUpdateFeatureFlag(
-  id: string,
-  key: string,
-  value: boolean,
-) {
+function callUpdateFeatureFlag(id: string, key: string, value: boolean) {
   const request = new Request(constants.FEATURE_FLAGS_ENDPOINT, {
     method: 'PUT',
     body: JSON.stringify({

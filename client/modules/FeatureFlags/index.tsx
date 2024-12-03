@@ -11,7 +11,6 @@ import {
   PanelFooter,
   Switch,
 } from 'graphen';
-import globalConfig from 'client/config';
 import * as utils from 'client/utils/translations';
 import * as actions from 'client/models/featureFlags/actions';
 import * as selectors from 'client/models/featureFlags/selectors';
@@ -29,12 +28,7 @@ function FeatureFlags() {
   }, [dispatch]);
 
   const handleAddFeatureFlag = useCallback(() => {
-    dispatch(
-      actions.addFeatureFlag(
-        featureFlagKey,
-        featureFlagValue,
-      )
-    );
+    dispatch(actions.addFeatureFlag(featureFlagKey, featureFlagValue));
 
     setFeatureFlagKey('');
     setFeatureFlagValue(false);
@@ -52,11 +46,7 @@ function FeatureFlags() {
 
             return (
               <FlexItem key={`translation-item-${key}-${id}`}>
-                <FeatureFlag
-                  id={id}
-                  initialKey={key}
-                  isSwitched={value}
-                />
+                <FeatureFlag id={id} initialKey={key} isSwitched={value} />
               </FlexItem>
             );
           })}
@@ -84,10 +74,7 @@ function FeatureFlags() {
                   <label htmlFor="key" className="gc-input__label">
                     On / Off
                   </label>
-                  <Switch
-                    onChange={setFeatureFlagValue}
-                    type="success"
-                  />
+                  <Switch onChange={setFeatureFlagValue} type="success" />
                 </div>
               </FlexItem>
             </Flex>
