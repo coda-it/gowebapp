@@ -31,7 +31,7 @@ const (
 	AdminEditPostModuleURL     = AdminPostsModuleURL + "/edit"
 	AdminCategoriesModuleURL   = AdminModuleURL + "/categories"
 	AdminNewCategoryModuleURL  = AdminCategoriesModuleURL + "/new"
-	AdminEditCategoryModuleURL = AdminModuleURL + "/edit"
+	AdminEditCategoryModuleURL = AdminCategoriesModuleURL + "/edit"
 	AdminPlatformEditModuleURL = AdminModuleURL + "/platform/edit"
 	AdminHelpdeskModuleURL     = AdminModuleURL + "/helpdesk"
 	AdminTranslationsModuleURL = AdminModuleURL + "/translations"
