@@ -13,5 +13,7 @@ const platformConfig: config.Config = {
 delete window.config;
 // @ts-ignore - its a hack to load translations from the application template
 delete window.translation;
+// @ts-ignore - its a hack to load feature flags from the application template
+delete window.featureFlags;
 
 export default platformConfig;
