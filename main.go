@@ -109,13 +109,13 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/api/login",
+				Path:      constants.LoginEndpointURL,
 				Method:    "OPTIONS",
 				Handler:   apiLoginCtl.CtrLoginOptions,
 				Protected: false,
 			},
 			{
-				Path:      "/api/login",
+				Path:      constants.LoginEndpointURL,
 				Method:    "POST",
 				Handler:   apiLoginCtl.CtrLoginPost,
 				Protected: false,
@@ -312,7 +312,7 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/page",
+				Path:      constants.StaticModuleURL,
 				Method:    "GET",
 				Handler:   staticCtl.CtrStaticGet,
 				Protected: false,
@@ -326,7 +326,7 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/",
+				Path:      constants.LandingModuleURL,
 				Method:    "GET",
 				Handler:   landingCtl.CtrLandingGet,
 				Protected: false,
@@ -339,13 +339,13 @@ func main() {
 		ID: "post",
 		Routes: []route.Route{
 			{
-				Path:      "/post",
+				Path:      constants.PostModuleURL,
 				Method:    "ALL",
 				Handler:   postsCtl.CtrPosts,
 				Protected: false,
 			},
 			{
-				Path:      "/post/{id}",
+				Path:      constants.PostModuleURL + "/{id}",
 				Method:    "ALL",
 				Handler:   postsCtl.CtrPosts,
 				Protected: false,
@@ -358,13 +358,13 @@ func main() {
 		ID: "category",
 		Routes: []route.Route{
 			{
-				Path:      "/category",
+				Path:      constants.CategoryModuleURL,
 				Method:    "ALL",
 				Handler:   categoriesCtl.CtrCategories,
 				Protected: false,
 			},
 			{
-				Path:      "/category/{id}",
+				Path:      constants.CategoryModuleURL + "/{id}",
 				Method:    "ALL",
 				Handler:   postsCtl.CtrPosts,
 				Protected: false,
@@ -377,13 +377,13 @@ func main() {
 		ID: "helpdesk",
 		Routes: []route.Route{
 			{
-				Path:      "/helpdesk",
+				Path:      constants.HelpdeskModuleURL,
 				Method:    "ALL",
 				Handler:   helpdeskCtl.CtrHelpdesk,
 				Protected: false,
 			},
 			{
-				Path:      "/helpdesk/{id}",
+				Path:      constants.HelpdeskModuleURL + "/{id}",
 				Method:    "ALL",
 				Handler:   helpdeskCtl.CtrHelpdesk,
 				Protected: false,
@@ -396,67 +396,67 @@ func main() {
 		ID: "admin",
 		Routes: []route.Route{
 			{
-				Path:      "/admin",
+				Path:      constants.AdminModuleURL,
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
 			{
-				Path:      "/admin/posts",
+				Path:      constants.AdminPostsModuleURL,
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
 			{
-				Path:      "/admin/posts/new",
+				Path:      constants.AdminNewPostModuleURL,
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
 			{
-				Path:      "/admin/posts/edit/{id}",
+				Path:      constants.AdminEditPostModuleURL + "/{id}",
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
 			{
-				Path:      "/admin/categories",
+				Path:      constants.AdminCategoriesModuleURL,
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
 			{
-				Path:      "/admin/categories/new",
+				Path:      constants.AdminNewCategoryModuleURL,
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
 			{
-				Path:      "/admin/categories/edit/{id}",
+				Path:      constants.AdminEditCategoryModuleURL + "/{id}",
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
 			{
-				Path:      "/admin/platform/edit",
+				Path:      constants.AdminPlatformEditModuleURL,
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
 			{
-				Path:      "/admin/helpdesk",
+				Path:      constants.AdminHelpdeskModuleURL,
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
 			{
-				Path:      "/admin/translations",
+				Path:      constants.AdminTranslationsModuleURL,
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
 			{
-				Path:      "/admin/featureflags",
+				Path:      constants.AdminFeatureFlagsModuleURL,
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
@@ -470,13 +470,13 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/login/register",
+				Path:      constants.RegisterModuleURL,
 				Method:    "GET",
 				Handler:   userRegisterCtl.CtrRegisterGet,
 				Protected: false,
 			},
 			{
-				Path:      "/login/register",
+				Path:      constants.RegisterModuleURL,
 				Method:    "POST",
 				Handler:   userRegisterCtl.CtrRegisterPost,
 				Protected: false,
@@ -490,7 +490,7 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/login/activation/{id}",
+				Path:      constants.ActivationModuleURL + "/{id}",
 				Method:    "GET",
 				Handler:   userActivationCtl.CtrActivationGet,
 				Protected: false,
@@ -504,7 +504,7 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/login/logout",
+				Path:      constants.LogoutModuleURL,
 				Method:    "ALL",
 				Handler:   userLogoutCtl.AuthenticateLogout,
 				Protected: true,
@@ -518,13 +518,13 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/login",
+				Path:      constants.LoginModuleURL,
 				Method:    "GET",
 				Handler:   userLoginCtl.CtrLoginGet,
 				Protected: false,
 			},
 			{
-				Path:      "/login",
+				Path:      constants.LoginModuleURL,
 				Method:    "POST",
 				Handler:   userLoginCtl.CtrLoginPost,
 				Protected: false,
@@ -571,7 +571,7 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/account",
+				Path:      constants.AccountModuleURL,
 				Method:    "GET",
 				Handler:   accountCtl.CtrAccount,
 				Protected: true,
