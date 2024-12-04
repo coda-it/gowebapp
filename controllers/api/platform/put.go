@@ -2,6 +2,7 @@ package platform
 
 import (
 	"encoding/json"
+	"github.com/coda-it/gowebapp/constants"
 	"github.com/coda-it/gowebapp/domain/models/platform"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
@@ -45,7 +46,7 @@ func (c *Controller) CtrPlatformPut(w http.ResponseWriter, r *http.Request, opt 
 
 	links := map[string]map[string]string{
 		"self": map[string]string{
-			"href": href,
+			"href": constants.PlatformEndpointURL,
 		},
 	}
 

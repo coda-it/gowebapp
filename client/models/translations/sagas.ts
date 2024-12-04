@@ -107,7 +107,7 @@ function callDeleteTranslation(id: string) {
     .catch(() => 'Removing translation failed');
 }
 
-export function* onDeletePost({
+export function* onDeleteTranslation({
   id,
 }: types.DeleteTranslationAction): Iterable<any> {
   const response = yield call(callDeleteTranslation, id);

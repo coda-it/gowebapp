@@ -13,6 +13,8 @@ import * as helpdeskSagas from './models/helpdesk/sagas';
 import * as helpdeskActionTypes from './models/helpdesk/actionTypes';
 import * as translationsSagas from './models/translations/sagas';
 import * as translationActionTypes from './models/translations/actionTypes';
+import * as featureFlagsActionTypes from './models/featureFlags/actionTypes';
+import * as featureFlagsSagas from './models/featureFlags/sagas';
 
 function* root() {
   yield all([
@@ -73,7 +75,23 @@ function* root() {
     ),
     takeEvery(
       translationActionTypes.DELETE_TRANSLATION,
-      translationsSagas.onDeletePost
+      translationsSagas.onDeleteTranslation
+    ),
+    takeEvery(
+      featureFlagsActionTypes.ADD_FEATURE_FLAG,
+      featureFlagsSagas.onAddFeatureFlag
+    ),
+    takeEvery(
+      featureFlagsActionTypes.FETCH_FEATURE_FLAGS,
+      featureFlagsSagas.onFetchFeatureFlags
+    ),
+    takeEvery(
+      featureFlagsActionTypes.UPDATE_FEATURE_FLAG,
+      featureFlagsSagas.onUpdateFeatureFlag
+    ),
+    takeEvery(
+      featureFlagsActionTypes.DELETE_FATURE_FLAG,
+      featureFlagsSagas.onDeleteFeatureFlag
     ),
   ]);
 }

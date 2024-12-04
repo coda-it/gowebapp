@@ -11,6 +11,7 @@ import (
 	userActivationController "github.com/coda-it/gowebapp/controllers/activation"
 	adminController "github.com/coda-it/gowebapp/controllers/admin"
 	categoryApiController "github.com/coda-it/gowebapp/controllers/api/category"
+	"github.com/coda-it/gowebapp/controllers/api/featureflags"
 	helpdeskApiController "github.com/coda-it/gowebapp/controllers/api/helpdesk"
 	loginApiController "github.com/coda-it/gowebapp/controllers/api/login"
 	"github.com/coda-it/gowebapp/controllers/api/platform"
@@ -32,12 +33,14 @@ import (
 	"github.com/coda-it/gowebapp/data/persistence"
 	categoryRepository "github.com/coda-it/gowebapp/data/repositories/category"
 	dynamictranslationRepository "github.com/coda-it/gowebapp/data/repositories/dynamictranslation"
+	featureflagRepository "github.com/coda-it/gowebapp/data/repositories/featureflag"
 	helpdeskRepository "github.com/coda-it/gowebapp/data/repositories/helpdesk"
 	platformRepository "github.com/coda-it/gowebapp/data/repositories/platform"
 	postRepository "github.com/coda-it/gowebapp/data/repositories/post"
 	translationRepository "github.com/coda-it/gowebapp/data/repositories/translation"
 	userRepository "github.com/coda-it/gowebapp/data/repositories/user"
 	categoryUsecases "github.com/coda-it/gowebapp/domain/usecases/category"
+	featureflagUsecases "github.com/coda-it/gowebapp/domain/usecases/featureflag"
 	helpdeskUsecases "github.com/coda-it/gowebapp/domain/usecases/helpdesk"
 	platformUsecases "github.com/coda-it/gowebapp/domain/usecases/platform"
 	postUsecases "github.com/coda-it/gowebapp/domain/usecases/post"
@@ -86,8 +89,10 @@ func main() {
 	postUsecasesEntity := postUsecases.New(&postRepositoryEntity)
 	userRepositoryEntity := userRepository.New(store)
 	userUsecaseEntity := userUsecases.New(&userRepositoryEntity)
-	helpdeskRepository := helpdeskRepository.New(store)
-	helpdeskUsecases := helpdeskUsecases.New(&helpdeskRepository)
+	helpdeskRepositoryEntity := helpdeskRepository.New(store)
+	helpdeskUsecasesEntity := helpdeskUsecases.New(&helpdeskRepositoryEntity)
+	featureflagsRepositoryEntity := featureflagRepository.New(store)
+	featureflagUsecasesEntity := featureflagUsecases.New(&featureflagsRepositoryEntity)
 
 	baseController := base.New(mailer.New(
 		[]string{},
@@ -96,7 +101,7 @@ func main() {
 		os.Getenv("WEBAPP_MAILER_PASSWORD"),
 		os.Getenv("WEBAPP_MAILER_SMTP_PORT"),
 		os.Getenv("WEBAPP_MAILER_SMTP_AUTHURL"),
-	), appConfig, platformUsecasesEntity, translationUsecasesEntity)
+	), appConfig, platformUsecasesEntity, translationUsecasesEntity, featureflagUsecasesEntity)
 
 	apiLoginCtl := loginApiController.New(baseController, "api-login", *userUsecaseEntity)
 	apiLoginModule := module.Module{
@@ -104,13 +109,13 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/api/login",
+				Path:      constants.LoginEndpointURL,
 				Method:    "OPTIONS",
 				Handler:   apiLoginCtl.CtrLoginOptions,
 				Protected: false,
 			},
 			{
-				Path:      "/api/login",
+				Path:      constants.LoginEndpointURL,
 				Method:    "POST",
 				Handler:   apiLoginCtl.CtrLoginPost,
 				Protected: false,
@@ -124,13 +129,13 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/api/user",
+				Path:      constants.UserEndpointURL,
 				Method:    "GET",
 				Handler:   userCtl.CtrUsersGet,
 				Protected: false,
 			},
 			{
-				Path:      "/api/user",
+				Path:      constants.UserEndpointURL,
 				Method:    "DELETE",
 				Handler:   userCtl.CtrUserDelete,
 				Protected: true,
@@ -143,25 +148,25 @@ func main() {
 		ID: "api-category",
 		Routes: []route.Route{
 			{
-				Path:      "/api/category",
+				Path:      constants.CategoryEndpointURL,
 				Method:    "GET",
 				Handler:   categoryCtl.CtrCategoryGet,
 				Protected: false,
 			},
 			{
-				Path:      "/api/category",
+				Path:      constants.CategoryEndpointURL,
 				Method:    "POST",
 				Handler:   categoryCtl.CtrCategoryPost,
 				Protected: true,
 			},
 			{
-				Path:      "/api/category",
+				Path:      constants.CategoryEndpointURL,
 				Method:    "DELETE",
 				Handler:   categoryCtl.CtrCategoryDelete,
 				Protected: true,
 			},
 			{
-				Path:      "/api/category",
+				Path:      constants.CategoryEndpointURL,
 				Method:    "PUT",
 				Handler:   categoryCtl.CtrCategoryPut,
 				Protected: true,
@@ -174,25 +179,25 @@ func main() {
 		ID: "api-post",
 		Routes: []route.Route{
 			{
-				Path:      "/api/post/{id}",
+				Path:      constants.PostEndpointURL + "/{id}",
 				Method:    "GET",
 				Handler:   postCtl.CtrPostGet,
 				Protected: false,
 			},
 			{
-				Path:      "/api/post/{id}",
+				Path:      constants.PostEndpointURL + "/{id}",
 				Method:    "POST",
 				Handler:   postCtl.CtrPostPost,
 				Protected: true,
 			},
 			{
-				Path:      "/api/post/{id}",
+				Path:      constants.PostEndpointURL + "/{id}",
 				Method:    "DELETE",
 				Handler:   postCtl.CtrPostDelete,
 				Protected: true,
 			},
 			{
-				Path:      "/api/post/{id}",
+				Path:      constants.PostEndpointURL + "/{id}",
 				Method:    "PUT",
 				Handler:   postCtl.CtrPostPut,
 				Protected: true,
@@ -200,36 +205,36 @@ func main() {
 		},
 	}
 
-	helpdeskApiCtl := helpdeskApiController.New(baseController, "api-helpdesk", *helpdeskUsecases, *platformUsecasesEntity)
+	helpdeskApiCtl := helpdeskApiController.New(baseController, "api-helpdesk", *helpdeskUsecasesEntity, *platformUsecasesEntity)
 	helpdeskApiModule := module.Module{
 		ID: "api-helpdesk",
 		Routes: []route.Route{
 			{
-				Path:      "/api/ticket",
+				Path:      constants.HelpdeskEndpointURL,
 				Method:    "POST",
 				Handler:   helpdeskApiCtl.CtrTicketPost,
 				Protected: false,
 			},
 			{
-				Path:      "/api/ticket",
+				Path:      constants.HelpdeskEndpointURL,
 				Method:    "PUT",
 				Handler:   helpdeskApiCtl.CtrTicketPut,
 				Protected: false,
 			},
 			{
-				Path:      "/api/ticket",
+				Path:      constants.HelpdeskEndpointURL,
 				Method:    "DELETE",
 				Handler:   helpdeskApiCtl.CtrTicketDelete,
 				Protected: false,
 			},
 			{
-				Path:      "/api/ticket",
+				Path:      constants.HelpdeskEndpointURL,
 				Method:    "GET",
 				Handler:   helpdeskApiCtl.CtrTicketGetAll,
 				Protected: false,
 			},
 			{
-				Path:      "/api/ticket/{id}",
+				Path:      constants.HelpdeskEndpointURL + "/{id}",
 				Method:    "GET",
 				Handler:   helpdeskApiCtl.CtrTicketGet,
 				Protected: false,
@@ -243,27 +248,59 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/api/translations",
+				Path:      constants.TranslationEndpointURL,
 				Method:    "POST",
 				Handler:   translationsApiCtl.CtrTranslationsPost,
 				Protected: true,
 			},
 			{
-				Path:      "/api/translations",
+				Path:      constants.TranslationEndpointURL,
 				Method:    "GET",
 				Handler:   translationsApiCtl.CtrTranslationsGet,
 				Protected: true,
 			},
 			{
-				Path:      "/api/translations",
+				Path:      constants.TranslationEndpointURL,
 				Method:    "PUT",
 				Handler:   translationsApiCtl.CtrTranslationPut,
 				Protected: true,
 			},
 			{
-				Path:      "/api/translations",
+				Path:      constants.TranslationEndpointURL,
 				Method:    "DELETE",
 				Handler:   translationsApiCtl.CtrTranslationDelete,
+				Protected: true,
+			},
+		},
+	}
+
+	featureflagsApiCtl := featureflags.New(baseController, "api-featureflag", *featureflagUsecasesEntity, *platformUsecasesEntity)
+	featureflagsApiModule := module.Module{
+		ID:      "featureflag",
+		Enabled: true,
+		Routes: []route.Route{
+			{
+				Path:      constants.FeatureFlagEndpointURL,
+				Method:    "POST",
+				Handler:   featureflagsApiCtl.CtrFeatureFlagsPost,
+				Protected: true,
+			},
+			{
+				Path:      constants.FeatureFlagEndpointURL,
+				Method:    "GET",
+				Handler:   featureflagsApiCtl.CtrFeatureFlagsGet,
+				Protected: true,
+			},
+			{
+				Path:      constants.FeatureFlagEndpointURL,
+				Method:    "PUT",
+				Handler:   featureflagsApiCtl.CtrFeatureFlagPut,
+				Protected: true,
+			},
+			{
+				Path:      constants.FeatureFlagEndpointURL,
+				Method:    "DELETE",
+				Handler:   featureflagsApiCtl.CtrFeatureFlagDelete,
 				Protected: true,
 			},
 		},
@@ -275,7 +312,7 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/page",
+				Path:      constants.StaticModuleURL,
 				Method:    "GET",
 				Handler:   staticCtl.CtrStaticGet,
 				Protected: false,
@@ -289,7 +326,7 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/",
+				Path:      constants.LandingModuleURL,
 				Method:    "GET",
 				Handler:   landingCtl.CtrLandingGet,
 				Protected: false,
@@ -302,13 +339,13 @@ func main() {
 		ID: "post",
 		Routes: []route.Route{
 			{
-				Path:      "/post",
+				Path:      constants.PostModuleURL,
 				Method:    "ALL",
 				Handler:   postsCtl.CtrPosts,
 				Protected: false,
 			},
 			{
-				Path:      "/post/{id}",
+				Path:      constants.PostModuleURL + "/{id}",
 				Method:    "ALL",
 				Handler:   postsCtl.CtrPosts,
 				Protected: false,
@@ -321,13 +358,13 @@ func main() {
 		ID: "category",
 		Routes: []route.Route{
 			{
-				Path:      "/category",
+				Path:      constants.CategoryModuleURL,
 				Method:    "ALL",
 				Handler:   categoriesCtl.CtrCategories,
 				Protected: false,
 			},
 			{
-				Path:      "/category/{id}",
+				Path:      constants.CategoryModuleURL + "/{id}",
 				Method:    "ALL",
 				Handler:   postsCtl.CtrPosts,
 				Protected: false,
@@ -340,13 +377,13 @@ func main() {
 		ID: "helpdesk",
 		Routes: []route.Route{
 			{
-				Path:      "/helpdesk",
+				Path:      constants.HelpdeskModuleURL,
 				Method:    "ALL",
 				Handler:   helpdeskCtl.CtrHelpdesk,
 				Protected: false,
 			},
 			{
-				Path:      "/helpdesk/{id}",
+				Path:      constants.HelpdeskModuleURL + "/{id}",
 				Method:    "ALL",
 				Handler:   helpdeskCtl.CtrHelpdesk,
 				Protected: false,
@@ -359,61 +396,67 @@ func main() {
 		ID: "admin",
 		Routes: []route.Route{
 			{
-				Path:      "/admin",
+				Path:      constants.AdminModuleURL,
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
 			{
-				Path:      "/admin/posts",
+				Path:      constants.AdminPostsModuleURL,
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
 			{
-				Path:      "/admin/posts/new",
+				Path:      constants.AdminNewPostModuleURL,
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
 			{
-				Path:      "/admin/posts/edit/{id}",
+				Path:      constants.AdminEditPostModuleURL + "/{id}",
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
 			{
-				Path:      "/admin/categories",
+				Path:      constants.AdminCategoriesModuleURL,
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
 			{
-				Path:      "/admin/categories/new",
+				Path:      constants.AdminNewCategoryModuleURL,
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
 			{
-				Path:      "/admin/categories/edit/{id}",
+				Path:      constants.AdminEditCategoryModuleURL + "/{id}",
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
 			{
-				Path:      "/admin/platform/edit",
+				Path:      constants.AdminPlatformEditModuleURL,
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
 			{
-				Path:      "/admin/helpdesk",
+				Path:      constants.AdminHelpdeskModuleURL,
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
 			},
 			{
-				Path:      "/admin/translations",
+				Path:      constants.AdminTranslationsModuleURL,
+				Method:    "ALL",
+				Handler:   adminCtl.CtrAdmin,
+				Protected: true,
+			},
+			{
+				Path:      constants.AdminFeatureFlagsModuleURL,
 				Method:    "ALL",
 				Handler:   adminCtl.CtrAdmin,
 				Protected: true,
@@ -427,13 +470,13 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/login/register",
+				Path:      constants.RegisterModuleURL,
 				Method:    "GET",
 				Handler:   userRegisterCtl.CtrRegisterGet,
 				Protected: false,
 			},
 			{
-				Path:      "/login/register",
+				Path:      constants.RegisterModuleURL,
 				Method:    "POST",
 				Handler:   userRegisterCtl.CtrRegisterPost,
 				Protected: false,
@@ -447,7 +490,7 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/login/activation/{id}",
+				Path:      constants.ActivationModuleURL + "/{id}",
 				Method:    "GET",
 				Handler:   userActivationCtl.CtrActivationGet,
 				Protected: false,
@@ -461,7 +504,7 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/login/logout",
+				Path:      constants.LogoutModuleURL,
 				Method:    "ALL",
 				Handler:   userLogoutCtl.AuthenticateLogout,
 				Protected: true,
@@ -475,13 +518,13 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/login",
+				Path:      constants.LoginModuleURL,
 				Method:    "GET",
 				Handler:   userLoginCtl.CtrLoginGet,
 				Protected: false,
 			},
 			{
-				Path:      "/login",
+				Path:      constants.LoginModuleURL,
 				Method:    "POST",
 				Handler:   userLoginCtl.CtrLoginPost,
 				Protected: false,
@@ -496,25 +539,25 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/api/reset",
+				Path:      constants.ResetEndpointURL,
 				Method:    "ALL",
 				Handler:   resetCtl.CtrResetDb,
 				Protected: false,
 			},
 			{
-				Path:      "/api/platform",
+				Path:      constants.PlatformEndpointURL,
 				Method:    "GET",
 				Handler:   platformCtl.CtrPlatformGet,
 				Protected: true,
 			},
 			{
-				Path:      "/api/platform",
+				Path:      constants.PlatformEndpointURL,
 				Method:    "POST",
 				Handler:   platformCtl.CtrPlatformPost,
 				Protected: true,
 			},
 			{
-				Path:      "/api/platform",
+				Path:      constants.PlatformEndpointURL,
 				Method:    "PUT",
 				Handler:   platformCtl.CtrPlatformPut,
 				Protected: true,
@@ -528,7 +571,7 @@ func main() {
 		Enabled: true,
 		Routes: []route.Route{
 			{
-				Path:      "/account",
+				Path:      constants.AccountModuleURL,
 				Method:    "GET",
 				Handler:   accountCtl.CtrAccount,
 				Protected: true,
@@ -557,6 +600,7 @@ func main() {
 		helpdeskApiModule,
 		accountModule,
 		translationsApiModule,
+		featureflagsApiModule,
 	}
 
 	appInstance := goappframe.New(goappframe.Internals{

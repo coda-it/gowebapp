@@ -2,6 +2,7 @@ package helpdesk
 
 import (
 	"encoding/json"
+	"github.com/coda-it/gowebapp/constants"
 	"github.com/coda-it/gowebapp/domain/models/ticket"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
@@ -38,7 +39,7 @@ func (c *Controller) CtrTicketPost(w http.ResponseWriter, r *http.Request, opt r
 
 	links := map[string]map[string]string{
 		"self": map[string]string{
-			"href": href,
+			"href": constants.HelpdeskEndpointURL,
 		},
 	}
 

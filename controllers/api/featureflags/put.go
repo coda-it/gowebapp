@@ -1,9 +1,9 @@
-package translations
+package featureflags
 
 import (
 	"encoding/json"
 	"github.com/coda-it/gowebapp/constants"
-	"github.com/coda-it/gowebapp/domain/models/translation"
+	"github.com/coda-it/gowebapp/domain/models/featureflag"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
@@ -11,8 +11,8 @@ import (
 	"net/http"
 )
 
-// CtrTranslationPut - update translation
-func (c *Controller) CtrTranslationPut(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
+// CtrFeatureFlagPut - update feature flag
+func (c *Controller) CtrFeatureFlagPut(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	requestBody, err := ioutil.ReadAll(r.Body)
 
 	if err != nil {
@@ -21,31 +21,31 @@ func (c *Controller) CtrTranslationPut(w http.ResponseWriter, r *http.Request, o
 	}
 	defer r.Body.Close()
 
-	var editedTranslation translation.Translation
-	err = json.Unmarshal(requestBody, &editedTranslation)
+	var editedFeatureFlag featureflag.FeatureFlag
+	err = json.Unmarshal(requestBody, &editedFeatureFlag)
 	if err != nil {
 		c.HandleErrorResponse(w, err.Error())
 		return
 	}
 
 	application := c.PlatformUsecases.GetApplicationByDomain(c.Config, r)
-	editedTranslation.AppID = application.ID
+	editedFeatureFlag.AppID = application.ID
 
-	err = c.TranslationsUsecases.UpdateDynamicTranslation(editedTranslation)
+	err = c.FeatureFlagUsecases.UpdateFeatureFlag(editedFeatureFlag)
 
 	if err != nil {
-		c.HandleErrorResponse(w, "error updating translation")
+		c.HandleErrorResponse(w, "error updating feature flag")
 	}
 
 	data := struct {
-		Translation translation.Translation `json:"translation"`
+		FeatureFlag featureflag.FeatureFlag `json:"featureFlag"`
 	}{
-		editedTranslation,
+		editedFeatureFlag,
 	}
 
 	links := map[string]map[string]string{
 		"self": map[string]string{
-			"href": constants.TranslationEndpointURL,
+			"href": constants.FeatureFlagEndpointURL,
 		},
 	}
 

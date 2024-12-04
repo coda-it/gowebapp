@@ -16,7 +16,7 @@ func (c *Controller) CtrLoginPost(w http.ResponseWriter, r *http.Request, opt ro
 
 	links := map[string]map[string]string{
 		"self": map[string]string{
-			"href": "/api/",
+			"href": constants.LoginEndpointURL,
 		},
 	}
 

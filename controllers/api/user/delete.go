@@ -1,6 +1,7 @@
 package user
 
 import (
+	"github.com/coda-it/gowebapp/constants"
 	"github.com/coda-it/gowebapp/domain/models/user"
 	userHelpers "github.com/coda-it/gowebapp/helpers/user"
 	"github.com/coda-it/gowebserver/router"
@@ -33,7 +34,7 @@ func (c *Controller) CtrUserDelete(w http.ResponseWriter, r *http.Request, opt r
 
 	links := map[string]map[string]string{
 		"self": map[string]string{
-			"href": "/api/users",
+			"href": constants.UserEndpointURL,
 		},
 	}
 

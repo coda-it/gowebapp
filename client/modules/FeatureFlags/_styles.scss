@@ -1,0 +1,13 @@
+.translation-dialog {
+  @include gx-phone {
+    width: 80%;
+  }
+
+  @include gx-tablet {
+    width: 50%;
+  }
+
+  @include gx-desktop {
+    width: 50%;
+  }
+}

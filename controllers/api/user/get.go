@@ -1,6 +1,7 @@
 package user
 
 import (
+	"github.com/coda-it/gowebapp/constants"
 	userHelpers "github.com/coda-it/gowebapp/helpers/user"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
@@ -12,7 +13,7 @@ import (
 func (c *Controller) CtrUsersGet(w http.ResponseWriter, r *http.Request, opt router.URLOptions, sm session.ISessionManager, s store.IStore) {
 	links := map[string]map[string]string{
 		"self": map[string]string{
-			"href": "/api/user",
+			"href": constants.UserEndpointURL,
 		},
 	}
 

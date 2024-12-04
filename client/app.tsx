@@ -17,6 +17,7 @@ import CategoryEditor from './modules/CategoryEditor';
 import PlatformEditor from './modules/PlatformEditor';
 import HelpdeskAdmin from './modules/HelpdeskAdmin';
 import Translations from './modules/Translations';
+import FeatureFlags from './modules/FeatureFlags';
 import Account from './modules/Account';
 import sagas from './sagas';
 import reducers from './reducers';
@@ -35,6 +36,7 @@ const moduleRegistry = {
   post: Posts,
   category: Categories,
   helpdesk: Helpdesk,
+  featureFlags: FeatureFlags,
 };
 
 if (appContainer) {
@@ -58,6 +60,7 @@ if (appContainer) {
           <Route exact path="/admin/posts/edit/:id?" component={PostEditor} />
           <Route exact path="/admin/platform/edit" component={PlatformEditor} />
           <Route exact path="/admin/translations" component={Translations} />
+          <Route exact path="/admin/featureflags" component={FeatureFlags} />
           <Route
             exact
             path="/admin/categories"
