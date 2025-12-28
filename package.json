@@ -1,6 +1,6 @@
 {
   "name": "gowebapp",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "A customizable web platform",
   "main": "index.js",
   "scripts": {
