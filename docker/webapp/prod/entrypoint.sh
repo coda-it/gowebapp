@@ -1,8 +1,3 @@
-mkdir -p /root/volume \
-  /root/go/src/github.com/coda-it/gowebapp/public \
-  /root/go/src/github.com/coda-it/gowebapp/views \
-  /root/go/src/github.com/coda-it/gowebapp/translations
-
 echo "Waiting for mounts..."
 i=0
 while [ $i -lt 30 ]; do
@@ -36,9 +31,12 @@ done
 echo
 echo "=== Starting app ==="
 
-ln -sfn /home/volume/config        /root/volume
-ln -sfn /home/volume/public        /root/go/src/github.com/coda-it/gowebapp/public
-ln -sfn /home/volume/views         /root/go/src/github.com/coda-it/gowebapp/views
-ln -sfn /home/volume/translations  /root/go/src/github.com/coda-it/gowebapp/translations
+APP=/root/go/src/github.com/coda-it/gowebapp
 
-cd /root/go/src/github.com/coda-it/gowebapp && ./gowebapp
+rm -rf "$APP/public" "$APP/views" "$APP/translations"
+ln -sfn /home/volume/public        "$APP/public"
+ln -sfn /home/volume/views         "$APP/views"
+ln -sfn /home/volume/translations  "$APP/translations"
+
+cd "$APP"
+exec ./gowebapp
