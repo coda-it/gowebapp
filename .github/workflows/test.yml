@@ -33,8 +33,8 @@ jobs:
           docker run -d --net=host mongo:7.0
           sleep 10
           make image IMAGE_NAME=webapp ENV=prod V=$APP_VERSION
-          docker run -d --net=host -e WEBAPP_ENV=test -e WEBAPP_CONFIGCAT_KEY=$WEBAPP_CONFIGCAT_KEY  oszura/webapp-prod:$APP_VERSION
+          docker run -d --name webapp-test --net=host -e WEBAPP_ENV=test -e WEBAPP_CONFIGCAT_KEY=$WEBAPP_CONFIGCAT_KEY  oszura/webapp-prod:$APP_VERSION
           sleep 5
-          npm run cypress:run
+          npm run cypress:run || (docker logs --tail=300 webapp-test && exit 1)
       - name: Build application
         run: make all ENV=prod

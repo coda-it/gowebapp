@@ -2,15 +2,18 @@ package user
 
 import (
 	"errors"
+	"net/http"
+	"time"
+
+	"github.com/coda-it/goappframe/config"
 	goutilsSession "github.com/coda-it/goutils/session"
 	"github.com/coda-it/gowebapp/constants"
 	userModel "github.com/coda-it/gowebapp/domain/models/user"
 	userHelpers "github.com/coda-it/gowebapp/helpers/user"
+	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/session"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"net/http"
-	"time"
 )
 
 // Usecase - user usecases
@@ -29,11 +32,10 @@ func New(ur IRepository) *Usecase {
 func (u *Usecase) Register(appID string, username string, password string, isRoot bool) (userModel.User, error) {
 	_, err := u.userRepository.Find(bson.M{
 		"username": username,
-		"password": password,
 	})
 
 	if err == nil {
-		return userModel.User{}, errors.New("User already exists")
+		return userModel.User{}, utils.ErrUserAlreadyExists
 	}
 
 	return u.userRepository.Add(appID, username, password, isRoot)
@@ -52,10 +54,11 @@ func (u *Usecase) Activate(ID string) error {
 	return u.userRepository.Update(bson.M{"_id": id}, bson.M{"$set": bson.M{"isActivated": true}})
 }
 
-func (u *Usecase) authenticate(username string, password string, sid string) (userModel.User, error) {
+func (u *Usecase) authenticate(username string, password string, appId string, sid string) (userModel.User, error) {
 	authenticatedUser, err := u.userRepository.Find(bson.M{
 		"username": username,
 		"password": password,
+		"appId":    appId,
 	})
 	if err != nil {
 		return userModel.User{}, errors.New("user '" + username + "' not found")
@@ -66,13 +69,13 @@ func (u *Usecase) authenticate(username string, password string, sid string) (us
 }
 
 // CreateClientSession - checks does user exist in the repository and sets session in repository and browser
-func (u *Usecase) CreateClientSession(w http.ResponseWriter, r *http.Request, username string, password string, sm session.ISessionManager) (userModel.User, error) {
+func (u *Usecase) CreateClientSession(w http.ResponseWriter, r *http.Request, username string, password string, application config.App, sm session.ISessionManager) (userModel.User, error) {
 	expiration := time.Now().Add(365 * 24 * time.Hour)
 	t := time.Now()
 	timeStr := t.Format(time.RFC850)
 	cookieValue := goutilsSession.CreateSessionID(username, password, timeStr)
 
-	authenticatedUser, err := u.authenticate(username, password, cookieValue)
+	authenticatedUser, err := u.authenticate(username, password, application.ID, cookieValue)
 	isActivated := userHelpers.IsActivated(authenticatedUser)
 
 	if err == nil && isActivated {

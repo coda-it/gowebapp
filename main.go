@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/coda-it/goappframe"
 	"github.com/coda-it/goappframe/module"
 	"github.com/coda-it/goappframe/route"
@@ -47,7 +49,6 @@ import (
 	translationUsecases "github.com/coda-it/gowebapp/domain/usecases/translation"
 	userUsecases "github.com/coda-it/gowebapp/domain/usecases/user"
 	"github.com/coda-it/gowebapp/utils"
-	"os"
 )
 
 //go:generate bash ./scripts/version.sh ./scripts/version_tpl.txt ./version.go
@@ -103,7 +104,7 @@ func main() {
 		os.Getenv("WEBAPP_MAILER_SMTP_AUTHURL"),
 	), appConfig, platformUsecasesEntity, translationUsecasesEntity, featureflagUsecasesEntity)
 
-	apiLoginCtl := loginApiController.New(baseController, "api-login", *userUsecaseEntity)
+	apiLoginCtl := loginApiController.New(baseController, "api-login", *userUsecaseEntity, *platformUsecasesEntity)
 	apiLoginModule := module.Module{
 		ID:      "api-login",
 		Enabled: true,

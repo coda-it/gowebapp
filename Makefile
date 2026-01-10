@@ -74,7 +74,7 @@ endif
 
 .PHONY: run-services
 run-services:
-	cd docker/webapp/dev && docker-compose --verbose up
+	cd docker/webapp/dev && docker compose --verbose up
 
 ### Utilities
 .PHONY: version

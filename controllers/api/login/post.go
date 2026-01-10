@@ -1,13 +1,14 @@
 package login
 
 import (
+	"net/http"
+
 	"github.com/coda-it/goutils/hash"
 	goutilsSession "github.com/coda-it/goutils/session"
 	"github.com/coda-it/gowebapp/constants"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
-	"net/http"
 )
 
 // CtrLoginPost - handle login page and login process
@@ -28,8 +29,9 @@ func (c *Controller) CtrLoginPost(w http.ResponseWriter, r *http.Request, opt ro
 	if !isLogged {
 		username := r.PostFormValue("username")
 		password := hash.EncryptString(r.PostFormValue("password"))
+		application := c.PlatformUsecases.GetApplicationByDomain(c.Config, r)
 
-		_, err := c.UserUsecases.CreateClientSession(w, r, username, password, sm)
+		_, err := c.UserUsecases.CreateClientSession(w, r, username, password, application, sm)
 
 		if err != nil {
 			data := struct {

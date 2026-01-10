@@ -1,3 +1,11 @@
 {
-  "HelloWorld": "Hello World"
+  "HelloWorld": "Hello World",
+  "RegisterUserTitle": "Register new user",
+  "RegisterUserErrorUnknown": "Error registering user",
+  "RegisterUserErrorUserExists": "User already exists, please choose another user name",
+  "RegisterUserEmailLabel": "Email address",
+  "RegisterUserPasswordLabel": "Password",
+  "RegisterUserRegisterButton": "Register",
+  "RegisterUserLoginButton": "Login",
+  "RegisterUserIfHaveAccount": "if you have an account already"
 }
