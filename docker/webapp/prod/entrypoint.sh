@@ -1,3 +1,5 @@
+APP=/root/go/src/github.com/coda-it/gowebapp
+
 if [ "${WEBAPP_ENV:-}" != "test" ]; then
   echo "=== Creating mount symlinks ==="
 
