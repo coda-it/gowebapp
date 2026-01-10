@@ -8,14 +8,14 @@ import (
 
 // Controller - register controller
 type Controller struct {
-	*base.Controller
+	base.BaseController
 	moduleID         string
 	UserUsecases     userUsecases.Usecase
 	PlatformUsecases platformUsecases.Usecase
 }
 
 // New - creates instance of register Controller
-func New(b *base.Controller, moduleID string, uu userUsecases.Usecase, pu platformUsecases.Usecase) *Controller {
+func New(b base.BaseController, moduleID string, uu userUsecases.Usecase, pu platformUsecases.Usecase) *Controller {
 	return &Controller{
 		b,
 		moduleID,

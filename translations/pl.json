@@ -1,5 +1,13 @@
 {
   "HelloWorld": "Witaj Świecie",
+  "RegisterUserTitle": "Rejestracja użytkownika",
+  "RegisterUserErrorUnknown": "Błąd podczas rejestracji użytkownika",
+  "RegisterUserErrorUserExists": "Błąd: użytkownik już istnieje, wybierz inną nazwę użytkownika",
+  "RegisterUserEmailLabel": "Adres e-mail",
+  "RegisterUserPasswordLabel": "Hasło",
+  "RegisterUserRegisterButton": "Zarejestruj",
+  "RegisterUserLoginButton": "Zaloguj",
+  "RegisterUserIfHaveAccount": "jeżeli masz już konto",
   "Navigation_post": "Posty",
   "Navigation_category": "Kategorie",
   "Navigation_helpdesk": "Helpdesk",

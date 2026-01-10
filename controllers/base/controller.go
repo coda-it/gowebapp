@@ -2,6 +2,12 @@ package base
 
 import (
 	"encoding/json"
+	"html/template"
+	"maps"
+	"net/http"
+	"os"
+	"path/filepath"
+
 	"github.com/coda-it/goappframe/config" // this probably should not rely on application layer
 	"github.com/coda-it/goappframe/page"   // this probably should not rely on application layer
 	"github.com/coda-it/goutils/logger"
@@ -15,11 +21,6 @@ import (
 	"github.com/coda-it/gowebapp/utils"
 	"github.com/coda-it/gowebserver/helpers"
 	"github.com/coda-it/gowebserver/session"
-	"html/template"
-	"maps"
-	"net/http"
-	"os"
-	"path/filepath"
 )
 
 // Controller - base controller
@@ -233,4 +234,12 @@ func (c *Controller) HandleJSONResponse(w http.ResponseWriter, data interface{},
 	if err != nil {
 		c.HandleErrorResponse(w, "error parsing JSON response")
 	}
+}
+
+func (c *Controller) GetMailer() mailer.IMailer {
+	return c.Mailer
+}
+
+func (c *Controller) GetConfig() config.Config {
+	return c.Config
 }

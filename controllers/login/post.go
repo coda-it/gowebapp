@@ -1,12 +1,13 @@
 package login
 
 import (
+	"net/http"
+
 	"github.com/coda-it/goutils/hash"
 	"github.com/coda-it/goutils/logger"
 	"github.com/coda-it/gowebserver/router"
 	"github.com/coda-it/gowebserver/session"
 	"github.com/coda-it/gowebserver/store"
-	"net/http"
 )
 
 // CtrLoginPost - authenticates user
@@ -19,15 +20,15 @@ func (c *Controller) CtrLoginPost(w http.ResponseWriter, r *http.Request, opt ro
 	if !isLogged {
 		username := r.PostFormValue("username")
 		password := hash.EncryptString(r.PostFormValue("password"))
+		application := c.PlatformUsecases.GetApplicationByDomain(c.Config, r)
 
-		_, err := c.UserUsecases.CreateClientSession(w, r, username, password, sm)
+		_, err := c.UserUsecases.CreateClientSession(w, r, username, password, application, sm)
 		if err != nil {
 			logger.Log("user '" + username + "' failed to login: " + err.Error())
 			http.Redirect(w, r, "/login?err", http.StatusSeeOther)
 			return
 		}
 
-		application := c.PlatformUsecases.GetApplicationByDomain(c.Config, r)
 		config, err := c.PlatformUsecases.Fetch(application.ID)
 
 		loginRedirectURL := "/"

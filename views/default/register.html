@@ -2,12 +2,16 @@
     <main class="gc-page">
         <div class="login-box">
             <h2 class="login-box__title">
-                Register new user
+              {{.Translations.RegisterUserTitle}}
             </h2>
 
           {{if .Params.IsError}}
             <div class="login-box__alert">
-              Error registering user
+              {{ if eq .Params.ErrorType "user_exists" }}
+                {{.Translations.RegisterUserErrorUserExists}}
+              {{ else }}
+                {{.Translations.RegisterUserErrorUnknown}}
+              {{ end }}
             </div>
           {{end}}
 
@@ -15,7 +19,7 @@
                 <div class="gc-input">
                     <label class="gc-input__label"
                            for="email-field">
-                        Email address
+                      {{.Translations.RegisterUserEmailLabel}}
                     </label>
                     <input type="email"
                            class="tst-email gc-input__field"
@@ -26,7 +30,7 @@
                 <div class="gc-input">
                     <label class="gc-input__label"
                            for="password-field">
-                        Password
+                      {{.Translations.RegisterUserPasswordLabel}}
                     </label>
                     <input type="password"
                            class="tst-password gc-input__field"
@@ -36,14 +40,14 @@
                 </div>
                 <p>
                     <button type="submit" class="tst-register gc-btn gc-btn--primary">
-                        Register
+                      {{.Translations.RegisterUserRegisterButton}}
                     </button>
                     or
                     <a class="tst-register-login gc-link gc-link--primary"
                        href="/login">
-                        Login
+                      {{.Translations.RegisterUserLoginButton}}
                     </a>
-                    (if you have an account yet)
+                    ({{.Translations.RegisterUserIfHaveAccount}})
                 </p>
             </form>
         </div>
