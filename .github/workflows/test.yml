@@ -33,10 +33,9 @@ jobs:
           docker run -d --net=host mongo:7.0
           sleep 10
           make image IMAGE_NAME=webapp ENV=prod V=$APP_VERSION
-          docker run -d --net=host -e WEBAPP_ENV=test -e WEBAPP_CONFIGCAT_KEY=$WEBAPP_CONFIGCAT_KEY  oszura/webapp-prod:$APP_VERSION
+          docker run -d --name webapp-test --net=host -e WEBAPP_ENV=test -e WEBAPP_CONFIGCAT_KEY=$WEBAPP_CONFIGCAT_KEY  oszura/webapp-prod:$APP_VERSION
+          docker logs -f webapp-test
           sleep 10
-          curl -v --retry 10 --retry-connrefused --retry-delay 1 http://localhost:3000/ || true
-          curl -v --retry 10 --retry-connrefused --retry-delay 1 -X POST http://localhost:3000/api/reset || true
           npm run cypress:run
       - name: Build application
         run: make all ENV=prod
