@@ -29,12 +29,12 @@ build-frontend:
 
 .PHONY: build-backend
 build-backend:
-	$(GOCMD) build -mod=readonly -o gowebapp
+	$(GOCMD) build -mod=vendor -o gowebapp
 
 .PHONY: test
 test:
 	$(NPM) run test
-	$(GOCMD) test -mod=readonly ./...
+	$(GOCMD) test -mod=vendor ./...
 
 .PHONY: integration-test
 integration-test:
