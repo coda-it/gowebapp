@@ -41,13 +41,33 @@ func (m *mockBaseController) GetConfig() config.Config {
 func TestCtrRegisterGet(t *testing.T) {
 	t.Run("When rendering 'register' template", func(t *testing.T) {
 		mockCtrl := &mockBaseController{}
-		mockCtrl.On("RenderTemplate", "register", mock.Anything, "moduleID")
+
+		params := make(map[string]interface{})
+
+		mockCtrl.On("RenderTemplate", "register", params, "moduleID")
 
 		ctrl := New(mockCtrl, "moduleID", userUsecases.Usecase{}, platformUsecases.Usecase{})
 
-		r := httptest.NewRequest("GET", "/register?err=some_error", nil)
+		r := httptest.NewRequest("GET", "/register", nil)
 		ctrl.CtrRegisterGet(nil, r, router.URLOptions{}, nil, nil)
 
-		mockCtrl.AssertCalled(t, "RenderTemplate", "register", mock.Anything, "moduleID")
+		mockCtrl.AssertCalled(t, "RenderTemplate", "register", params, "moduleID")
+	})
+
+	t.Run("When rendering with error", func(t *testing.T) {
+		mockCtrl := &mockBaseController{}
+
+		params := make(map[string]interface{})
+		params["IsError"] = true
+		params["ErrorType"] = "user_exists"
+
+		mockCtrl.On("RenderTemplate", "register", params, "moduleID")
+
+		ctrl := New(mockCtrl, "moduleID", userUsecases.Usecase{}, platformUsecases.Usecase{})
+
+		r := httptest.NewRequest("GET", "/register?err=user_exists", nil)
+		ctrl.CtrRegisterGet(nil, r, router.URLOptions{}, nil, nil)
+
+		mockCtrl.AssertCalled(t, "RenderTemplate", "register", params, "moduleID")
 	})
 }

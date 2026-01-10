@@ -29,12 +29,12 @@ build-frontend:
 
 .PHONY: build-backend
 build-backend:
-	$(GOCMD) build -mod=vendor -o gowebapp
+	$(GOCMD) build -mod=readonly -o gowebapp
 
 .PHONY: test
 test:
 	$(NPM) run test
-	$(GOCMD) test -mod=vendor ./...
+	$(GOCMD) test -mod=readonly ./...
 
 .PHONY: integration-test
 integration-test:
@@ -74,7 +74,7 @@ endif
 
 .PHONY: run-services
 run-services:
-	cd docker/webapp/dev && docker-compose --verbose up
+	cd docker/webapp/dev && docker compose --verbose up
 
 ### Utilities
 .PHONY: version
