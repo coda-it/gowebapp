@@ -18,6 +18,7 @@ const (
 	PostModuleURL     = "/post"
 	CategoryModuleURL = "/category"
 	HelpdeskModuleURL = "/helpdesk"
+	EShopModuleURL    = "/eshop"
 	AccountModuleURL  = "/account"
 
 	LoginModuleURL      = "/login"

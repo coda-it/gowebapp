@@ -23,6 +23,7 @@ import (
 	"github.com/coda-it/gowebapp/controllers/api/user"
 	"github.com/coda-it/gowebapp/controllers/base"
 	categoriesController "github.com/coda-it/gowebapp/controllers/categories"
+	eshopController "github.com/coda-it/gowebapp/controllers/eshop"
 	helpdeskController "github.com/coda-it/gowebapp/controllers/helpdesk"
 	landingController "github.com/coda-it/gowebapp/controllers/landing"
 	userLoginController "github.com/coda-it/gowebapp/controllers/login"
@@ -392,6 +393,19 @@ func main() {
 		},
 	}
 
+	eshopCtl := eshopController.New(baseController, "eshop")
+	eshopModule := module.Module{
+		ID: "eshop",
+		Routes: []route.Route{
+			{
+				Path:      constants.EShopModuleURL,
+				Method:    "ALL",
+				Handler:   eshopCtl.CtrEshop,
+				Protected: true,
+			},
+		},
+	}
+
 	adminCtl := adminController.New(baseController, "admin")
 	adminModule := module.Module{
 		ID: "admin",
@@ -592,6 +606,7 @@ func main() {
 		postsModule,
 		categoriesModule,
 		helpdeskModule,
+		eshopModule,
 		adminModule,
 		userRegisterModule,
 		userActivationModule,

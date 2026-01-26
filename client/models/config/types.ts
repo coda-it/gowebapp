@@ -4,4 +4,5 @@ export type Config = {
   featureFlags: Map<string, string>;
   languages: ReadonlyArray<string>;
   defaultLanguage: string;
+  appId: string;
 };

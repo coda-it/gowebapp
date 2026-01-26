@@ -24,6 +24,13 @@
         "id": "api-helpdesk"
       },
       {
+        "id": "eshop",
+        "properties": {
+          "shopId": "3",
+          "shopDomain": "http://localhost:8080"
+        }
+      },
+      {
         "id": "admin"
       }
     ],
@@ -93,6 +100,13 @@
             "href": "/admin/featureflags"
           }
         ]
+      },
+      {
+        "id": "eshop",
+        "label": "e-Shop",
+        "href": "/eshop",
+        "isRoot": false,
+        "isLogged": true
       },
       {
         "id": "account",

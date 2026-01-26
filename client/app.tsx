@@ -13,6 +13,7 @@ import PostEditor from './modules/PostEditor';
 import Post from './modules/Post';
 import Categories from './modules/Categories';
 import Helpdesk from './modules/Helpdesk';
+import EShopAdmin from './modules/EShopAdmin';
 import CategoryEditor from './modules/CategoryEditor';
 import PlatformEditor from './modules/PlatformEditor';
 import HelpdeskAdmin from './modules/HelpdeskAdmin';
@@ -77,6 +78,7 @@ if (appContainer) {
             component={CategoryEditor}
           />
           <Route exact path="/admin/helpdesk" component={HelpdeskAdmin} />
+          <Route exact path="/eshop" component={EShopAdmin} />
           <Route exact path="/account" component={Account} />
         </Application>
       </Router>

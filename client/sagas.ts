@@ -11,6 +11,8 @@ import * as platformSagas from './models/platform/sagas';
 import * as platformActionTypes from './models/platform/actionTypes';
 import * as helpdeskSagas from './models/helpdesk/sagas';
 import * as helpdeskActionTypes from './models/helpdesk/actionTypes';
+import * as eshopActionTypes from './models/eshop/actionTypes';
+import * as eshopSagas from './models/eshop/sagas';
 import * as translationsSagas from './models/translations/sagas';
 import * as translationActionTypes from './models/translations/actionTypes';
 import * as featureFlagsActionTypes from './models/featureFlags/actionTypes';
@@ -61,6 +63,23 @@ function* root() {
     ),
     takeEvery(helpdeskActionTypes.DELETE_TICKET, helpdeskSagas.onDeleteTicket),
     takeEvery(helpdeskActionTypes.UPDATE_TICKET, helpdeskSagas.onUpdateTicket),
+    takeEvery(
+      eshopActionTypes.FETCH_PRODUCTS_REQUEST,
+      eshopSagas.onFetchProductsSaga
+    ),
+    takeEvery(
+      eshopActionTypes.DELETE_PRODUCT_REQUEST,
+      eshopSagas.onDeleteProductSaga
+    ),
+    takeEvery(
+      eshopActionTypes.CREATE_PRODUCT_REQUEST,
+      eshopSagas.onCreateProductSaga
+    ),
+    takeEvery(eshopActionTypes.GET_JWT_TOKEN_REQUEST, eshopSagas.onGetJWTToken),
+    takeEvery(
+      eshopActionTypes.VALIDATE_JWT_TOKEN_REQUEST,
+      eshopSagas.onValidateJWTToken
+    ),
     takeEvery(
       translationActionTypes.ADD_TRANSLATION,
       translationsSagas.onAddTranslation

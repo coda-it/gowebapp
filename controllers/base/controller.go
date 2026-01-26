@@ -131,6 +131,7 @@ func (c *Controller) buildViewModel(
 		Translations:    translations,
 		FeatureFlags:    featureFlags,
 		JSFeaturesFlags: string(featureFlagsJSON),
+		AppId:           application.ID,
 	}
 }
 
