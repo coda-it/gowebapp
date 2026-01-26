@@ -3,7 +3,7 @@ module github.com/coda-it/gowebapp
 go 1.23.0
 
 require (
-	github.com/coda-it/goappframe v0.4.6
+	github.com/coda-it/goappframe v0.4.7
 	github.com/coda-it/goutils v0.2.7
 	github.com/coda-it/gowebserver v1.3.1
 	github.com/stretchr/testify v1.11.1
