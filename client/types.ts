@@ -6,6 +6,7 @@ import * as helpdeskTypes from './models/helpdesk/types';
 import * as platformTypes from './models/platform/types';
 import * as translationTypes from './models/translations/types';
 import * as featureFlagsTypes from './models/featureFlags/types';
+// eslint-disable-next-line import/no-cycle
 import * as eshopTypes from './models/eshop/types';
 
 export type State = Partial<{
