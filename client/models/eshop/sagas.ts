@@ -121,7 +121,7 @@ export function* onCreateProductSaga({
   } catch (error: any) {
     yield put(
       alertActions.addAlert(
-        translations.getLocalization('eShop_Admin_Product_Create_Error') ??
+        translations.getLocalization('eShop_Admin_ProductCreateError') ??
           'Error while creating a product',
         alertConstants.ALERT_TYPE_ERROR
       )
@@ -162,7 +162,7 @@ export function* onGetJWTToken({ payload }: types.GetJWTTokenRequestAction) {
     yield put(
       alertActions.addAlert(
         translations.getLocalization(
-          'eShop_Admin_Product_Authenticate_Get_JWT_Error'
+          'eShop_Admin_ProductAuthenticateGetJWTError'
         ) ?? 'Getting JWT failed',
         alertConstants.ALERT_TYPE_ERROR
       )
@@ -205,7 +205,7 @@ export function* onValidateJWTToken({
     yield put(
       alertActions.addAlert(
         translations.getLocalization(
-          'eShop_Admin_Product_Authenticate_Validate_JWT_Error'
+          'eShop_Admin_ProductAuthenticateValidateJWTError'
         ) ?? 'JWT validation failed',
         alertConstants.ALERT_TYPE_ERROR
       )

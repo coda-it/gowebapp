@@ -1,3 +1,5 @@
+@import './components/AddProductDialog/styles';
+
 .eshop {
   &__product {
     gap: 7px;
@@ -5,5 +7,11 @@
 
   &__product-price {
     font-size: 16px;
+  }
+}
+
+.eshop-login {
+  &__actions {
+    gap: $spacing-medium;
   }
 }

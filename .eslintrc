@@ -20,7 +20,8 @@
         "optionalDependencies": false,
         "peerDependencies": false
       }
-    ]
+    ],
+    "react/require-default-props": "off"
   },
   "globals": {
     "window": true,
