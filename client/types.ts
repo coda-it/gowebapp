@@ -6,8 +6,9 @@ import * as helpdeskTypes from './models/helpdesk/types';
 import * as platformTypes from './models/platform/types';
 import * as translationTypes from './models/translations/types';
 import * as featureFlagsTypes from './models/featureFlags/types';
+// eslint-disable-next-line import/no-cycle
+import * as eshopTypes from './models/eshop/types';
 
-/* eslint-disable import/prefer-default-export */
 export type State = Partial<{
   posts: postTypes.State;
   alerts: alertTypes.State;
@@ -20,5 +21,10 @@ export type State = Partial<{
   helpdesk: helpdeskTypes.State;
   translations: translationTypes.State;
   featureFlags: featureFlagsTypes.State;
+  eshop: eshopTypes.State;
 }>;
-/* eslint-enable import/prefer-default-export */
+
+export interface Module {
+  id: string;
+  properties: Record<string, any>;
+}

@@ -13,6 +13,7 @@ import PostEditor from './modules/PostEditor';
 import Post from './modules/Post';
 import Categories from './modules/Categories';
 import Helpdesk from './modules/Helpdesk';
+import EShopAdmin from './modules/EShopAdmin';
 import CategoryEditor from './modules/CategoryEditor';
 import PlatformEditor from './modules/PlatformEditor';
 import HelpdeskAdmin from './modules/HelpdeskAdmin';
@@ -21,6 +22,7 @@ import FeatureFlags from './modules/FeatureFlags';
 import Account from './modules/Account';
 import sagas from './sagas';
 import reducers from './reducers';
+import routes from './constants/routes';
 
 const appContainer = document.querySelector('.js-app');
 const sagaMiddleware = createSagaMiddleware();
@@ -54,7 +56,7 @@ if (appContainer) {
           <Route exact path="/category" component={Categories} />
           <Route exact path="/category/:categoryId" component={Posts} />
           <Route exact path="/helpdesk/:id?" component={Helpdesk} />
-          <Route exact path="/admin" component={Admin} />
+          <Route exact path={routes.admin} component={Admin} />
           <Route exact path="/admin/posts" render={() => <Posts isAdmin />} />
           <Route exact path="/admin/posts/new" component={PostEditor} />
           <Route exact path="/admin/posts/edit/:id?" component={PostEditor} />
@@ -77,6 +79,7 @@ if (appContainer) {
             component={CategoryEditor}
           />
           <Route exact path="/admin/helpdesk" component={HelpdeskAdmin} />
+          <Route exact path="/eshop" component={EShopAdmin} />
           <Route exact path="/account" component={Account} />
         </Application>
       </Router>
