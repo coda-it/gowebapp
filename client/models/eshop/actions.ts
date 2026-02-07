@@ -15,13 +15,6 @@ export const deleteProductRequest = (productId: number) => ({
   payload: productId,
 });
 
-export const deleteProductFailure = (
-  error: string
-): types.DeleteEShopProductAction => ({
-  type: actionTypes.DELETE_PRODUCT_FAILURE,
-  payload: error,
-});
-
 export const createProductRequest = (product: types.NewProduct) => ({
   type: actionTypes.CREATE_PRODUCT_REQUEST,
   payload: product,
