@@ -31,6 +31,15 @@ export const createProductSuccess = () => ({
   type: actionTypes.CREATE_PRODUCT_SUCCESS,
 });
 
+export const updateProductRequest = (product: types.Product) => ({
+  type: actionTypes.UPDATE_PRODUCT_REQUEST,
+  payload: product,
+});
+
+export const updateProductSuccess = () => ({
+  type: actionTypes.UPDATE_PRODUCT_SUCCESS,
+});
+
 export const getJwtTokenRequest = (username: string, password: string) => ({
   type: actionTypes.GET_JWT_TOKEN_REQUEST,
   payload: {
@@ -49,4 +58,14 @@ export const validateJwtTokenRequest = (token: string) => ({
   payload: {
     token,
   },
+});
+
+export const setEditedProduct = (product: types.NewProduct | null) => ({
+  type: actionTypes.SET_EDITED_PRODUCT,
+  payload: product,
+});
+
+export const setEditMode = (mode: types.ProductEditMode | null) => ({
+  type: actionTypes.SET_EDIT_MODE,
+  payload: mode,
 });

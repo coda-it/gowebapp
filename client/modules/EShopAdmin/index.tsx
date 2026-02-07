@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -14,19 +14,21 @@ import {
 } from 'graphen';
 import * as actions from 'client/models/eshop/actions';
 import * as eshopConstants from 'client/models/eshop/constants';
+import * as types from 'client/models/eshop/types';
 import * as selectors from 'client/models/eshop/selectors';
 import * as userSelectors from 'client/models/users/selectors';
 import * as utils from 'client/utils/translations';
 import AuthenticateDialog from './components/AuthenticateDialog';
 import ProductList from './components/ProductList';
-import AddProductDialog from './components/AddProductDialog';
+import EditProductDialog from './components/EditProductDialog';
 
 function EShopAdmin() {
   const dispatch = useDispatch();
-  const [isAddProductDialogOpen, setIsAddProductDialogOpen] = useState(false);
 
   const user = useSelector(userSelectors.getUser);
   const jwt = useSelector(selectors.getJWTToken);
+  const productEditMode = useSelector(selectors.getProductEditMode);
+  const products = useSelector(selectors.getProducts);
 
   useEffect(() => {
     dispatch(actions.fetchProductsRequest());
@@ -37,7 +39,10 @@ function EShopAdmin() {
     dispatch(actions.validateJwtTokenRequest(token));
   }, []);
 
-  const products = useSelector(selectors.getProducts);
+  const setProductEditMode = (mode: types.ProductEditMode) => {
+    dispatch(actions.setEditedProduct(null));
+    dispatch(actions.setEditMode(mode));
+  };
 
   return (
     <>
@@ -55,7 +60,7 @@ function EShopAdmin() {
                     <Button
                       className="gc-btn--primary"
                       onClick={() => {
-                        setIsAddProductDialogOpen(true);
+                        setProductEditMode(types.ProductEditMode.CREATE);
                       }}
                       isFull
                     >
@@ -78,10 +83,11 @@ function EShopAdmin() {
           </Flex>
         </div>
         {!jwt && <AuthenticateDialog username={user?.username} />}
-        {isAddProductDialogOpen && (
-          <AddProductDialog
+        {productEditMode && (
+          <EditProductDialog
+            mode={productEditMode}
             onClose={() => {
-              setIsAddProductDialogOpen(false);
+              setProductEditMode(null);
             }}
           />
         )}

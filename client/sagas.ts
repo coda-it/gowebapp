@@ -75,6 +75,10 @@ function* root() {
       eshopActionTypes.CREATE_PRODUCT_REQUEST,
       eshopSagas.onCreateProductSaga
     ),
+    takeEvery(
+      eshopActionTypes.UPDATE_PRODUCT_REQUEST,
+      eshopSagas.onUpdateProductSaga
+    ),
     takeEvery(eshopActionTypes.GET_JWT_TOKEN_REQUEST, eshopSagas.onGetJWTToken),
     takeEvery(
       eshopActionTypes.VALIDATE_JWT_TOKEN_REQUEST,
