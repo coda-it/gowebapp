@@ -1,0 +1,19 @@
+.eshop-product-list {
+  &__item {
+    height: 300px;
+    width: 250px;
+  }
+
+  &__title {
+    text-overflow: ellipsis;
+  }
+
+  &__previewer {
+    height: 100px;
+    text-align: center;
+  }
+
+  &__actions {
+    gap: $spacing-small;
+  }
+}
