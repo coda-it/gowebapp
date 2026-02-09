@@ -24,6 +24,7 @@ export type State = {
   token?: string;
   editedProduct: NewProduct | Product | null;
   productEditMode: ProductEditMode | null;
+  productToDelete?: number | null;
 };
 
 export type ModuleProperties = {

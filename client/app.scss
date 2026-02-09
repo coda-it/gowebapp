@@ -3,6 +3,8 @@ $gc-font-url: '~graphen/src/assets/font';
 
 @import '~graphen/src/style.scss';
 @import 'components/Previewer/styles';
+@import 'components/BlurInOut/styles';
+@import 'components/Skeleton/styles';
 @import 'modules/AlertPanel/styles';
 @import 'modules/LoginBox/styles';
 @import 'modules/Translations/styles';

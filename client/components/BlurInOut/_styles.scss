@@ -1,0 +1,22 @@
+.l-blur-in-out {
+  --effect-time: 0.35s;
+  --blur-size: 20px;
+
+  opacity: 1;
+  transition:
+    opacity var(--effect-time) ease,
+ filter var(--effect-time) ease,
+    transform var(--effect-time) ease;
+
+  &--hiding {
+    opacity: 0;
+    filter: blur(var(--blur-size));
+    transform: scale(0.3);
+  }
+
+  &--entering {
+    opacity: 0;
+    filter: blur(var(--blur-size));
+    transform: scale(0.3);
+  }
+}

@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import classNames from 'classnames';
 import {
   Dialog,
   Button,
@@ -11,6 +12,7 @@ import {
   PanelTitle,
   Separator,
 } from 'graphen';
+import withBlurInOut from 'client/components/BlurInOut';
 import Previewer from 'client/components/Previewer';
 import * as actions from 'client/models/eshop/actions';
 import * as types from 'client/models/eshop/types';
@@ -21,9 +23,11 @@ import * as constants from '../../constants';
 function EditProductDialog({
   onClose,
   mode,
+  className,
 }: {
   onClose: () => void;
   mode: types.ProductEditMode;
+  className?: string;
 }) {
   const dispatch = useDispatch();
   const isEditMode = mode === types.ProductEditMode.EDIT;
@@ -117,8 +121,10 @@ function EditProductDialog({
     }
   };
 
+  const dialogClasses = classNames(className);
+
   return (
-    <Dialog>
+    <Dialog className={dialogClasses}>
       <Panel>
         <PanelTitle>
           {isEditMode
@@ -236,4 +242,4 @@ function EditProductDialog({
   );
 }
 
-export default EditProductDialog;
+export default withBlurInOut(EditProductDialog);

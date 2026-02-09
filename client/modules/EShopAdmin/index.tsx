@@ -21,6 +21,7 @@ import * as utils from 'client/utils/translations';
 import AuthenticateDialog from './components/AuthenticateDialog';
 import ProductList from './components/ProductList';
 import EditProductDialog from './components/EditProductDialog';
+import DeleteProductConfirmationDialog from './components/DeleteProductConfirmationDialog';
 
 function EShopAdmin() {
   const dispatch = useDispatch();
@@ -29,6 +30,8 @@ function EShopAdmin() {
   const jwt = useSelector(selectors.getJWTToken);
   const productEditMode = useSelector(selectors.getProductEditMode);
   const products = useSelector(selectors.getProducts);
+
+  const productIdToDelete = useSelector(selectors.getProductToDelete);
 
   useEffect(() => {
     dispatch(actions.fetchProductsRequest());
@@ -42,6 +45,9 @@ function EShopAdmin() {
   const setProductEditMode = (mode: types.ProductEditMode) => {
     dispatch(actions.setEditedProduct(null));
     dispatch(actions.setEditMode(mode));
+  };
+  const setDeleteProduct = (productId: number) => {
+    dispatch(actions.setProductToDelete(productId));
   };
 
   return (
@@ -88,6 +94,14 @@ function EShopAdmin() {
             mode={productEditMode}
             onClose={() => {
               setProductEditMode(null);
+            }}
+          />
+        )}
+        {productIdToDelete && (
+          <DeleteProductConfirmationDialog
+            productId={productIdToDelete}
+            onClose={() => {
+              setDeleteProduct(null);
             }}
           />
         )}
