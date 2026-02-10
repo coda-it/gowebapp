@@ -1,11 +1,22 @@
 .eshop-product-list {
   &__item {
-    height: 300px;
+    height: 230px;
     width: 250px;
+  }
+
+  &__card {
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  &__panel {
+    height: 100%;
   }
 
   &__title {
     text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   &__previewer {

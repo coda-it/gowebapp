@@ -9,6 +9,7 @@ import {
   Panel,
   PanelContent,
   PanelTitle,
+  Card,
 } from 'graphen';
 import Previewer from 'client/components/Previewer';
 import * as types from './types';
@@ -87,8 +88,8 @@ function CategoryEditor(props: types.Props) {
   );
 
   return (
-    <>
-      <Panel isSeparator>
+    <Card isGradient className="l-category-editor">
+      <Panel>
         <PanelTitle>Category editor</PanelTitle>
         <PanelContent>
           <Flex isVertical>
@@ -109,7 +110,7 @@ function CategoryEditor(props: types.Props) {
             </FlexItem>
             <FlexItem className="gm-spacing-bm">
               <Flex isVertical alignItems="center">
-                <FlexItem>
+                <FlexItem className="gm-spacing-bl">
                   <input
                     type="file"
                     name="category-image"
@@ -159,7 +160,7 @@ function CategoryEditor(props: types.Props) {
           </Flex>
         </PanelContent>
       </Panel>
-    </>
+    </Card>
   );
 }
 

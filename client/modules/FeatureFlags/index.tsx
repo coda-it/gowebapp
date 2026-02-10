@@ -1,7 +1,8 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 import {
+  Card,
   Button,
   Panel,
   PanelTitle,
@@ -9,17 +10,17 @@ import {
   Flex,
   FlexItem,
   PanelFooter,
-  Switch,
 } from 'graphen';
 import * as utils from 'client/utils/translations';
 import * as actions from 'client/models/featureFlags/actions';
 import * as selectors from 'client/models/featureFlags/selectors';
+import AddFeatureFlagDialog from './components/AddFeatureFlagDialog';
 import FeatureFlag from './FeatureFlag';
 
 function FeatureFlags() {
   const dispatch = useDispatch();
-  const [featureFlagKey, setFeatureFlagKey] = useState('');
-  const [featureFlagValue, setFeatureFlagValue] = useState(false);
+
+  const [isAddNewDialogOpen, setIsAddNewDialogOpen] = useState(false);
 
   const featureFlags = useSelector(selectors.getFeatureFlags);
 
@@ -27,70 +28,63 @@ function FeatureFlags() {
     dispatch(actions.fetchFeatureFlags());
   }, [dispatch]);
 
-  const handleAddFeatureFlag = useCallback(() => {
-    dispatch(actions.addFeatureFlag(featureFlagKey, featureFlagValue));
-
-    setFeatureFlagKey('');
-    setFeatureFlagValue(false);
-  }, [dispatch, featureFlagKey, featureFlagValue]);
-
   return (
-    <Panel>
-      <PanelTitle>
-        {utils.getLocalization('FeatureFlags_Title') ?? 'Feature Flags'}
-      </PanelTitle>
-      <PanelContent>
-        <Flex wrap="wrap" isVertical>
-          {featureFlags.map((featureFlag) => {
-            const { key, value, id } = featureFlag;
+    <>
+      <Panel>
+        <PanelTitle>
+          {utils.getLocalization('FeatureFlags_Admin_Title') ??
+            'Feature Flags Admin'}
+        </PanelTitle>
+        <PanelContent>
+          <Card isGradient>
+            <Panel>
+              <PanelTitle>
+                {utils.getLocalization('FeatureFlags_Admin_Card_Title') ??
+                  'Admin'}
+              </PanelTitle>
+              <PanelContent />
+              <PanelFooter>
+                <Flex>
+                  <FlexItem>
+                    <Button
+                      className="gc-btn--primary"
+                      onClick={() => {
+                        setIsAddNewDialogOpen(true);
+                      }}
+                      isFull
+                    >
+                      {utils.getLocalization('FeatureFlags_Admin_Add_New') ??
+                        'Add new feature flag'}
+                    </Button>
+                  </FlexItem>
+                </Flex>
+              </PanelFooter>
+            </Panel>
+          </Card>
+        </PanelContent>
+      </Panel>
+      <Panel>
+        <PanelTitle>
+          {utils.getLocalization('FeatureFlags_Title') ?? 'Feature Flags'}
+        </PanelTitle>
+        <PanelContent>
+          <Flex wrap="wrap" isVertical>
+            {featureFlags.map((featureFlag) => {
+              const { key, value, id } = featureFlag;
 
-            return (
-              <FlexItem key={`translation-item-${key}-${id}`}>
-                <FeatureFlag id={id} initialKey={key} isSwitched={value} />
-              </FlexItem>
-            );
-          })}
-          <FlexItem className="gm-spacing-tvl">
-            <Flex>
-              <FlexItem className="gm-spacing-rl">
-                <div className="gc-input gc-input--full">
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                  <label htmlFor="key" className="gc-input__label">
-                    Feature flag key
-                  </label>
-                  <input
-                    id="key"
-                    value={featureFlagKey}
-                    onChange={(event) => {
-                      setFeatureFlagKey(event.target.value);
-                    }}
-                    className="gc-input__field"
-                  />
-                </div>
-              </FlexItem>
-              <FlexItem className="gm-spacing-rl">
-                <div className="gc-input gc-input--full">
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                  <label htmlFor="key" className="gc-input__label">
-                    On / Off
-                  </label>
-                  <Switch onChange={setFeatureFlagValue} type="success" />
-                </div>
-              </FlexItem>
-            </Flex>
-          </FlexItem>
-        </Flex>
-      </PanelContent>
-      <PanelFooter>
-        <Button
-          className="gc-btn--primary"
-          isFull
-          onClick={handleAddFeatureFlag}
-        >
-          {utils.getLocalization('AddButton') ?? 'Add'}
-        </Button>
-      </PanelFooter>
-    </Panel>
+              return (
+                <FlexItem key={`translation-item-${key}-${id}`}>
+                  <FeatureFlag id={id} initialKey={key} isSwitched={value} />
+                </FlexItem>
+              );
+            })}
+          </Flex>
+        </PanelContent>
+      </Panel>
+      {isAddNewDialogOpen && (
+        <AddFeatureFlagDialog onClose={() => setIsAddNewDialogOpen(false)} />
+      )}
+    </>
   );
 }
 

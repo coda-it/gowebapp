@@ -11,6 +11,8 @@ import {
   PanelFooter,
   PanelTitle,
   Separator,
+  Validation,
+  Input,
 } from 'graphen';
 import withBlurInOut from 'client/components/BlurInOut';
 import Previewer from 'client/components/Previewer';
@@ -38,8 +40,17 @@ function EditProductDialog({
   const productPrice = editedProduct?.price ?? 0;
   const productImage = editedProduct?.image ?? null;
 
+  const [isNameInvalid, setIsNameInvalid] = useState(false);
+  const [isPriceInvalid, setIsPriceInvalid] = useState(false);
+
   const handleProductNameChange = useCallback(
     (event) => {
+      if (event.target.value.trim() === '') {
+        setIsNameInvalid(true);
+      } else {
+        setIsNameInvalid(false);
+      }
+
       dispatch(
         actions.setEditedProduct({
           ...editedProduct,
@@ -47,7 +58,7 @@ function EditProductDialog({
         })
       );
     },
-    [dispatch, editedProduct]
+    [dispatch, editedProduct, setIsNameInvalid]
   );
   const handleProductDescriptionChange = useCallback(
     (event) => {
@@ -60,16 +71,27 @@ function EditProductDialog({
     },
     [dispatch, editedProduct]
   );
+
+  const isFormValid = !isPriceInvalid && !isNameInvalid;
+
   const handleProductPriceChange = useCallback(
     (event) => {
+      const price = parseFloat(event.target.value);
+
+      if (Number.isNaN(price)) {
+        setIsPriceInvalid(true);
+        return;
+      }
+
+      setIsPriceInvalid(false);
       dispatch(
         actions.setEditedProduct({
           ...editedProduct,
-          price: event.target.value,
+          price,
         })
       );
     },
-    [dispatch, editedProduct]
+    [dispatch, editedProduct, setIsPriceInvalid]
   );
 
   const [image, setImage] = useState(null);
@@ -123,6 +145,21 @@ function EditProductDialog({
 
   const dialogClasses = classNames(className);
 
+  const priceLabel = `${
+    utils.getLocalization('eShop_Admin_NewProductPrice') ?? 'Product price'
+  }  ${constants.defaultCurrency}`;
+  const priceValidationMessage = isPriceInvalid
+    ? utils.getLocalization('eShop_Admin_NewProductPriceValidation') ??
+      'Price should be numberic'
+    : undefined;
+
+  const nameLabel =
+    utils.getLocalization('eShop_Admin_NewProductName') ?? 'Product name';
+  const nameValidationMessage = isNameInvalid
+    ? utils.getLocalization('eShop_Admin_NewProductNameValidation') ??
+      'Name should contain at least one character'
+    : undefined;
+
   return (
     <Dialog className={dialogClasses}>
       <Panel>
@@ -136,35 +173,28 @@ function EditProductDialog({
         <PanelContent>
           <Flex isVertical>
             <FlexItem className="gm-spacing-bm">
-              <div className="gc-input gc-input--full">
-                {/* eslint-disable jsx-a11y/label-has-associated-control */}
-                <label htmlFor="product-name" className="gc-input__label">
-                  {utils.getLocalization('eShop_Admin_NewProductName') ??
-                    'Product name'}
-                </label>
-                {/* eslint-enable jsx-a11y/label-has-associated-control */}
-                <input
-                  id="product-name"
+              <Validation type="danger" message={nameValidationMessage}>
+                <Input
+                  className="gc-input--full"
+                  label={nameLabel}
+                  type="text"
+                  validation={isNameInvalid ? 'danger' : 'success'}
                   value={productName}
                   onChange={handleProductNameChange}
-                  className="gc-input__field"
                 />
-              </div>
+              </Validation>
             </FlexItem>
             <FlexItem className="gm-spacing-bm">
-              {/* eslint-disable jsx-a11y/label-has-associated-control */}
-              <label htmlFor="product-price" className="gc-input__label">
-                {utils.getLocalization('eShop_Admin_NewProductPrice') ??
-                  'Product price'}{' '}
-                ({constants.defaultCurrency})
-              </label>
-              {/* eslint-enable jsx-a11y/label-has-associated-control */}
-              <input
-                id="product-price"
-                value={productPrice}
-                onChange={handleProductPriceChange}
-                className="gc-input__field"
-              />
+              <Validation type="danger" message={priceValidationMessage}>
+                <Input
+                  className="gc-input--full"
+                  label={priceLabel}
+                  type="text"
+                  validation={isPriceInvalid ? 'danger' : 'success'}
+                  value={productPrice}
+                  onChange={handleProductPriceChange}
+                />
+              </Validation>
             </FlexItem>
             <FlexItem className="gm-spacing-bm">
               {/* eslint-disable jsx-a11y/label-has-associated-control */}
@@ -207,9 +237,13 @@ function EditProductDialog({
             <FlexItem isGrow>
               {isEditMode ? (
                 <Button
-                  className="gc-btn--primary"
+                  className={classNames({
+                    'gc-btn--primary': isFormValid,
+                  })}
                   onClick={() => {
-                    updateProduct();
+                    if (isFormValid) {
+                      updateProduct();
+                    }
                   }}
                   isFull
                 >
@@ -218,11 +252,16 @@ function EditProductDialog({
                 </Button>
               ) : (
                 <Button
-                  className="gc-btn--primary"
+                  className={classNames({
+                    'gc-btn--primary': isFormValid,
+                  })}
                   onClick={() => {
-                    createProduct();
+                    if (isFormValid) {
+                      createProduct();
+                    }
                   }}
                   isFull
+                  isDisabled={!isFormValid}
                 >
                   {utils.getLocalization('eShop_Admin_Product_Create') ??
                     'Create'}

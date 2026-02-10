@@ -52,9 +52,9 @@ function EShopAdmin() {
 
   return (
     <>
-      <div className="gc-panel">
-        <div className="gc-panel__title">e-Shop admin</div>
-        <div className="gc-panel__content gc-flex--wrap">
+      <Panel>
+        <PanelTitle>e-Shop admin</PanelTitle>
+        <PanelContent className="gc-flex--wrap">
           <Card isGradient>
             <Panel>
               <PanelTitle>Admin</PanelTitle>
@@ -79,15 +79,15 @@ function EShopAdmin() {
               </PanelFooter>
             </Panel>
           </Card>
-        </div>
-      </div>
-      <div className="gc-panel">
-        <div className="gc-panel__title">Products</div>
-        <div className="gc-panel__content gc-flex--wrap">
-          <Flex wrap="wrap">
+        </PanelContent>
+      </Panel>
+      <Panel>
+        <PanelTitle>Products</PanelTitle>
+        <PanelContent className="gc-flex--wrap">
+          <Flex className="eshop__product-list" wrap="wrap">
             <ProductList products={products} />
           </Flex>
-        </div>
+        </PanelContent>
         {!jwt && <AuthenticateDialog username={user?.username} />}
         {productEditMode && (
           <EditProductDialog
@@ -105,7 +105,7 @@ function EShopAdmin() {
             }}
           />
         )}
-      </div>
+      </Panel>
     </>
   );
 }

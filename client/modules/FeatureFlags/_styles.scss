@@ -1,4 +1,10 @@
+@import './components/styles';
+
 .translation-dialog {
+  &__actions {
+    gap: $spacing-medium;
+  }
+
   @include gx-phone {
     width: 80%;
   }

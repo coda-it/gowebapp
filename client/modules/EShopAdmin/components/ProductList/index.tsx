@@ -41,22 +41,20 @@ function ProductList({ products }: { products: any[] }) {
           return (
             <FlexItem
               key={`product-${id}`}
-              className="eshop-product-list__item gm-spacing-l"
+              className="eshop-product-list__item"
             >
-              <Card isGradient>
-                <Panel>
+              <Card className="eshop-product-list__card">
+                <Panel className="eshop-product-list__panel">
                   <PanelTitle className="eshop-product-list__title">
                     {name}
                   </PanelTitle>
                   <PanelContent>
                     <Flex isVertical className="eshop__product">
-                      <FlexItem className="eshop__product-price">
-                        {price} {constants.defaultCurrency}
-                      </FlexItem>
                       <FlexItem>
                         <Previewer
                           className="eshop-product-list__previewer"
                           image={image}
+                          isRounded
                         />
                       </FlexItem>
                     </Flex>
@@ -89,6 +87,10 @@ function ProductList({ products }: { products: any[] }) {
                             'eShop_Admin_Product_Delete'
                           ) ?? 'Delete'}
                         </Button>
+                      </FlexItem>
+                      <FlexItem isGrow />
+                      <FlexItem className="eshop__product-price">
+                        {price} {constants.defaultCurrency}
                       </FlexItem>
                     </Flex>
                   </PanelFooter>

@@ -1,6 +1,12 @@
 import React from 'react';
-import { Card, Panel, PanelContent, PanelFooter, PanelTitle } from 'graphen';
-import Skeleton from 'client/components/Skeleton';
+import {
+  Card,
+  Panel,
+  PanelContent,
+  PanelFooter,
+  PanelTitle,
+  Skeleton,
+} from 'graphen';
 
 function ProductLoader() {
   return (
