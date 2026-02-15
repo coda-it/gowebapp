@@ -81,10 +81,7 @@ function CategoryEditor(props: types.Props) {
   const updateButtonClasses = classNames(
     'gc-btn--primary',
     'gm-spacing-bl',
-    'tst-category-editor-update',
-    {
-      'gc-btn--disabled': isDirty,
-    }
+    'tst-category-editor-update'
   );
 
   return (
@@ -141,6 +138,7 @@ function CategoryEditor(props: types.Props) {
                       isFull
                       className={updateButtonClasses}
                       onClick={handleUpdateCategory}
+                      isDisabled={!isDirty}
                     >
                       {utils.getLocalization('UpdateButton') ?? 'Update'}
                     </Button>
