@@ -5,7 +5,7 @@
   opacity: 1;
   transition:
     opacity var(--effect-time) ease,
-    filter var(--effect-time) ease,
+ filter var(--effect-time) ease,
     transform var(--effect-time) ease;
 
   &--hiding {

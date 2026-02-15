@@ -125,10 +125,7 @@ function PostEditor(props: types.Props) {
   const updateButtonClasses = classNames(
     'gc-btn--primary',
     'gm-spacing-bl',
-    'tst-post-editor-update',
-    {
-      'gc-btn--disabled': isDirty,
-    }
+    'tst-post-editor-update'
   );
 
   const preSelectedCategory =
@@ -220,6 +217,7 @@ function PostEditor(props: types.Props) {
                       isFull
                       className={updateButtonClasses}
                       onClick={handleUpdatePost}
+                      isDisabled={!isDirty}
                     >
                       {utils.getLocalization('UpdateButton') ?? 'Update'}
                     </Button>
