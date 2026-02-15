@@ -9,6 +9,11 @@
   &__product-price {
     font-size: 16px;
   }
+
+  &__product-list {
+    gap: 15px;
+    justify-content: center;
+  }
 }
 
 .eshop-login {

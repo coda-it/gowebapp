@@ -5,6 +5,7 @@ import {
   GET_JWT_TOKEN_SUCCESS,
   SET_EDITED_PRODUCT,
   SET_EDIT_MODE,
+  SET_PRODUCT_TO_DELETE,
 } from './actionTypes';
 import * as types from './types';
 
@@ -33,6 +34,8 @@ export default function eshopReducer(
       return { ...state, editedProduct: action.payload };
     case SET_EDIT_MODE:
       return { ...state, productEditMode: action.payload };
+    case SET_PRODUCT_TO_DELETE:
+      return { ...state, productToDelete: action.payload };
     default:
       return state;
   }

@@ -12,6 +12,15 @@ export type Product = {
 
 export type NewProduct = Omit<Product, 'id'>;
 
+export type EditedProduct = {
+  image?: string;
+  imageFile?: File | null;
+  price: string;
+  description: string;
+  name: string;
+  id: number;
+};
+
 export enum ProductEditMode {
   CREATE = 'create',
   EDIT = 'edit',
@@ -22,8 +31,9 @@ export type State = {
   loading: boolean;
   products: Product[];
   token?: string;
-  editedProduct: NewProduct | Product | null;
+  editedProduct: EditedProduct | null;
   productEditMode: ProductEditMode | null;
+  productToDelete?: number | null;
 };
 
 export type ModuleProperties = {

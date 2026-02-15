@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import {
+  Card,
   Button,
   Panel,
   PanelTitle,
@@ -39,62 +40,64 @@ function Helpdesk(props: types.Props) {
   );
 
   return (
-    <Panel>
-      <PanelTitle>Helpdesk</PanelTitle>
-      <PanelContent>
-        <Flex wrap="wrap" isVertical>
-          <FlexItem>
-            <div className="gc-input gc-input--full">
+    <Card isGradient className="l-helpdesk">
+      <Panel>
+        <PanelTitle>Helpdesk</PanelTitle>
+        <PanelContent>
+          <Flex wrap="wrap" isVertical>
+            <FlexItem>
+              <div className="gc-input gc-input--full">
+                {/* eslint-disable jsx-a11y/label-has-associated-control */}
+                <label htmlFor="ticket-title" className="gc-input__label">
+                  {utils.getLocalization('Helpdesk_Title') ?? 'Title'}
+                </label>
+                {/* eslint-enable jsx-a11y/label-has-associated-control */}
+                {ticket ? (
+                  <p>{ticket.title}</p>
+                ) : (
+                  <input
+                    id="ticket-title"
+                    value={title}
+                    onChange={handleTitleChange}
+                    className="gc-input__field tst-ticket-title"
+                  />
+                )}
+              </div>
+            </FlexItem>
+            <FlexItem>
               {/* eslint-disable jsx-a11y/label-has-associated-control */}
-              <label htmlFor="ticket-title" className="gc-input__label">
-                {utils.getLocalization('Helpdesk_Title') ?? 'Title'}
+              <label htmlFor="post-description" className="gc-input__label">
+                {utils.getLocalization('Helpdesk_Description') ?? 'Description'}
               </label>
               {/* eslint-enable jsx-a11y/label-has-associated-control */}
               {ticket ? (
-                <p>{ticket.title}</p>
+                <p>{ticket.description}</p>
               ) : (
-                <input
-                  id="ticket-title"
-                  value={title}
-                  onChange={handleTitleChange}
-                  className="gc-input__field tst-ticket-title"
+                <textarea
+                  id="ticket-description"
+                  value={description}
+                  onChange={handleDescriptionChange}
+                  className="gc-textarea"
                 />
               )}
-            </div>
-          </FlexItem>
-          <FlexItem>
-            {/* eslint-disable jsx-a11y/label-has-associated-control */}
-            <label htmlFor="post-description" className="gc-input__label">
-              {utils.getLocalization('Helpdesk_Description') ?? 'Description'}
-            </label>
-            {/* eslint-enable jsx-a11y/label-has-associated-control */}
-            {ticket ? (
-              <p>{ticket.description}</p>
-            ) : (
-              <textarea
-                id="ticket-description"
-                value={description}
-                onChange={handleDescriptionChange}
-                className="gc-textarea"
-              />
-            )}
-          </FlexItem>
-        </Flex>
-      </PanelContent>
-      <PanelFooter>
-        {!id && (
-          <Button
-            className="gc-btn--primary"
-            isFull
-            onClick={() => {
-              createTicket(title, description);
-            }}
-          >
-            {utils.getLocalization('AddButton') ?? 'Add'}
-          </Button>
-        )}
-      </PanelFooter>
-    </Panel>
+            </FlexItem>
+          </Flex>
+        </PanelContent>
+        <PanelFooter>
+          {!id && (
+            <Button
+              className="gc-btn--primary"
+              isFull
+              onClick={() => {
+                createTicket(title, description);
+              }}
+            >
+              {utils.getLocalization('AddButton') ?? 'Add'}
+            </Button>
+          )}
+        </PanelFooter>
+      </Panel>
+    </Card>
   );
 }
 

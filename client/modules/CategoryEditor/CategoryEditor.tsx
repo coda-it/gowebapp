@@ -9,6 +9,7 @@ import {
   Panel,
   PanelContent,
   PanelTitle,
+  Card,
 } from 'graphen';
 import Previewer from 'client/components/Previewer';
 import * as types from './types';
@@ -80,15 +81,12 @@ function CategoryEditor(props: types.Props) {
   const updateButtonClasses = classNames(
     'gc-btn--primary',
     'gm-spacing-bl',
-    'tst-category-editor-update',
-    {
-      'gc-btn--disabled': isDirty,
-    }
+    'tst-category-editor-update'
   );
 
   return (
-    <>
-      <Panel isSeparator>
+    <Card isGradient className="l-category-editor">
+      <Panel>
         <PanelTitle>Category editor</PanelTitle>
         <PanelContent>
           <Flex isVertical>
@@ -109,7 +107,7 @@ function CategoryEditor(props: types.Props) {
             </FlexItem>
             <FlexItem className="gm-spacing-bm">
               <Flex isVertical alignItems="center">
-                <FlexItem>
+                <FlexItem className="gm-spacing-bl">
                   <input
                     type="file"
                     name="category-image"
@@ -140,6 +138,7 @@ function CategoryEditor(props: types.Props) {
                       isFull
                       className={updateButtonClasses}
                       onClick={handleUpdateCategory}
+                      isDisabled={!isDirty}
                     >
                       {utils.getLocalization('UpdateButton') ?? 'Update'}
                     </Button>
@@ -159,7 +158,7 @@ function CategoryEditor(props: types.Props) {
           </Flex>
         </PanelContent>
       </Panel>
-    </>
+    </Card>
   );
 }
 

@@ -53,7 +53,7 @@ export const validateJwtTokenRequest = (token: string) => ({
   },
 });
 
-export const setEditedProduct = (product: types.NewProduct | null) => ({
+export const setEditedProduct = (product: types.EditedProduct | null) => ({
   type: actionTypes.SET_EDITED_PRODUCT,
   payload: product,
 });
@@ -61,4 +61,9 @@ export const setEditedProduct = (product: types.NewProduct | null) => ({
 export const setEditMode = (mode: types.ProductEditMode | null) => ({
   type: actionTypes.SET_EDIT_MODE,
   payload: mode,
+});
+
+export const setProductToDelete = (productId: number) => ({
+  type: actionTypes.SET_PRODUCT_TO_DELETE,
+  payload: productId,
 });

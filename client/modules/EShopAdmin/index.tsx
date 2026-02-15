@@ -21,6 +21,7 @@ import * as utils from 'client/utils/translations';
 import AuthenticateDialog from './components/AuthenticateDialog';
 import ProductList from './components/ProductList';
 import EditProductDialog from './components/EditProductDialog';
+import DeleteProductConfirmationDialog from './components/DeleteProductConfirmationDialog';
 
 function EShopAdmin() {
   const dispatch = useDispatch();
@@ -29,6 +30,8 @@ function EShopAdmin() {
   const jwt = useSelector(selectors.getJWTToken);
   const productEditMode = useSelector(selectors.getProductEditMode);
   const products = useSelector(selectors.getProducts);
+
+  const productIdToDelete = useSelector(selectors.getProductToDelete);
 
   useEffect(() => {
     dispatch(actions.fetchProductsRequest());
@@ -43,12 +46,15 @@ function EShopAdmin() {
     dispatch(actions.setEditedProduct(null));
     dispatch(actions.setEditMode(mode));
   };
+  const setDeleteProduct = (productId: number) => {
+    dispatch(actions.setProductToDelete(productId));
+  };
 
   return (
     <>
-      <div className="gc-panel">
-        <div className="gc-panel__title">e-Shop admin</div>
-        <div className="gc-panel__content gc-flex--wrap">
+      <Panel>
+        <PanelTitle>e-Shop admin</PanelTitle>
+        <PanelContent className="gc-flex--wrap">
           <Card isGradient>
             <Panel>
               <PanelTitle>Admin</PanelTitle>
@@ -73,15 +79,15 @@ function EShopAdmin() {
               </PanelFooter>
             </Panel>
           </Card>
-        </div>
-      </div>
-      <div className="gc-panel">
-        <div className="gc-panel__title">Products</div>
-        <div className="gc-panel__content gc-flex--wrap">
-          <Flex wrap="wrap">
+        </PanelContent>
+      </Panel>
+      <Panel>
+        <PanelTitle>Products</PanelTitle>
+        <PanelContent className="gc-flex--wrap">
+          <Flex className="eshop__product-list" wrap="wrap">
             <ProductList products={products} />
           </Flex>
-        </div>
+        </PanelContent>
         {!jwt && <AuthenticateDialog username={user?.username} />}
         {productEditMode && (
           <EditProductDialog
@@ -91,7 +97,15 @@ function EShopAdmin() {
             }}
           />
         )}
-      </div>
+        {productIdToDelete && (
+          <DeleteProductConfirmationDialog
+            productId={productIdToDelete}
+            onClose={() => {
+              setDeleteProduct(null);
+            }}
+          />
+        )}
+      </Panel>
     </>
   );
 }

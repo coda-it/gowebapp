@@ -94,6 +94,7 @@ export function* onDeleteProductSaga({
     yield call(deleteProductBlobStorageApi, product.image, jwtToken);
 
     yield call(deleteProductApi, payload, jwtToken);
+    yield put(actions.setProductToDelete(null));
     yield put(actions.fetchProductsRequest());
   } catch (error: any) {
     yield put(

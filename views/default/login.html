@@ -1,88 +1,91 @@
 {{define "body"}}
     <main class="gc-page">
-        <div class="login-box">
-            <h2 class="login-box__title">
-                {{ $headerLabel := (index .Translations "Login_Header") }}
-                {{ if ne $headerLabel "" }}
-                  {{ $headerLabel }}
+        <div class="gc-card gc-card--default login-box">
+          <div class="gc-panel">
+            <div class="gc-panel__title">
+              {{ $headerLabel := (index .Translations "Login_Header") }}
+              {{ if ne $headerLabel "" }}
+              {{ $headerLabel }}
+              {{ else }}
+              Login
+              {{ end }}
+            </div>
+            <div class="gc-panel__content">
+              {{if .Params.IsError}}
+              <div class="login-box__alert">
+                {{ $errorLabel := (index .Translations "Login_Error") }}
+                {{ if ne $errorLabel "" }}
+                {{ $errorLabel }}
                 {{ else }}
-                  Login
+                Invalid login credentials
                 {{ end }}
-            </h2>
+              </div>
+              {{end}}
 
-            {{if .Params.IsError}}
-                <div class="login-box__alert">
-                    {{ $errorLabel := (index .Translations "Login_Error") }}
-                    {{ if ne $errorLabel "" }}
-                      {{ $errorLabel }}
+              <form action="/login" method="post">
+                <div class="gc-input">
+                  <label class="gc-input__label"
+                         for="email-field">
+                    {{ $emailLabel := (index .Translations "Login_EmailAddress") }}
+                    {{ if ne $emailLabel "" }}
+                    {{ $emailLabel }}
                     {{ else }}
-                      Invalid login credentials
+                    Email address
                     {{ end }}
-                </div>
-            {{end}}
-
-            <form action="/login" method="post">
-                <div class="gc-input">
-                    <label class="gc-input__label"
-                           for="email-field">
-                        {{ $emailLabel := (index .Translations "Login_EmailAddress") }}
-                        {{ if ne $emailLabel "" }}
-                          {{ $emailLabel }}
-                        {{ else }}
-                          Email address
-                        {{ end }}
-                    </label>
-                    <input type="email"
-                           class="tst-email gc-input__field"
-                           id="email-field"
-                           placeholder="Email"
-                           name="username">
+                  </label>
+                  <input type="email"
+                         class="tst-email gc-input__field"
+                         id="email-field"
+                         placeholder="Email"
+                         name="username">
                 </div>
                 <div class="gc-input">
-                    <label class="gc-input__label"
-                           for="password-field">
-                        {{ $passwordLabel := (index .Translations "Login_Password") }}
-                        {{ if ne $passwordLabel "" }}
-                          {{ $passwordLabel }}
-                        {{ else }}
-                          Password
-                        {{ end }}
-                    </label>
-                    <input type="password"
-                           class="tst-password gc-input__field"
-                           id="password-field"
-                           placeholder="Password"
-                           name="password">
+                  <label class="gc-input__label"
+                         for="password-field">
+                    {{ $passwordLabel := (index .Translations "Login_Password") }}
+                    {{ if ne $passwordLabel "" }}
+                    {{ $passwordLabel }}
+                    {{ else }}
+                    Password
+                    {{ end }}
+                  </label>
+                  <input type="password"
+                         class="tst-password gc-input__field"
+                         id="password-field"
+                         placeholder="Password"
+                         name="password">
                 </div>
                 <p>
-                    <button type="submit"
-                            class="tst-login gc-btn gc-btn--primary"
-                            id="login-submit">
-                        {{ $loginLabel := (index .Translations "Login_LoginButton") }}
-                        {{ if ne $loginLabel "" }}
-                          {{ $loginLabel }}
-                        {{ else }}
-                          Login
-                        {{ end }}
-                    </button>
-                    or
-                    <a class="tst-signup login-box__signup gc-link gc-link--primary"
-                       href="/login/register">
-                        {{ $signupLabel := (index .Translations "Login_SignupButton") }}
-                        {{ if ne $signupLabel "" }}
-                          {{ $signupLabel }}
-                        {{ else }}
-                          Sign up
-                        {{ end }}
-                    </a>
-                    {{ $noAccountLabel := (index .Translations "Login_DontHaveAccountYet") }}
-                    {{ if ne $noAccountLabel "" }}
-                      {{ $noAccountLabel }}
+                  <button type="submit"
+                          class="tst-login gc-btn gc-btn--primary"
+                          id="login-submit">
+                    {{ $loginLabel := (index .Translations "Login_LoginButton") }}
+                    {{ if ne $loginLabel "" }}
+                    {{ $loginLabel }}
                     {{ else }}
-                      (if you don't have an account yet)
+                    Login
                     {{ end }}
+                  </button>
+                  or
+                  <a class="tst-signup login-box__signup gc-link gc-link--primary"
+                     href="/login/register">
+                    {{ $signupLabel := (index .Translations "Login_SignupButton") }}
+                    {{ if ne $signupLabel "" }}
+                    {{ $signupLabel }}
+                    {{ else }}
+                    Sign up
+                    {{ end }}
+                  </a>
+                  {{ $noAccountLabel := (index .Translations "Login_DontHaveAccountYet") }}
+                  {{ if ne $noAccountLabel "" }}
+                  {{ $noAccountLabel }}
+                  {{ else }}
+                  (if you don't have an account yet)
+                  {{ end }}
                 </p>
-            </form>
+              </form>
+            </div>
+          </div>
         </div>
     </main>
 {{end}}

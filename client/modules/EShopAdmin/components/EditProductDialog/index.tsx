@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import classNames from 'classnames';
 import {
   Dialog,
   Button,
@@ -10,20 +11,25 @@ import {
   PanelFooter,
   PanelTitle,
   Separator,
+  Validation,
+  Input,
 } from 'graphen';
+import withBlurInOut from 'client/components/BlurInOut';
 import Previewer from 'client/components/Previewer';
 import * as actions from 'client/models/eshop/actions';
 import * as types from 'client/models/eshop/types';
 import * as selectors from 'client/models/eshop/selectors';
-import * as utils from 'client/utils/translations';
+import { translations, validators } from 'client/utils';
 import * as constants from '../../constants';
 
 function EditProductDialog({
   onClose,
   mode,
+  className,
 }: {
   onClose: () => void;
   mode: types.ProductEditMode;
+  className?: string;
 }) {
   const dispatch = useDispatch();
   const isEditMode = mode === types.ProductEditMode.EDIT;
@@ -31,19 +37,33 @@ function EditProductDialog({
   const editedProduct = useSelector(selectors.getEditedProduct);
   const productName = editedProduct?.name ?? '';
   const productDescription = editedProduct?.description ?? '';
-  const productPrice = editedProduct?.price ?? 0;
+  const productPrice = editedProduct?.price ?? '';
   const productImage = editedProduct?.image ?? null;
+
+  const [isNameInvalid, setIsNameInvalid] = useState(
+    !validators.isStringNotEmpty(productName)
+  );
+  const [isPriceInvalid, setIsPriceInvalid] = useState(
+    !validators.isNumeric(productPrice)
+  );
 
   const handleProductNameChange = useCallback(
     (event) => {
+      const name = event.target.value;
+      if (validators.isStringNotEmpty(name)) {
+        setIsNameInvalid(false);
+      } else {
+        setIsNameInvalid(true);
+      }
+
       dispatch(
         actions.setEditedProduct({
           ...editedProduct,
-          name: event.target.value,
+          name,
         })
       );
     },
-    [dispatch, editedProduct]
+    [dispatch, editedProduct, setIsNameInvalid]
   );
   const handleProductDescriptionChange = useCallback(
     (event) => {
@@ -56,16 +76,27 @@ function EditProductDialog({
     },
     [dispatch, editedProduct]
   );
+
+  const isFormValid = !isPriceInvalid && !isNameInvalid;
+
   const handleProductPriceChange = useCallback(
     (event) => {
+      const price = event.target.value;
+
+      if (validators.isNumeric(price)) {
+        setIsPriceInvalid(false);
+      } else {
+        setIsPriceInvalid(true);
+      }
+
       dispatch(
         actions.setEditedProduct({
           ...editedProduct,
-          price: event.target.value,
+          price,
         })
       );
     },
-    [dispatch, editedProduct]
+    [dispatch, editedProduct, setIsPriceInvalid]
   );
 
   const [image, setImage] = useState(null);
@@ -97,7 +128,7 @@ function EditProductDialog({
       actions.createProductRequest({
         name: productName,
         description: productDescription,
-        price: productPrice,
+        price: parseFloat(productPrice),
         imageFile: image,
       })
     );
@@ -110,61 +141,75 @@ function EditProductDialog({
           ...editedProduct,
           name: productName,
           description: productDescription,
-          price: productPrice,
+          price: parseFloat(productPrice),
           imageFile: image,
         })
       );
     }
   };
 
+  const dialogClasses = classNames(className);
+
+  const priceLabel = `${
+    translations.getLocalization('eShop_Admin_NewProductPrice') ??
+    'Product price'
+  }  ${constants.defaultCurrency}`;
+
+  const priceValidationMessage = isPriceInvalid
+    ? translations.getLocalization('eShop_Admin_NewProductPriceValidation') ??
+      'Price should be numeric'
+    : undefined;
+
+  const nameLabel =
+    translations.getLocalization('eShop_Admin_NewProductName') ??
+    'Product name';
+  const nameValidationMessage = isNameInvalid
+    ? translations.getLocalization('eShop_Admin_NewProductNameValidation') ??
+      'Name should contain at least one character'
+    : undefined;
+
   return (
-    <Dialog>
+    <Dialog className={dialogClasses}>
       <Panel>
         <PanelTitle>
           {isEditMode
-            ? utils.getLocalization('eShop_Admin_EditProductTitle') ??
+            ? translations.getLocalization('eShop_Admin_EditProductTitle') ??
               'Edit product'
-            : utils.getLocalization('eShop_Admin_NewProductTitle') ??
+            : translations.getLocalization('eShop_Admin_NewProductTitle') ??
               'Add new product'}
         </PanelTitle>
         <PanelContent>
           <Flex isVertical>
             <FlexItem className="gm-spacing-bm">
-              <div className="gc-input gc-input--full">
-                {/* eslint-disable jsx-a11y/label-has-associated-control */}
-                <label htmlFor="product-name" className="gc-input__label">
-                  {utils.getLocalization('eShop_Admin_NewProductName') ??
-                    'Product name'}
-                </label>
-                {/* eslint-enable jsx-a11y/label-has-associated-control */}
-                <input
-                  id="product-name"
+              <Validation type="danger" message={nameValidationMessage}>
+                <Input
+                  className="gc-input--full"
+                  label={nameLabel}
+                  type="text"
+                  validation={isNameInvalid ? 'danger' : 'success'}
                   value={productName}
                   onChange={handleProductNameChange}
-                  className="gc-input__field"
                 />
-              </div>
+              </Validation>
             </FlexItem>
             <FlexItem className="gm-spacing-bm">
-              {/* eslint-disable jsx-a11y/label-has-associated-control */}
-              <label htmlFor="product-price" className="gc-input__label">
-                {utils.getLocalization('eShop_Admin_NewProductPrice') ??
-                  'Product price'}{' '}
-                ({constants.defaultCurrency})
-              </label>
-              {/* eslint-enable jsx-a11y/label-has-associated-control */}
-              <input
-                id="product-price"
-                value={productPrice}
-                onChange={handleProductPriceChange}
-                className="gc-input__field"
-              />
+              <Validation type="danger" message={priceValidationMessage}>
+                <Input
+                  className="gc-input--full"
+                  label={priceLabel}
+                  type="text"
+                  validation={isPriceInvalid ? 'danger' : 'success'}
+                  value={productPrice}
+                  onChange={handleProductPriceChange}
+                />
+              </Validation>
             </FlexItem>
             <FlexItem className="gm-spacing-bm">
               {/* eslint-disable jsx-a11y/label-has-associated-control */}
               <label htmlFor="product-description" className="gc-input__label">
-                {utils.getLocalization('eShop_Admin_New_Product_Description') ??
-                  'Product description'}
+                {translations.getLocalization(
+                  'eShop_Admin_New_Product_Description'
+                ) ?? 'Product description'}
               </label>
               {/* eslint-enable jsx-a11y/label-has-associated-control */}
               <textarea
@@ -201,31 +246,41 @@ function EditProductDialog({
             <FlexItem isGrow>
               {isEditMode ? (
                 <Button
-                  className="gc-btn--primary"
+                  className={classNames({
+                    'gc-btn--primary': isFormValid,
+                  })}
                   onClick={() => {
-                    updateProduct();
+                    if (isFormValid) {
+                      updateProduct();
+                    }
                   }}
                   isFull
+                  isDisabled={!isFormValid}
                 >
-                  {utils.getLocalization('eShop_Admin_Product_Update') ??
+                  {translations.getLocalization('eShop_Admin_Product_Update') ??
                     'Update'}
                 </Button>
               ) : (
                 <Button
-                  className="gc-btn--primary"
+                  className={classNames({
+                    'gc-btn--primary': isFormValid,
+                  })}
                   onClick={() => {
-                    createProduct();
+                    if (isFormValid) {
+                      createProduct();
+                    }
                   }}
                   isFull
+                  isDisabled={!isFormValid}
                 >
-                  {utils.getLocalization('eShop_Admin_Product_Create') ??
+                  {translations.getLocalization('eShop_Admin_Product_Create') ??
                     'Create'}
                 </Button>
               )}
             </FlexItem>
             <FlexItem isGrow>
               <Button className="gc-btn--secondary" onClick={onClose} isFull>
-                {utils.getLocalization('eShop_Admin_Product_Cancel') ??
+                {translations.getLocalization('eShop_Admin_Product_Cancel') ??
                   'Cancel'}
               </Button>
             </FlexItem>
@@ -236,4 +291,4 @@ function EditProductDialog({
   );
 }
 
-export default EditProductDialog;
+export default withBlurInOut(EditProductDialog);
