@@ -19,7 +19,7 @@ import Previewer from 'client/components/Previewer';
 import * as actions from 'client/models/eshop/actions';
 import * as types from 'client/models/eshop/types';
 import * as selectors from 'client/models/eshop/selectors';
-import * as utils from 'client/utils/translations';
+import { translations, validators } from 'client/utils';
 import * as constants from '../../constants';
 
 function EditProductDialog({
@@ -37,24 +37,29 @@ function EditProductDialog({
   const editedProduct = useSelector(selectors.getEditedProduct);
   const productName = editedProduct?.name ?? '';
   const productDescription = editedProduct?.description ?? '';
-  const productPrice = editedProduct?.price ?? 0;
+  const productPrice = editedProduct?.price ?? '';
   const productImage = editedProduct?.image ?? null;
 
-  const [isNameInvalid, setIsNameInvalid] = useState(false);
-  const [isPriceInvalid, setIsPriceInvalid] = useState(false);
+  const [isNameInvalid, setIsNameInvalid] = useState(
+    !validators.isStringNotEmpty(productName)
+  );
+  const [isPriceInvalid, setIsPriceInvalid] = useState(
+    !validators.isNumeric(productPrice)
+  );
 
   const handleProductNameChange = useCallback(
     (event) => {
-      if (event.target.value.trim() === '') {
-        setIsNameInvalid(true);
-      } else {
+      const name = event.target.value;
+      if (validators.isStringNotEmpty(name)) {
         setIsNameInvalid(false);
+      } else {
+        setIsNameInvalid(true);
       }
 
       dispatch(
         actions.setEditedProduct({
           ...editedProduct,
-          name: event.target.value,
+          name,
         })
       );
     },
@@ -76,14 +81,14 @@ function EditProductDialog({
 
   const handleProductPriceChange = useCallback(
     (event) => {
-      const price = parseFloat(event.target.value);
+      const price = event.target.value;
 
-      if (Number.isNaN(price)) {
+      if (validators.isNumeric(price)) {
+        setIsPriceInvalid(false);
+      } else {
         setIsPriceInvalid(true);
-        return;
       }
 
-      setIsPriceInvalid(false);
       dispatch(
         actions.setEditedProduct({
           ...editedProduct,
@@ -123,7 +128,7 @@ function EditProductDialog({
       actions.createProductRequest({
         name: productName,
         description: productDescription,
-        price: productPrice,
+        price: parseFloat(productPrice),
         imageFile: image,
       })
     );
@@ -136,7 +141,7 @@ function EditProductDialog({
           ...editedProduct,
           name: productName,
           description: productDescription,
-          price: productPrice,
+          price: parseFloat(productPrice),
           imageFile: image,
         })
       );
@@ -146,17 +151,20 @@ function EditProductDialog({
   const dialogClasses = classNames(className);
 
   const priceLabel = `${
-    utils.getLocalization('eShop_Admin_NewProductPrice') ?? 'Product price'
+    translations.getLocalization('eShop_Admin_NewProductPrice') ??
+    'Product price'
   }  ${constants.defaultCurrency}`;
+
   const priceValidationMessage = isPriceInvalid
-    ? utils.getLocalization('eShop_Admin_NewProductPriceValidation') ??
-      'Price should be numberic'
+    ? translations.getLocalization('eShop_Admin_NewProductPriceValidation') ??
+      'Price should be numeric'
     : undefined;
 
   const nameLabel =
-    utils.getLocalization('eShop_Admin_NewProductName') ?? 'Product name';
+    translations.getLocalization('eShop_Admin_NewProductName') ??
+    'Product name';
   const nameValidationMessage = isNameInvalid
-    ? utils.getLocalization('eShop_Admin_NewProductNameValidation') ??
+    ? translations.getLocalization('eShop_Admin_NewProductNameValidation') ??
       'Name should contain at least one character'
     : undefined;
 
@@ -165,9 +173,9 @@ function EditProductDialog({
       <Panel>
         <PanelTitle>
           {isEditMode
-            ? utils.getLocalization('eShop_Admin_EditProductTitle') ??
+            ? translations.getLocalization('eShop_Admin_EditProductTitle') ??
               'Edit product'
-            : utils.getLocalization('eShop_Admin_NewProductTitle') ??
+            : translations.getLocalization('eShop_Admin_NewProductTitle') ??
               'Add new product'}
         </PanelTitle>
         <PanelContent>
@@ -199,8 +207,9 @@ function EditProductDialog({
             <FlexItem className="gm-spacing-bm">
               {/* eslint-disable jsx-a11y/label-has-associated-control */}
               <label htmlFor="product-description" className="gc-input__label">
-                {utils.getLocalization('eShop_Admin_New_Product_Description') ??
-                  'Product description'}
+                {translations.getLocalization(
+                  'eShop_Admin_New_Product_Description'
+                ) ?? 'Product description'}
               </label>
               {/* eslint-enable jsx-a11y/label-has-associated-control */}
               <textarea
@@ -246,8 +255,9 @@ function EditProductDialog({
                     }
                   }}
                   isFull
+                  isDisabled={!isFormValid}
                 >
-                  {utils.getLocalization('eShop_Admin_Product_Update') ??
+                  {translations.getLocalization('eShop_Admin_Product_Update') ??
                     'Update'}
                 </Button>
               ) : (
@@ -263,14 +273,14 @@ function EditProductDialog({
                   isFull
                   isDisabled={!isFormValid}
                 >
-                  {utils.getLocalization('eShop_Admin_Product_Create') ??
+                  {translations.getLocalization('eShop_Admin_Product_Create') ??
                     'Create'}
                 </Button>
               )}
             </FlexItem>
             <FlexItem isGrow>
               <Button className="gc-btn--secondary" onClick={onClose} isFull>
-                {utils.getLocalization('eShop_Admin_Product_Cancel') ??
+                {translations.getLocalization('eShop_Admin_Product_Cancel') ??
                   'Cancel'}
               </Button>
             </FlexItem>

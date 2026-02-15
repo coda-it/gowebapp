@@ -28,7 +28,12 @@ function ProductList({ products }: { products: any[] }) {
   };
   const editProduct = (product: types.Product) => {
     dispatch(actions.setEditMode(types.ProductEditMode.EDIT));
-    dispatch(actions.setEditedProduct(product));
+    dispatch(
+      actions.setEditedProduct({
+        ...product,
+        price: String(product.price),
+      })
+    );
   };
 
   return (
